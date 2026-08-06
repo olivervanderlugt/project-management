@@ -1,10 +1,11 @@
 ---
 title: Learn — personal learning app
 status: active
-next:
+next: Review en merge learning-website PR #1 (Pages-deploy) en zet Pages-bron op "GitHub Actions"
 due:
 started:
 repo: olivervanderlugt/learning-website
+preview:
 stack: Vite, React, TypeScript, Tailwind v4, zustand, xyflow
 tags: learning, robotics, frontend
 ---

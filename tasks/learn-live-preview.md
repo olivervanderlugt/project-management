@@ -1,7 +1,7 @@
 ---
 title: Put Learn online so it has a live preview
 project: learning-website
-status: doing
+status: blocked
 added: 2026-08-06
 effort: S
 branch: night/learn-live-preview
@@ -27,3 +27,15 @@ Two things that will bite:
   -f build_type=workflow` call that worked for the Hangar.
 
 Do not touch the curriculum or lesson content. This task is about deployment.
+
+## Status 2026-08-06 (nachtrun)
+
+Gebouwd op `night/learn-live-preview`, PR #1 open naar main: Pages-workflow plus
+`base: '/learning-website/'`. Lokale build en headless-check groen (skill tree
+rendert, 140 nodes, klikbaar). Checker: `ship:false` — niets staat live tot:
+
+1. Ollie PR #1 merget, en
+2. Pages op de repo op bron "GitHub Actions" staat (Settings → Pages, of
+   `gh api -X POST repos/olivervanderlugt/learning-website/pages -f build_type=workflow`).
+
+Daarna `preview:` in `projects/learning-website.md` invullen en deze taak `done`.

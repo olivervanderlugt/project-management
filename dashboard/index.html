@@ -255,14 +255,6 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
       </span>
     </div>
     <ul class="tasks">
-        <li class="task" data-status="doing">
-          <span class="task-state mono">doing</span>
-          <div class="task-body">
-            <h4>Put Learn online so it has a live preview</h4>
-            <p><code>olivervanderlugt/learning-website</code> builds and deploys to GitHub Pages on every push to its default branch, the site loads and the skill tree is usable, and <code>projects/learning-website.md</code> in the Hangar has a working <code>preview:</code> URL.</p>
-          </div>
-          <span class="task-meta mono">learning-website<br>S</span>
-        </li>
         <li class="task" data-status="ready">
           <span class="task-state mono">ready</span>
           <div class="task-body">
@@ -270,6 +262,14 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p>A script reads the commit history of every repo listed in a project&#x27;s <code>repo:</code> field since the last weekly file, and writes <code>planning/weekly/YYYY-Www.md</code> with Wins filled in from real commits. Slips and Next week stay empty for Ollie.</p>
           </div>
           <span class="task-meta mono">hangar<br>M</span>
+        </li>
+        <li class="task" data-status="blocked">
+          <span class="task-state mono">blocked</span>
+          <div class="task-body">
+            <h4>Put Learn online so it has a live preview</h4>
+            <p><code>olivervanderlugt/learning-website</code> builds and deploys to GitHub Pages on every push to its default branch, the site loads and the skill tree is usable, and <code>projects/learning-website.md</code> in the Hangar has a working <code>preview:</code> URL.</p>
+          </div>
+          <span class="task-meta mono">learning-website<br>S</span>
         </li>
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
@@ -302,7 +302,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p>Nog niet schrijfbaar — daarom <code>inbox</code>.</p>
           </div>
           <span class="task-meta mono">versa<br>M</span>
-        </li></ul><p class="mono dim queue-sum">1 doing &middot; 4 inbox &middot; 1 ready</p>
+        </li></ul><p class="mono dim queue-sum">1 blocked &middot; 4 inbox &middot; 1 ready</p>
   </section>
 
   <section>
@@ -318,10 +318,10 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
               <h3>Learn — personal learning app</h3>
               <span class="status mono">active</span>
             </div>
-            <p class='strip-next missing'>No next action &mdash; decide one</p>
+            <p class='strip-next'>Review en merge learning-website PR #1 (Pages-deploy) en zet Pages-bron op &quot;GitHub Actions&quot;</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/learning-website">olivervanderlugt/learning-website</a><span class=sep>&middot;</span><span>Vite, React, TypeScript, Tailwind v4, zustand, xyflow</span></div>
             <div class="strip-tags"><span class='tag'>learning</span><span class='tag'>robotics</span><span class='tag'>frontend</span></div>
-            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/learning-website" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Learn — personal learning app (olivervanderlugt/learning-website). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. There is no next action set. Work out what it should be, tell me, and write it into the Hangar. When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/learning-website" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Learn — personal learning app (olivervanderlugt/learning-website). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Review en merge learning-website PR #1 (Pages-deploy) en zet Pages-bron op &quot;GitHub Actions&quot; When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <p class="no-preview mono">not deployed yet &mdash; no preview to show</p>
           </div>
           <div class="strip-due mono" data-tone="none" title="no date set">—</div>
