@@ -349,6 +349,46 @@ def render_ideas(ideas):
     return f'<ul class="ideas">{"".join(rows)}</ul>'
 
 
+LESSON_GOALS = ("effectiever", "simpeler", "veiliger", "goedkoper")
+
+
+def parse_goals(value):
+    """A lesson's comma-separated `goal:` field, primary first.
+
+    Only the four fixed words become labels — an unknown or empty goal is
+    dropped rather than invented, and the caller falls back to a neutral tag.
+    """
+    return [g for g in (g.strip().lower() for g in (value or "").split(",")) if g in LESSON_GOALS]
+
+
+def render_lessons(lessons):
+    active = [
+        (meta, body)
+        for meta, body in lessons
+        if meta.get("status", "").strip().lower() == "active"
+    ]
+    if not active:
+        return "<p class='empty'>No active lessons yet.</p>"
+    ordered = sorted(active, key=lambda d: d[0]["slug"])
+    rows = []
+    for meta, body in ordered:
+        title = meta.get("title") or meta["slug"]
+        scope = meta.get("scope", "")
+        goals = parse_goals(meta.get("goal", ""))
+        goal_html = "".join(
+            f'<span class="goal-tag" data-goal="{escape(g)}">{escape(g)}</span>' for g in goals
+        ) or '<span class="goal-tag" data-goal="none">&mdash;</span>'
+        rows.append(f"""
+        <li class="lesson">
+          <div class="lesson-top">
+            <h4>{escape(title)}</h4>
+            <span class="mono dim">{escape(scope)}</span>
+          </div>
+          <div class="lesson-goals">{goal_html}</div>
+        </li>""")
+    return f'<ul class="lessons">{"".join(rows)}</ul>'
+
+
 def render_decisions(decisions):
     if not decisions:
         return "<p class='empty'>Nothing logged yet.</p>"
@@ -609,6 +649,19 @@ body{
 .decision p{margin:4px 0 6px; color:var(--muted); font-size:.9rem;}
 .decision[data-status="superseded"]{opacity:.55;}
 
+.lessons{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
+.lesson{padding:14px 0; border-bottom:1px solid var(--hair);}
+.lesson:last-child{border-bottom:0;}
+.lesson-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+.lesson h4{margin:0; font-size:.98rem; font-weight:600;}
+.lesson-goals{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.goal-tag{font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+  border:1px solid var(--hair); padding:1px 7px;}
+.goal-tag[data-goal="effectiever"]{color:var(--accent-ink); border-color:var(--accent);}
+.goal-tag[data-goal="simpeler"]{color:var(--good); border-color:var(--good);}
+.goal-tag[data-goal="veiliger"]{color:var(--crit); border-color:var(--crit);}
+.goal-tag[data-goal="goedkoper"]{color:var(--warn); border-color:var(--warn);}
+
 .week-focus{margin:12px 0 0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em;}
 .week-list{margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:.92rem;}
 .week-list li{margin-bottom:4px;}
@@ -636,6 +689,12 @@ def build():
     ideas = read_dir("ideas")
     decisions = read_dir("decisions")
     tasks = read_dir("tasks")
+    lessons = read_dir("lessons")
+    active_lessons = [
+        (meta, body)
+        for meta, body in lessons
+        if meta.get("status", "").strip().lower() == "active"
+    ]
 
     html = f"""<title>The Hangar</title>
 <style>{CSS}</style>
@@ -689,6 +748,14 @@ def build():
         <span class="mono dim">{len(decisions)}</span>
       </div>
       {render_decisions(decisions)}
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="eyebrow">Lessons</h2>
+        <span class="mono dim">{len(active_lessons)}</span>
+      </div>
+      {render_lessons(lessons)}
     </section>
   </div>
 
