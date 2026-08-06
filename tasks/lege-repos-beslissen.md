@@ -1,5 +1,5 @@
 ---
-title: Quizzly en Crew management: één alinea of weg
+title: Crew management: één alinea of weg
 project:
 status: inbox
 added: 2026-08-06
@@ -9,19 +9,22 @@ branch:
 
 ## Done means
 
-Nog niet schrijfbaar — alleen Ollie weet wat deze twee repo's moesten worden.
+Nog niet schrijfbaar — alleen Ollie weet wat deze repo moest worden.
 
-Af is het als voor beide geldt: er staat een echte `## What this is` in het
-projectbestand én een `next`, of de repo is verwijderd en het projectbestand
-weg.
+Af is het als er een echte `## What this is` in het projectbestand staat én een
+`next`, of de repo is verwijderd en het projectbestand weg.
 
 ## Notes
 
-`olivervanderlugt/quizzly` en `olivervanderlugt/crew-management-system` hebben
-nul commits sinds ze zijn aangemaakt. De projectbestanden zeggen daarom niets
-over de bedoeling — dat is met opzet niet uit de naam geraden.
+`olivervanderlugt/crew-management-system` heeft nul commits sinds het is
+aangemaakt. Het projectbestand zegt daarom niets over de bedoeling — dat is met
+opzet niet uit de naam geraden.
 
-Twee lege repo's kosten geen geld en wel aandacht: het zijn twee besluiten die
-je elke keer opnieuw neemt als je het bord opent.
+Quizzly stond hier ook, maar loste zichzelf op: op 2026-08-06 kreeg de repo
+zijn app (uit `claude` gelicht, historie intact) en het projectbestand is
+diezelfde dag bijgewerkt met een echte beschrijving en een `next`.
+
+Een lege repo kost geen geld en wel aandacht: het is een besluit dat je elke
+keer opnieuw neemt als je het bord opent.
 
 Niet automatisch opruimen. Repo's verwijderen doet de nachtrun nooit.
