@@ -15,9 +15,12 @@ permissions:
   pages: write
   id-token: write
 
+# One deploy at a time, but never kill one that is already running: a deploy
+# that gets cancelled halfway leaves the site on its previous version, and the
+# autosave hook pushes often enough that that kept happening.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:

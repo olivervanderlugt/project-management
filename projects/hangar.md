@@ -5,7 +5,7 @@ next: Set a next action on Learn and Percentile
 due:
 started: 2026-08-06
 repo: olivervanderlugt/project-management
-preview: https://olivervanderlugt.github.io/project-management/
+preview:
 stack: Markdown, Python 3, GitHub Pages
 tags: tooling, personal
 ---
@@ -22,8 +22,14 @@ without me re-explaining the structure.
 ## Where it stands
 
 Structure, templates and the dashboard build are done. The four existing GitHub
-repos were imported on 2026-08-06; two of them turned out to be empty. The board
-publishes itself to GitHub Pages on every push, so it is up with the laptop shut.
+repos were imported on 2026-08-06; two of them turned out to be empty.
+
+The board is **not live yet**. The Pages workflow exists and runs on every push,
+but on 2026-08-06 not one run had ever reached the deploy step: two runs died on
+a GitHub incident (`Failed to resolve action download info: Service
+Unavailable`) and the rest were cancelled by the concurrency group before they
+finished. `preview:` is therefore blank — an honest blank beats a link that
+404s. Fill it in once a run is green and the URL actually loads.
 
 Two active projects are sitting there with no next action, which is the point of
 the red flag and the thing to fix first.
