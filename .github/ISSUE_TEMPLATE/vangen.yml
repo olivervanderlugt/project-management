@@ -1,0 +1,54 @@
+name: Vangen
+description: Leg een gedachte, idee of klacht vast als task in de Hangar. Geen sessie nodig.
+title: "Vangen: "
+labels: ["capture"]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Dit wordt automatisch een taak met `status: inbox` in `tasks/`.
+        Bouwen gebeurt niet vanzelf — dit is alleen vastleggen.
+
+  - type: input
+    id: summary
+    attributes:
+      label: Wat is het, in één zin?
+      placeholder: Bijv. "Percentile: exportknop doet niks op mobiel"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Meer context (optioneel)
+      placeholder: Wat er gebeurde, waarom het opvalt, wat je al probeerde.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: project
+    attributes:
+      label: Welk project?
+      description: Kies "weet ik niet" als het los staat of je het niet weet.
+      options:
+        - "weet ik niet"
+        - learning-website
+        - quizzly
+        - crew-management-system
+        - versa
+        - percentile
+        - hangar
+      default: 0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: effort
+    attributes:
+      label: Geschatte inspanning
+      options:
+        - S
+        - M
+        - L
+    validations:
+      required: true
