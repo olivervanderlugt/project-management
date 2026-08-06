@@ -127,6 +127,79 @@ def rich(value):
     return CODE_SPAN.sub(r"<code>\1</code>", escape(value or ""))
 
 
+def start_prompt(meta, nxt):
+    """A scoped opening prompt, so a session does not read a whole repo to begin."""
+    repo = meta.get("repo", "")
+    title = meta.get("title") or meta["slug"]
+    lines = [f"Work on {title}" + (f" ({repo})." if repo else ".")]
+    lines.append(
+        "Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the "
+        "whole repo — open files only when a step needs them."
+    )
+    if nxt:
+        lines.append(f"Next action: {nxt}")
+    else:
+        lines.append(
+            "There is no next action set. Work out what it should be, tell me, "
+            "and write it into the Hangar."
+        )
+    lines.append(
+        "When you finish, update this project's file in "
+        "olivervanderlugt/project-management and rebuild the dashboard."
+    )
+    return " ".join(lines)
+
+
+def render_preview(meta):
+    """A live preview, if the project is actually deployed somewhere.
+
+    The iframe only loads on the GitHub Pages copy — the Artifact build runs
+    under a CSP that blocks every external host, so the link below it is the
+    fallback that always works.
+    """
+    url = (meta.get("preview") or "").strip()
+    title = meta.get("title") or meta["slug"]
+    if not url:
+        return (
+            '<p class="no-preview mono">not deployed yet &mdash; no preview to show</p>'
+        )
+    return f"""
+          <details class="preview">
+            <summary>preview {escape(title)}</summary>
+            <div class="preview-body">
+              <iframe src="{escape(url)}" title="Live preview of {escape(title)}"
+                      loading="lazy" referrerpolicy="no-referrer"
+                      sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+              <a class="act" href="{escape(url)}" target="_blank" rel="noopener">
+                open in a tab &#8599;</a>
+            </div>
+          </details>"""
+
+
+def render_actions(meta, nxt):
+    repo = meta.get("repo", "")
+    buttons = []
+    if meta.get("preview"):
+        buttons.append(
+            f'<a class="act" href="{escape(meta["preview"])}" target="_blank" '
+            f'rel="noopener">live &#8599;</a>'
+        )
+    if repo:
+        buttons.append(
+            f'<a class="act" href="https://github.com/{escape(repo)}" '
+            f'target="_blank" rel="noopener">code &#8599;</a>'
+        )
+    buttons.append(
+        '<a class="act" href="https://claude.ai/code" target="_blank" '
+        'rel="noopener">open Claude Code &#8599;</a>'
+    )
+    buttons.append(
+        f'<button class="act" type="button" data-prompt="{escape(start_prompt(meta, nxt))}">'
+        "copy start prompt</button>"
+    )
+    return f'<div class="strip-acts">{"".join(buttons)}</div>'
+
+
 def label(text):
     return f'<span class="eyebrow">{escape(text)}</span>'
 
@@ -188,6 +261,7 @@ def render_projects(projects):
             if bits
             else ""
         )
+        actions_html = render_actions(meta, nxt)
         if nxt:
             next_html = f"<p class='strip-next'>{rich(nxt)}</p>"
         else:
@@ -203,6 +277,8 @@ def render_projects(projects):
             {next_html}
             {meta_html}
             <div class="strip-tags">{tag_html}</div>
+            {actions_html}
+            {render_preview(meta)}
           </div>
           <div class="strip-due mono" data-tone="{tone}" title="{escape(hint)}">{escape(text)}</div>
         </article>""")
@@ -410,6 +486,35 @@ body{
 .strip-meta .repo{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid transparent;}
 .strip-meta .repo:hover{border-bottom-color:currentColor;}
 .strip-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.strip-acts{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
+.act{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.72rem;
+  letter-spacing:.02em; color:var(--accent-ink); background:transparent;
+  border:1px solid var(--hair); padding:4px 10px; cursor:pointer; text-decoration:none;
+  transition:border-color .15s ease, background .15s ease;
+}
+.act:hover{border-color:var(--accent); background:var(--accent-soft);}
+.act:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+.act.copied{border-color:var(--good); color:var(--good);}
+
+.no-preview{margin:10px 0 0; color:var(--muted); opacity:.75;}
+.preview{margin-top:10px;}
+.preview summary{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.72rem;
+  letter-spacing:.02em; color:var(--accent-ink); cursor:pointer; display:inline-block;
+  border:1px solid var(--hair); padding:4px 10px; list-style:none;
+}
+.preview summary::-webkit-details-marker{display:none;}
+.preview summary::before{content:"\\25B8 "; opacity:.7;}
+.preview[open] summary::before{content:"\\25BE ";}
+.preview summary:hover{border-color:var(--accent); background:var(--accent-soft);}
+.preview summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+.preview-body{margin-top:10px; display:flex; flex-direction:column; gap:8px;
+  align-items:flex-start;}
+.preview-body iframe{
+  width:100%; height:min(58vh,420px); border:1px solid var(--hair);
+  background:var(--ground); border-radius:0;
+}
 .tag{font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
   border:1px solid var(--hair); padding:1px 7px;}
 .strip-due{display:flex; align-items:center; padding:0 18px; font-size:1rem; font-weight:600;
@@ -523,6 +628,38 @@ def build():
     <span class="mono dim">github.com/olivervanderlugt/project-management</span>
   </footer>
 </main>
+<script>
+document.querySelectorAll(".act[data-prompt]").forEach(function (button) {{
+  button.addEventListener("click", function () {{
+    var text = button.getAttribute("data-prompt");
+    var done = function () {{
+      var was = button.textContent;
+      button.textContent = "copied - paste into Claude Code";
+      button.classList.add("copied");
+      setTimeout(function () {{
+        button.textContent = was;
+        button.classList.remove("copied");
+      }}, 2200);
+    }};
+    if (navigator.clipboard && navigator.clipboard.writeText) {{
+      navigator.clipboard.writeText(text).then(done, fallback);
+    }} else {{
+      fallback();
+    }}
+    function fallback() {{
+      var field = document.createElement("textarea");
+      field.value = text;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      try {{ document.execCommand("copy"); done(); }} catch (err) {{ /* nothing to do */ }}
+      document.body.removeChild(field);
+    }}
+  }});
+}});
+</script>
 """
     OUT.write_text(html, encoding="utf-8")
     print(f"built {OUT.relative_to(ROOT)}")

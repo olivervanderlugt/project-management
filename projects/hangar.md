@@ -5,6 +5,7 @@ next: Set a next action on Learn and Percentile
 due:
 started: 2026-08-06
 repo: olivervanderlugt/project-management
+preview: https://olivervanderlugt.github.io/project-management/
 stack: Markdown, Python 3, GitHub Pages
 tags: tooling, personal
 ---

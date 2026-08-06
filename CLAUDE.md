@@ -36,6 +36,7 @@ next:    One concrete next action. Never empty on an active project.
 due:     YYYY-MM-DD, or blank if nothing is actually due
 started: YYYY-MM-DD
 repo:    owner/name on GitHub, or blank
+preview: Live URL, or blank. Blank is honest — never point it at a dead deploy.
 stack:   What it runs on, comma separated
 tags:    comma, separated
 ---
