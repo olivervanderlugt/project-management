@@ -39,3 +39,24 @@ verboden wordt.
 
 **Niet gedaan:** `preview:` niet ingevuld (geen levende URL — leeg is eerlijk),
 niets gemerged, Pages niet aangezet (admin, kost mogelijk geld: aan Ollie).
+
+## 2026-08-06 (avond, op verzoek van Ollie) — lessons-loop → done
+
+**Aanleiding:** Ollie vroeg expliciet om een zelflerende Hangar naar aanleiding
+van het workflow-dispatch-incident. Direct gevangen als `tasks/lessons-loop.md`
+en gebouwd zonder nachtrun.
+
+**Gedaan:** bouwer (sonnet, plafond 80k) op de sessiebranch. Nieuw: `lessons/`
+met `_template.md` en les `0001-never-trigger-a-workflow.md` (scope: builders).
+`scripts/gen_agents.py` injecteert nu elke les met `status: active` in de
+gegenereerde agents, gefilterd op scope; `_`-bestanden en `retired` lessen
+worden overgeslagen. CLAUDE.md beschrijft de loop: incident in night-log → les
+in `lessons/` → generator draaien. Checker: `"ship":true` op alle vijf regels,
+empirisch getest — scope-filters kloppen, handgeschreven agentbestanden blijven
+staan, beide scripts idempotent. Les 0001 staat nu letterlijk in alle zes
+builder-agents.
+
+**Kanttekening:** de bouwer rapporteerde 58k verbruik, de harness mat 103k —
+boven het plafond van 80k. Genoteerd; kandidaat voor les 0002 zodra het patroon
+terugkomt. Verder vuurde de autosave-hook halverwege de bouw en committe
+tussenwerk (`ece0b1d`) — geen schade, maar het checkpoint liep vóór de check uit.

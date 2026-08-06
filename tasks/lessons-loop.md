@@ -1,7 +1,7 @@
 ---
 title: Zelflerende Hangar: incidenten worden lessen, lessen landen in elke agent
 project: hangar
-status: doing
+status: done
 added: 2026-08-06
 effort: S
 branch: claude/hangar-project-setup-w61m5q

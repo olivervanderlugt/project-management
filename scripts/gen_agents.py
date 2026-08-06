@@ -103,7 +103,15 @@ def lessons_block(lessons, targets):
     """The '## Geleerde lessen' section for one agent, or "" if nothing applies.
 
     Each lesson's `## Rule` text is injected literally, one bullet per lesson,
-    so the rule reads the same here as it does in `lessons/`.
+    so the rule reads the same here as it does in `lessons/`. Returns "" when
+    no lesson's scope matches, so callers that splice this into a template
+    with the surrounding blank lines already in place get back exactly the
+    original text — that is what keeps generation idempotent.
+
+    The returned block, when non-empty, carries its own leading and trailing
+    newline so a caller can drop it in between two lines that already have a
+    single blank line between them (`"...{lessons_block(...)}\\n## Next"`)
+    without hand-counting blank lines at each call site.
     """
     applicable = [
         (meta, body) for meta, body in lessons if _lesson_applies(meta.get("scope"), targets)
@@ -114,15 +122,15 @@ def lessons_block(lessons, targets):
         f"- **{meta.get('title') or meta['slug']}** — {_build.prose(body, 'Rule')}"
         for meta, body in applicable
     )
-    return f"""
-
-## Geleerde lessen
-
-Vaste lessen uit eerdere incidenten. Ze gelden naast alles hierboven, niet in
-plaats ervan.
-
-{bullets}
-"""
+    body = (
+        "## Geleerde lessen\n"
+        "\n"
+        "Vaste lessen uit eerdere incidenten. Ze gelden naast alles hierboven, niet in\n"
+        "plaats ervan.\n"
+        "\n"
+        f"{bullets}\n"
+    )
+    return "\n" + body
 
 
 def builder_agent(meta, routing, lessons=()):
@@ -178,7 +186,7 @@ looked, stop and report `split` with two sharper tasks instead.
 - Never touch a repository other than {repo}.
 - If you are unsure whether something is inside these lines, it is outside.
   Write it in the report and leave it.
-
+{lessons_text}
 ## What you return
 
 Your final message is read by another agent, not by a person. Return this and
@@ -198,9 +206,10 @@ line as met because it probably is — if you did not see it work, it is `false`
 """
 
 
-def manager_agent(routing):
+def manager_agent(routing, lessons=()):
     manage = routing.get("manage", {})
     model = MODEL_ALIAS.get(manage.get("model", "fable"), "fable")
+    lessons_text = lessons_block(lessons, {"manager"})
     lines = []
     for kind, row in routing.items():
         lines.append(
@@ -263,12 +272,13 @@ A report with a `false` in `dm` is not done, whatever its `status` says. Hand it
 to the checker before you believe it, and write the night-log from what the
 report actually says — quote it, do not summarise it into something rosier.
 Nothing without evidence happened.
-"""
+{lessons_text}"""
 
 
-def checker_agent(routing):
+def checker_agent(routing, lessons=()):
     check = routing.get("check", {})
     model = MODEL_ALIAS.get(check.get("model", "opus"), "opus")
+    lessons_text = lessons_block(lessons, {"checker"})
     return f"""---
 name: hangar-checker
 description: Adversarial reviewer. Reads only the diff and the finish line, and tries to prove the work is not done. Use before accepting any builder's report.
@@ -304,7 +314,7 @@ Return this and nothing else:
 `ship: true` is only allowed when `broken` is empty. "It looks fine" is not a
 verdict — if you cannot point at the lines that make each finish line true, it
 is not true yet.
-"""
+{lessons_text}"""
 
 
 def write_if_changed(path, content):
@@ -335,18 +345,19 @@ def generate(root=None, agents_dir=None):
     """Write every agent file. Returns (written, removed) as filename lists."""
     agents_dir = agents_dir or AGENTS_DIR
     routing = read_routing()
+    lessons = active_lessons(root)
     written = []
     keep = set()
 
     for meta, _ in projects_with_repos(root):
         name = f"{meta['slug']}.md"
         keep.add(name)
-        if write_if_changed(agents_dir / name, builder_agent(meta, routing)):
+        if write_if_changed(agents_dir / name, builder_agent(meta, routing, lessons)):
             written.append(name)
 
     for name, content in (
-        ("hangar-manager.md", manager_agent(routing)),
-        ("hangar-checker.md", checker_agent(routing)),
+        ("hangar-manager.md", manager_agent(routing, lessons)),
+        ("hangar-checker.md", checker_agent(routing, lessons)),
     ):
         keep.add(name)
         if write_if_changed(agents_dir / name, content):

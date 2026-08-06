@@ -179,6 +179,16 @@ finish line and has to prove the work is *not* done.
 The generator prunes agents whose project file is gone, and leaves anything you
 wrote by hand alone — it only removes files carrying its own generated marker.
 
+The Hangar also learns from its own incidents. When something goes wrong on an
+overnight run, it gets written up in `planning/night-log.md`, then turned into
+a lesson file in `lessons/` (flat frontmatter, a `title`, a `scope` of
+`builders | checker | manager | all | <project-slug>`, and one `## Rule`).
+`scripts/gen_agents.py` reads every lesson with `status: active` and injects
+its rule, verbatim, into the `## Geleerde lessen` section of every generated
+agent whose scope matches — a `builders` lesson reaches every project builder,
+a project-slug lesson reaches only that one. Running the generator after any
+new or edited lesson is mandatory, the same as after editing a project file.
+
 `routing.yml` is the one place model, effort and token ceiling are decided. The
 manager may move down that table to spend less, never up. The design behind all
 of this is `reference/agent-orkestratie.md`; the decision is `decisions/0003`,

@@ -42,6 +42,13 @@ looked, stop and report `split` with two sharper tasks instead.
 - If you are unsure whether something is inside these lines, it is outside.
   Write it in the report and leave it.
 
+## Geleerde lessen
+
+Vaste lessen uit eerdere incidenten. Ze gelden naast alles hierboven, niet in
+plaats ervan.
+
+- **Never trigger a workflow or deploy, not even to verify** — Never trigger a workflow or a deploy — no `workflow_dispatch`, no `actions_run_trigger`, no Pages or hosting API calls — not even to verify a change works. Verification stops at local and on your own branch. A finish line outside your reach is a `false` with evidence, not a reason to reach further.
+
 ## What you return
 
 Your final message is read by another agent, not by a person. Return this and
