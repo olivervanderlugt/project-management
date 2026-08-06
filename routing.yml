@@ -1,0 +1,44 @@
+# Model, effort and token ceiling per kind of work.
+#
+# One place, so the choice is a decision on paper instead of a habit. The
+# manager may move DOWN this table to save money, never up — that is the brake
+# on the bill. See decisions/0003 and reference/agent-orkestratie.md.
+#
+# Deliberately flat key: value, same as the frontmatter contract, so a tiny
+# parser can read it. scripts/gen_agents.py is that parser.
+
+capture:
+  model: haiku
+  effort: low
+  cap: 10000
+  what: sorting and filing what was captured; no reading of project code
+
+sharpen:
+  model: sonnet
+  effort: medium
+  cap: 60000
+  what: turning an inbox task into a ready one by reading the repo
+
+build_s:
+  model: sonnet
+  effort: medium
+  cap: 80000
+  what: building a task with effort S
+
+build_ml:
+  model: opus
+  effort: high
+  cap: 150000
+  what: building a task with effort M or L
+
+check:
+  model: opus
+  effort: low
+  cap: 40000
+  what: judging a diff against the finish line; reads little, must be sharp
+
+manage:
+  model: fable
+  effort: low
+  cap: 40000
+  what: choosing work, writing briefs, reading reports; never reads code

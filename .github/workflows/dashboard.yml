@@ -8,6 +8,18 @@ name: Dashboard
 on:
   push:
     branches: [main, "claude/**"]
+    # Only what the board is made of. A push that touches scripts or agent
+    # definitions does not change a pixel, and triggering a run for it just
+    # cancels the one already waiting for a runner.
+    paths:
+      - "planning/**"
+      - "projects/**"
+      - "ideas/**"
+      - "decisions/**"
+      - "reference/**"
+      - "tasks/**"
+      - "dashboard/**"
+      - ".github/workflows/dashboard.yml"
   workflow_dispatch:
 
 permissions:
