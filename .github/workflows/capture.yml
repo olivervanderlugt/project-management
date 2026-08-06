@@ -1,0 +1,81 @@
+name: Capture
+
+# Turns a "Vangen" issue-form submission into a tasks/*.md file, no model
+# calls and no API keys involved: the form already collects structured
+# fields, so scripts/capture_issue.py writes the file deterministically.
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  capture:
+    if: contains(github.event.issue.labels.*.name, 'capture')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/hangar-project-setup-kvhcad
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Write the task file
+        id: capture
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+        run: |
+          python3 scripts/capture_issue.py | tee /tmp/capture_output.txt
+          {
+            echo "status=$(grep -m1 '^status=' /tmp/capture_output.txt | cut -d= -f2)"
+            echo "path=$(grep -m1 '^path=' /tmp/capture_output.txt | cut -d= -f2)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Rebuild the board
+        if: steps.capture.outputs.status == 'written'
+        run: python3 dashboard/build.py
+
+      - name: Commit and push
+        if: steps.capture.outputs.status == 'written'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "${{ steps.capture.outputs.path }}" dashboard/index.html
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+          else
+            git commit -m "Capture: task from issue #${{ github.event.issue.number }}"
+            git push origin HEAD:claude/hangar-project-setup-kvhcad
+          fi
+
+      - name: Comment and close the issue
+        if: steps.capture.outputs.status == 'written'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const path = "${{ steps.capture.outputs.path }}";
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Vastgelegd als \`${path}\` — status \`inbox\`. Bouwen gebeurt pas als hij naar \`ready\` gaat.`,
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: "closed",
+              state_reason: "completed",
+            });
+
+      - name: Skipped
+        if: steps.capture.outputs.status == 'skipped'
+        run: echo "Issue #${{ github.event.issue.number }} was already captured at ${{ steps.capture.outputs.path }} — no comment, not closed."

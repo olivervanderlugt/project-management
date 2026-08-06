@@ -13,7 +13,7 @@ body:
     id: summary
     attributes:
       label: Wat is het, in één zin?
-      placeholder: Bijv. "Percentile: exportknop doet niks op mobiel"
+      placeholder: 'Bijv. "Percentile: exportknop doet niks op mobiel"'
     validations:
       required: true
 
