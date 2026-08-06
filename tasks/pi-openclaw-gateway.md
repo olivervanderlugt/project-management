@@ -35,3 +35,13 @@ optie, ook als het geen Claude is?
   `## Done means` — de Pi verandert daar niets aan.
 - Breekt net als stap 4 besluit 0001 half: het is een server, alleen dan van
   jezelf. Nieuw besluit schrijven vóór er gebouwd wordt.
+
+## Keuzes van Ollie (2026-08-06)
+
+- Hardware: liever een nieuwe Pi 5 dan de oude pc/laptop (8 GB) die er nog ligt.
+- Motor: het Claude Max-abonnement via OpenClaw-login, geen losse API-kosten.
+  Doel is €0 per maand. Let op: deelt limieten met gewoon gebruik én nachtruns,
+  en de route bestaat bij gratie van Anthropic — plan B nodig.
+- Kanaal: maakt hem niet uit; kies het eenvoudigst/stabielst.
+- Kimi/open source besproken: grote open modellen draaien niet op een Pi;
+  lokaal kan alleen een mini-model als offline-terugval voor puur vangen.
