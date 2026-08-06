@@ -35,9 +35,15 @@ status:  active | paused | shipped | parked
 next:    One concrete next action. Never empty on an active project.
 due:     YYYY-MM-DD, or blank if nothing is actually due
 started: YYYY-MM-DD
+repo:    owner/name on GitHub, or blank
+stack:   What it runs on, comma separated
 tags:    comma, separated
 ---
 ```
+
+`repo` is what makes the Hangar an index into the code: the dashboard turns it
+into a link. It is also the key the repo importer matches on, so never write the
+same `repo` value into two project files.
 
 **`ideas/*.md`**
 
@@ -69,6 +75,8 @@ Body sections: `## Context`, `## Decision`, `## Consequences`.
 2. **Rebuild after every content change.** Run `python3 dashboard/build.py`
    whenever anything under `planning/`, `projects/`, `ideas/`, `decisions/` or
    `reference/` changes. Commit the regenerated `dashboard/index.html` with it.
+   GitHub Actions rebuilds and republishes to Pages on push regardless, but the
+   committed copy should not be stale.
 3. **Never invent status, dates or progress.** Leave a field blank and ask.
 4. **Decisions are append-only.** To reverse one, add a new record and set the
    old one to `superseded`. Do not rewrite history.
@@ -88,4 +96,35 @@ Body sections: `## Context`, `## Decision`, `## Consequences`.
   fill it from what changed in the repo since the last one (`git log` is fair
   game), update `planning/now.md`, rebuild, commit.
 - *"Publish the dashboard"* → build, then publish `dashboard/index.html` as an
-  Artifact. Reuse the same file path so it redeploys to the same URL.
+  Artifact. Reuse the same file path so it redeploys to the same URL. The Pages
+  copy needs no action; it republishes on push.
+
+## Repos
+
+The Hangar indexes Ollie's GitHub repos; it does not contain them.
+
+- *"Import my repos"* → list them (`list_repos`, or `gh repo list --json
+  nameWithOwner,description,pushedAt`), pipe the JSON into
+  `python3 scripts/import_repos.py`, then rebuild. The importer skips repos
+  already claimed by a `repo:` line, so it is safe to re-run. It writes stubs
+  with `status: parked` and a blank `next` on purpose — do not fill those in
+  from the repo name.
+- **Read the repo before describing it.** If a repo has commits, clone it and
+  write `## What this is` from its README, `CLAUDE.md` or source — never from
+  the name. If it is empty, say it is empty. Two of the four repos imported on
+  2026-08-06 had zero commits.
+- *"Create a repo for X"* → create it on GitHub (`create_repository`), then add
+  the matching `projects/<slug>.md` with its `repo:` field set, and rebuild.
+  Ask before making anything public.
+
+## Hosting
+
+`.github/workflows/dashboard.yml` rebuilds the board and deploys it to GitHub
+Pages on every push to `main` or `claude/**`. The live board is at
+<https://olivervanderlugt.github.io/project-management/> and needs nothing
+running locally. If it 404s, Pages has not been switched on: repo Settings →
+Pages → Source: "GitHub Actions".
+
+Deploy infrastructure — Docker, Vercel, Supabase, Stripe — belongs to the
+individual project repos, never to the Hangar. The Hangar records `stack` and
+where a thing deploys so you know where to look. See decision 0002.

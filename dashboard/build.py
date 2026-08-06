@@ -175,6 +175,19 @@ def render_projects(projects):
         text, tone, hint = due_cell(meta.get("due", ""))
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
         tag_html = "".join(f"<span class='tag'>{escape(t)}</span>" for t in tags)
+        bits = []
+        if meta.get("repo"):
+            slug = meta["repo"]
+            bits.append(
+                f'<a class="repo" href="https://github.com/{escape(slug)}">{escape(slug)}</a>'
+            )
+        if meta.get("stack"):
+            bits.append(f'<span>{escape(meta["stack"])}</span>')
+        meta_html = (
+            f'<div class="strip-meta mono">{"<span class=sep>&middot;</span>".join(bits)}</div>'
+            if bits
+            else ""
+        )
         if nxt:
             next_html = f"<p class='strip-next'>{rich(nxt)}</p>"
         else:
@@ -188,6 +201,7 @@ def render_projects(projects):
               <span class="status mono">{escape(status)}</span>
             </div>
             {next_html}
+            {meta_html}
             <div class="strip-tags">{tag_html}</div>
           </div>
           <div class="strip-due mono" data-tone="{tone}" title="{escape(hint)}">{escape(text)}</div>
@@ -390,6 +404,11 @@ body{
 .status{text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-size:.66rem;}
 .strip-next{margin:4px 0 0; color:var(--muted); font-size:.94rem;}
 .strip-next.missing{color:var(--crit);}
+.strip-meta{margin-top:6px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px;
+  align-items:baseline;}
+.strip-meta .sep{opacity:.5;}
+.strip-meta .repo{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid transparent;}
+.strip-meta .repo:hover{border-bottom-color:currentColor;}
 .strip-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
 .tag{font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
   border:1px solid var(--hair); padding:1px 7px;}

@@ -7,12 +7,17 @@ Markdown is the source of truth. `dashboard/index.html` is generated from it.
 
 ## Where it lives
 
-| Thing            | Where                                                  |
-| ---------------- | ------------------------------------------------------ |
-| The repo         | `github.com/olivervanderlugt/project-management`        |
-| Read it anywhere | GitHub web or app — every file renders in the browser   |
-| Work on it       | claude.ai/code → open this repo → just start talking    |
-| The dashboard    | `dashboard/index.html`, publishable as a shareable link |
+| Thing            | Where                                                             |
+| ---------------- | ----------------------------------------------------------------- |
+| **The board**    | <https://olivervanderlugt.github.io/project-management/> — always on |
+| The repo         | `github.com/olivervanderlugt/project-management`                   |
+| Read it anywhere | GitHub web or app — every file renders in the browser              |
+| Work on it       | claude.ai/code → open this repo → just start talking               |
+
+The board is rebuilt and republished by GitHub Actions on every push, so it is
+live in any browser with your laptop shut. Nothing runs on your machine.
+
+One-time setup, if it 404s: repo Settings → Pages → Source: **GitHub Actions**.
 
 Plain markdown means it opens in anything — GitHub, Obsidian, a text editor, your
 phone — and it will still open in ten years.
@@ -34,8 +39,25 @@ python3 dashboard/build.py
 ```
 
 No dependencies, no build tools, no install step. It reads the markdown and
-writes `dashboard/index.html`. Open that file directly, or ask Claude to publish
-it as a link you can keep on your phone.
+writes `dashboard/index.html`. You rarely need to run this by hand — Actions does
+it on every push.
+
+## Repos
+
+The Hangar indexes your repos, it does not contain them. Each project carries a
+`repo:` field that the board turns into a link to the code.
+
+```bash
+gh repo list --json nameWithOwner,description,pushedAt --limit 200 \
+  | python3 scripts/import_repos.py
+```
+
+Safe to re-run: repos already claimed by a `repo:` line are skipped. Imported
+projects land as `parked` with a blank next action, so they show up flagged until
+you decide what to do with them.
+
+Easier: open the repo in Claude and say *"import my repos"* — it reads each one
+before describing it, rather than guessing from the name.
 
 ## Working on it from inside itself
 

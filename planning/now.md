@@ -1,8 +1,8 @@
 ---
 updated: 2026-08-06
-focus: Get the Hangar off the ground and actually put things in it
+focus: Give Learn and Percentile a real next action
 ---
 
-- Fill `projects/` with what's genuinely in flight right now
+- Decide the next action on Learn and on Percentile — both are flagged red
+- Say what Quizzly and Crew management were meant to be, or delete the repos
 - Dump the ideas currently living in my head into `ideas/`
-- Publish the dashboard and put the link somewhere I'll actually see it

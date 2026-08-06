@@ -1,9 +1,11 @@
 ---
 title: The Hangar
 status: active
-next: Load in the real projects and ideas
+next: Set a next action on Learn and Percentile
 due:
 started: 2026-08-06
+repo: olivervanderlugt/project-management
+stack: Markdown, Python 3, GitHub Pages
 tags: tooling, personal
 ---
 
@@ -18,8 +20,12 @@ without me re-explaining the structure.
 
 ## Where it stands
 
-Structure, templates and the dashboard build are done. It is empty of real
-content — one project (this one), no ideas, one decision.
+Structure, templates and the dashboard build are done. The four existing GitHub
+repos were imported on 2026-08-06; two of them turned out to be empty. The board
+publishes itself to GitHub Pages on every push, so it is up with the laptop shut.
+
+Two active projects are sitting there with no next action, which is the point of
+the red flag and the thing to fix first.
 
 ## Open questions
 

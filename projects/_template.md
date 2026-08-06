@@ -4,6 +4,8 @@ status: active
 next: The single next concrete action
 due:
 started: YYYY-MM-DD
+repo: owner/name, if it has one
+stack: what it runs on
 tags:
 ---
 
