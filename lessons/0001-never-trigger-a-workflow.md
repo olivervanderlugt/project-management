@@ -1,6 +1,7 @@
 ---
 title: Never trigger a workflow or deploy, not even to verify
 scope: builders
+goal: veiliger, goedkoper
 source: night-log 2026-08-06 / learn-live-preview
 added: 2026-08-06
 status: active

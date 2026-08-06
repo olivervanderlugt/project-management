@@ -182,7 +182,10 @@ wrote by hand alone — it only removes files carrying its own generated marker.
 The Hangar also learns from its own incidents. When something goes wrong on an
 overnight run, it gets written up in `planning/night-log.md`, then turned into
 a lesson file in `lessons/` (flat frontmatter, a `title`, a `scope` of
-`builders | checker | manager | all | <project-slug>`, and one `## Rule`).
+`builders | checker | manager | all | <project-slug>`, a `goal`, and one
+`## Rule`). Every lesson serves at least one of four goals — `effectiever`,
+`simpeler`, `veiliger` or `goedkoper` — named in its `goal:` field, primary
+first, comma separated. A lesson that serves none of the four is not a lesson.
 `scripts/gen_agents.py` reads every lesson with `status: active` and injects
 its rule, verbatim, into the `## Geleerde lessen` section of every generated
 agent whose scope matches — a `builders` lesson reaches every project builder,
