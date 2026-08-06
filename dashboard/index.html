@@ -1,0 +1,261 @@
+<title>The Hangar</title>
+<style>
+:root{
+  --ground:#EEF2F1; --surface:#FFFFFF; --rack:#E5EBEA;
+  --ink:#111819; --muted:#5C6A6D; --hair:#D3DBDA;
+  --accent:#0E6B65; --accent-ink:#0E6B65; --accent-soft:#DBEAE7;
+  --warn:#8A5A0B; --crit:#9E2B23; --good:#2C6640;
+  --shadow:rgba(17,24,25,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --ground:#0C1214; --surface:#141D1F; --rack:#101819;
+    --ink:#E3ECEC; --muted:#8A9A9D; --hair:#233032;
+    --accent:#46B9AE; --accent-ink:#7FD3CA; --accent-soft:#16302E;
+    --warn:#D9A441; --crit:#E4776C; --good:#6FBE86;
+    --shadow:rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="light"]{
+  --ground:#EEF2F1; --surface:#FFFFFF; --rack:#E5EBEA;
+  --ink:#111819; --muted:#5C6A6D; --hair:#D3DBDA;
+  --accent:#0E6B65; --accent-ink:#0E6B65; --accent-soft:#DBEAE7;
+  --warn:#8A5A0B; --crit:#9E2B23; --good:#2C6640;
+  --shadow:rgba(17,24,25,.06);
+}
+:root[data-theme="dark"]{
+  --ground:#0C1214; --surface:#141D1F; --rack:#101819;
+  --ink:#E3ECEC; --muted:#8A9A9D; --hair:#233032;
+  --accent:#46B9AE; --accent-ink:#7FD3CA; --accent-soft:#16302E;
+  --warn:#D9A441; --crit:#E4776C; --good:#6FBE86;
+  --shadow:rgba(0,0,0,.4);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.mono{
+  font-family:ui-monospace,SFMono-Regular,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  font-variant-numeric:tabular-nums; font-size:.78rem; letter-spacing:.02em;
+}
+.dim{color:var(--muted);}
+.board{max-width:1080px; margin:0 auto; padding:clamp(24px,5vw,56px) clamp(16px,4vw,32px) 72px;
+  display:flex; flex-direction:column; gap:clamp(24px,4vw,40px);}
+
+.eyebrow{
+  font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.16em;
+  color:var(--muted);
+}
+.eyebrow.inline{display:block; margin-top:14px;}
+
+/* masthead */
+.masthead{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+  gap:16px; padding-bottom:18px; border-bottom:2px solid var(--ink);}
+.masthead h1{
+  margin:2px 0 0; font-size:clamp(2rem,5vw,2.9rem); line-height:1;
+  letter-spacing:-.03em; font-weight:700; text-wrap:balance;
+}
+.masthead h1 em{font-style:normal; color:var(--accent-ink);}
+.stamp{text-align:right;}
+
+.counters{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1px;
+  background:var(--hair); border:1px solid var(--hair);}
+.counter{background:var(--surface); padding:14px 16px; display:flex; flex-direction:column; gap:2px;}
+.counter-value{font-size:1.7rem; line-height:1.1; font-weight:600; letter-spacing:-.02em;}
+
+/* now */
+.now{background:var(--surface); border:1px solid var(--hair); border-top:3px solid var(--accent);
+  padding:clamp(18px,3vw,26px);}
+.now-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px;}
+.now-focus{margin:10px 0 18px; font-size:clamp(1.35rem,3.2vw,1.9rem); line-height:1.2;
+  letter-spacing:-.02em; font-weight:600; text-wrap:balance;}
+.now-list{margin:0; padding:0; list-style:none; counter-reset:n;
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px 24px;}
+.now-list li{counter-increment:n; position:relative; padding-left:26px; color:var(--muted);
+  border-top:1px solid var(--hair); padding-top:8px;}
+.now-list li::before{
+  content:counter(n,decimal-leading-zero); position:absolute; left:0; top:8px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:.7rem; color:var(--accent-ink); letter-spacing:.02em;
+}
+
+/* section headings */
+.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  border-bottom:1px solid var(--hair); padding-bottom:8px; margin-bottom:14px;}
+.section-head h2{margin:0; font-size:1rem; font-weight:600; letter-spacing:.01em;}
+
+/* project rack */
+.rack{background:var(--rack); border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
+.strip{display:grid; grid-template-columns:6px 1fr auto; align-items:stretch;
+  background:var(--surface); transition:background .15s ease;}
+.strip:hover{background:var(--accent-soft);}
+.strip-flag{background:var(--muted);}
+.strip[data-status="active"] .strip-flag{background:var(--accent);}
+.strip[data-status="paused"] .strip-flag{background:var(--warn);}
+.strip[data-status="shipped"] .strip-flag{background:var(--good);}
+.strip[data-status="parked"] .strip-flag{background:var(--hair);}
+.strip-body{padding:14px 18px; min-width:0;}
+.strip-top{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
+.strip-top h3{margin:0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em;}
+.status{text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-size:.66rem;}
+.strip-next{margin:4px 0 0; color:var(--muted); font-size:.94rem;}
+.strip-next.missing{color:var(--crit);}
+.strip-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
+.tag{font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
+  border:1px solid var(--hair); padding:1px 7px;}
+.strip-due{display:flex; align-items:center; padding:0 18px; font-size:1rem; font-weight:600;
+  border-left:1px solid var(--hair); min-width:88px; justify-content:flex-end;}
+.strip-due[data-tone="crit"]{color:var(--crit);}
+.strip-due[data-tone="warn"]{color:var(--warn);}
+.strip-due[data-tone="calm"]{color:var(--ink);}
+.strip-due[data-tone="none"]{color:var(--muted); font-weight:400;}
+
+/* lower deck */
+.deck{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:clamp(20px,3vw,32px); align-items:start;}
+.panel{background:var(--surface); border:1px solid var(--hair); padding:clamp(16px,2.5vw,22px);}
+.panel-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px;
+  border-bottom:1px solid var(--hair); padding-bottom:8px;}
+
+.ideas,.decisions{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
+.idea{padding:14px 0; border-bottom:1px solid var(--hair);}
+.idea:last-child{border-bottom:0;}
+.idea-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
+.idea h4{margin:0; font-size:.98rem; font-weight:600;}
+.idea p{margin:6px 0 0; color:var(--muted); font-size:.9rem;}
+.verdict{text-transform:uppercase; letter-spacing:.1em; font-size:.64rem; color:var(--muted);}
+.idea[data-tone="accent"] .verdict{color:var(--accent-ink);}
+.idea[data-tone="warn"] .verdict{color:var(--warn);}
+.idea[data-tone="faded"]{opacity:.5;}
+
+.decision{display:grid; grid-template-columns:auto 1fr; gap:14px; padding:14px 0;
+  border-bottom:1px solid var(--hair);}
+.decision:last-child{border-bottom:0;}
+.adr{color:var(--accent-ink); font-size:.85rem; padding-top:2px;}
+.decision h4{margin:0; font-size:.98rem; font-weight:600;}
+.decision p{margin:4px 0 6px; color:var(--muted); font-size:.9rem;}
+.decision[data-status="superseded"]{opacity:.55;}
+
+.week-focus{margin:12px 0 0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em;}
+.week-list{margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:.92rem;}
+.week-list li{margin-bottom:4px;}
+
+.empty{color:var(--muted); font-size:.92rem; margin:12px 0 0;}
+code{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.85em;
+  background:var(--accent-soft); padding:1px 5px;}
+footer{border-top:1px solid var(--hair); padding-top:14px; display:flex;
+  justify-content:space-between; flex-wrap:wrap; gap:8px;}
+a{color:var(--accent-ink);}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;}}
+@media (max-width:520px){
+  .strip{grid-template-columns:6px 1fr;}
+  .strip-due{grid-column:2; border-left:0; border-top:1px solid var(--hair);
+    justify-content:flex-start; padding:8px 18px 14px;}
+}
+</style>
+<main class="board">
+  <header class="masthead">
+    <div>
+      <span class="eyebrow">Project HQ</span>
+      <h1>The <em>Hangar</em></h1>
+    </div>
+    <div class="stamp">
+      <span class="eyebrow">Board built</span><br>
+      <span class="mono dim">06 Aug 2026</span>
+    </div>
+  </header>
+
+  <div class="counters"><div class="counter">
+              <span class="eyebrow">In flight</span>
+              <span class="counter-value mono">1</span>
+              <span class="mono dim">1 total</span>
+            </div><div class="counter">
+              <span class="eyebrow">Parked</span>
+              <span class="counter-value mono">0</span>
+              <span class="mono dim">ideas</span>
+            </div><div class="counter">
+              <span class="eyebrow">Logged</span>
+              <span class="counter-value mono">1</span>
+              <span class="mono dim">decisions</span>
+            </div><div class="counter">
+              <span class="eyebrow">Next due</span>
+              <span class="counter-value mono">—</span>
+              <span class="mono dim">nothing scheduled</span>
+            </div></div>
+
+  
+    <section class="now">
+      <div class="now-head">
+        <span class="eyebrow">Current focus</span>
+        <span class="mono dim">updated 06 Aug 2026</span>
+      </div>
+      <p class="now-focus">Get the Hangar off the ground and actually put things in it</p>
+      <ol class='now-list'><li>Fill <code>projects/</code> with what&#x27;s genuinely in flight right now</li><li>Dump the ideas currently living in my head into <code>ideas/</code></li><li>Publish the dashboard and put the link somewhere I&#x27;ll actually see it</li></ol>
+    </section>
+
+  <section>
+    <div class="section-head">
+      <h2>On the apron</h2>
+      <span class="mono dim">1 project</span>
+    </div>
+    <div class="rack">
+        <article class="strip" data-status="active">
+          <div class="strip-flag" aria-hidden="true"></div>
+          <div class="strip-body">
+            <div class="strip-top">
+              <h3>The Hangar</h3>
+              <span class="status mono">active</span>
+            </div>
+            <p class='strip-next'>Load in the real projects and ideas</p>
+            <div class="strip-tags"><span class='tag'>tooling</span><span class='tag'>personal</span></div>
+          </div>
+          <div class="strip-due mono" data-tone="none" title="no date set">—</div>
+        </article></div>
+  </section>
+
+  <div class="deck">
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="eyebrow">Parked ideas</h2>
+        <span class="mono dim">0</span>
+      </div>
+      <p class='empty'>Nothing parked yet. Add a file to <code>ideas/</code>.</p>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2 class="eyebrow">Decision log</h2>
+        <span class="mono dim">1</span>
+      </div>
+      <ul class="decisions">
+        <li class="decision" data-status="accepted">
+          <span class="adr mono">0001</span>
+          <div>
+            <h4>Markdown first, a real app only if a project starts earning</h4>
+            <p>Markdown is the source of truth. The dashboard is a generated, self-contained HTML file with no dependencies and no build toolchain.</p>
+            <span class="mono dim">06 Aug 2026 &middot; accepted</span>
+          </div>
+        </li></ul>
+    </section>
+  </div>
+
+  
+    <section class="panel week">
+      <div class="panel-head">
+        <span class="eyebrow">Last review</span>
+        <span class="mono dim">2026-W32</span>
+      </div>
+      <p class="week-focus">Building the Hangar itself</p>
+      <span class="eyebrow inline">Next week</span>
+      <ul class="week-list"><li>Load in the real projects and ideas; an empty HQ is not an HQ</li><li>Run one full weekly review through the Hangar and see whether it holds up</li></ul>
+    </section>
+
+  <footer>
+    <span class="mono dim">Generated from markdown &middot; python3 dashboard/build.py</span>
+    <span class="mono dim">github.com/olivervanderlugt/project-management</span>
+  </footer>
+</main>
