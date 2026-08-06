@@ -1,6 +1,20 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Read|Edit|MultiEdit|Write|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/scripts/guard.py\"",
+            "timeout": 10,
+            "statusMessage": "Checking the boundaries",
+            "suppressOutput": true
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
@@ -37,7 +51,25 @@
       "Bash(git log:*)",
       "Bash(git diff:*)",
       "Bash(python3 dashboard/build.py)",
+      "Bash(python3 scripts/gen_agents.py)",
+      "Bash(python3 scripts/brief.py:*)",
       "Bash(python3 scripts/import_repos.py:*)"
+    ],
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/*.pem)",
+      "Read(**/id_rsa*)",
+      "Read(**/.git-credentials)",
+      "Read(**/credentials.json)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git reset --hard:*)",
+      "Bash(git filter-branch:*)",
+      "Bash(gh repo delete:*)",
+      "Bash(npm publish:*)",
+      "Bash(vercel:*)",
+      "Bash(terraform apply:*)"
     ]
   }
 }

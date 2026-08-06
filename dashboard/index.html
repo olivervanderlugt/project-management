@@ -133,6 +133,8 @@ body{
 .task h4{margin:0; font-size:.98rem; font-weight:600;}
 .task p{margin:3px 0 0; color:var(--muted); font-size:.88rem;}
 .task-meta{color:var(--muted); text-align:right; line-height:1.5;}
+.task-agent{color:var(--accent-ink); font-size:.72rem;}
+.task-agent.unassigned{color:var(--warn); opacity:.85;}
 .queue-sum{margin:8px 0 0; text-align:right;}
 
 .no-preview{margin:10px 0 0; color:var(--muted); opacity:.75;}
@@ -261,7 +263,8 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <h4>Generate the weekly review from what actually changed</h4>
             <p>A script reads the commit history of every repo listed in a project&#x27;s <code>repo:</code> field since the last weekly file, and writes <code>planning/weekly/YYYY-Www.md</code> with Wins filled in from real commits. Slips and Next week stay empty for Ollie.</p>
           </div>
-          <span class="task-meta mono">hangar<br>M</span>
+          <span class="task-meta mono">hangar<br>M
+            <br><span class="task-agent">hangar &middot; opus</span></span>
         </li>
         <li class="task" data-status="ready">
           <span class="task-state mono">ready</span>
@@ -269,7 +272,8 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <h4>Put Learn online so it has a live preview</h4>
             <p><code>olivervanderlugt/learning-website</code> builds and deploys to GitHub Pages on every push to its default branch, the site loads and the skill tree is usable, and <code>projects/learning-website.md</code> in the Hangar has a working <code>preview:</code> URL.</p>
           </div>
-          <span class="task-meta mono">learning-website<br>S</span>
+          <span class="task-meta mono">learning-website<br>S
+            <br><span class="task-agent">learning-website &middot; sonnet</span></span>
         </li>
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
@@ -277,7 +281,8 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <h4>Quizzly en Crew management: één alinea of weg</h4>
             <p>Nog niet schrijfbaar — alleen Ollie weet wat deze twee repo&#x27;s moesten worden.</p>
           </div>
-          <span class="task-meta mono"><br>S</span>
+          <span class="task-meta mono"><br>S
+            <br><span class="task-agent unassigned">no agent</span></span>
         </li>
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
@@ -285,7 +290,8 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <h4>Vanuit de browser tegen de Hangar praten, met automatische routing</h4>
             <p>Nog niet schrijfbaar als één taak — hij is te groot en hij valt uiteen in vier stappen die los waarde hebben. Zie hieronder. Per stap is een echte finish line te schrijven; voor het geheel niet.</p>
           </div>
-          <span class="task-meta mono">hangar<br>L</span>
+          <span class="task-meta mono">hangar<br>L
+            <br><span class="task-agent">hangar &middot; sonnet</span></span>
         </li>
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
@@ -293,7 +299,8 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <h4>Work out which two fixes made things worse in Percentile</h4>
             <p>Not writable yet — that is why this is <code>inbox</code> and not <code>ready</code>.</p>
           </div>
-          <span class="task-meta mono">percentile<br>M</span>
+          <span class="task-meta mono">percentile<br>M
+            <br><span class="task-agent">percentile &middot; sonnet</span></span>
         </li>
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
@@ -301,7 +308,8 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <h4>Beslissen waar Versa draait, en hem daar neerzetten</h4>
             <p>Nog niet schrijfbaar — daarom <code>inbox</code>.</p>
           </div>
-          <span class="task-meta mono">versa<br>M</span>
+          <span class="task-meta mono">versa<br>M
+            <br><span class="task-agent">versa &middot; sonnet</span></span>
         </li></ul><p class="mono dim queue-sum">4 inbox &middot; 2 ready</p>
   </section>
 

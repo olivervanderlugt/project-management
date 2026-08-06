@@ -184,6 +184,41 @@ manager may move down that table to spend less, never up. The design behind all
 of this is `reference/agent-orkestratie.md`; the decision is `decisions/0003`,
 still `proposed`.
 
+## From a captured thought to a working agent
+
+Nothing in this path is typed twice, and none of it costs a model call:
+
+```
+python3 scripts/brief.py --list        what every open task would go to
+python3 scripts/brief.py <task-slug>   the brief for one task, as JSON
+```
+
+`scripts/dispatch.py` derives it: the repo comes from the project file, the
+model, effort and ceiling from `routing.yml`, the finish line from the task's
+own `## Done means`, the boundaries from `DEFAULT_NOGO`. An `inbox` task gets a
+*sharpen* brief that forbids writing code; a `ready` task gets a build brief. A
+task with no project, no repo, or no finish line says exactly that instead of
+producing a brief with a guess in it — never fill that gap yourself.
+
+The board shows the same thing per task: which agent, which model. If it says
+"no agent", the task needs a `project:` or that project needs a `repo:`.
+
+## The guard
+
+`scripts/guard.py` runs as a `PreToolUse` hook on every Bash, Read, Edit and
+Write. It exits 2 — blocking the call — for force pushes, pushes to `main`,
+branch deletion, `reset --hard`, history rewriting, anything touching secrets,
+deploys and paid CLIs, and repository deletion or visibility changes.
+
+It is a `command` hook for the same reason autosave is: zero tokens, and it
+binds every agent in the repo whether or not it read its own prompt. Prompt
+rules are requests; this is a wall.
+
+Keep it narrow. It deliberately does not fire on ordinary git, tests or builds —
+a guard that blocks safe work gets switched off, and a switched-off guard
+protects nothing. If you add a rule, add a test to `scripts/test_guard.py` on
+both sides: what it blocks and what it must keep allowing.
+
 ## Autosave
 
 `.claude/settings.json` runs `scripts/autosave.sh` on every Stop and SessionEnd:

@@ -294,10 +294,44 @@ def render_projects(projects):
 TASK_ORDER = {"doing": 0, "ready": 1, "blocked": 2, "inbox": 3, "done": 4}
 
 
-def render_tasks(tasks):
+def task_plans(tasks, projects):
+    """Which agent and model each task goes to, as a rendered fragment.
+
+    Imported lazily and defensively: the board is the one thing that must build
+    even when the rest is mid-surgery. No dispatch module, no column, no crash.
+    """
+    try:
+        import importlib.util
+
+        spec = importlib.util.spec_from_file_location("dispatch", ROOT / "scripts" / "dispatch.py")
+        dispatch = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(dispatch)
+        routing = dispatch.read_routing()
+    except Exception:
+        return {}
+
+    by_slug = {meta["slug"]: meta for meta, _ in projects}
+    plans = {}
+    for meta, _ in tasks:
+        plan = dispatch.dispatch(meta, by_slug.get((meta.get("project") or "").strip()), routing)
+        if plan["kind"] is None:
+            continue
+        if plan["agent"]:
+            plans[meta["slug"]] = (
+                f'<span class="task-agent">{escape(plan["agent"])}'
+                f' &middot; {escape(plan["model"])}</span>'
+            )
+        else:
+            plans[meta["slug"]] = '<span class="task-agent unassigned">no agent</span>'
+    return plans
+
+
+def render_tasks(tasks, projects=None):
     live = [t for t in tasks if t[0].get("status", "").lower() != "done"]
     if not live:
         return "<p class='empty'>Queue is empty. Add a file to <code>tasks/</code>.</p>"
+
+    plans = task_plans(live, projects or [])
 
     def sort_key(doc):
         meta = doc[0]
@@ -319,7 +353,8 @@ def render_tasks(tasks):
             <h4>{rich(meta.get("title") or meta["slug"])}</h4>
             <p>{rich(done_means) if done_means else "&mdash;"}</p>
           </div>
-          <span class="task-meta mono">{escape(project)}<br>{escape(meta.get("effort", ""))}</span>
+          <span class="task-meta mono">{escape(project)}<br>{escape(meta.get("effort", ""))}
+            <br>{plans.get(meta["slug"], "")}</span>
         </li>""")
     counts = {}
     for meta, _ in live:
@@ -554,6 +589,8 @@ body{
 .task h4{margin:0; font-size:.98rem; font-weight:600;}
 .task p{margin:3px 0 0; color:var(--muted); font-size:.88rem;}
 .task-meta{color:var(--muted); text-align:right; line-height:1.5;}
+.task-agent{color:var(--accent-ink); font-size:.72rem;}
+.task-agent.unassigned{color:var(--warn); opacity:.85;}
 .queue-sum{margin:8px 0 0; text-align:right;}
 
 .no-preview{margin:10px 0 0; color:var(--muted); opacity:.75;}
@@ -663,7 +700,7 @@ def build():
         <span class="mono dim">tasks/</span>
       </span>
     </div>
-    {render_tasks(tasks)}
+    {render_tasks(tasks, projects)}
   </section>
 
   <section>

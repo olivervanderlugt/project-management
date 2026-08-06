@@ -47,25 +47,13 @@ MODEL_ALIAS = {
 }
 
 
-def read_routing(path=None):
-    """The routing table as {kind: {model, effort, cap, what}}.
+_dispatch_spec = importlib.util.spec_from_file_location("dispatch", ROOT / "scripts" / "dispatch.py")
+_dispatch = importlib.util.module_from_spec(_dispatch_spec)
+_dispatch_spec.loader.exec_module(_dispatch)
 
-    Two levels, two spaces of indent, `key: value` only — the same deliberately
-    small shape as the frontmatter contract. No YAML dependency.
-    """
-    path = path or ROUTING
-    table = {}
-    current = None
-    for raw in path.read_text(encoding="utf-8").splitlines():
-        if not raw.strip() or raw.lstrip().startswith("#"):
-            continue
-        if not raw.startswith(" "):
-            current = raw.split(":", 1)[0].strip()
-            table[current] = {}
-        elif current:
-            key, _, value = raw.strip().partition(":")
-            table[current][key.strip()] = value.strip()
-    return table
+# One parser for routing.yml, in scripts/dispatch.py. Re-exported here because
+# the generator, the board and the brief must never disagree about the table.
+read_routing = _dispatch.read_routing
 
 
 def projects_with_repos(root=None):
