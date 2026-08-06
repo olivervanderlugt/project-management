@@ -118,6 +118,43 @@ The Hangar indexes Ollie's GitHub repos; it does not contain them.
   the matching `projects/<slug>.md` with its `repo:` field set, and rebuild.
   Ask before making anything public.
 
+## Capture, then build
+
+When Ollie shares feedback, an idea or a complaint about any project, write it
+down **immediately** as a file in `tasks/` with `status: inbox`. Do this before
+discussing it, and do not ask permission — capture is free and losing it is the
+only real failure.
+
+Building is a separate decision. Do not start work because something was
+mentioned; work when he says so, or when a task is `ready` and the overnight run
+picks it up.
+
+Promoting `inbox` → `ready` means writing a real `## Done means`. If you cannot
+state the finish line concretely, the task stays `inbox`. That line is what
+keeps the overnight run from producing work that gets thrown away.
+
+## Overnight runs
+
+A Routine fires nightly and works the queue in `tasks/`. The rules are not
+suggestions — they exist because nobody is awake to catch a mistake:
+
+1. **One task per night.** Highest `ready` task, oldest first. Not the whole
+   queue — the limit is Ollie's usage budget, not the machine.
+2. **`ready` only.** An `inbox` task gets investigated and sharpened into a
+   proposal. Never built.
+3. **Its own branch, then a PR.** Never commit to `main`, never to a branch
+   Ollie is working on. Record the branch in the task's `branch:` field.
+4. **Tests must pass.** If the project has tests, run them. Red means: do not
+   push code, write down what broke, set the task to `blocked`.
+5. **Stop at three open overnight PRs.** Review debt compounds. At the limit,
+   skip building and spend the night sharpening `inbox` tasks instead.
+6. **Never touch credentials, deploys or anything that costs money.**
+7. **Leave a trail.** Every night writes to `planning/night-log.md`: what it
+   did, what it refused to do, and why.
+
+If a task turns out to be bigger or vaguer than it looked, stop and rewrite it
+as two smaller `ready` tasks. Half-finished code is worse than none.
+
 ## Autosave
 
 `.claude/settings.json` runs `scripts/autosave.sh` on every Stop and SessionEnd:

@@ -120,6 +120,20 @@ body{
 .act:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 .act.copied{border-color:var(--good); color:var(--good);}
 
+.tasks{list-style:none; margin:0; padding:0; background:var(--rack);
+  border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
+.task{display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:baseline;
+  background:var(--surface); padding:12px 16px;}
+.task-state{text-transform:uppercase; letter-spacing:.1em; font-size:.62rem;
+  min-width:56px; color:var(--muted);}
+.task[data-status="ready"] .task-state{color:var(--accent-ink);}
+.task[data-status="doing"] .task-state{color:var(--good);}
+.task[data-status="blocked"] .task-state{color:var(--crit);}
+.task h4{margin:0; font-size:.98rem; font-weight:600;}
+.task p{margin:3px 0 0; color:var(--muted); font-size:.88rem;}
+.task-meta{color:var(--muted); text-align:right; line-height:1.5;}
+.queue-sum{margin:8px 0 0; text-align:right;}
+
 .no-preview{margin:10px 0 0; color:var(--muted); opacity:.75;}
 .preview{margin-top:10px;}
 .preview summary{
@@ -230,6 +244,38 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
       <p class="now-focus">Give Learn and Percentile a real next action</p>
       <ol class='now-list'><li>Decide the next action on Learn and on Percentile — both are flagged red</li><li>Say what Quizzly and Crew management were meant to be, or delete the repos</li><li>Dump the ideas currently living in my head into <code>ideas/</code></li></ol>
     </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Queue</h2>
+      <span class="mono dim">tasks/</span>
+    </div>
+    <ul class="tasks">
+        <li class="task" data-status="ready">
+          <span class="task-state mono">ready</span>
+          <div class="task-body">
+            <h4>Generate the weekly review from what actually changed</h4>
+            <p>A script reads the commit history of every repo listed in a project&#x27;s <code>repo:</code> field since the last weekly file, and writes <code>planning/weekly/YYYY-Www.md</code> with Wins filled in from real commits. Slips and Next week stay empty for Ollie.</p>
+          </div>
+          <span class="task-meta mono">hangar<br>M</span>
+        </li>
+        <li class="task" data-status="ready">
+          <span class="task-state mono">ready</span>
+          <div class="task-body">
+            <h4>Put Learn online so it has a live preview</h4>
+            <p><code>olivervanderlugt/learning-website</code> builds and deploys to GitHub Pages on every push to its default branch, the site loads and the skill tree is usable, and <code>projects/learning-website.md</code> in the Hangar has a working <code>preview:</code> URL.</p>
+          </div>
+          <span class="task-meta mono">learning-website<br>S</span>
+        </li>
+        <li class="task" data-status="inbox">
+          <span class="task-state mono">inbox</span>
+          <div class="task-body">
+            <h4>Work out which two fixes made things worse in Percentile</h4>
+            <p>Not writable yet — that is why this is <code>inbox</code> and not <code>ready</code>.</p>
+          </div>
+          <span class="task-meta mono">percentile<br>M</span>
+        </li></ul><p class="mono dim queue-sum">1 inbox &middot; 2 ready</p>
+  </section>
 
   <section>
     <div class="section-head">

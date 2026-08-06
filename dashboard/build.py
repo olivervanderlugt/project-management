@@ -285,6 +285,44 @@ def render_projects(projects):
     return f'<div class="rack">{"".join(rows)}</div>'
 
 
+TASK_ORDER = {"doing": 0, "ready": 1, "blocked": 2, "inbox": 3, "done": 4}
+
+
+def render_tasks(tasks):
+    live = [t for t in tasks if t[0].get("status", "").lower() != "done"]
+    if not live:
+        return "<p class='empty'>Queue is empty. Add a file to <code>tasks/</code>.</p>"
+
+    def sort_key(doc):
+        meta = doc[0]
+        return (
+            TASK_ORDER.get(meta.get("status", "").lower(), 9),
+            meta.get("project", ""),
+            meta.get("title", meta["slug"]).lower(),
+        )
+
+    rows = []
+    for meta, body in sorted(live, key=sort_key):
+        status = meta.get("status", "inbox").lower()
+        project = meta.get("project", "")
+        done_means = prose(body, "Done means")
+        rows.append(f"""
+        <li class="task" data-status="{escape(status)}">
+          <span class="task-state mono">{escape(status)}</span>
+          <div class="task-body">
+            <h4>{rich(meta.get("title") or meta["slug"])}</h4>
+            <p>{rich(done_means) if done_means else "&mdash;"}</p>
+          </div>
+          <span class="task-meta mono">{escape(project)}<br>{escape(meta.get("effort", ""))}</span>
+        </li>""")
+    counts = {}
+    for meta, _ in live:
+        key = meta.get("status", "inbox").lower()
+        counts[key] = counts.get(key, 0) + 1
+    summary = " &middot; ".join(f"{n} {escape(k)}" for k, n in sorted(counts.items()))
+    return f'<ul class="tasks">{"".join(rows)}</ul><p class="mono dim queue-sum">{summary}</p>'
+
+
 def render_ideas(ideas):
     if not ideas:
         return "<p class='empty'>Nothing parked yet. Add a file to <code>ideas/</code>.</p>"
@@ -497,6 +535,20 @@ body{
 .act:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 .act.copied{border-color:var(--good); color:var(--good);}
 
+.tasks{list-style:none; margin:0; padding:0; background:var(--rack);
+  border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
+.task{display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:baseline;
+  background:var(--surface); padding:12px 16px;}
+.task-state{text-transform:uppercase; letter-spacing:.1em; font-size:.62rem;
+  min-width:56px; color:var(--muted);}
+.task[data-status="ready"] .task-state{color:var(--accent-ink);}
+.task[data-status="doing"] .task-state{color:var(--good);}
+.task[data-status="blocked"] .task-state{color:var(--crit);}
+.task h4{margin:0; font-size:.98rem; font-weight:600;}
+.task p{margin:3px 0 0; color:var(--muted); font-size:.88rem;}
+.task-meta{color:var(--muted); text-align:right; line-height:1.5;}
+.queue-sum{margin:8px 0 0; text-align:right;}
+
 .no-preview{margin:10px 0 0; color:var(--muted); opacity:.75;}
 .preview{margin-top:10px;}
 .preview summary{
@@ -576,6 +628,7 @@ def build():
     projects = read_dir("projects")
     ideas = read_dir("ideas")
     decisions = read_dir("decisions")
+    tasks = read_dir("tasks")
 
     html = f"""<title>The Hangar</title>
 <style>{CSS}</style>
@@ -594,6 +647,14 @@ def build():
   <div class="counters">{render_counters(projects, ideas, decisions)}</div>
 
   {render_now(now_meta, now_body)}
+
+  <section>
+    <div class="section-head">
+      <h2>Queue</h2>
+      <span class="mono dim">tasks/</span>
+    </div>
+    {render_tasks(tasks)}
+  </section>
 
   <section>
     <div class="section-head">
@@ -664,7 +725,7 @@ document.querySelectorAll(".act[data-prompt]").forEach(function (button) {{
     OUT.write_text(html, encoding="utf-8")
     print(f"built {OUT.relative_to(ROOT)}")
     print(
-        f"  {len(projects)} projects  {len(ideas)} ideas  "
+        f"  {len(tasks)} tasks  {len(projects)} projects  {len(ideas)} ideas  "
         f"{len(decisions)} decisions  {len(weeks)} weekly reviews"
     )
 
