@@ -1,7 +1,7 @@
 ---
 title: The Hangar
 status: active
-next: Set a next action on Learn and Percentile
+next: Get a green Pages deploy and fill preview with the live board URL
 due:
 started: 2026-08-06
 repo: olivervanderlugt/project-management
@@ -31,8 +31,10 @@ Unavailable`) and the rest were cancelled by the concurrency group before they
 finished. `preview:` is therefore blank — an honest blank beats a link that
 404s. Fill it in once a run is green and the URL actually loads.
 
-Two active projects are sitting there with no next action, which is the point of
-the red flag and the thing to fix first.
+The two active projects that sat there with no next action both got one on
+2026-08-06 (Learn: merge the parked A+B branches; Percentile: F-8 from the
+privacy audit), which clears the red flags and moves the Pages deploy to the
+front of the queue.
 
 ## Still to build
 
