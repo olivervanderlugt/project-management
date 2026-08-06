@@ -1,10 +1,11 @@
 ---
 title: Learn — personal learning app
 status: active
-next:
+next: Merge the two parked worktree branches (math-calculus-4/-5 + dev-tooling/applied-software) into main and re-run the full quality gate
 due:
-started:
+started: 2026-07-05
 repo: olivervanderlugt/learning-website
+preview:
 stack: Vite, React, TypeScript, Tailwind v4, zustand, xyflow
 tags: learning, robotics, frontend
 ---
@@ -20,16 +21,32 @@ No backend and no router, by design. State is one versioned localStorage blob.
 
 ## Where it stands
 
-Imported from the repo on 2026-08-06, not from memory — everything here is read off the
-code.
+Re-read from the repo on 2026-08-06 evening.
 
-Components exist for the skill tree, lesson player, gate sandbox, cumulative review flow,
-review queue, progress and skills panels, and achievement toasts. `docs/` holds three
-rounds of curriculum gap analysis plus an employability-skills coverage note. Last commit
-was 2026-07-27.
+~123 playable lesson nodes across 16 domains, each with a module exam. The ranked Phase 1–3
+depth backlog is complete; the map checker reports zero crossings in both view tiers. PR #1
+(merged 2026-08-06) added a GitHub Pages deploy workflow — first run (triggered the same
+evening) built fine but failed at "Setup Pages": Pages is not enabled on the repo. One
+click from Ollie fixes it: repo Settings → Pages → Source: "GitHub Actions", then re-run
+the workflow. Preview stays blank until that deploy is green.
+
+Two finished content streams from 2026-07-22 are parked on remote branches, built and
+committed but never merged (the merge was interrupted mid-session):
+
+- `worktree-agent-ac1417f092bc06180` (4591cb6) — math-calculus-4/-5 chain, math-exam 34→38
+- `worktree-agent-a712044fc679120af` (1a23b90) — dev-tooling chain (bash/git), new
+  `applied-software` domain + exam
+
+The merge plan is written out in the repo's CLAUDE.md under "CURRENT STATE": merge both,
+resolve curriculum.ts conflicts, then build + validator + map checker in both tiers +
+browser-verify before committing. That is the next action — it unblocks two done chains
+and closes the git/bash employability-skill gaps.
 
 ## Open questions
 
-- No next action set. This came from git, not from your head — you have to decide it.
-- Three versions of the gap analysis suggests the curriculum scope kept moving. Is it
-  settled now?
+- Curriculum scope (three gap-analysis docs): settled for now — the ranked Phase 1–3 depth
+  backlog is done and CLAUDE.md names the open frontiers (Phase 2/4 leftovers, Stage 2
+  rigor, Stage 3 labs, Phase-5 Tier-2 chains). Direction is chosen per session, one chain
+  at a time.
+- After the parked merge: next content call is math-stats follow-ups vs Phase-5 Tier-2
+  (OOP/Java, C#, backend) — ordering still open, Ollie's call.
