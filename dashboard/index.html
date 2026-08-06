@@ -255,6 +255,14 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
       </span>
     </div>
     <ul class="tasks">
+        <li class="task" data-status="doing">
+          <span class="task-state mono">doing</span>
+          <div class="task-body">
+            <h4>Zelflerende Hangar: incidenten worden lessen, lessen landen in elke agent</h4>
+            <p>- <code>lessons/</code> bestaat met een <code>_template.md</code> (plat frontmatter, zelfde contract als de rest) en één echte les: <code>0001-*.md</code> over het workflow-dispatch-incident van 2026-08-06. - <code>scripts/gen_agents.py</code> leest <code>lessons/*.md</code> en injecteert elke les met <code>status: active</code> in de gegenereerde agentbestanden, gefilterd op <code>scope</code> (builders, checker, manager, all, of een project-slug). Bestanden die met <code>_</code> beginnen worden overgeslagen. - Na <code>python3 scripts/gen_agents.py</code> staat de tekst van les 0001 letterlijk in elke builder-agent in <code>.claude/agents/</code>. Handgeschreven agentbestanden blijven onaangeraakt. - CLAUDE.md beschrijft de loop: incident in het night-log → les in <code>lessons/</code> → generator draaien. Eén alinea, geen essay. - <code>python3 dashboard/build.py</code> en <code>python3 scripts/gen_agents.py</code> draaien zonder fouten en zijn idempotent: een tweede run verandert niets.</p>
+          </div>
+          <span class="task-meta mono">hangar<br>S</span>
+        </li>
         <li class="task" data-status="ready">
           <span class="task-state mono">ready</span>
           <div class="task-body">
@@ -302,7 +310,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p>Nog niet schrijfbaar — daarom <code>inbox</code>.</p>
           </div>
           <span class="task-meta mono">versa<br>M</span>
-        </li></ul><p class="mono dim queue-sum">1 blocked &middot; 4 inbox &middot; 1 ready</p>
+        </li></ul><p class="mono dim queue-sum">1 blocked &middot; 1 doing &middot; 4 inbox &middot; 1 ready</p>
   </section>
 
   <section>

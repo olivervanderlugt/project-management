@@ -76,7 +76,56 @@ def projects_with_repos(root=None):
     return [(meta, body) for meta, body in docs if meta.get("repo")]
 
 
-def builder_agent(meta, routing):
+def active_lessons(root=None):
+    """Every `lessons/*.md` with `status: active`, as (meta, body). `_`-files skipped by read_dir."""
+    if root is not None:
+        _build.ROOT = root
+    docs = _build.read_dir("lessons")
+    return [
+        (meta, body)
+        for meta, body in docs
+        if meta.get("status", "").strip().lower() == "active"
+    ]
+
+
+def _lesson_applies(scope, targets):
+    """A lesson's flat `scope:` value matches a generated agent's audience.
+
+    `targets` is the set of scope values this particular agent answers to: a
+    builder answers to `builders` and its own project slug, the checker to
+    `checker`, the manager to `manager`. `all` always matches.
+    """
+    scope = (scope or "").strip()
+    return scope == "all" or scope in targets
+
+
+def lessons_block(lessons, targets):
+    """The '## Geleerde lessen' section for one agent, or "" if nothing applies.
+
+    Each lesson's `## Rule` text is injected literally, one bullet per lesson,
+    so the rule reads the same here as it does in `lessons/`.
+    """
+    applicable = [
+        (meta, body) for meta, body in lessons if _lesson_applies(meta.get("scope"), targets)
+    ]
+    if not applicable:
+        return ""
+    bullets = "\n".join(
+        f"- **{meta.get('title') or meta['slug']}** — {_build.prose(body, 'Rule')}"
+        for meta, body in applicable
+    )
+    return f"""
+
+## Geleerde lessen
+
+Vaste lessen uit eerdere incidenten. Ze gelden naast alles hierboven, niet in
+plaats ervan.
+
+{bullets}
+"""
+
+
+def builder_agent(meta, routing, lessons=()):
     slug = meta["slug"]
     repo = meta["repo"]
     title = meta.get("title") or slug
@@ -84,6 +133,7 @@ def builder_agent(meta, routing):
     build = routing.get("build_ml", {})
     model = MODEL_ALIAS.get(build.get("model", "opus"), "opus")
     stack_line = f"Its stack, as recorded in the Hangar: {stack}." if stack else ""
+    lessons_text = lessons_block(lessons, {"builders", slug})
 
     return f"""---
 name: {slug}
