@@ -118,6 +118,23 @@ The Hangar indexes Ollie's GitHub repos; it does not contain them.
   the matching `projects/<slug>.md` with its `repo:` field set, and rebuild.
   Ask before making anything public.
 
+## Autosave
+
+`.claude/settings.json` runs `scripts/autosave.sh` on every Stop and SessionEnd:
+rebuild, commit, push. Nothing is lost when Ollie closes the laptop mid-thought.
+
+It is a `command` hook on purpose — a shell script, so it costs zero tokens. Do
+not convert it to a `prompt` or `agent` hook; that would fire a model call every
+time a turn ends.
+
+It exits silently when nothing changed, refuses to run outside this repo, never
+force-pushes, and treats a failed push as a retry rather than an error. Keep
+those properties if you touch it.
+
+Autosave is a safety net, not a substitute for a real commit. Still write a
+proper message at the end of a session — `Autosave <timestamp>` says nothing
+about what changed.
+
 ## Hosting
 
 `.github/workflows/dashboard.yml` rebuilds the board and deploys it to GitHub
