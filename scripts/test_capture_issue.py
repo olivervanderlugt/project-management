@@ -253,5 +253,37 @@ class MainCli(unittest.TestCase):
                 capture_issue.TASKS_DIR = original_tasks_dir
 
 
+class IsCaptureForm(unittest.TestCase):
+    def test_form_submission_is_recognised(self):
+        self.assertTrue(capture_issue.is_capture_form(REALISTIC_BODY))
+        self.assertTrue(capture_issue.is_capture_form(EMPTY_OPTIONALS_BODY))
+
+    def test_hand_written_issue_is_not(self):
+        self.assertFalse(capture_issue.is_capture_form("Even een idee: donkere modus?"))
+        self.assertFalse(capture_issue.is_capture_form(""))
+        self.assertFalse(capture_issue.is_capture_form(None))
+
+    def test_other_headings_do_not_count(self):
+        self.assertFalse(capture_issue.is_capture_form("### Stappen\n\n1. open de app"))
+
+    def test_main_writes_nothing_for_a_hand_written_issue(self):
+        import contextlib
+        import io
+
+        with tempfile.TemporaryDirectory() as tmp:
+            tasks_dir = Path(tmp)
+            original_tasks_dir = capture_issue.TASKS_DIR
+            capture_issue.TASKS_DIR = tasks_dir
+            try:
+                out = io.StringIO()
+                with contextlib.redirect_stdout(out):
+                    rc = capture_issue.main(["99", "Zomaar een issue", "geen formulier", ""])
+                self.assertEqual(rc, 0)
+                self.assertIn("status=skipped", out.getvalue().splitlines())
+                self.assertEqual(list(tasks_dir.glob("*.md")), [])
+            finally:
+                capture_issue.TASKS_DIR = original_tasks_dir
+
+
 if __name__ == "__main__":
     unittest.main()

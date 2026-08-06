@@ -14,7 +14,10 @@ permissions:
 
 jobs:
   capture:
-    if: contains(github.event.issue.labels.*.name, 'capture')
+    # Deliberately not gated on a `capture` label: a label that does not exist
+    # in the repo is never applied, and the job would then silently never run.
+    # capture_issue.py decides from the body whether this is a form submission
+    # and exits with status=skipped if it is not.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

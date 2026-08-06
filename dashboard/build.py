@@ -22,6 +22,12 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "dashboard" / "index.html"
 TODAY = date.today()
 
+# The board is read-only, but capture has to work from a phone: this opens the
+# issue form that scripts/capture_issue.py turns into a tasks/ file.
+CAPTURE_URL = (
+    "https://github.com/olivervanderlugt/project-management/issues/new?template=vangen.yml"
+)
+
 PROJECT_ORDER = {"active": 0, "paused": 1, "parked": 2, "shipped": 3}
 VERDICT_TONE = {
     "promising": "accent",
@@ -501,6 +507,7 @@ body{
 .section-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
   border-bottom:1px solid var(--hair); padding-bottom:8px; margin-bottom:14px;}
 .section-head h2{margin:0; font-size:1rem; font-weight:600; letter-spacing:.01em;}
+.section-actions{display:flex; align-items:baseline; gap:12px;}
 
 /* project rack */
 .rack{background:var(--rack); border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
@@ -651,7 +658,10 @@ def build():
   <section>
     <div class="section-head">
       <h2>Queue</h2>
-      <span class="mono dim">tasks/</span>
+      <span class="section-actions">
+        <a class="act" href="{CAPTURE_URL}" target="_blank" rel="noopener">+ vangen</a>
+        <span class="mono dim">tasks/</span>
+      </span>
     </div>
     {render_tasks(tasks)}
   </section>

@@ -92,6 +92,18 @@ def field(fields, label, default=""):
     return "" if value == NO_RESPONSE else value
 
 
+def is_capture_form(body):
+    """True if this issue body came from the Vangen form.
+
+    The workflow used to gate on a `capture` label, which fails silently when
+    the label does not exist in the repo: no label, no run, no error. The body
+    is the honest signal — a form submission always renders its field labels as
+    "### " headings.
+    """
+    fields = parse_form_body(body)
+    return LABEL_SUMMARY in fields
+
+
 # ---------------------------------------------------------------------- slug
 
 
@@ -214,6 +226,12 @@ def main(argv=None):
     if not issue_number:
         print("error: no ISSUE_NUMBER (env or argv[0])", file=sys.stderr)
         return 1
+
+    if not is_capture_form(issue_body):
+        print(f"skipped: issue #{issue_number} is not a Vangen form submission")
+        print("status=skipped")
+        print("path=")
+        return 0
 
     path, written = write_task(issue_number, issue_title, issue_body, issue_url)
     rel = path.relative_to(ROOT) if path.is_relative_to(ROOT) else path
