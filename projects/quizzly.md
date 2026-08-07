@@ -1,7 +1,7 @@
 ---
 title: Quizzly
 status: active
-next: Deploy (Fly/Railway/VPS) and play one real game over phones
+next: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo
 due:
 started: 2026-07-27
 repo: olivervanderlugt/quizzly
@@ -67,10 +67,19 @@ hand-written question faces (the landing page had promised export since day
 one; it didn't exist), plus a **search box on Discover**. Merged the same day — `main` is at
 `cff0040`; CI runs on the push.
 
-Never deployed, never played with real people. That is the gap between "the
-code is done" and "this is a thing", and it is what `next` points at. None of
-the remaining gaps blocks a private game with friends; the full list is
-`SECURITY.md`, *Known limitations*.
+2026-08-07, evening: **finalized for launch** — task `quizzly-finalisatie`,
+**PR #1**, branch `claude/quizzly-finalization`, version 1.0.0. Password reset
+(optional SMTP, degrades like AI), change-password, GDPR Art. 15 export, age
+gate, `DATA_RETENTION_DAYS` sweep, deliberate robots.txt, the realtime
+socket-e2e suite the docs had always claimed (72 unit + 8 integration tests,
+CI runs them against a Postgres service and builds the Docker image),
+`fly.toml` ready, SECURITY/LEGAL doc drift fixed, and a compose bug found and
+fixed (Docker 29+ choked on the unquoted secret guards). What only Ollie can
+do — hosting account, SMTP credentials, legal placeholders, domain, backups —
+is one ordered list in `docs/LAUNCH-CHECKLIST.md`.
+
+Never deployed, never played with real people. Merging PR #1 and walking the
+launch checklist is all that remains between the code and a live site.
 
 ## Open questions
 

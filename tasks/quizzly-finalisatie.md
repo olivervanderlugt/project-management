@@ -1,7 +1,7 @@
 ---
 title: Quizzly: finaliseren voor launch — alles behalve de handmatige stappen
 project: quizzly
-status: doing
+status: done
 added: 2026-08-07
 effort: L
 branch: claude/quizzly-finalization
@@ -30,28 +30,28 @@ SMTP-provider, juridische gegevens, domein). Mergen doet Ollie.
 
 ## Notes
 
-**Stand 2026-08-07 (gepauzeerd op Ollie's verzoek, "pause and save"):**
+**Afgerond 2026-08-07.** Alle vijf punten gebouwd en geverifieerd:
+**PR #1** op `olivervanderlugt/quizzly`, vijf commits, eindigend met een
+compose-fix die tijdens het testen boven kwam (Docker 29+ weigert de
+ongequote `: ` in de secret-guards — `docker compose up` was stuk op
+nieuwe machines). Versie 1.0.0, één additieve migratie
+(`PasswordResetToken`).
 
-- Lokale clone: `~/Claude/quizzly`, branch `claude/quizzly-finalization`
-  (gepusht). Eerste commit: env-oppervlak voor SMTP/EMAIL_FROM/
-  DATA_RETENTION_DAYS + `emailConfigured`-vlag. Trio groen.
-- Dev-Postgres: container `quizzly-dev-pg` op poort 5433 (user/pass/db
-  `quizzly`), nu gestopt — `docker start quizzly-dev-pg` om te hervatten.
-  Nog geen migraties gedraaid.
-- Nog te bouwen, in volgorde: `PasswordResetToken`-model + migratie
-  (via dev-pg op 5433), `src/lib/email.ts` (nodemailer, `server-only`),
-  `src/lib/password-reset.ts` (db-gebonden, testbaar zonder `server-only`),
-  acties + pagina's `/forgot-password` en `/reset-password`, wachtwoord
-  wijzigen in settings, dan punten 2–5 hierboven.
-- Ontwerpkeuzes al genomen: token = `generateSessionToken` +
-  `hashSessionToken` (zelfde patroon als Session, alleen hash in db),
-  30 min geldig, single-use, reset verwijdert alle sessies en stuurt naar
-  `/login?reset=done`; e-mailverzending fire-and-forget zodat timing geen
-  account-bestaan lekt; rate limit 3/uur per IP én per e-mail.
-- Belangrijk gevonden feit: `main` en `claude/quizzly-assessment-hli9uv`
-  wijzen beide naar `cff0040` — er stond niets meer te mergen; de
-  "awaiting merge" in het projectbestand was al opgelost.
-- Handmatig voor Ollie (komt in het eindrapport): hostingkeuze + account
-  (Fly/Railway/VPS), SMTP-provider + credentials, `[BRACKETED]`-velden in
-  privacy/terms + SECURITY.md-contact, eventueel domein en
-  `ANTHROPIC_API_KEY`.
+Bewijs: 72 unit- + 8 integratietests groen (6× achtereen, geen flake),
+trio groen, `docker compose up --build` boot met beide migraties, alle
+publieke routes 200, boot-log meldt per optionele feature de status,
+half-geconfigureerde SMTP weigert te booten. De socket-e2e bewijst:
+host-auth (cookie + eigenaarschap), scheldnaam geweigerd, volledig spel
+met scoring, geen correct-antwoord in speler-payload, resultaat in
+Postgres.
+
+Handmatig voor Ollie — volledig uitgeschreven in `docs/LAUNCH-CHECKLIST.md`
+in de repo: hostingkeuze (Railway/Fly/VPS; `fly.toml` ligt klaar) +
+account, SMTP-provider voor password reset (optioneel), `[BRACKETED]`-
+velden in privacy/terms + SECURITY.md-contact, domein, backups + één
+restore-test, en de 10-minuten-rooktest na deploy. Mergen van PR #1 doet
+Ollie; daarna is deployen de enige stap tussen code en launch.
+
+Lokale clone: `~/Claude/quizzly`. Dev-Postgres voor `npm run test:e2e`:
+container `quizzly-dev-pg`, poort 5433 (draait; `docker stop` mag —
+instructies staan in `vitest.e2e.config.ts`).
