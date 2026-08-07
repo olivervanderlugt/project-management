@@ -1,7 +1,7 @@
 ---
 title: Learn — personal learning app
 status: active
-next: "Decide the next chain: C#/.NET (smallest) vs backend/APIs vs OOP+Java — see learning-website CLAUDE.md 'Next items'"
+next: "Next chain, Ollie's call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data & BI vs db-depth — see learning-website CLAUDE.md 'Next items'"
 due:
 started: 2026-07-05
 repo: olivervanderlugt/learning-website
@@ -21,24 +21,22 @@ No backend and no router, by design. State is one versioned localStorage blob.
 
 ## Where it stands
 
-Streams A+B merged to main on 2026-08-07 (PR #2, merge commit 4731d77): the two parked
-worktree branches landed as merges bfaefc6 (stream A, math-calculus-4/-5 chain, math-exam
-34→38) and d19b45e (stream B, dev-tooling chain bash/git + new `applied-software` domain
-and exam). 130 playable lesson nodes across 17 domains, each with a module exam. Gate
-green: build clean, map checker zero crossings in both view tiers, content validator green
-on all 130 lessons (headless + in-browser), math-calculus-4 browser-played end-to-end.
+The backend & APIs chain landed on main 2026-08-07 (Opus built, Fable gate-verified,
+deploy green): web-http → web-server → web-api extending the `applied-software` domain,
+tools-exam grown 10→14. That closes the whole web-and-apis skill family — employability
+coverage is now 19 covered / 6 partial / 21 gap of 46. **133 playable lesson nodes across
+17 domains**, each with a module exam. Gate green: build clean, map checker zero crossings
+in both view tiers, content validator green on all 133 lessons (headless + in-browser),
+web-http browser-played end-to-end (code screen live-run, 5/5 quiz, mastered +100 XP).
 
-GitHub Pages deploy is LIVE: Pages is enabled (Source: GitHub Actions), the deploy
-workflow ran green on the merge to main, and
-https://olivervanderlugt.github.io/learning-website/ serves the freshly-merged build
-(browser-verified — the new Applied Software Engineering domain shows on the map). Every
-future push to main auto-deploys.
+GitHub Pages deploy is LIVE and auto-runs on every push to main:
+https://olivervanderlugt.github.io/learning-website/ serves the freshly-merged build.
 
 ## Open questions
 
 - Curriculum scope (three gap-analysis docs): settled for now — the ranked Phase 1–3 depth
-  backlog is done and CLAUDE.md names the open frontiers (Phase 2/4 leftovers, Stage 2
+  backlog is done and CLAUDE.md names the open frontiers (Phase 4 leftovers, Stage 2
   rigor, Stage 3 labs, Phase-5 Tier-2 chains). Direction is chosen per session, one chain
   at a time.
-- After the parked merge: next content call is math-stats follow-ups vs Phase-5 Tier-2
-  (OOP/Java, C#, backend) — ordering still open, Ollie's call.
+- Next content call after backend & APIs: C#/.NET vs OOP+Java vs data & BI vs db-depth —
+  ordering still open, Ollie's call (CLAUDE.md leans C#/.NET as smallest and cleanest).
