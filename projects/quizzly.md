@@ -1,7 +1,7 @@
 ---
 title: Quizzly
 status: active
-next: Pick a host (Fly/Railway/VPS), deploy it, and play one real game over phones
+next: Merge claude/quizzly-assessment-hli9uv (public quizzes + autosave), then deploy and play one real game
 due:
 started: 2026-07-27
 repo: olivervanderlugt/quizzly
@@ -34,6 +34,16 @@ as an independent check, the exact trio CI runs (`npm run typecheck && npm
 test && npm run build`) was run locally on a fresh `npm ci` of `main` and came
 back green, 53 tests passing. The code is verified; the Actions tab just
 doesn't show it yet.
+
+2026-08-07: two features Ollie asked for landed on branch
+`claude/quizzly-assessment-hli9uv` (commit `9af5d78`, trio green locally,
+no migration needed): **public quizzes** — a Sharing toggle in the editor, a
+public `/discover` page, host-someone-else's-quiz and save-a-copy, with
+public restricted to solo quizzes at every layer so the blind group-quiz
+promise stays intact — and **editor autosave** for questions, theme and game
+rules, with a debounce, a status line, and a fix for a latent bug where
+added or reordered questions didn't show up without a reload. Review and
+merge it into `main`; that's the first half of `next`.
 
 Never deployed, never played with real people. That is the gap between "the
 code is done" and "this is a thing", and it is what `next` points at. The
