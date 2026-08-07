@@ -45,16 +45,18 @@ rules, with a debounce, a status line, and a fix for a latent bug where
 added or reordered questions didn't show up without a reload. Review and
 merge it into `main`; that's the first half of `next`.
 
-Never deployed, never played with real people. That is the gap between "the
-code is done" and "this is a thing", and it is what `next` points at. The
-README and docs still describe the pre-extraction layout (a `percentile/`
-subdirectory that no longer exists); captured as the `ready` task
-`quizzly-extractie-opruimen`.
+Same branch, commit `04d76a7`: the nickname filter the schema had promised
+since day one (normalises leetspeak, blocks slurs as substrings, short terms
+only as whole names, English + Dutch, 9 tests), and the extraction cleanup —
+README describes the standalone repo, migration guide deleted. Task
+`quizzly-extractie-opruimen` is done. Of the repo's pre-public list only
+password reset (needs an email provider) and the legal-page placeholders
+(need real contact details) remain, and both need input only Ollie has.
 
-The repo's own pre-public list, in its stated priority order: password reset
-flow (needs an email provider), automatic nickname filter, and the
-`[BRACKETED]` placeholders in the privacy/terms pages. None of it blocks a
-private game with friends. Full gap list: `SECURITY.md`, *Known limitations*.
+Never deployed, never played with real people. That is the gap between "the
+code is done" and "this is a thing", and it is what `next` points at. None of
+the remaining gaps blocks a private game with friends; the full list is
+`SECURITY.md`, *Known limitations*.
 
 ## Open questions
 

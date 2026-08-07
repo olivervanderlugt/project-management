@@ -1,10 +1,10 @@
 ---
 title: Quizzly: extractie-restanten uit README en docs halen
 project: quizzly
-status: ready
+status: done
 added: 2026-08-06
 effort: S
-branch:
+branch: claude/quizzly-assessment-hli9uv
 ---
 
 ## Done means
@@ -18,6 +18,12 @@ projectbestand of naar taken, zodat ze niet met het document verdwijnen.
 `npm run typecheck && npm test && npm run build` blijft groen.
 
 ## Notes
+
+Gedaan op 2026-08-07, commit `04d76a7` op de branch hierboven: README
+beschrijft de standalone repo, migratiegids verwijderd, en van zijn drie
+prioriteiten is de nickname-filter meteen gebouwd (zelfde commit). Password
+reset en de legal-placeholders staan in `projects/quizzly.md` en `SECURITY.md`.
+Mergen van de branch sluit dit definitief af.
 
 De extractie is op 2026-08-06 gebeurd; README en docs beschrijven nog de oude
 situatie waarin Quizzly in `quizzly/` naast `percentile/` in de gedeelde
