@@ -1,7 +1,7 @@
 ---
 title: Work out which two fixes made things worse in Percentile
 project: percentile
-status: inbox
+status: done
 added: 2026-08-06
 effort: M
 branch:
@@ -14,6 +14,12 @@ Not writable yet — that is why this is `inbox` and not `ready`.
 The last commit in the old location said finding F-1 was confirmed fixed and
 that two of the fixes made things worse. Which two, and worse how, is not
 recorded anywhere I can read.
+
+**Resolved 2026-08-07.** The answer was in `docs/11-privacy-audit.md` all
+along: (1) `meanSensitivity` moved from per-contributor to per-row, worsening
+F-8; (2) count generalisation replaced exact counts but is deterministic and
+invertible, creating F-16. One `ready` task now exists per regression:
+`percentile-f8-one-value-per-workspace.md` and `percentile-f16-count-ladder.md`.
 
 ## Notes
 
