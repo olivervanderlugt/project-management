@@ -26,14 +26,13 @@ the evening. The app was built inside the shared `claude` repo starting
 intact: seven commits on `main`, ending with a fresh-machine Docker fix and a
 written-down verdict on three unreachable npm advisories.
 
-CI's first run on the extracted repo died in the same GitHub incident that
-killed the Hangar's Pages deploys (`Failed to resolve action download info`) —
-the code was never even checked out. A rerun was kicked off the same evening
-and was still sitting `queued` behind GitHub's backlog when this was written;
-as an independent check, the exact trio CI runs (`npm run typecheck && npm
-test && npm run build`) was run locally on a fresh `npm ci` of `main` and came
-back green, 53 tests passing. The code is verified; the Actions tab just
-doesn't show it yet.
+**CI is green on `main`.** The first run died in the 2026-08-06 GitHub
+incident and its rerun never left GitHub's queue, but the merge push on
+2026-08-07 triggered a fresh run against `04d76a7` — the full
+typecheck/test/build trio passed in 66 seconds, on the code that includes all
+the new features. The stuck rerun of the superseded commit refuses to cancel
+(GitHub 409) and can be ignored; it belongs to a commit that no longer heads
+the branch.
 
 2026-08-07: two features Ollie asked for landed on branch
 `claude/quizzly-assessment-hli9uv` (commit `9af5d78`, trio green locally,
