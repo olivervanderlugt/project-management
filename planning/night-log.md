@@ -8,6 +8,31 @@ pull requests to find out.
 
 ---
 
+## 2026-08-07 (dag, met Ollie) — weekly-review-automatic → done; Learn wacht op Pages
+
+**Gedaan:** `weekly-review-automatic` gebouwd (opus, plafond 150k) — nieuw
+`scripts/weekly_review.py`: leest elk `repo:`-veld uit `projects/`, haalt echte
+commits sinds het vorige weekbestand (ondiepe read-only clones) en vult Wins;
+Slips en Next week blijven van Ollie. Idempotent, 89 tests groen. Checker:
+`"ship":true` op alle vier regels, met een echte dry-run als bewijs.
+
+**Incident → les:** de eerste oplevering wiste twee handgeschreven Wins-regels
+van Ollie uit `2026-W32.md`. Teruggestuurd; het script bezit nu alleen regels
+met zijn eigen gegenereerde patroon en Ollie's regels zijn hersteld. Vastgelegd
+als `lessons/0002-own-only-your-generated-lines.md` (veiliger, effectiever) en
+via de generator in alle zes builders geïnjecteerd — de loop uit de vorige
+entry heeft zijn eerste echte les.
+
+**Plafonds, eerlijk gemeten:** de bouwer verbruikte ~106k + ~124k over twee
+rondes tegen een plafond van 150k — de correctieronde duwde het totaal
+eroverheen. Zelfrapportage ("spent") blijft lager dan de meting; plafond-
+bewaking is dus nog niet hard. Kandidaat voor een volgende taak.
+
+**Learn:** Ollie mergde PR #1 en dacht dat de site live was. Herstart van de
+deploy-run (poging 2, 09:00) faalde op hetzelfde punt: "Get Pages site failed:
+Not Found" — Pages staat op `learning-website` nog steeds uit. Bij Ollie
+gemeld met de exacte fix; taak blijft `blocked`.
+
 ## 2026-08-06 — learn-live-preview → blocked
 
 **Gekozen:** `learn-live-preview` (S, `ready`, sluit aan op de focus in
