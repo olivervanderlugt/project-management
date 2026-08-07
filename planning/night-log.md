@@ -17,9 +17,9 @@ pull requests to find out.
   which is the repo's default branch and another session's working branch.
 - Ruled out: the guard and autosave hooks. All guard tests pass and every
   command a nightrun would use is allowed.
-- Fix, same day: the Routine now fires into a dedicated persistent session
-  ("Hangar — nachtrun (vaste sessie)") with the repo attached and its own
-  outcome branch `claude/nightrun`; a live check confirmed it can push. The
-  broken trigger was disabled, not deleted. Project repos get attached at run
-  time via `add_repo`; if that fails during a run, the task goes to `blocked`
-  instead of being built.
+- Fix, same day: first patched via a dedicated persistent session with the repo
+  attached (a live check confirmed it could push to `claude/nightrun`), then
+  replaced by the real thing: Ollie recreated the Routine in the claude.ai UI
+  with all seven repos attached, so every run clones them with push access —
+  no runtime repo-attaching, no standing session. The temporary trigger and
+  session were removed, the broken trigger deleted. Next run: tonight 00:04 UTC.
