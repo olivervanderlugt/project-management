@@ -60,6 +60,13 @@ README describes the standalone repo, migration guide deleted. Task
 password reset (needs an email provider) and the legal-page placeholders
 (need real contact details) remain, and both need input only Ollie has.
 
+2026-08-07, continued building on the same branch (`cff0040`, trio green,
+72 tests): **quiz export/import** — any solo quiz downloads as a
+`.quizzly.json` file and imports back through the same validation a
+hand-written question faces (the landing page had promised export since day
+one; it didn't exist), plus a **search box on Discover**. Awaiting merge;
+Ollie merges by saying so.
+
 Never deployed, never played with real people. That is the gap between "the
 code is done" and "this is a thing", and it is what `next` points at. None of
 the remaining gaps blocks a private game with friends; the full list is
