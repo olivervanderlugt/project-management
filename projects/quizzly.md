@@ -1,7 +1,7 @@
 ---
 title: Quizzly
 status: active
-next: Merge claude/quizzly-assessment-hli9uv (public quizzes + autosave), then deploy and play one real game
+next: Deploy (Fly/Railway/VPS) and play one real game over phones
 due:
 started: 2026-07-27
 repo: olivervanderlugt/quizzly
@@ -44,6 +44,14 @@ promise stays intact — and **editor autosave** for questions, theme and game
 rules, with a debounce, a status line, and a fix for a latent bug where
 added or reordered questions didn't show up without a reload. Review and
 merge it into `main`; that's the first half of `next`.
+
+2026-08-07, later: **merged** — `main` fast-forwarded to `04d76a7`. And the app
+had its first real end-to-end play: booted from `main` against a live
+Postgres, seeded, and driven through a real browser — sign-in, Discover,
+autosave, sharing toggle, hosting, a nickname (`k4nker99`) blocked on join, a
+player joining from a phone-sized viewport and answering a live question over
+sockets. Ten screenshots delivered to Ollie as an HTML report. Not deployed
+yet by choice ("not hosting today").
 
 Same branch, commit `04d76a7`: the nickname filter the schema had promised
 since day one (normalises leetspeak, blocks slurs as substrings, short terms
