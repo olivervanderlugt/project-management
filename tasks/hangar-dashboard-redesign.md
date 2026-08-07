@@ -1,7 +1,7 @@
 ---
 title: Redesign the Hangar dashboard around a live all-projects status view
 project: hangar
-status: doing
+status: done
 added: 2026-08-07
 effort: M
 branch: claude/hangar-project-setup-kvhcad
@@ -28,3 +28,10 @@ right. start with a view and status of all projects. like progress, to-do's
 and running agents, tasks or things waiting for my attention" plus the preview
 button spec above. No product is truly live yet, so today every Preview button
 resolves to a Pages URL.
+
+Closed 2026-08-07: built by the Atlasboard agent (commit 09e4df8), gate-checked
+by the manager — rebuild idempotent, fleet/waiting sections verified in the
+generated HTML and visually in Chrome, preview buttons confirmed live-vs-guess
+(curl: only the Hangar and Learn Pages URLs answer 200), zero github.com code
+pages behind a Preview button. One manager fix on top: `<meta charset="utf-8">`
+so em-dashes survive raw file serving (commit 3517638).

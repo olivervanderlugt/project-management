@@ -1,7 +1,7 @@
 ---
 title: F-16 — stop publishing a deterministic function of an attacker-movable count
 project: percentile
-status: doing
+status: done
 added: 2026-08-07
 effort: S
 branch: night/percentile-f16-count-ladder

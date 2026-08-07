@@ -1,7 +1,7 @@
 ---
 title: Learn — build the C#/.NET chain (Phase-5 Tier 2)
 project: learning-website
-status: doing
+status: done
 added: 2026-08-07
 effort: M
 branch: night/learn-csharp-chain
