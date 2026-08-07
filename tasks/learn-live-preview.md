@@ -34,8 +34,13 @@ Gebouwd op `night/learn-live-preview`, PR #1 open naar main: Pages-workflow plus
 `base: '/learning-website/'`. Lokale build en headless-check groen (skill tree
 rendert, 140 nodes, klikbaar). Checker: `ship:false` — niets staat live tot:
 
-1. Ollie PR #1 merget, en
-2. Pages op de repo op bron "GitHub Actions" staat (Settings → Pages, of
-   `gh api -X POST repos/olivervanderlugt/learning-website/pages -f build_type=workflow`).
+1. ~~Ollie PR #1 merget~~ — gemerged door Ollie, 2026-08-06 18:25.
+2. Pages op de repo op bron "GitHub Actions" staat. Dit is het enige dat nog
+   openstaat: Ollie's handmatige run (31126219285) bouwde groen maar faalde op
+   `configure-pages` met "Get Pages site failed: Not Found". Fix: Settings →
+   Pages → Source: "GitHub Actions" (of `gh api -X POST
+   repos/olivervanderlugt/learning-website/pages -f build_type=workflow`),
+   daarna de workflow re-runnen. De manager kon dit niet zelf: de API-call is
+   in deze sessie geblokkeerd.
 
 Daarna `preview:` in `projects/learning-website.md` invullen en deze taak `done`.

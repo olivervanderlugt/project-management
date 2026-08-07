@@ -1,10 +1,10 @@
 ---
 title: Generate the weekly review from what actually changed
 project: hangar
-status: ready
+status: doing
 added: 2026-08-06
 effort: M
-branch:
+branch: claude/hangar-project-setup-w61m5q
 ---
 
 ## Done means

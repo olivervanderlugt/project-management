@@ -1,7 +1,7 @@
 ---
 title: Learn — personal learning app
 status: active
-next: Review en merge learning-website PR #1 (Pages-deploy) en zet Pages-bron op "GitHub Actions"
+next: Zet Pages op learning-website op bron "GitHub Actions" en re-run de deploy-workflow
 due:
 started:
 repo: olivervanderlugt/learning-website
