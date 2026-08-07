@@ -931,7 +931,8 @@ def build():
     waiting_html = render_waiting(projects, tasks, by_slug)
     waiting_count = waiting_html.count("<li ")
 
-    html = f"""<title>The Hangar</title>
+    html = f"""<meta charset="utf-8">
+<title>The Hangar</title>
 <style>{CSS}</style>
 <main class="hangar">
   <header class="top">
