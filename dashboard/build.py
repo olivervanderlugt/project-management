@@ -3,20 +3,28 @@
 
     python3 dashboard/build.py
 
-Reads planning/, projects/, ideas/ and decisions/, and writes a self-contained
-dashboard/index.html — no dependencies, no network requests, no build tools.
+Reads planning/, projects/, tasks/, ideas/ and decisions/, and writes a
+self-contained dashboard/index.html — no dependencies, no network requests, no
+build tools.
+
+The page leads with the fleet: one card per project carrying its status, its
+concrete `next`, how far its tasks have got, what an agent is working on right
+now, and what is still to do. Under it sits everything that is waiting on Ollie,
+and under that the slower material — focus, week, ideas, decisions, night log.
 
 The output is written without <!doctype>, <html>, <head> or <body> wrappers, so
 it can be opened directly in a browser *and* published as an Artifact, which
 supplies that skeleton itself.
 """
 
+import importlib.util
 import re
 from datetime import date
 from html import escape
 from pathlib import Path
 
 CODE_SPAN = re.compile(r"`([^`]+)`")
+EMPHASIS = re.compile(r"(\*\*|__|\*|_)")
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "dashboard" / "index.html"
@@ -27,8 +35,14 @@ TODAY = date.today()
 CAPTURE_URL = (
     "https://github.com/olivervanderlugt/project-management/issues/new?template=vangen.yml"
 )
+HANGAR_REPO = "https://github.com/olivervanderlugt/project-management"
+
+# Where a repo deploys to when nobody has written a real URL into `preview:`.
+# A guess, and always labelled as one.
+PAGES_BASE = "https://olivervanderlugt.github.io/"
 
 PROJECT_ORDER = {"active": 0, "paused": 1, "parked": 2, "shipped": 3}
+TASK_ORDER = {"doing": 0, "blocked": 1, "ready": 2, "inbox": 3, "done": 4}
 VERDICT_TONE = {
     "promising": "accent",
     "unexplored": "calm",
@@ -102,6 +116,15 @@ def prose(body, heading):
     return " ".join(lines)
 
 
+def first_prose(body, *headings):
+    """The first of several headings that actually has a paragraph under it."""
+    for heading in headings:
+        text = prose(body, heading)
+        if text:
+            return text
+    return ""
+
+
 def parse_date(value):
     try:
         return date.fromisoformat((value or "").strip())
@@ -113,24 +136,114 @@ def due_cell(value):
     """Render a due date as (text, tone, title) relative to today."""
     due = parse_date(value)
     if due is None:
-        return "—", "none", "no date set"
+        return "", "none", "no date set"
     delta = (due - TODAY).days
     stamp = due.strftime("%d %b %Y")
     if delta < 0:
-        return f"+{abs(delta)}d", "crit", f"overdue since {stamp}"
+        return f"{abs(delta)}d over", "crit", f"overdue since {stamp}"
     if delta == 0:
-        return "today", "crit", stamp
+        return "due today", "crit", stamp
     if delta <= 7:
-        return f"{delta}d", "warn", stamp
-    return f"{delta}d", "calm", stamp
+        return f"due in {delta}d", "warn", stamp
+    return f"due in {delta}d", "calm", stamp
+
+
+def clip(text, limit=150):
+    text = (text or "").strip()
+    if len(text) <= limit:
+        return text
+    return text[: limit - 1].rsplit(" ", 1)[0] + "…"
 
 
 # ------------------------------------------------------------------- rendering
 
 
+def unquote(value):
+    """Drop a pair of quotes wrapping a whole frontmatter value."""
+    value = (value or "").strip()
+    if len(value) > 1 and value[0] == value[-1] and value[0] in "\"'":
+        return value[1:-1].strip()
+    return value
+
+
 def rich(value):
     """Escape text, then honour markdown code spans."""
-    return CODE_SPAN.sub(r"<code>\1</code>", escape(value or ""))
+    return CODE_SPAN.sub(r"<code>\1</code>", escape(unquote(value)))
+
+
+def plain(value):
+    """Escaped text with markdown emphasis markers stripped."""
+    return escape(EMPHASIS.sub("", unquote(value)))
+
+
+def pill(text, tone="calm", title=""):
+    hint = f' title="{escape(title)}"' if title else ""
+    return f'<span class="pill" data-tone="{tone}"{hint}>{escape(text)}</span>'
+
+
+# ---------------------------------------------------------------- the dispatch
+
+
+def load_dispatch():
+    """scripts/dispatch.py and routing.yml, or (None, {}) if either is missing.
+
+    Imported lazily and defensively: the board is the one thing that must build
+    even when the rest is mid-surgery. No dispatch module, no agent names, no
+    crash.
+    """
+    try:
+        spec = importlib.util.spec_from_file_location("dispatch", ROOT / "scripts" / "dispatch.py")
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module, module.read_routing()
+    except Exception:
+        return None, {}
+
+
+def plan_for(task, project, dispatch, routing):
+    """(agent, model) for a task — derived, never invented.
+
+    scripts/dispatch.py owns this answer: the agent is the project slug once
+    that project has a repo, the model is the routing.yml row its effort falls
+    under. A task already `doing` has nothing left to hand out, so dispatch
+    returns no row for it; asking the same function what that task's effort
+    routes to gives the row it is running under, without a second copy of the
+    rule living here.
+    """
+    if dispatch is None:
+        return None, ""
+    meta = task
+    if (task.get("status") or "").strip().lower() in ("doing", "blocked"):
+        meta = dict(task, status="ready")
+    plan = dispatch.dispatch(meta, project, routing)
+    return plan["agent"], plan["model"]
+
+
+def agent_tag(agent, model):
+    if not agent:
+        return '<span class="agent none" title="needs a project: with a repo:">no agent</span>'
+    label = escape(agent) + (f' <span class="model">{escape(model)}</span>' if model else "")
+    return f'<span class="agent">{label}</span>'
+
+
+# ------------------------------------------------------------------- the fleet
+
+
+def preview_for(meta):
+    """(url, verified) for a project's live product, or (None, False).
+
+    A `preview:` URL was written by a person who looked at it: that one is live.
+    Everything else is the GitHub Pages URL the repo would deploy to — useful,
+    and labelled as a guess, because the Hangar never presents a dead deploy as
+    live. Never the repo's code page; that is a separate, smaller link.
+    """
+    url = (meta.get("preview") or "").strip()
+    if url:
+        return url, True
+    repo = (meta.get("repo") or "").strip()
+    if not repo:
+        return None, False
+    return f"{PAGES_BASE}{repo.split('/')[-1]}/", False
 
 
 def start_prompt(meta, nxt):
@@ -143,7 +256,7 @@ def start_prompt(meta, nxt):
         "whole repo — open files only when a step needs them."
     )
     if nxt:
-        lines.append(f"Next action: {nxt}")
+        lines.append(f"Next action: {unquote(nxt)}")
     else:
         lines.append(
             "There is no next action set. Work out what it should be, tell me, "
@@ -156,58 +269,232 @@ def start_prompt(meta, nxt):
     return " ".join(lines)
 
 
-def render_preview(meta):
-    """A live preview, if the project is actually deployed somewhere.
-
-    The iframe only loads on the GitHub Pages copy — the Artifact build runs
-    under a CSP that blocks every external host, so the link below it is the
-    fallback that always works.
-    """
-    url = (meta.get("preview") or "").strip()
-    title = meta.get("title") or meta["slug"]
-    if not url:
-        return (
-            '<p class="no-preview mono">not deployed yet &mdash; no preview to show</p>'
-        )
+def render_lane(title, rows, tone):
+    if not rows:
+        return ""
     return f"""
-          <details class="preview">
-            <summary>preview {escape(title)}</summary>
-            <div class="preview-body">
-              <iframe src="{escape(url)}" title="Live preview of {escape(title)}"
-                      loading="lazy" referrerpolicy="no-referrer"
-                      sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-              <a class="act" href="{escape(url)}" target="_blank" rel="noopener">
-                open in a tab &#8599;</a>
+          <div class="lane" data-tone="{tone}">
+            <span class="lane-label">{escape(title)}</span>
+            <ul class="lane-list">{"".join(rows)}</ul>
+          </div>"""
+
+
+def render_card(meta, body, tasks, dispatch, routing):
+    status = (meta.get("status") or "active").lower()
+    title = meta.get("title") or meta["slug"]
+    nxt = unquote(meta.get("next", ""))
+
+    done = [t for t in tasks if (t[0].get("status") or "").lower() == "done"]
+    doing = [t for t in tasks if (t[0].get("status") or "").lower() == "doing"]
+    blocked = [t for t in tasks if (t[0].get("status") or "").lower() == "blocked"]
+    todo = [t for t in tasks if (t[0].get("status") or "").lower() in ("ready", "inbox")]
+
+    # progress
+    total = len(tasks)
+    if total:
+        pct = round(100 * len(done) / total)
+        bar = (
+            f'<div class="bar" role="img" aria-label="{len(done)} of {total} tasks done">'
+            f'<span style="width:{pct}%"></span></div>'
+            f'<span class="mono dim">{len(done)}/{total} done</span>'
+        )
+    else:
+        bar = (
+            '<div class="bar empty" role="img" aria-label="no tasks filed"><span></span></div>'
+            '<span class="mono dim">no tasks filed</span>'
+        )
+
+    due_text, due_tone, due_hint = due_cell(meta.get("due", ""))
+    chips = [pill(status, status)]
+    if due_text:
+        chips.append(pill(due_text, due_tone, due_hint))
+    if doing:
+        chips.append(pill(f"{len(doing)} running", "live"))
+
+    # running agents
+    running_rows = []
+    for tmeta, _ in sorted(doing, key=lambda d: d[0].get("title", d[0]["slug"]).lower()):
+        agent, model = plan_for(tmeta, meta, dispatch, routing)
+        branch = tmeta.get("branch", "")
+        running_rows.append(
+            f'<li><span class="dot live" aria-hidden="true"></span>'
+            f'<span class="lane-text">{rich(tmeta.get("title") or tmeta["slug"])}</span>'
+            f'{agent_tag(agent, model)}'
+            + (f'<span class="mono dim branch">{escape(branch)}</span>' if branch else "")
+            + "</li>"
+        )
+
+    # to do, blocked first so it cannot hide under the ready ones
+    todo_rows = []
+    for tmeta, tbody in sorted(
+        blocked + todo,
+        key=lambda d: (
+            TASK_ORDER.get((d[0].get("status") or "inbox").lower(), 9),
+            d[0].get("title", d[0]["slug"]).lower(),
+        ),
+    ):
+        tstatus = (tmeta.get("status") or "inbox").lower()
+        agent, model = plan_for(tmeta, meta, dispatch, routing)
+        extra = agent_tag(agent, model) if tstatus == "ready" else ""
+        note = "needs a verdict" if tstatus == "inbox" else ""
+        if tstatus == "blocked":
+            note = clip(first_prose(tbody, "Blocked", "Why", "Waiting on", "Notes"), 70) or "blocked"
+        todo_rows.append(
+            f'<li><span class="dot" data-status="{escape(tstatus)}" aria-hidden="true"></span>'
+            f'<span class="state mono">{escape(tstatus)}</span>'
+            f'<span class="lane-text">{rich(tmeta.get("title") or tmeta["slug"])}</span>'
+            f'{extra}'
+            + (f'<span class="mono dim">{escape(note)}</span>' if note else "")
+            + "</li>"
+        )
+
+    # actions
+    url, verified = preview_for(meta)
+    acts = []
+    if url:
+        if verified:
+            acts.append(
+                f'<a class="act primary live" href="{escape(url)}" target="_blank" rel="noopener" '
+                f'title="{escape(url)}"><span class="dot live" aria-hidden="true"></span>'
+                f"Preview &#8599;</a>"
+            )
+        else:
+            acts.append(
+                f'<a class="act primary guess" href="{escape(url)}" target="_blank" rel="noopener" '
+                f'title="Derived GitHub Pages URL, never opened by anyone here: {escape(url)}">'
+                f"Preview &#8599;<span class=\"guess-flag\">unverified</span></a>"
+            )
+    if meta.get("repo"):
+        acts.append(
+            f'<a class="act small" href="https://github.com/{escape(meta["repo"])}" '
+            f'target="_blank" rel="noopener" title="{escape(meta["repo"])}">repo</a>'
+        )
+    acts.append(
+        f'<button class="act small" type="button" '
+        f'data-prompt="{escape(start_prompt(meta, nxt))}">copy start prompt</button>'
+    )
+
+    if nxt:
+        next_html = f'<p class="next-text">{rich(nxt)}</p>'
+    elif status == "active":
+        next_html = '<p class="next-text missing">No next action &mdash; decide one</p>'
+    else:
+        next_html = f'<p class="next-text idle">Nothing queued while {escape(status)}</p>'
+
+    foot_bits = []
+    if meta.get("stack"):
+        foot_bits.append(escape(meta["stack"]))
+    tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
+    tag_html = "".join(f'<span class="tag">{escape(t)}</span>' for t in tags)
+
+    return f"""
+        <article class="card" data-status="{escape(status)}">
+          <div class="card-head">
+            <h3>{escape(title)}</h3>
+            <span class="chips">{"".join(chips)}</span>
+          </div>
+          <div class="next"><span class="lane-label">next</span>{next_html}</div>
+          <div class="progress">{bar}</div>
+          {render_lane("running now", running_rows, "live")}
+          {render_lane("to do", todo_rows, "calm")}
+          <div class="card-foot">
+            <div class="acts">{"".join(acts)}</div>
+            <div class="card-meta mono dim">{" &middot; ".join(foot_bits)}</div>
+            <div class="tags">{tag_html}</div>
+          </div>
+        </article>"""
+
+
+def render_fleet(projects, by_project, dispatch, routing):
+    if not projects:
+        return "<p class='empty'>The rack is empty. Add a file to <code>projects/</code>.</p>"
+
+    def sort_key(doc):
+        meta = doc[0]
+        tasks = by_project.get(meta["slug"], [])
+        running = sum(1 for t in tasks if (t[0].get("status") or "").lower() == "doing")
+        due = parse_date(meta.get("due", ""))
+        return (
+            PROJECT_ORDER.get((meta.get("status") or "").lower(), 9),
+            -running,
+            due or date.max,
+            (meta.get("title") or meta["slug"]).lower(),
+        )
+
+    cards = [
+        render_card(meta, body, by_project.get(meta["slug"], []), dispatch, routing)
+        for meta, body in sorted(projects, key=sort_key)
+    ]
+    return f'<div class="fleet">{"".join(cards)}</div>'
+
+
+# --------------------------------------------------------------- waiting on me
+
+
+def render_waiting(projects, tasks, by_slug):
+    """Everything that cannot move without Ollie. Never hidden, even when empty."""
+    rows = []
+
+    blocked = [t for t in tasks if (t[0].get("status") or "").lower() == "blocked"]
+    for meta, body in sorted(blocked, key=lambda d: d[0].get("title", d[0]["slug"]).lower()):
+        why = first_prose(body, "Blocked", "Why", "Waiting on", "Notes")
+        rows.append(
+            (
+                "blocked",
+                "crit",
+                meta.get("title") or meta["slug"],
+                clip(why) or "No reason written in the task file.",
+                meta.get("project", ""),
+            )
+        )
+
+    inbox = [t for t in tasks if (t[0].get("status") or "").lower() == "inbox"]
+    for meta, body in sorted(inbox, key=lambda d: d[0].get("added", "")):
+        why = clip(prose(body, "Done means"))
+        rows.append(
+            (
+                "verdict",
+                "warn",
+                meta.get("title") or meta["slug"],
+                why or "No finish line written yet — it stays inbox until there is one.",
+                meta.get("project", ""),
+            )
+        )
+
+    for meta, _ in sorted(projects, key=lambda d: (d[0].get("title") or d[0]["slug"]).lower()):
+        if (meta.get("status") or "").lower() == "active" and not unquote(meta.get("next", "")):
+            rows.append(
+                (
+                    "no next",
+                    "crit",
+                    meta.get("title") or meta["slug"],
+                    "Active project with an empty next — decide the one concrete action.",
+                    meta["slug"],
+                )
+            )
+
+    if not rows:
+        return (
+            '<p class="all-clear">Nothing is waiting on you. No blocked tasks, no inbox '
+            "task without a verdict, and every active project has a next action.</p>"
+        )
+
+    items = []
+    for kind, tone, title, why, where in rows:
+        context = by_slug.get(where, {}).get("title", where) if where else "no project"
+        items.append(f"""
+          <li data-tone="{tone}">
+            <span class="kind mono">{escape(kind)}</span>
+            <div>
+              <p class="what">{rich(title)}</p>
+              <p class="why">{rich(why)}</p>
             </div>
-          </details>"""
+            <span class="where mono dim">{escape(context)}</span>
+          </li>""")
+    return f'<ul class="waiting-list">{"".join(items)}</ul>'
 
 
-def render_actions(meta, nxt):
-    repo = meta.get("repo", "")
-    buttons = []
-    if meta.get("preview"):
-        buttons.append(
-            f'<a class="act" href="{escape(meta["preview"])}" target="_blank" '
-            f'rel="noopener">live &#8599;</a>'
-        )
-    if repo:
-        buttons.append(
-            f'<a class="act" href="https://github.com/{escape(repo)}" '
-            f'target="_blank" rel="noopener">code &#8599;</a>'
-        )
-    buttons.append(
-        '<a class="act" href="https://claude.ai/code" target="_blank" '
-        'rel="noopener">open Claude Code &#8599;</a>'
-    )
-    buttons.append(
-        f'<button class="act" type="button" data-prompt="{escape(start_prompt(meta, nxt))}">'
-        "copy start prompt</button>"
-    )
-    return f'<div class="strip-acts">{"".join(buttons)}</div>'
-
-
-def label(text):
-    return f'<span class="eyebrow">{escape(text)}</span>'
+# ----------------------------------------------------------------- lower stack
 
 
 def render_now(meta, body):
@@ -216,184 +503,73 @@ def render_now(meta, body):
     stamp = updated.strftime("%d %b %Y") if updated else "undated"
     items = [line.strip()[2:] for line in body.splitlines() if line.strip().startswith("- ")]
     listing = (
-        "<ol class='now-list'>"
-        + "".join(f"<li>{rich(item)}</li>" for item in items)
-        + "</ol>"
+        "<ul class='now-list'>" + "".join(f"<li>{rich(item)}</li>" for item in items) + "</ul>"
         if items
         else "<p class='empty'>No supporting actions listed.</p>"
     )
     return f"""
-    <section class="now">
-      <div class="now-head">
-        {label("Current focus")}
-        <span class="mono dim">updated {escape(stamp)}</span>
+    <section class="panel focus">
+      <div class="panel-head">
+        <h2>Current focus</h2>
+        <span class="mono dim">planning/now.md &middot; {escape(stamp)}</span>
       </div>
-      <p class="now-focus">{rich(focus)}</p>
+      <p class="focus-line">{rich(focus)}</p>
       {listing}
     </section>"""
 
 
-def render_projects(projects):
-    if not projects:
-        return "<p class='empty'>The rack is empty. Add a file to <code>projects/</code>.</p>"
-
-    def sort_key(doc):
-        meta = doc[0]
-        due = parse_date(meta.get("due", ""))
-        return (
-            PROJECT_ORDER.get(meta.get("status", "").lower(), 9),
-            due or date.max,
-            meta.get("title", meta["slug"]).lower(),
-        )
-
-    rows = []
-    for meta, body in sorted(projects, key=sort_key):
-        status = meta.get("status", "active").lower()
-        title = meta.get("title") or meta["slug"]
-        nxt = meta.get("next", "")
-        text, tone, hint = due_cell(meta.get("due", ""))
-        tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
-        tag_html = "".join(f"<span class='tag'>{escape(t)}</span>" for t in tags)
-        bits = []
-        if meta.get("repo"):
-            slug = meta["repo"]
-            bits.append(
-                f'<a class="repo" href="https://github.com/{escape(slug)}">{escape(slug)}</a>'
-            )
-        if meta.get("stack"):
-            bits.append(f'<span>{escape(meta["stack"])}</span>')
-        meta_html = (
-            f'<div class="strip-meta mono">{"<span class=sep>&middot;</span>".join(bits)}</div>'
-            if bits
-            else ""
-        )
-        actions_html = render_actions(meta, nxt)
-        if nxt:
-            next_html = f"<p class='strip-next'>{rich(nxt)}</p>"
-        else:
-            next_html = "<p class='strip-next missing'>No next action &mdash; decide one</p>"
-        rows.append(f"""
-        <article class="strip" data-status="{escape(status)}">
-          <div class="strip-flag" aria-hidden="true"></div>
-          <div class="strip-body">
-            <div class="strip-top">
-              <h3>{escape(title)}</h3>
-              <span class="status mono">{escape(status)}</span>
-            </div>
-            {next_html}
-            {meta_html}
-            <div class="strip-tags">{tag_html}</div>
-            {actions_html}
-            {render_preview(meta)}
-          </div>
-          <div class="strip-due mono" data-tone="{tone}" title="{escape(hint)}">{escape(text)}</div>
-        </article>""")
-    return f'<div class="rack">{"".join(rows)}</div>'
-
-
-TASK_ORDER = {"doing": 0, "ready": 1, "blocked": 2, "inbox": 3, "done": 4}
-
-
-def task_plans(tasks, projects):
-    """Which agent and model each task goes to, as a rendered fragment.
-
-    Imported lazily and defensively: the board is the one thing that must build
-    even when the rest is mid-surgery. No dispatch module, no column, no crash.
-    """
-    try:
-        import importlib.util
-
-        spec = importlib.util.spec_from_file_location("dispatch", ROOT / "scripts" / "dispatch.py")
-        dispatch = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(dispatch)
-        routing = dispatch.read_routing()
-    except Exception:
-        return {}
-
-    by_slug = {meta["slug"]: meta for meta, _ in projects}
-    plans = {}
-    for meta, _ in tasks:
-        plan = dispatch.dispatch(meta, by_slug.get((meta.get("project") or "").strip()), routing)
-        if plan["kind"] is None:
-            continue
-        if plan["agent"]:
-            plans[meta["slug"]] = (
-                f'<span class="task-agent">{escape(plan["agent"])}'
-                f' &middot; {escape(plan["model"])}</span>'
-            )
-        else:
-            plans[meta["slug"]] = '<span class="task-agent unassigned">no agent</span>'
-    return plans
-
-
-def render_tasks(tasks, projects=None):
-    live = [t for t in tasks if t[0].get("status", "").lower() != "done"]
-    if not live:
-        return "<p class='empty'>Queue is empty. Add a file to <code>tasks/</code>.</p>"
-
-    plans = task_plans(live, projects or [])
-
-    def sort_key(doc):
-        meta = doc[0]
-        return (
-            TASK_ORDER.get(meta.get("status", "").lower(), 9),
-            meta.get("project", ""),
-            meta.get("title", meta["slug"]).lower(),
-        )
-
-    rows = []
-    for meta, body in sorted(live, key=sort_key):
-        status = meta.get("status", "inbox").lower()
-        project = meta.get("project", "")
-        done_means = prose(body, "Done means")
-        rows.append(f"""
-        <li class="task" data-status="{escape(status)}">
-          <span class="task-state mono">{escape(status)}</span>
-          <div class="task-body">
-            <h4>{rich(meta.get("title") or meta["slug"])}</h4>
-            <p>{rich(done_means) if done_means else "&mdash;"}</p>
-          </div>
-          <span class="task-meta mono">{escape(project)}<br>{escape(meta.get("effort", ""))}
-            <br>{plans.get(meta["slug"], "")}</span>
-        </li>""")
-    counts = {}
-    for meta, _ in live:
-        key = meta.get("status", "inbox").lower()
-        counts[key] = counts.get(key, 0) + 1
-    summary = " &middot; ".join(f"{n} {escape(k)}" for k, n in sorted(counts.items()))
-    return f'<ul class="tasks">{"".join(rows)}</ul><p class="mono dim queue-sum">{summary}</p>'
+def render_week(weeks):
+    if not weeks:
+        return ""
+    meta, body = weeks[-1]
+    nxt = bullets(body, "Next week")
+    items = nxt or bullets(body, "Wins")
+    heading = "Next week" if nxt else "Wins"
+    listing = "".join(f"<li>{rich(item)}</li>" for item in items)
+    return f"""
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Last review</h2>
+        <span class="mono dim">{escape(meta.get("week", meta["slug"]))}</span>
+      </div>
+      <p class="lede">{rich(meta.get("focus", ""))}</p>
+      <span class="lane-label">{escape(heading)}</span>
+      <ul class="plain-list">{listing}</ul>
+    </section>"""
 
 
 def render_ideas(ideas):
     if not ideas:
-        return "<p class='empty'>Nothing parked yet. Add a file to <code>ideas/</code>.</p>"
+        return (
+            "<p class='empty'>Nothing parked yet. Add a file to <code>ideas/</code> "
+            "rather than keeping it in your head.</p>"
+        )
     rows = []
     for meta, body in sorted(ideas, key=lambda d: d[0].get("title", d[0]["slug"]).lower()):
-        verdict = meta.get("verdict", "unexplored").lower()
+        verdict = (meta.get("verdict") or "unexplored").lower()
         tone = VERDICT_TONE.get(verdict, "calm")
         summary = prose(body, "The idea")
         rows.append(f"""
         <li class="idea" data-tone="{tone}">
-          <div class="idea-top">
+          <div class="row-top">
             <h4>{escape(meta.get("title") or meta["slug"])}</h4>
             <span class="mono dim">{escape(meta.get("effort", "?"))}</span>
           </div>
           <span class="verdict mono">{escape(verdict)}</span>
           <p>{rich(summary) if summary else "&mdash;"}</p>
         </li>""")
-    return f'<ul class="ideas">{"".join(rows)}</ul>'
+    return f'<ul class="rows">{"".join(rows)}</ul>'
 
 
 def render_decisions(decisions):
     if not decisions:
         return "<p class='empty'>Nothing logged yet.</p>"
-    ordered = sorted(decisions, key=lambda d: d[0]["slug"], reverse=True)
     rows = []
-    for meta, body in ordered:
+    for meta, body in sorted(decisions, key=lambda d: d[0]["slug"], reverse=True):
         number = meta["slug"].split("-", 1)[0]
         when = parse_date(meta.get("date", ""))
         stamp = when.strftime("%d %b %Y") if when else "undated"
-        status = meta.get("status", "accepted").lower()
+        status = (meta.get("status") or "accepted").lower()
         rows.append(f"""
         <li class="decision" data-status="{escape(status)}">
           <span class="adr mono">{escape(number)}</span>
@@ -403,266 +579,336 @@ def render_decisions(decisions):
             <span class="mono dim">{escape(stamp)} &middot; {escape(status)}</span>
           </div>
         </li>""")
-    return f'<ul class="decisions">{"".join(rows)}</ul>'
+    return f'<ul class="rows">{"".join(rows)}</ul>'
 
 
-def render_week(weeks):
-    if not weeks:
+def render_nightlog():
+    """The last few entries of planning/night-log.md, newest first as written."""
+    path = ROOT / "planning" / "night-log.md"
+    if not path.is_file():
         return ""
-    meta, body = weeks[-1]
-    items = bullets(body, "Next week") or bullets(body, "Wins")
-    heading = "Next week" if bullets(body, "Next week") else "Wins"
-    listing = "".join(f"<li>{rich(item)}</li>" for item in items)
+    text = path.read_text(encoding="utf-8")
+    tail = text.split("\n---\n", 1)[-1]
+    blocks = [b.strip() for b in tail.split("\n\n") if b.strip() and not b.strip().startswith("#")]
+    if not blocks:
+        return "<p class='empty'>No runs logged yet.</p>"
+    items = "".join(f"<li>{plain(clip(b, 260))}</li>" for b in blocks[:4])
+    return f'<ul class="plain-list">{items}</ul>'
+
+
+def render_queue(tasks, by_slug, dispatch, routing):
+    """Every task, done ones included, as the one complete list on the page."""
+    if not tasks:
+        return "<p class='empty'>Queue is empty. Add a file to <code>tasks/</code>.</p>"
+
+    def sort_key(doc):
+        meta = doc[0]
+        return (
+            TASK_ORDER.get((meta.get("status") or "inbox").lower(), 9),
+            meta.get("project", ""),
+            (meta.get("title") or meta["slug"]).lower(),
+        )
+
+    rows = []
+    for meta, _ in sorted(tasks, key=sort_key):
+        status = (meta.get("status") or "inbox").lower()
+        project_slug = (meta.get("project") or "").strip()
+        agent, model = plan_for(meta, by_slug.get(project_slug), dispatch, routing)
+        cell = agent_tag(agent, model) if status != "done" else '<span class="dim">&mdash;</span>'
+        rows.append(f"""
+          <tr data-status="{escape(status)}">
+            <td><span class="state mono">{escape(status)}</span></td>
+            <td class="q-title">{rich(meta.get("title") or meta["slug"])}</td>
+            <td class="mono dim">{escape(project_slug or "&mdash;") if project_slug else "&mdash;"}</td>
+            <td class="mono dim">{escape(meta.get("effort", ""))}</td>
+            <td>{cell}</td>
+          </tr>""")
     return f"""
-    <section class="panel week">
-      <div class="panel-head">
-        {label("Last review")}
-        <span class="mono dim">{escape(meta.get("week", meta["slug"]))}</span>
-      </div>
-      <p class="week-focus">{rich(meta.get("focus", ""))}</p>
-      <span class="eyebrow inline">{escape(heading)}</span>
-      <ul class="week-list">{listing}</ul>
-    </section>"""
+      <table class="queue">
+        <thead><tr><th>status</th><th>task</th><th>project</th><th>effort</th><th>goes to</th></tr></thead>
+        <tbody>{"".join(rows)}</tbody>
+      </table>"""
 
 
-def render_counters(projects, ideas, decisions):
-    active = sum(1 for m, _ in projects if m.get("status", "").lower() == "active")
-    upcoming = [
-        parse_date(m.get("due", ""))
-        for m, _ in projects
-        if parse_date(m.get("due", "")) is not None
-    ]
-    if upcoming:
-        soonest = min(upcoming)
-        delta = (soonest - TODAY).days
-        next_due = f"+{abs(delta)}d" if delta < 0 else ("today" if delta == 0 else f"{delta}d")
-        due_hint = soonest.strftime("%d %b")
-    else:
-        next_due, due_hint = "—", "nothing scheduled"
-    cells = [
-        ("In flight", str(active), f"{len(projects)} total"),
-        ("Parked", str(len(ideas)), "ideas"),
-        ("Logged", str(len(decisions)), "decisions"),
-        ("Next due", next_due, due_hint),
-    ]
-    return "".join(
-        f"""<div class="counter">
-              <span class="eyebrow">{escape(name)}</span>
-              <span class="counter-value mono">{escape(value)}</span>
-              <span class="mono dim">{escape(hint)}</span>
-            </div>"""
-        for name, value, hint in cells
+# ------------------------------------------------------------------- the vital
+
+
+def render_vitals(projects, tasks, waiting_count):
+    active = sum(1 for m, _ in projects if (m.get("status") or "").lower() == "active")
+    running = sum(1 for m, _ in tasks if (m.get("status") or "").lower() == "doing")
+    open_todo = sum(
+        1 for m, _ in tasks if (m.get("status") or "").lower() in ("ready", "inbox", "blocked")
     )
+    cells = [
+        ("in flight", str(active), f"of {len(projects)} projects", "", "calm"),
+        ("agents running", str(running), "tasks doing", "", "live" if running else "calm"),
+        ("open to-dos", str(open_todo), "in the queue", "", "calm"),
+        (
+            "waiting on you",
+            str(waiting_count),
+            "needs a call" if waiting_count else "all clear",
+            "#waiting",
+            "warn" if waiting_count else "good",
+        ),
+    ]
+    out = []
+    for name, value, hint, href, tone in cells:
+        inner = (
+            f'<span class="vital-label">{escape(name)}</span>'
+            f'<span class="vital-value">{escape(value)}</span>'
+            f'<span class="mono dim">{escape(hint)}</span>'
+        )
+        if href:
+            out.append(f'<a class="vital" data-tone="{tone}" href="{href}">{inner}</a>')
+        else:
+            out.append(f'<div class="vital" data-tone="{tone}">{inner}</div>')
+    return "".join(out)
 
 
 CSS = """
 :root{
-  --ground:#EEF2F1; --surface:#FFFFFF; --rack:#E5EBEA;
-  --ink:#111819; --muted:#5C6A6D; --hair:#D3DBDA;
-  --accent:#0E6B65; --accent-ink:#0E6B65; --accent-soft:#DBEAE7;
-  --warn:#8A5A0B; --crit:#9E2B23; --good:#2C6640;
-  --shadow:rgba(17,24,25,.06);
+  --ground:#0A0E10; --panel:#111819; --panel-2:#151E20; --raise:#192325;
+  --hair:#212D2F; --hair-soft:#1A2426;
+  --ink:#DEE7E7; --ink-2:#A6B6B7; --dim:#718284;
+  --accent:#4FBFB2; --accent-ink:#7FD6CB; --accent-soft:#12302E;
+  --live:#5FD08A; --good:#5FD08A; --warn:#E0A94A; --crit:#E8796C;
+  --radius:10px;
 }
-@media (prefers-color-scheme: dark){
-  :root{
-    --ground:#0C1214; --surface:#141D1F; --rack:#101819;
-    --ink:#E3ECEC; --muted:#8A9A9D; --hair:#233032;
-    --accent:#46B9AE; --accent-ink:#7FD3CA; --accent-soft:#16302E;
-    --warn:#D9A441; --crit:#E4776C; --good:#6FBE86;
-    --shadow:rgba(0,0,0,.4);
-  }
-}
-:root[data-theme="light"]{
-  --ground:#EEF2F1; --surface:#FFFFFF; --rack:#E5EBEA;
-  --ink:#111819; --muted:#5C6A6D; --hair:#D3DBDA;
-  --accent:#0E6B65; --accent-ink:#0E6B65; --accent-soft:#DBEAE7;
-  --warn:#8A5A0B; --crit:#9E2B23; --good:#2C6640;
-  --shadow:rgba(17,24,25,.06);
-}
-:root[data-theme="dark"]{
-  --ground:#0C1214; --surface:#141D1F; --rack:#101819;
-  --ink:#E3ECEC; --muted:#8A9A9D; --hair:#233032;
-  --accent:#46B9AE; --accent-ink:#7FD3CA; --accent-soft:#16302E;
-  --warn:#D9A441; --crit:#E4776C; --good:#6FBE86;
-  --shadow:rgba(0,0,0,.4);
-}
-
 *{box-sizing:border-box;}
 body{
   margin:0; background:var(--ground); color:var(--ink);
   font-family:ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  font-size:16px; line-height:1.55; -webkit-font-smoothing:antialiased;
+  font-size:15.5px; line-height:1.55; -webkit-font-smoothing:antialiased;
 }
-.mono{
-  font-family:ui-monospace,SFMono-Regular,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
-  font-variant-numeric:tabular-nums; font-size:.78rem; letter-spacing:.02em;
-}
-.dim{color:var(--muted);}
-.board{max-width:1080px; margin:0 auto; padding:clamp(24px,5vw,56px) clamp(16px,4vw,32px) 72px;
-  display:flex; flex-direction:column; gap:clamp(24px,4vw,40px);}
+h1,h2,h3,h4{margin:0; font-weight:600; letter-spacing:-.01em;}
+p{margin:0;}
+a{color:var(--accent-ink); text-decoration:none;}
+a:hover{text-decoration:underline;}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+code{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.86em;
+  background:var(--accent-soft); color:var(--accent-ink); padding:1px 5px; border-radius:4px;}
+.mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  font-variant-numeric:tabular-nums; font-size:.74rem; letter-spacing:.02em;}
+.dim{color:var(--dim);}
+.empty{color:var(--dim); font-size:.92rem;}
 
-.eyebrow{
-  font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.16em;
-  color:var(--muted);
-}
-.eyebrow.inline{display:block; margin-top:14px;}
+.hangar{max-width:1180px; margin:0 auto;
+  padding:clamp(22px,4vw,44px) clamp(14px,3vw,28px) 64px;
+  display:flex; flex-direction:column; gap:clamp(22px,3vw,34px);}
 
 /* masthead */
-.masthead{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
-  gap:16px; padding-bottom:18px; border-bottom:2px solid var(--ink);}
-.masthead h1{
-  margin:2px 0 0; font-size:clamp(2rem,5vw,2.9rem); line-height:1;
-  letter-spacing:-.03em; font-weight:700; text-wrap:balance;
-}
-.masthead h1 em{font-style:normal; color:var(--accent-ink);}
-.stamp{text-align:right;}
+.top{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:18px;}
+.kicker{font-size:.64rem; text-transform:uppercase; letter-spacing:.2em; color:var(--dim);}
+.top h1{font-size:clamp(1.6rem,3.4vw,2.1rem); line-height:1.1; margin-top:4px;}
+.top h1 em{font-style:normal; color:var(--accent);}
+.top-acts{display:flex; gap:10px; align-items:center;}
 
-.counters{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1px;
-  background:var(--hair); border:1px solid var(--hair);}
-.counter{background:var(--surface); padding:14px 16px; display:flex; flex-direction:column; gap:2px;}
-.counter-value{font-size:1.7rem; line-height:1.1; font-weight:600; letter-spacing:-.02em;}
+.vitals{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px;}
+.vital{background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius);
+  padding:12px 14px; display:flex; flex-direction:column; gap:1px; color:inherit;}
+a.vital:hover{border-color:var(--accent); text-decoration:none;}
+.vital-label{font-size:.66rem; text-transform:uppercase; letter-spacing:.14em; color:var(--dim);}
+.vital-value{font-size:1.55rem; font-weight:600; line-height:1.25;
+  font-variant-numeric:tabular-nums;}
+.vital[data-tone="live"] .vital-value{color:var(--live);}
+.vital[data-tone="warn"] .vital-value{color:var(--warn);}
+.vital[data-tone="good"] .vital-value{color:var(--good);}
 
-/* now */
-.now{background:var(--surface); border:1px solid var(--hair); border-top:3px solid var(--accent);
-  padding:clamp(18px,3vw,26px);}
-.now-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px;}
-.now-focus{margin:10px 0 18px; font-size:clamp(1.35rem,3.2vw,1.9rem); line-height:1.2;
-  letter-spacing:-.02em; font-weight:600; text-wrap:balance;}
-.now-list{margin:0; padding:0; list-style:none; counter-reset:n;
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px 24px;}
-.now-list li{counter-increment:n; position:relative; padding-left:26px; color:var(--muted);
-  border-top:1px solid var(--hair); padding-top:8px;}
-.now-list li::before{
-  content:counter(n,decimal-leading-zero); position:absolute; left:0; top:8px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  font-size:.7rem; color:var(--accent-ink); letter-spacing:.02em;
-}
+/* section frame */
+.sec-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  margin-bottom:12px;}
+.sec-head h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.16em; color:var(--ink-2);}
 
-/* section headings */
-.section-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
-  border-bottom:1px solid var(--hair); padding-bottom:8px; margin-bottom:14px;}
-.section-head h2{margin:0; font-size:1rem; font-weight:600; letter-spacing:.01em;}
-.section-actions{display:flex; align-items:baseline; gap:12px;}
+/* fleet */
+.fleet{display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:12px;}
+.card{background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius);
+  padding:16px 18px 14px; display:flex; flex-direction:column; gap:12px; position:relative;
+  overflow:hidden;}
+.card::before{content:""; position:absolute; inset:0 auto 0 0; width:3px; background:var(--dim);}
+.card[data-status="active"]::before{background:var(--accent);}
+.card[data-status="paused"]::before{background:var(--warn);}
+.card[data-status="shipped"]::before{background:var(--good);}
+.card[data-status="parked"]::before{background:var(--hair);}
+.card[data-status="parked"],.card[data-status="shipped"]{opacity:.82;}
+.card-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+  flex-wrap:wrap;}
+.card-head h3{font-size:1.06rem;}
+.chips{display:flex; gap:6px; flex-wrap:wrap;}
+.pill{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.64rem; letter-spacing:.1em;
+  text-transform:uppercase; border:1px solid var(--hair); border-radius:99px; padding:2px 8px;
+  color:var(--dim); white-space:nowrap;}
+.pill[data-tone="active"]{color:var(--accent-ink); border-color:var(--accent-soft);}
+.pill[data-tone="live"]{color:var(--live); border-color:#1E3A2B;}
+.pill[data-tone="warn"]{color:var(--warn); border-color:#3A2E14;}
+.pill[data-tone="crit"]{color:var(--crit); border-color:#3B211E;}
+.pill[data-tone="good"]{color:var(--good);}
 
-/* project rack */
-.rack{background:var(--rack); border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
-.strip{display:grid; grid-template-columns:6px 1fr auto; align-items:stretch;
-  background:var(--surface); transition:background .15s ease;}
-.strip:hover{background:var(--accent-soft);}
-.strip-flag{background:var(--muted);}
-.strip[data-status="active"] .strip-flag{background:var(--accent);}
-.strip[data-status="paused"] .strip-flag{background:var(--warn);}
-.strip[data-status="shipped"] .strip-flag{background:var(--good);}
-.strip[data-status="parked"] .strip-flag{background:var(--hair);}
-.strip-body{padding:14px 18px; min-width:0;}
-.strip-top{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;}
-.strip-top h3{margin:0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em;}
-.status{text-transform:uppercase; letter-spacing:.12em; color:var(--muted); font-size:.66rem;}
-.strip-next{margin:4px 0 0; color:var(--muted); font-size:.94rem;}
-.strip-next.missing{color:var(--crit);}
-.strip-meta{margin-top:6px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px;
-  align-items:baseline;}
-.strip-meta .sep{opacity:.5;}
-.strip-meta .repo{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid transparent;}
-.strip-meta .repo:hover{border-bottom-color:currentColor;}
-.strip-tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;}
-.strip-acts{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;}
-.act{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.72rem;
-  letter-spacing:.02em; color:var(--accent-ink); background:transparent;
-  border:1px solid var(--hair); padding:4px 10px; cursor:pointer; text-decoration:none;
-  transition:border-color .15s ease, background .15s ease;
-}
-.act:hover{border-color:var(--accent); background:var(--accent-soft);}
-.act:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+.lane-label{font-size:.62rem; text-transform:uppercase; letter-spacing:.16em; color:var(--dim);
+  display:block;}
+.next-text{font-size:.98rem; color:var(--ink); margin-top:3px; text-wrap:pretty;}
+.next-text.missing{color:var(--crit);}
+.next-text.idle{color:var(--dim);}
+
+.progress{display:flex; align-items:center; gap:10px;}
+.bar{flex:1; height:4px; background:var(--hair-soft); border-radius:99px; overflow:hidden;}
+.bar span{display:block; height:100%; background:var(--accent); border-radius:99px;}
+.bar.empty{background:repeating-linear-gradient(90deg,var(--hair-soft) 0 6px,transparent 6px 12px);}
+
+.lane{border-top:1px solid var(--hair-soft); padding-top:9px;}
+.lane-list{list-style:none; margin:5px 0 0; padding:0; display:flex; flex-direction:column; gap:5px;}
+.lane-list li{display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; font-size:.9rem;
+  color:var(--ink-2);}
+.lane-text{flex:1; min-width:min(100%,180px); color:var(--ink);}
+.dot{width:6px; height:6px; border-radius:99px; background:var(--dim); flex:none;
+  transform:translateY(-1px);}
+.dot.live{background:var(--live); box-shadow:0 0 0 3px rgba(95,208,138,.14);
+  animation:pulse 2.6s ease-in-out infinite;}
+.dot[data-status="ready"]{background:var(--accent);}
+.dot[data-status="inbox"]{background:var(--warn);}
+.dot[data-status="blocked"]{background:var(--crit);}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.state{text-transform:uppercase; letter-spacing:.1em; font-size:.6rem; color:var(--dim);
+  min-width:48px;}
+.agent{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.68rem; color:var(--accent-ink);
+  background:var(--accent-soft); border-radius:4px; padding:1px 6px; white-space:nowrap;}
+.agent .model{color:var(--ink-2); opacity:.9;}
+.agent.none{color:var(--warn); background:transparent; border:1px dashed #3A2E14;}
+.branch{opacity:.7;}
+
+.card-foot{margin-top:auto; padding-top:11px; border-top:1px solid var(--hair-soft);
+  display:flex; flex-direction:column; gap:8px;}
+.acts{display:flex; flex-wrap:wrap; gap:8px; align-items:center;}
+.act{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.72rem; letter-spacing:.02em;
+  border:1px solid var(--hair); border-radius:6px; padding:5px 10px; color:var(--ink-2);
+  background:transparent; cursor:pointer; display:inline-flex; align-items:center; gap:6px;
+  transition:border-color .15s ease,color .15s ease,background .15s ease;}
+.act:hover{border-color:var(--accent); color:var(--accent-ink); text-decoration:none;}
+.act.small{font-size:.68rem; padding:4px 9px; color:var(--dim);}
+.act.primary{color:var(--ink); border-color:#2B3A3B; background:var(--raise); font-weight:600;}
+.act.primary.live{color:var(--live); border-color:#255138;}
+.act.primary.live:hover{background:#16251C;}
+.act.primary.guess{border-style:dashed; border-color:#3A3323; color:var(--warn);}
+.act.primary.guess:hover{background:#231D10; color:var(--warn);}
+.guess-flag{font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; opacity:.75;}
 .act.copied{border-color:var(--good); color:var(--good);}
+.card-meta{color:var(--dim);}
+.tags{display:flex; flex-wrap:wrap; gap:5px;}
+.tag{font-size:.62rem; letter-spacing:.08em; text-transform:uppercase; color:var(--dim);
+  border:1px solid var(--hair-soft); border-radius:99px; padding:1px 7px;}
 
-.tasks{list-style:none; margin:0; padding:0; background:var(--rack);
-  border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
-.task{display:grid; grid-template-columns:auto 1fr auto; gap:14px; align-items:baseline;
-  background:var(--surface); padding:12px 16px;}
-.task-state{text-transform:uppercase; letter-spacing:.1em; font-size:.62rem;
-  min-width:56px; color:var(--muted);}
-.task[data-status="ready"] .task-state{color:var(--accent-ink);}
-.task[data-status="doing"] .task-state{color:var(--good);}
-.task[data-status="blocked"] .task-state{color:var(--crit);}
-.task h4{margin:0; font-size:.98rem; font-weight:600;}
-.task p{margin:3px 0 0; color:var(--muted); font-size:.88rem;}
-.task-meta{color:var(--muted); text-align:right; line-height:1.5;}
-.task-agent{color:var(--accent-ink); font-size:.72rem;}
-.task-agent.unassigned{color:var(--warn); opacity:.85;}
-.queue-sum{margin:8px 0 0; text-align:right;}
+/* waiting */
+#waiting .sec-head h2{color:var(--warn);}
+.waiting-list{list-style:none; margin:0; padding:0; border:1px solid var(--hair);
+  border-radius:var(--radius); overflow:hidden;}
+.waiting-list li{display:grid; grid-template-columns:76px 1fr auto; gap:12px; align-items:baseline;
+  padding:11px 14px; background:var(--panel); border-bottom:1px solid var(--hair-soft);}
+.waiting-list li:last-child{border-bottom:0;}
+.kind{text-transform:uppercase; letter-spacing:.1em; font-size:.6rem; color:var(--dim);}
+.waiting-list li[data-tone="crit"] .kind{color:var(--crit);}
+.waiting-list li[data-tone="warn"] .kind{color:var(--warn);}
+.what{font-size:.95rem;}
+.why{font-size:.85rem; color:var(--dim); margin-top:2px; text-wrap:pretty;}
+.where{white-space:nowrap;}
+.all-clear{border:1px solid var(--hair); border-left:3px solid var(--good);
+  border-radius:var(--radius); background:var(--panel); padding:13px 15px; color:var(--ink-2);
+  font-size:.93rem;}
 
-.no-preview{margin:10px 0 0; color:var(--muted); opacity:.75;}
-.preview{margin-top:10px;}
-.preview summary{
-  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.72rem;
-  letter-spacing:.02em; color:var(--accent-ink); cursor:pointer; display:inline-block;
-  border:1px solid var(--hair); padding:4px 10px; list-style:none;
-}
-.preview summary::-webkit-details-marker{display:none;}
-.preview summary::before{content:"\\25B8 "; opacity:.7;}
-.preview[open] summary::before{content:"\\25BE ";}
-.preview summary:hover{border-color:var(--accent); background:var(--accent-soft);}
-.preview summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
-.preview-body{margin-top:10px; display:flex; flex-direction:column; gap:8px;
-  align-items:flex-start;}
-.preview-body iframe{
-  width:100%; height:min(58vh,420px); border:1px solid var(--hair);
-  background:var(--ground); border-radius:0;
-}
-.tag{font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);
-  border:1px solid var(--hair); padding:1px 7px;}
-.strip-due{display:flex; align-items:center; padding:0 18px; font-size:1rem; font-weight:600;
-  border-left:1px solid var(--hair); min-width:88px; justify-content:flex-end;}
-.strip-due[data-tone="crit"]{color:var(--crit);}
-.strip-due[data-tone="warn"]{color:var(--warn);}
-.strip-due[data-tone="calm"]{color:var(--ink);}
-.strip-due[data-tone="none"]{color:var(--muted); font-weight:400;}
+/* lower stack */
+.stack{display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px;
+  align-items:start;}
+.panel{background:var(--panel); border:1px solid var(--hair); border-radius:var(--radius);
+  padding:16px 18px;}
+.panel-head{display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  padding-bottom:9px; border-bottom:1px solid var(--hair-soft); margin-bottom:11px;}
+.panel-head h2{font-size:.72rem; text-transform:uppercase; letter-spacing:.16em; color:var(--ink-2);}
+.focus{border-left:3px solid var(--accent);}
+.focus-line{font-size:1.18rem; font-weight:600; letter-spacing:-.01em; text-wrap:balance;}
+.now-list{list-style:none; margin:12px 0 0; padding:0; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:8px 22px;}
+.now-list li{color:var(--ink-2); font-size:.9rem; padding-left:14px; position:relative;
+  text-wrap:pretty;}
+.now-list li::before{content:""; position:absolute; left:0; top:.62em; width:5px; height:5px;
+  border-radius:99px; background:var(--accent); opacity:.7;}
+.lede{font-size:1rem; color:var(--ink); margin-bottom:10px;}
+.plain-list{margin:6px 0 0; padding-left:16px; color:var(--ink-2); font-size:.9rem;}
+.plain-list li{margin-bottom:4px; text-wrap:pretty;}
 
-/* lower deck */
-.deck{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:clamp(20px,3vw,32px); align-items:start;}
-.panel{background:var(--surface); border:1px solid var(--hair); padding:clamp(16px,2.5vw,22px);}
-.panel-head{display:flex; justify-content:space-between; align-items:baseline; gap:12px;
-  border-bottom:1px solid var(--hair); padding-bottom:8px;}
-
-.ideas,.decisions{list-style:none; margin:0; padding:0; display:flex; flex-direction:column;}
-.idea{padding:14px 0; border-bottom:1px solid var(--hair);}
-.idea:last-child{border-bottom:0;}
-.idea-top{display:flex; justify-content:space-between; align-items:baseline; gap:10px;}
-.idea h4{margin:0; font-size:.98rem; font-weight:600;}
-.idea p{margin:6px 0 0; color:var(--muted); font-size:.9rem;}
-.verdict{text-transform:uppercase; letter-spacing:.1em; font-size:.64rem; color:var(--muted);}
+.rows{list-style:none; margin:0; padding:0;}
+.rows>li{padding:11px 0; border-bottom:1px solid var(--hair-soft);}
+.rows>li:last-child{border-bottom:0;}
+.rows h4{font-size:.95rem;}
+.rows p{font-size:.87rem; color:var(--dim); margin-top:4px; text-wrap:pretty;}
+.row-top{display:flex; justify-content:space-between; gap:10px; align-items:baseline;}
+.verdict{text-transform:uppercase; letter-spacing:.1em; font-size:.6rem; color:var(--dim);}
 .idea[data-tone="accent"] .verdict{color:var(--accent-ink);}
 .idea[data-tone="warn"] .verdict{color:var(--warn);}
 .idea[data-tone="faded"]{opacity:.5;}
-
-.decision{display:grid; grid-template-columns:auto 1fr; gap:14px; padding:14px 0;
-  border-bottom:1px solid var(--hair);}
-.decision:last-child{border-bottom:0;}
-.adr{color:var(--accent-ink); font-size:.85rem; padding-top:2px;}
-.decision h4{margin:0; font-size:.98rem; font-weight:600;}
-.decision p{margin:4px 0 6px; color:var(--muted); font-size:.9rem;}
+.decision{display:grid; grid-template-columns:auto 1fr; gap:12px;}
+.adr{color:var(--accent-ink); font-size:.8rem; padding-top:3px;}
 .decision[data-status="superseded"]{opacity:.55;}
+.decision[data-status="proposed"] .adr{color:var(--warn);}
 
-.week-focus{margin:12px 0 0; font-size:1.05rem; font-weight:600; letter-spacing:-.01em;}
-.week-list{margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:.92rem;}
-.week-list li{margin-bottom:4px;}
+/* queue */
+details.queue-wrap{background:var(--panel); border:1px solid var(--hair);
+  border-radius:var(--radius); padding:12px 16px;}
+details.queue-wrap summary{cursor:pointer; font-size:.72rem; text-transform:uppercase;
+  letter-spacing:.16em; color:var(--ink-2); list-style:none;}
+details.queue-wrap summary::-webkit-details-marker{display:none;}
+details.queue-wrap summary::before{content:"\\25B8"; color:var(--dim); margin-right:8px;}
+details.queue-wrap[open] summary::before{content:"\\25BE";}
+.queue{width:100%; border-collapse:collapse; margin-top:12px; font-size:.88rem;}
+.queue th{text-align:left; font-size:.6rem; text-transform:uppercase; letter-spacing:.12em;
+  color:var(--dim); font-weight:500; padding:0 10px 7px 0; border-bottom:1px solid var(--hair);}
+.queue td{padding:8px 10px 8px 0; border-bottom:1px solid var(--hair-soft); vertical-align:baseline;}
+.queue tr[data-status="done"]{opacity:.45;}
+.queue tr[data-status="doing"] .state{color:var(--live);}
+.queue tr[data-status="ready"] .state{color:var(--accent-ink);}
+.queue tr[data-status="inbox"] .state{color:var(--warn);}
+.queue tr[data-status="blocked"] .state{color:var(--crit);}
+.q-title{color:var(--ink); text-wrap:pretty;}
+.table-scroll{overflow-x:auto;}
 
-.empty{color:var(--muted); font-size:.92rem; margin:12px 0 0;}
-code{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.85em;
-  background:var(--accent-soft); padding:1px 5px;}
-footer{border-top:1px solid var(--hair); padding-top:14px; display:flex;
-  justify-content:space-between; flex-wrap:wrap; gap:8px;}
-a{color:var(--accent-ink);}
-a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
-@media (prefers-reduced-motion:reduce){*{transition:none !important;}}
-@media (max-width:520px){
-  .strip{grid-template-columns:6px 1fr;}
-  .strip-due{grid-column:2; border-left:0; border-top:1px solid var(--hair);
-    justify-content:flex-start; padding:8px 18px 14px;}
+footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
+  border-top:1px solid var(--hair); padding-top:14px;}
+
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important;}}
+@media (max-width:560px){
+  .waiting-list li{grid-template-columns:1fr; gap:4px;}
+  .where{text-align:left;}
 }
+"""
+
+SCRIPT = """
+document.querySelectorAll(".act[data-prompt]").forEach(function (button) {
+  button.addEventListener("click", function () {
+    var text = button.getAttribute("data-prompt");
+    var was = button.textContent;
+    var done = function () {
+      button.textContent = "copied";
+      button.classList.add("copied");
+      setTimeout(function () {
+        button.textContent = was;
+        button.classList.remove("copied");
+      }, 2000);
+    };
+    function fallback() {
+      var field = document.createElement("textarea");
+      field.value = text;
+      field.setAttribute("readonly", "");
+      field.style.position = "fixed";
+      field.style.opacity = "0";
+      document.body.appendChild(field);
+      field.select();
+      try { document.execCommand("copy"); done(); } catch (err) { /* nothing to do */ }
+      document.body.removeChild(field);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else {
+      fallback();
+    }
+  });
+});
 """
 
 
@@ -674,106 +920,94 @@ def build():
     decisions = read_dir("decisions")
     tasks = read_dir("tasks")
 
+    dispatch, routing = load_dispatch()
+    by_slug = {meta["slug"]: meta for meta, _ in projects}
+    by_project = {}
+    for doc in tasks:
+        key = (doc[0].get("project") or "").strip()
+        if key in by_slug:
+            by_project.setdefault(key, []).append(doc)
+
+    waiting_html = render_waiting(projects, tasks, by_slug)
+    waiting_count = waiting_html.count("<li ")
+
     html = f"""<title>The Hangar</title>
 <style>{CSS}</style>
-<main class="board">
-  <header class="masthead">
+<main class="hangar">
+  <header class="top">
     <div>
-      {label("Project HQ")}
+      <span class="kicker">Project HQ</span>
       <h1>The <em>Hangar</em></h1>
     </div>
-    <div class="stamp">
-      <span class="eyebrow">Board built</span><br>
-      <span class="mono dim">{TODAY.strftime("%d %b %Y")}</span>
+    <div class="top-acts">
+      <a class="act small" href="{CAPTURE_URL}" target="_blank" rel="noopener">+ capture</a>
+      <a class="act small" href="{HANGAR_REPO}" target="_blank" rel="noopener">hangar repo</a>
+      <span class="mono dim">built {TODAY.strftime("%d %b %Y")}</span>
     </div>
   </header>
 
-  <div class="counters">{render_counters(projects, ideas, decisions)}</div>
+  <div class="vitals">{render_vitals(projects, tasks, waiting_count)}</div>
+
+  <section id="fleet">
+    <div class="sec-head">
+      <h2>Fleet &mdash; every project, where it stands</h2>
+      <span class="mono dim">projects/</span>
+    </div>
+    {render_fleet(projects, by_project, dispatch, routing)}
+  </section>
+
+  <section id="waiting">
+    <div class="sec-head">
+      <h2>Waiting on you</h2>
+      <span class="mono dim">blocked &middot; needs a verdict &middot; no next action</span>
+    </div>
+    {waiting_html}
+  </section>
 
   {render_now(now_meta, now_body)}
 
-  <section>
-    <div class="section-head">
-      <h2>Queue</h2>
-      <span class="section-actions">
-        <a class="act" href="{CAPTURE_URL}" target="_blank" rel="noopener">+ vangen</a>
-        <span class="mono dim">tasks/</span>
-      </span>
-    </div>
-    {render_tasks(tasks, projects)}
-  </section>
-
-  <section>
-    <div class="section-head">
-      <h2>On the apron</h2>
-      <span class="mono dim">{len(projects)} project{"" if len(projects) == 1 else "s"}</span>
-    </div>
-    {render_projects(projects)}
-  </section>
-
-  <div class="deck">
+  <div class="stack">
+    {render_week(weeks)}
     <section class="panel">
       <div class="panel-head">
-        <h2 class="eyebrow">Parked ideas</h2>
+        <h2>Parked ideas</h2>
         <span class="mono dim">{len(ideas)}</span>
       </div>
       {render_ideas(ideas)}
     </section>
-
     <section class="panel">
       <div class="panel-head">
-        <h2 class="eyebrow">Decision log</h2>
+        <h2>Decision log</h2>
         <span class="mono dim">{len(decisions)}</span>
       </div>
       {render_decisions(decisions)}
     </section>
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Night log</h2>
+        <span class="mono dim">planning/night-log.md</span>
+      </div>
+      {render_nightlog()}
+    </section>
   </div>
 
-  {render_week(weeks)}
+  <details class="queue-wrap">
+    <summary>Full queue &mdash; {len(tasks)} task{"" if len(tasks) == 1 else "s"}, done included</summary>
+    <div class="table-scroll">{render_queue(tasks, by_slug, dispatch, routing)}</div>
+  </details>
 
   <footer>
     <span class="mono dim">Generated from markdown &middot; python3 dashboard/build.py</span>
     <span class="mono dim">github.com/olivervanderlugt/project-management</span>
   </footer>
 </main>
-<script>
-document.querySelectorAll(".act[data-prompt]").forEach(function (button) {{
-  button.addEventListener("click", function () {{
-    var text = button.getAttribute("data-prompt");
-    var done = function () {{
-      var was = button.textContent;
-      button.textContent = "copied - paste into Claude Code";
-      button.classList.add("copied");
-      setTimeout(function () {{
-        button.textContent = was;
-        button.classList.remove("copied");
-      }}, 2200);
-    }};
-    if (navigator.clipboard && navigator.clipboard.writeText) {{
-      navigator.clipboard.writeText(text).then(done, fallback);
-    }} else {{
-      fallback();
-    }}
-    function fallback() {{
-      var field = document.createElement("textarea");
-      field.value = text;
-      field.setAttribute("readonly", "");
-      field.style.position = "fixed";
-      field.style.opacity = "0";
-      document.body.appendChild(field);
-      field.select();
-      try {{ document.execCommand("copy"); done(); }} catch (err) {{ /* nothing to do */ }}
-      document.body.removeChild(field);
-    }}
-  }});
-}});
-</script>
+<script>{SCRIPT}</script>
 """
     OUT.write_text(html, encoding="utf-8")
     print(f"built {OUT.relative_to(ROOT)}")
     print(
-        f"  {len(tasks)} tasks  {len(projects)} projects  {len(ideas)} ideas  "
-        f"{len(decisions)} decisions  {len(weeks)} weekly reviews"
+        f"  {len(projects)} projects  {len(tasks)} tasks  {waiting_count} waiting  "
+        f"{len(ideas)} ideas  {len(decisions)} decisions  {len(weeks)} weekly reviews"
     )
 
 
