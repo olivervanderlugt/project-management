@@ -1,10 +1,10 @@
 ---
 title: F-8 — collapse the release gate to one value per workspace
 project: percentile
-status: ready
+status: done
 added: 2026-08-07
 effort: M
-branch:
+branch: main
 ---
 
 ## Done means
@@ -22,28 +22,13 @@ workspace holding 600 of 1599 rows gets 600× the declared epsilon. Full write-u
 `docs/11-privacy-audit.md`, F-8. Prerequisite: merge branch
 `claude/percentile-assessment-mwpi8t` into main first (carries the F-2 fix).
 
-Steps:
-
-1. `git checkout main`
-2. `git merge claude/percentile-assessment-mwpi8t`
-3. Open `src/core/privacy/release-gate.ts`
-4. Find `const values = eligible.map(...)` (gate step 4)
-5. Above it, group `eligible` rows by `workspaceId`
-6. Replace each group with one number: subject-weighted mean of its values
-7. Make `values` = that list (one entry per workspace)
-8. Add one assertion: after the collapse, rows === distinct workspaces
-9. `npm test`
-10. The four `VULN-4` tests now fail → rename to `HOLDS-*`, flip assertions
-    (attack must *not* work); keep `HOLDS-10` as the control
-11. `npm test` again — all green
-12. `npm run typecheck`
-13. Mark F-8 fixed in `docs/11-privacy-audit.md` (dated note, like F-2's)
-14. Change CLAUDE.md's "next thing to build" to F-16
-15. Commit + push
-16. In project-management: set percentile.md `next:` to F-16
-17. `python3 dashboard/build.py`
-18. Commit + push this repo
-
-Steps 5–7 are the entire fix; the rest is ceremony. Privacy-critical code —
-per the parent task's rule, not for an unattended overnight run unless Ollie
-has approved this plan (he has seen it, 2026-08-07 session).
+**Done 2026-08-07**, commit `ed5bcf1` on `olivervanderlugt/percentile` main,
+with the F-2 branch merged first as planned. All four points of the finish line
+crossed: 199 tests green, guards named `HOLDS-12a–d` and verified to go red
+against the un-collapsed gate, `HOLDS-10` kept as the control. One
+interpretation call, recorded in docs/11: "weight the resulting distribution by
+subjectCount" is applied *inside* the collapse (a workspace's rows weighted by
+their subjectCount), not across workspaces — cross-workspace weighting would
+reintroduce the very sensitivity understatement F-8 is about. F-2's
+value-influence residual is inherited, not closed. Next in the audit's queue:
+F-16.
