@@ -48,6 +48,7 @@ Vaste lessen uit eerdere incidenten. Ze gelden naast alles hierboven, niet in
 plaats ervan.
 
 - **Never trigger a workflow or deploy, not even to verify** — Never trigger a workflow or a deploy — no `workflow_dispatch`, no `actions_run_trigger`, no Pages or hosting API calls — not even to verify a change works. Verification stops at local and on your own branch. A finish line outside your reach is a `false` with evidence, not a reason to reach further.
+- **A generator owns only the lines it generated itself** — When a script or agent (re)writes a file that Ollie also writes in by hand, it may only replace lines that match its own generated pattern; every other line survives verbatim. Silently overwriting hand-written content is data loss, whatever the section is called — if in doubt, keep the line and put the generated block below it.
 
 ## What you return
 
