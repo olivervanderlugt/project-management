@@ -68,8 +68,17 @@ Both are now written up as tasks with the audit's own fix in them:
   `inbox` until you pick. The five-point ladder carries no information below ~10k
   contributors; publishing fewer statistics is free and fixes it today at n≈1000.
 
-Nothing should be licensed to a third party before audit items 1–3 are done, and docs/10's
-seven legal blockers stand before any data licence regardless.
+- `tasks/percentile-b3-b4-sdk-blockers.md` (`ready`) — found 2026-08-08 by reading the code
+  against docs/10 rather than the audit. The audit is scoped to the *release gate*, so its
+  order of work never reaches the SDK or ingest, where two of the seven legal blockers live
+  and are still open: the SDK mints a persistent `localStorage` device id gated on opt-*out*
+  rather than on granted consent (B3), and jurisdiction is a client timezone string taken at
+  face value (B4). Working the audit to completion does not clear the licence blockers.
+
+Blocker score read from the code, not the docs: B1, B2 and B5 fixed; B3, B4 and B7 open;
+B6 partly — F-3/F-4 fixes its key, F-15 its durability, and it needs both. Nothing should be
+licensed to a third party before audit items 1–3 are done, and the seven legal blockers stand
+before any data licence regardless.
 
 ## Open questions
 

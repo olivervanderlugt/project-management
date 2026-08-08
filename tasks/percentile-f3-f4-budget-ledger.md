@@ -48,3 +48,8 @@ build on a fork of the gate.
 
 `test/adversarial.test.ts` is a red-team suite where `VULN-*` tests pass
 *because an attack works*. Read its header before touching it.
+
+**This does not close legal blocker B6 on its own.** B6 wants the budget keyed
+per cohort per period *and* persisted (Postgres, not a `Map`). This task fixes
+the key; durability is F-15. Doing only this leaves B6 open behind a green test
+suite. See `tasks/percentile-b3-b4-sdk-blockers.md` for the full blocker state.
