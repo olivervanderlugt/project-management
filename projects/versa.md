@@ -1,6 +1,6 @@
 ---
 title: Versa
-description: Song lyrics read line-by-line next to a translation, AI-drafted and improved by the community.
+description: Song lyrics line-by-line beside a translation — AI drafts them, the community votes and improves, LRC timestamps sync them karaoke-style. No API keys needed.
 status: active
 next:
 due:

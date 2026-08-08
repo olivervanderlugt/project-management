@@ -1,6 +1,6 @@
 ---
 title: Quizzly
-description: A live quiz platform — hosts build quizzes, players join from their phones with a PIN, self-hosted in one Docker container.
+description: A live quiz platform: ten question types, phones as buzzers, and blind group quizzes where nobody sees each other's questions until they hit the screen.
 status: active
 next: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo
 due:

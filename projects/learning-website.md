@@ -1,6 +1,6 @@
 ---
 title: Learn — personal learning app
-description: A playable skill tree across CS, maths, physics and robotics — one shared knowledge graph, no backend.
+description: A playable skill tree over one shared knowledge graph — 133 lessons across CS, maths, physics and robotics, in the browser with no backend.
 status: active
 next: "Next chain, Ollie's call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data & BI vs db-depth — see learning-website CLAUDE.md 'Next items'"
 due:

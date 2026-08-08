@@ -1,6 +1,6 @@
 ---
 title: The Hangar
-description: This board: a personal project HQ in markdown, with a generated dashboard and agents that work the queue.
+description: The board you're looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.
 status: active
 next: Build weekly-review-automatic — the script that writes the weekly file from real commits
 due:
