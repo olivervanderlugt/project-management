@@ -256,7 +256,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Percentile</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
-          <div class="next"><span class="lane-label">next</span><p class="next-text">Review and merge PR #1 (F-16) — then F-3/F-4, the per-workspace epsilon ledger</p></div>
+          <div class="next"><span class="lane-label">next</span><p class="next-text">Merge PR #1, then fix the two consent bugs in the SDK (tasks/percentile-b3-b4-sdk-blockers.md)</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="3 of 6 tasks done"><span style="width:50%"></span></div><span class="mono dim">3/6 done</span></div>
           
           
@@ -265,7 +265,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <ul class="lane-list"><li><span class="dot" data-status="ready" aria-hidden="true"></span><span class="state mono">ready</span><span class="lane-text">B3/B4 — the two legal blockers the privacy audit never looked at</span><span class="agent">percentile <span class="model">opus</span></span></li><li><span class="dot" data-status="ready" aria-hidden="true"></span><span class="state mono">ready</span><span class="lane-text">F-3/F-4 — per-workspace epsilon ledger keyed on population, not label</span><span class="agent">percentile <span class="model">opus</span></span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">F-11 — decide what the ladder publishes below 10k contributors</span><span class="mono dim">needs a verdict</span></li></ul>
           </div>
           <div class="card-foot">
-            <div class="acts"><a class="act primary guess" href="https://olivervanderlugt.github.io/percentile/" target="_blank" rel="noopener" title="Derived GitHub Pages URL, never opened by anyone here: https://olivervanderlugt.github.io/percentile/">Preview &#8599;<span class="guess-flag">unverified</span></a><a class="act small" href="https://github.com/olivervanderlugt/percentile" target="_blank" rel="noopener" title="olivervanderlugt/percentile">repo</a><button class="act small run-local" type="button" data-slug="percentile">run local</button><a class="act small local-link" data-slug="percentile" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on Percentile (olivervanderlugt/percentile). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Review and merge PR #1 (F-16) — then F-3/F-4, the per-workspace epsilon ledger When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="acts"><a class="act primary guess" href="https://olivervanderlugt.github.io/percentile/" target="_blank" rel="noopener" title="Derived GitHub Pages URL, never opened by anyone here: https://olivervanderlugt.github.io/percentile/">Preview &#8599;<span class="guess-flag">unverified</span></a><a class="act small" href="https://github.com/olivervanderlugt/percentile" target="_blank" rel="noopener" title="olivervanderlugt/percentile">repo</a><button class="act small run-local" type="button" data-slug="percentile">run local</button><a class="act small local-link" data-slug="percentile" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on Percentile (olivervanderlugt/percentile). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Merge PR #1, then fix the two consent bugs in the SDK (tasks/percentile-b3-b4-sdk-blockers.md) When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <div class="card-meta mono dim">TypeScript, Node 22, SDK + API + MCP server</div>
             <div class="tags"><span class="tag">startup</span><span class="tag">analytics</span><span class="tag">mcp</span></div>
           </div>
@@ -478,9 +478,17 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <section class="panel">
       <div class="panel-head">
         <h2>Decision log</h2>
-        <span class="mono dim">3</span>
+        <span class="mono dim">4</span>
       </div>
       <ul class="rows">
+        <li class="decision" data-status="proposed">
+          <span class="adr mono">0004</span>
+          <div>
+            <h4>Cut Percentile&#x27;s data co-op, ship the agent-readable analytics</h4>
+            <p>**Cut the data co-op and the benchmark licensing from the product Percentile is trying to ship. Keep the analytics and the MCP integration, and sell that.**</p>
+            <span class="mono dim">08 Aug 2026 &middot; proposed</span>
+          </div>
+        </li>
         <li class="decision" data-status="proposed">
           <span class="adr mono">0003</span>
           <div>

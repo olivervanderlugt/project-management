@@ -1,7 +1,7 @@
 ---
 title: Percentile
 status: active
-next: Review and merge PR #1 (F-16) — then F-3/F-4, the per-workspace epsilon ledger
+next: Merge PR #1, then fix the two consent bugs in the SDK (tasks/percentile-b3-b4-sdk-blockers.md)
 due:
 started:
 repo: olivervanderlugt/percentile
@@ -11,76 +11,98 @@ tags: startup, analytics, mcp
 
 ## What this is
 
-Consent-first analytics and a benchmark data network for apps built by AI. One line of SDK
-in the page; the coding agent reads the metrics back through MCP; apps that opt in earn a
-share of the revenue from the anonymous benchmark datasets they help create.
+Consent-first analytics for apps built by AI. One line of SDK in the page, and the coding
+agent reads the metrics back through MCP — so the developer who cannot read their own app's
+code can still ask their agent how the app is doing, and have it act on the answer.
 
-The pitch it makes: millions of people now ship apps whose code they cannot read, and have
-no idea whether 14% activation is good or terrible. Percentile answers that by aggregating
-across the network.
+The pitch: millions of people now ship apps they did not write and cannot audit, and have no
+idea whether 14% activation is good or terrible.
 
-## Where it stands
+**As of decision 0004 that pitch is being narrowed.** Percentile was designed as two
+products — the analytics above, and a benchmark data network where opted-in apps are pooled
+into anonymous cohort statistics, those datasets are licensed, and contributors take a
+revenue share. The co-op is the half that answers "is 14% good", and it is also the half
+that carries every legal cost and only works at a scale that is years away. Decision 0004
+proposes cutting it and selling the analytics on its own. **That decision is `proposed`, not
+accepted** — until Ollie says otherwise, the co-op code stays where it is.
 
-The privacy audit (docs/11) is the working plan; its "recommended order of work" is the
-backlog. Both Critical findings from the re-audit are now closed, and the third item is
-built but unmerged.
+## Why the co-op is being cut
 
-**F-16 is built and waiting on you** (PR olivervanderlugt/percentile#1, branch
-`night/percentile-f16-count-ladder`, opened 2026-08-07, still open). Published counts became
-k-threshold bands pinned to the public k-anonymity constants, and the refusal explanation
-stopped leaking the exact shortfall — a one-query exact-count inversion that reached the
-API, MCP and rollup wire. The two `VULN-6` binary-search tests are now `HOLDS-16a/b` guards.
-Tests 200/200, typecheck clean. The checker refuted the first pass, so one residual is
-labelled honestly rather than claimed fixed: the bare release/refuse decision is still a
-deterministic oracle, and an attacker who can issue refusals bisects the public 34%
-dominance cap to recover a victim's exact subject count in 14–15 queries. That is F-6's root
-cause, not F-16's, and it is in the suite as an explicitly-labelled KNOWN-OPEN `VULN` test.
-Nothing after this should branch off `main` until the PR lands.
+Three measured reasons, all from the project's own documents:
 
-**F-2 is fixed** (2026-08-06): the release path used to license data on a
-developer-set workspace toggle without ever reading the consent ledger, so a subject who
-withdrew was still in the licensed dataset. Observations now carry a per-subject
-`coop_licensing` count, k-anonymity counts only licensed subjects, and the gate refuses
-rows without any. Tests 192 → 199, all green. One residual is recorded in docs/11: a
-subject who declined licensing no longer counts toward thresholds but can still influence
-the value their workspace contributes.
+**It needs density nobody has.** The privacy audit measured the crossover: the published
+median only means anything at roughly 1,000 contributing workspaces in one comparable
+cohort, and the five-point ladder needs about 10,000. Below that, a cohort of ten apps all
+reporting the same number and a cohort of ten spread across the whole range publish the same
+statistics. So it cannot be charged for until it is large, and it cannot get large on revenue
+it cannot charge.
 
-**F-8 is fixed** (2026-08-07, commit `ed5bcf1`): noise was calibrated per *row* while
-privacy is declared per *workspace*, so a workspace stuffing 600 of 1599 rows took 600×
-the declared epsilon and its value was readable from a single published mean. The gate now
-collapses to one subject-weighted value per workspace before any noise mechanism runs and
-asserts it; the attack reproductions are converted to `HOLDS-12` guards. The F-2 branch
-was merged first, so everything is on `main`.
+**The legal bill comes first and does not shrink.** `docs/10-legal-review.md` lists seven
+blocking fixes and nine items needing paid outside counsel — an EU anonymisation opinion,
+data-broker analysis in Oregon and Vermont, a CalPrivacy registration narrative, a licence
+template. California registration alone is about €6,000 before any advice. Every one of those
+costs exists because data is licensed to a third party; none is needed to run the analytics.
 
-Source is split across `src/api`, `src/core`, `src/sdk` and `src/mcp`. Tests cover
-privacy, consent durability, adversarial cases, special-category data, rollup and
-pipeline. `test/adversarial.test.ts` is a red-team suite where `VULN-*` tests pass
-*because an attack works* — read its header before touching it.
+**Privacy and usefulness pull against each other.** The stronger the guarantee, the less the
+published numbers say. The audit's own recommendation is to publish one honest number rather
+than five meaningless ones.
 
-## Next after next
+None of this is a failure of the engineering, which is in good shape — see below.
 
-Both are now written up as tasks with the audit's own fix in them:
+## Where the code stands
 
-- `tasks/percentile-f3-f4-budget-ledger.md` (`ready`) — the budget is keyed on
+**PR #1 is built and waiting on you** (`night/percentile-f16-count-ladder`, opened
+2026-08-07). Published counts became k-threshold bands, and the refusal message stopped
+leaking the exact shortfall — a one-query inversion that reached the API, MCP and rollup
+wire. Tests 200/200, typecheck clean. The checker refuted the first pass, so one residual is
+labelled honestly rather than claimed fixed: an attacker who can trigger refusals still
+bisects the public 34% dominance cap to recover a subject count in 14–15 queries. That is a
+different finding's root cause and is in the suite as an explicitly KNOWN-OPEN test.
+
+Two Critical findings were closed before it. **Consent is now actually consulted on the
+release path** (2026-08-06): it used to license data on a developer-set workspace toggle
+without ever reading the consent ledger, so someone who withdrew stayed in the dataset. **The
+privacy unit was fixed** (2026-08-07, `ed5bcf1`): noise was calibrated per row while privacy
+is declared per workspace, so a workspace holding 600 of 1,599 rows took 600× the declared
+budget and its value was readable from a single published mean.
+
+Source is split across `src/api`, `src/core`, `src/sdk` and `src/mcp`. Tests cover privacy,
+consent durability, adversarial cases, special-category data, rollup and pipeline.
+`test/adversarial.test.ts` is a red-team suite where `VULN-*` tests pass *because an attack
+works* — read its header before touching it.
+
+## What to do next
+
+**Urgent whatever happens to the co-op** — these are ordinary consent bugs in the analytics
+layer, not benchmark concerns:
+
+- `tasks/percentile-b3-b4-sdk-blockers.md` (`ready`) — the SDK writes a persistent
+  `localStorage` device id in its constructor, gated on opt-*out* rather than on granted
+  consent, and jurisdiction is read from the browser's timezone and trusted as given. Anyone
+  can set their clock to `America/New_York` and be handled under US rules instead of EU ones.
+  Found 2026-08-08 by reading the code against docs/10; the audit never reaches these files
+  because it is scoped to the release gate.
+
+**Only matters if the co-op survives:**
+
+- `tasks/percentile-f3-f4-budget-ledger.md` (`ready`) — the query budget is keyed on
   attacker-supplied labels, so 50 of 50 releases of one population pass a budget permitting
-  10 just by varying `?period=`. This is where F-8's and F-16's attacks get their queries.
-- `tasks/percentile-f11-ladder-decision.md` (`inbox`) — a product decision, so it stays
-  `inbox` until you pick. The five-point ladder carries no information below ~10k
-  contributors; publishing fewer statistics is free and fixes it today at n≈1000.
+  10, just by varying `?period=`. This is where the other attacks get their queries cheaply.
+- `tasks/percentile-f11-ladder-decision.md` (`inbox`) — publish one number or five. Largely
+  answered by decision 0004, but keep it until that decision is accepted.
 
-- `tasks/percentile-b3-b4-sdk-blockers.md` (`ready`) — found 2026-08-08 by reading the code
-  against docs/10 rather than the audit. The audit is scoped to the *release gate*, so its
-  order of work never reaches the SDK or ingest, where two of the seven legal blockers live
-  and are still open: the SDK mints a persistent `localStorage` device id gated on opt-*out*
-  rather than on granted consent (B3), and jurisdiction is a client timezone string taken at
-  face value (B4). Working the audit to completion does not clear the licence blockers.
+A paste-ready prompt covering all three fixes: `reference/percentile-fix-prompt.md`.
 
-Blocker score read from the code, not the docs: B1, B2 and B5 fixed; B3, B4 and B7 open;
-B6 partly — F-3/F-4 fixes its key, F-15 its durability, and it needs both. Nothing should be
-licensed to a third party before audit items 1–3 are done, and the seven legal blockers stand
-before any data licence regardless.
+Legal blocker score, read from the code rather than the documents: three fixed (subject-level
+consent, epoch-independent withdrawal, the exponential mechanism), three open (the two SDK
+bugs above, plus the public no-reidentification commitment, which is website and contract
+work). One is half-done — the budget needs both a population-derived key and durability
+across restarts, and has neither.
 
 ## Open questions
 
-- This is the one project with a revenue model in it. Per decision 0001, that makes it the
-  project that would justify a real app.
+- Decision 0004 is `proposed`. Accepting it means no lawyer is hired, and the revenue-share
+  story — the thing that made this distinctive — goes away.
+- Per decision 0001, Percentile was the project whose revenue model would justify building a
+  real app for the Hangar. The narrowed product can still earn, but less, and later. That
+  justification weakens rather than disappears.
