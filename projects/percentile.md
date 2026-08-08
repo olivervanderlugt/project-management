@@ -93,6 +93,18 @@ layer, not benchmark concerns:
 
 A paste-ready prompt covering all three fixes: `reference/percentile-fix-prompt.md`.
 
+**Distance to launch: the hard half is done, the boring half hasn't started.** The privacy
+maths, the SDK and the MCP server are built and tested. Storage is in-memory, so a restart
+loses everything; nothing issues an API key; nothing is deployed; there is no UI of any kind
+in the repo. Those are exactly the four unticked items in `docs/07`'s Phase 0, and they are
+the whole gap — roughly 4–8 focused weekends solo. The full assessment, the cut-to-the-bone
+MVP and a rewritten go-to-market are in `reference/percentile-launch-plan.md`.
+
+Note that `docs/06-go-to-market.md` is written entirely around cohort density for the
+benchmark network, so decision 0004 voids most of it. The two channels that survive — the
+free PII leak scanner as a public wedge, and agent-native distribution through MCP — are the
+two it already ranked highest.
+
 Legal blocker score, read from the code rather than the documents: three fixed (subject-level
 consent, epoch-independent withdrawal, the exponential mechanism), three open (the two SDK
 bugs above, plus the public no-reidentification commitment, which is website and contract
