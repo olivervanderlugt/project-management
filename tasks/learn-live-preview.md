@@ -1,7 +1,7 @@
 ---
 title: Put Learn online so it has a live preview
 project: learning-website
-status: ready
+status: doing
 added: 2026-08-06
 effort: S
 branch:
