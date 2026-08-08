@@ -21,6 +21,14 @@ No backend and no router, by design. State is one versioned localStorage blob.
 
 ## Where it stands
 
+Onboarding + guide mode shipped 2026-08-08 (Opus built, Fable gate-verified, merged to
+main, deploy green): a replayable 4-step first-run tour (tappable status-card legend,
+the ⏩ honesty mechanic, pick-a-start-domain that flies the map there) plus 5 contextual
+💡 guide tips that fire the first time each feature becomes relevant — all off one derived
+show-rule so legacy profiles with progress never see the tour, three new persisted fields,
+export/import + legacy blobs verified, both themes. One real crash bug found and fixed by
+the browser gate (AnimatePresence double-click step overflow).
+
 The backend & APIs chain landed on main 2026-08-07 (Opus built, Fable gate-verified,
 deploy green): web-http → web-server → web-api extending the `applied-software` domain,
 tools-exam grown 10→14. That closes the whole web-and-apis skill family — employability
