@@ -1,10 +1,10 @@
 ---
 title: Put Learn online so it has a live preview
 project: learning-website
-status: ready
+status: done
 added: 2026-08-06
 effort: S
-branch:
+branch: main
 ---
 
 ## Done means
@@ -27,3 +27,9 @@ Two things that will bite:
   -f build_type=workflow` call that worked for the Hangar.
 
 Do not touch the curriculum or lesson content. This task is about deployment.
+
+Closed 2026-08-07: every finish line is met — the Pages workflow deploys on
+push to `main`, https://olivervanderlugt.github.io/learning-website/ loads
+(browser-verified per the repo's CLAUDE.md), and the Hangar project file
+carries that `preview:` URL. Done by the 2026-08-07 merge session, recorded
+here on the next manager pass.

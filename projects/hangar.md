@@ -1,11 +1,11 @@
 ---
 title: The Hangar
 status: active
-next: Get a green Pages deploy and fill preview with the live board URL
+next: Build weekly-review-automatic — the script that writes the weekly file from real commits
 due:
 started: 2026-08-06
 repo: olivervanderlugt/project-management
-preview:
+preview: https://olivervanderlugt.github.io/project-management/
 stack: Markdown, Python 3, GitHub Pages
 tags: tooling, personal
 ---
@@ -24,12 +24,12 @@ without me re-explaining the structure.
 Structure, templates and the dashboard build are done. The four existing GitHub
 repos were imported on 2026-08-06; two of them turned out to be empty.
 
-The board is **not live yet**. The Pages workflow exists and runs on every push,
-but on 2026-08-06 not one run had ever reached the deploy step: two runs died on
-a GitHub incident (`Failed to resolve action download info: Service
-Unavailable`) and the rest were cancelled by the concurrency group before they
-finished. `preview:` is therefore blank — an honest blank beats a link that
-404s. Fill it in once a run is green and the URL actually loads.
+The board is **live** as of 2026-08-07: https://olivervanderlugt.github.io/project-management/
+answers 200 and serves the redesigned dashboard (checked with curl before
+filling `preview:` — the 2026-08-06 runs had all died on a GitHub incident or
+been cancelled by the concurrency group, which is why the field stayed blank a
+day). The dashboard itself was rebuilt 2026-08-07 around an all-projects
+status view with per-project Preview buttons.
 
 The two active projects that sat there with no next action both got one on
 2026-08-06 (Learn: merge the parked A+B branches; Percentile: F-8 from the

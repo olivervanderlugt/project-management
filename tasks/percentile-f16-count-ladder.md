@@ -1,10 +1,10 @@
 ---
 title: F-16 — stop publishing a deterministic function of an attacker-movable count
 project: percentile
-status: ready
+status: done
 added: 2026-08-07
 effort: S
-branch:
+branch: night/percentile-f16-count-ladder
 ---
 
 ## Done means

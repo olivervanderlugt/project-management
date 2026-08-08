@@ -154,6 +154,29 @@ suggestions — they exist because nobody is awake to catch a mistake:
 6. **Never touch credentials, deploys or anything that costs money.**
 7. **Leave a trail.** Every night writes to `planning/night-log.md`: what it
    did, what it refused to do, and why.
+8. **No subagents? Play both roles yourself.** Routine-fired sessions may lack
+   the Agent/Task tool (seen on 2026-08-08) — check at the start. If delegation
+   works, use the builder and checker agents as designed. If not: build first,
+   then, as a separate step, adversarially check your own diff against the
+   task's `## Done means` as if someone else wrote it and you must prove it is
+   *not* done. Never push a build that skipped the check, and note in the
+   night-log that the check ran inline.
+9. **Trail before work, not after.** Set the task to `doing` and write the
+   night-log's opening block BEFORE the first expensive step, and commit to
+   the night branch after every self-contained step. A usage-limit cutoff
+   (5-hour or weekly) kills the session mid-run with no warning and no
+   notification — whatever is uncommitted at that moment is gone. Small
+   commits are the only recovery mechanism that survives it.
+10. **Never leave `doing` behind.** A task found `doing` at the start of a run,
+    with no session actually on it, is the residue of a cut-off run: set it
+    back to `ready` (or `blocked`, with whatever the night-log and branch
+    show), note the reset in the night-log, and only then pick work.
+11. **On limit pressure, downgrade.** If a usage-limit error appears mid-run,
+    stop building immediately: commit what exists, set the task's status
+    honestly, write the night-log line, exit. And know that a firing skipped
+    because the account was already at its limit is simply gone — runs are
+    not queued or made up. Background and limits: see
+    `reference/nightrun-usage-limits.md`.
 
 If a task turns out to be bigger or vaguer than it looked, stop and rewrite it
 as two smaller `ready` tasks. Half-finished code is worse than none.
