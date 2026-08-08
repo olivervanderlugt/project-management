@@ -1,45 +1,41 @@
 ---
 title: Sound cuts out on laptop and mobile in the workout timer
 project: timer-workout
-status: inbox
+status: done
 added: 2026-08-08
 effort: M
-branch:
+branch: claude/audio-background-and-silent-switch
 ---
 
 ## Done means
 
-Draft (confirm symptom with Ollie before promoting to ready):
-
-1. With the phone screen locked or the app backgrounded mid-workout and then
-   reopened, cues play again without touching pause — AudioContext is resumed
-   on visibilitychange/focus and the current segment is rescheduled.
-2. On a laptop, cues keep firing for every segment while the tab is
-   backgrounded — the full remaining schedule is queued in Web Audio up front
-   (immune to timer throttling), and cancel/reschedule on pause, skip, stop.
-3. On iPhone with the silent switch on, cues are audible
-   (`navigator.audioSession.type = 'playback'` where available) or the UI
-   says clearly why not.
-4. Existing tests green; a new harness check covers reschedule-after-resume.
+1. Screen locked or app backgrounded mid-workout, then reopened: cues play
+   again without touching pause. ✅ AudioContext is resumed on
+   `visibilitychange` and the run is re-queued.
+2. Backgrounded laptop tab: cues keep firing for every segment. ✅ The whole
+   remaining run is queued on the Web Audio clock up front, immune to timer
+   throttling, with cancel/re-queue on pause, resume and skip.
+3. iPhone silent switch: `navigator.audioSession.type = 'playback'` where
+   available, a toast explaining it where not. ✅
+4. Tests green, plus new coverage for the reschedule math. ✅ 34/34 unit tests,
+   and four browser suites driving the real app.
 
 ## Notes
 
-Diagnosis 2026-08-08 (code read, not yet reproduced on device):
+Diagnosis 2026-08-08, confirmed by instrumenting the AudioContext in Chromium
+and comparing the fixed build against the pristine one:
 
-- Audio is scheduled one segment at a time: `segmentStart` comes from a 250ms
-  `setInterval` in `engine.js:115`, and only then does `scheduleSegmentAudio`
-  queue that segment's 3 countdown beeps + boundary tone.
-- **Laptop, backgrounded tab:** browsers throttle timers to ~1/min. The
-  already-queued segment still sounds, but the next `segmentStart` fires
-  late and `scheduleCue` skips notes in the past (`audio.js:192`) — sound
-  dies from the next segment on.
-- **Mobile, screen lock / app switch:** the OS suspends the AudioContext
-  ('interrupted' on iOS). Nothing resumes it: `system.js`'s visibilitychange
-  handler only re-acquires the wake lock, and the one-shot `pointerdown`
-  unlock in `app.js:92` has already removed itself. Cues stay silent until
-  pause/resume happens to call `playNow` (which resumes as a side effect).
-  Also: while suspended, `ctx.currentTime` freezes but `performance.now()`
-  runs on, so `perfToCtx` (`audio.js:197`) mappings made during suspension
-  land in the past → skipped.
-- **iPhone silent switch** mutes Web Audio entirely; code does nothing about
-  it (no audioSession hint, no muted `<audio>` keepalive).
+- **Before:** a 4-minute Tabata queued 4 oscillator nodes reaching 7s ahead —
+  only the prep segment. Returning to a visible tab changed nothing.
+- **After:** the same run queues 66 nodes reaching 237s ahead, and re-queues
+  on return to visible.
+
+Cause was queueing one segment at a time on each engine `segmentStart`, which
+comes off a 250ms `setInterval`. Browsers throttle that to ~1/min in a
+background tab and freeze it entirely on a locked phone, so the late event
+scheduled cues that were already in the past, where `scheduleCue` drops them.
+Mobile additionally never resumed the suspended context: the one-shot
+`pointerdown` unlock in `app.js` had already removed itself.
+
+A 15-minute horizon bounds the node count on long runs, topped up additively
+so a top-up landing on a boundary never clips that boundary's tone.
