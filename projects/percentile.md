@@ -111,6 +111,17 @@ bugs above, plus the public no-reidentification commitment, which is website and
 work). One is half-done — the budget needs both a population-derived key and durability
 across restarts, and has neither.
 
+## The market moved — read before building
+
+Checked 2026-08-08 against the current market rather than `docs/05`: **ten major analytics
+vendors now ship official MCP servers**, PostHog's among them, connecting Claude Code, Cursor
+and Windsurf to funnels, trends and raw queries. "Ask your agent about your metrics" was the
+narrowed product's whole differentiator and it is now a checkbox feature on free, mature
+tools. The reframe this points at — selling consent and privacy compliance rather than
+analytics, which is what the code already does best — is in
+`reference/percentile-why-would-anyone-use-it.md`. Nothing in the MVP prompt is wasted either
+way, but the PII scanner should move first.
+
 ## Open questions
 
 - Decision 0004 is `proposed`. Accepting it means no lawyer is hired, and the revenue-share
