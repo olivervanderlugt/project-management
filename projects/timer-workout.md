@@ -1,7 +1,8 @@
 ---
 title: Workout Timer
+description: A zero-dependency interval timer — EMOM, Tabata, AMRAP and three more modes, drift-free off the wall clock, runs offline from a local file.
 status: active
-next: Test the audio fix on Ollie's phone and laptop, then merge claude/audio-background-and-silent-switch
+next: Try the audio fix on your own phone and laptop
 due:
 started: 2026-08-07
 repo: olivervanderlugt/timer-workout

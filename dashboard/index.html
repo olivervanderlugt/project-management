@@ -68,6 +68,7 @@ a.vital:hover{border-color:var(--accent); text-decoration:none;}
 .card-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px;
   flex-wrap:wrap;}
 .card-head h3{font-size:1.06rem;}
+.card-desc{font-size:.88rem; color:var(--ink-2); text-wrap:pretty; margin-top:-4px;}
 .chips{display:flex; gap:6px; flex-wrap:wrap;}
 .pill{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.64rem; letter-spacing:.1em;
   text-transform:uppercase; border:1px solid var(--hair); border-radius:99px; padding:2px 8px;
@@ -241,6 +242,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Learn — personal learning app</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">A playable skill tree over one shared knowledge graph — 133 lessons across CS, maths, physics and robotics, in the browser with no backend.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">Next chain, Ollie&#x27;s call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data &amp; BI vs db-depth — see learning-website CLAUDE.md &#x27;Next items&#x27;</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="2 of 2 tasks done"><span style="width:100%"></span></div><span class="mono dim">2/2 done</span></div>
           
@@ -256,6 +258,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Percentile</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">Consent-first analytics for apps built by AI — one line of SDK, metrics read back through MCP, and 30% of the benchmark-data revenue back to the apps that contribute.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">F-16 — stop publishing a deterministic function of an attacker-movable count (docs/11)</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="3 of 3 tasks done"><span style="width:100%"></span></div><span class="mono dim">3/3 done</span></div>
           
@@ -271,6 +274,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Quizzly</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">A live quiz platform: ten question types, phones as buzzers, and blind group quizzes where nobody sees each other&#x27;s questions until they hit the screen.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="2 of 7 tasks done"><span style="width:29%"></span></div><span class="mono dim">2/7 done</span></div>
           
@@ -290,8 +294,9 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>The Hangar</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">The board you&#x27;re looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">Build weekly-review-automatic — the script that writes the weekly file from real commits</p></div>
-          <div class="progress"><div class="bar" role="img" aria-label="2 of 6 tasks done"><span style="width:33%"></span></div><span class="mono dim">2/6 done</span></div>
+          <div class="progress"><div class="bar" role="img" aria-label="3 of 7 tasks done"><span style="width:43%"></span></div><span class="mono dim">3/7 done</span></div>
           
           
           <div class="lane" data-tone="calm">
@@ -309,6 +314,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Versa</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">Song lyrics line-by-line beside a translation — AI drafts them, the community votes and improves, LRC timestamps sync them karaoke-style. No API keys needed.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text missing">No next action &mdash; decide one</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="0 of 1 tasks done"><span style="width:0%"></span></div><span class="mono dim">0/1 done</span></div>
           
@@ -328,12 +334,13 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Workout Timer</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
-          <div class="next"><span class="lane-label">next</span><p class="next-text">Test the audio fix on Ollie&#x27;s phone and laptop, then merge claude/audio-background-and-silent-switch</p></div>
+          <p class="card-desc">A zero-dependency interval timer — EMOM, Tabata, AMRAP and three more modes, drift-free off the wall clock, runs offline from a local file.</p>
+          <div class="next"><span class="lane-label">next</span><p class="next-text">Try the audio fix on your own phone and laptop</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="2 of 2 tasks done"><span style="width:100%"></span></div><span class="mono dim">2/2 done</span></div>
           
           
           <div class="card-foot">
-            <div class="acts"><a class="act primary live" href="https://olivervanderlugt.github.io/timer-workout/" target="_blank" rel="noopener" title="https://olivervanderlugt.github.io/timer-workout/"><span class="dot live" aria-hidden="true"></span>Preview &#8599;</a><a class="act small" href="https://github.com/olivervanderlugt/timer-workout" target="_blank" rel="noopener" title="olivervanderlugt/timer-workout">repo</a><button class="act small run-local" type="button" data-slug="timer-workout">run local</button><a class="act small local-link" data-slug="timer-workout" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on Workout Timer (olivervanderlugt/timer-workout). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Test the audio fix on Ollie&#x27;s phone and laptop, then merge claude/audio-background-and-silent-switch When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="acts"><a class="act primary live" href="https://olivervanderlugt.github.io/timer-workout/" target="_blank" rel="noopener" title="https://olivervanderlugt.github.io/timer-workout/"><span class="dot live" aria-hidden="true"></span>Preview &#8599;</a><a class="act small" href="https://github.com/olivervanderlugt/timer-workout" target="_blank" rel="noopener" title="olivervanderlugt/timer-workout">repo</a><button class="act small run-local" type="button" data-slug="timer-workout">run local</button><a class="act small local-link" data-slug="timer-workout" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on Workout Timer (olivervanderlugt/timer-workout). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Try the audio fix on your own phone and laptop When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <div class="card-meta mono dim">vanilla HTML/CSS/JS, static, GitHub Pages</div>
             <div class="tags"><span class="tag">tool</span><span class="tag">fitness</span></div>
           </div>
@@ -343,6 +350,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Crew management system</h3>
             <span class="chips"><span class="pill" data-tone="parked">parked</span></span>
           </div>
+          <p class="card-desc">Still an empty repo — zero commits as of 2026-08-08, and what it was meant to be was never written down.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text idle">Nothing queued while parked</p></div>
           <div class="progress"><div class="bar empty" role="img" aria-label="no tasks filed"><span></span></div><span class="mono dim">no tasks filed</span></div>
           
@@ -513,7 +521,7 @@ score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
   </div>
 
   <details class="queue-wrap">
-    <summary>Full queue &mdash; 23 tasks, done included</summary>
+    <summary>Full queue &mdash; 24 tasks, done included</summary>
     <div class="table-scroll">
       <table class="queue">
         <thead><tr><th>status</th><th>task</th><th>project</th><th>effort</th><th>goes to</th></tr></thead>
@@ -601,6 +609,13 @@ score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
             <td class="mono dim">versa</td>
             <td class="mono dim">M</td>
             <td><span class="agent">versa <span class="model">sonnet</span></span></td>
+          </tr>
+          <tr data-status="done">
+            <td><span class="state mono">done</span></td>
+            <td class="q-title">Give every project a one-line description on the board</td>
+            <td class="mono dim">hangar</td>
+            <td class="mono dim">S</td>
+            <td><span class="dim">&mdash;</span></td>
           </tr>
           <tr data-status="done">
             <td><span class="state mono">done</span></td>

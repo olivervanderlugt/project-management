@@ -18,6 +18,7 @@ supplies that skeleton itself.
 """
 
 import importlib.util
+import os
 import re
 from datetime import date
 from html import escape
@@ -29,6 +30,12 @@ EMPHASIS = re.compile(r"(\*\*|__|\*|_)")
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "dashboard" / "index.html"
 TODAY = date.today()
+
+# The commit this page was built from, stamped into the output so the workflow
+# can fetch the live URL and prove Pages is serving *this* build and not a
+# cached older one. Empty on a local build — only CI knows its own sha, and the
+# committed index.html should not churn on every run.
+COMMIT = (os.environ.get("GITHUB_SHA") or "")[:7]
 
 # The board is read-only, but capture has to work from a phone: this opens the
 # issue form that scripts/capture_issue.py turns into a tasks/ file.
@@ -283,6 +290,10 @@ def render_card(meta, body, tasks, dispatch, routing):
     status = (meta.get("status") or "active").lower()
     title = meta.get("title") or meta["slug"]
     nxt = unquote(meta.get("next", ""))
+    # What the thing actually is. The card leads with `next`, which only makes
+    # sense once you remember what the project was — so this sits above it.
+    description = unquote(meta.get("description", ""))
+    desc_html = f'<p class="card-desc">{rich(description)}</p>' if description else ""
 
     done = [t for t in tasks if (t[0].get("status") or "").lower() == "done"]
     doing = [t for t in tasks if (t[0].get("status") or "").lower() == "doing"]
@@ -401,6 +412,7 @@ def render_card(meta, body, tasks, dispatch, routing):
             <h3>{escape(title)}</h3>
             <span class="chips">{"".join(chips)}</span>
           </div>
+          {desc_html}
           <div class="next"><span class="lane-label">next</span>{next_html}</div>
           <div class="progress">{bar}</div>
           {render_lane("running now", running_rows, "live")}
@@ -741,6 +753,7 @@ a.vital:hover{border-color:var(--accent); text-decoration:none;}
 .card-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px;
   flex-wrap:wrap;}
 .card-head h3{font-size:1.06rem;}
+.card-desc{font-size:.88rem; color:var(--ink-2); text-wrap:pretty; margin-top:-4px;}
 .chips{display:flex; gap:6px; flex-wrap:wrap;}
 .pill{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.64rem; letter-spacing:.1em;
   text-transform:uppercase; border:1px solid var(--hair); border-radius:99px; padding:2px 8px;
@@ -1031,8 +1044,11 @@ def build():
     waiting_html = render_waiting(projects, tasks, by_slug)
     waiting_count = waiting_html.count("<li ")
 
+    stamp = TODAY.strftime("%d %b %Y") + (f" &middot; {COMMIT}" if COMMIT else "")
+    commit_meta = f'\n<meta name="hangar-commit" content="{COMMIT}">' if COMMIT else ""
+
     html = f"""<meta charset="utf-8">
-<title>The Hangar</title>
+<title>The Hangar</title>{commit_meta}
 <style>{CSS}</style>
 <main class="hangar">
   <header class="top">
@@ -1043,7 +1059,7 @@ def build():
     <div class="top-acts">
       <a class="act small" href="{CAPTURE_URL}" target="_blank" rel="noopener">+ capture</a>
       <a class="act small" href="{HANGAR_REPO}" target="_blank" rel="noopener">hangar repo</a>
-      <span class="mono dim">built {TODAY.strftime("%d %b %Y")}</span>
+      <span class="mono dim">built {stamp}</span>
     </div>
   </header>
 
