@@ -216,7 +216,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
     </div>
     <div class="stamp">
       <span class="eyebrow">Board built</span><br>
-      <span class="mono dim">07 Aug 2026</span>
+      <span class="mono dim">08 Aug 2026</span>
     </div>
   </header>
 
@@ -284,6 +284,24 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
           <span class="task-meta mono">percentile<br>S
             <br><span class="task-agent">percentile &middot; sonnet</span></span>
         </li>
+        <li class="task" data-status="ready">
+          <span class="task-state mono">ready</span>
+          <div class="task-body">
+            <h4>Quizzly: afbeeldingen uploaden op slides (nu alleen URL)</h4>
+            <p>In de vraag-editor kun je een afbeelding úploaden (niet alleen een URL plakken): grootte-gecapt, mime-gesniffd op magic bytes, EXIF gestript, opgeslagen in een Docker-volume buiten de repo, same-origin geserveerd, alleen door de quiz-eigenaar. De drie bestaande beeld-layouts (image-above/split/full-bleed) werken ermee, de URL-route blijft bestaan, cover-image van een quiz kan ook. Compose heeft het volume, README de limieten. Trio groen.</p>
+          </div>
+          <span class="task-meta mono">quizzly<br>M
+            <br><span class="task-agent">quizzly &middot; opus</span></span>
+        </li>
+        <li class="task" data-status="ready">
+          <span class="task-state mono">ready</span>
+          <div class="task-body">
+            <h4>Quizzly: wachtwoord tonen/verbergen op elk wachtwoordveld</h4>
+            <p>Elk wachtwoordveld (login, signup, en de change-password/reset-velden uit PR #1 als die gemerged zijn) heeft een toegankelijke toon/verberg-knop: standaard verborgen, <code>aria-pressed</code> en een label, met toetsenbord bedienbaar, geen autocomplete-regressie. Trio groen.</p>
+          </div>
+          <span class="task-meta mono">quizzly<br>S
+            <br><span class="task-agent">quizzly &middot; sonnet</span></span>
+        </li>
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
           <div class="task-body">
@@ -305,12 +323,39 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
           <div class="task-body">
+            <h4>Quizzly: compliance-review westerse landen (EU/VK/VS/CA/AU)</h4>
+            <p>Nog aan te scherpen na merge van PR #1, dat al een deel dekt (GDPR-export, age gate, retentie). Beoogd resultaat: docs/COMPLIANCE-REVIEW.md dat de echte dataflows in de code (niet alleen de docs) toetst aan GDPR incl. kinderen, UK GDPR, COPPA, CCPA/CPRA, PIPEDA en de Australische Privacy Act — per punt gedekt/ontbreekt/besluit-van-Ollie-nodig, gemarkeerd must/should/could, met de expliciete disclaimer dat dit geen juridisch advies is.</p>
+          </div>
+          <span class="task-meta mono">quizzly<br>M
+            <br><span class="task-agent">quizzly &middot; sonnet</span></span>
+        </li>
+        <li class="task" data-status="inbox">
+          <span class="task-state mono">inbox</span>
+          <div class="task-body">
+            <h4>Quizzly: lichter en vriendelijker app-chrome (design-expertpass)</h4>
+            <p>Nog aan te scherpen — &quot;lichter en vriendelijker&quot; is een richting, geen finish. Voorstel eerst als DESIGN.md (paletttokens, typografie, spacing, voor/na), dan consistent doorgevoerd. Harde randen: alleen app-chrome, nooit de quiz-surface (<code>--q-*</code>-tokens moeten voor alle tien themes blijven werken), 44px touch targets, zichtbare focus, WCAG AA contrast.</p>
+          </div>
+          <span class="task-meta mono">quizzly<br>M
+            <br><span class="task-agent">quizzly &middot; sonnet</span></span>
+        </li>
+        <li class="task" data-status="inbox">
+          <span class="task-state mono">inbox</span>
+          <div class="task-body">
+            <h4>Quizzly: slide-designer — per-slide design, media, geluid, live preview</h4>
+            <p>Nog niet schrijfbaar — dit is een visie, geen taak. Eerst verkennen: docs/SLIDE-DESIGNER.md met de volledige mogelijkhedenruimte (per-slide designs en achtergronden, emoji, GIF&#x27;s, stickers, geluiden en muziek, transitions, soundboard voor de host, interactieve live slide-preview tijdens het bouwen), technische haalbaarheid per item tegen de bestaande presentation/theme/snapshot- architectuur, licentie- en privacyhaken (GIPHY-voorwaarden, muziekrechten), en een gefaseerde roadmap waarvan fase 1 in één sessie te bouwen is.</p>
+          </div>
+          <span class="task-meta mono">quizzly<br>L
+            <br><span class="task-agent">quizzly &middot; sonnet</span></span>
+        </li>
+        <li class="task" data-status="inbox">
+          <span class="task-state mono">inbox</span>
+          <div class="task-body">
             <h4>Beslissen waar Versa draait, en hem daar neerzetten</h4>
             <p>Nog niet schrijfbaar — daarom <code>inbox</code>.</p>
           </div>
           <span class="task-meta mono">versa<br>M
             <br><span class="task-agent">versa &middot; sonnet</span></span>
-        </li></ul><p class="mono dim queue-sum">3 inbox &middot; 3 ready</p>
+        </li></ul><p class="mono dim queue-sum">6 inbox &middot; 5 ready</p>
   </section>
 
   <section>
