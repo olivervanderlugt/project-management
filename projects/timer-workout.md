@@ -1,8 +1,8 @@
 ---
 title: Workout Timer
 description: A zero-dependency interval timer — EMOM, Tabata, AMRAP and three more modes, drift-free off the wall clock, runs offline from a local file.
-status: shipped
-next:
+status: active
+next: Try the audio fix on your own phone and laptop
 due:
 started: 2026-08-07
 repo: olivervanderlugt/timer-workout
@@ -26,3 +26,16 @@ Built and shipped on 2026-08-07: six commits from scaffold to QA polish, unit
 tests and an audio benchmark under `test/`, and three green `pages build and
 deployment` runs — the Pages deploy at the `preview:` URL is live. Works
 offline as a plain file; only screen wake lock needs the HTTPS copy.
+
+On 2026-08-08 Ollie reported sound failing on laptop and mobile. Cause: cues
+were queued one segment at a time off a 250ms interval, which browsers
+throttle in a background tab and freeze on a locked phone, so everything after
+the first backgrounded segment landed in the past and was dropped. Mobile also
+never resumed the suspended AudioContext. Branch
+`claude/audio-background-and-silent-switch` queues the whole run on the Web
+Audio clock up front, re-unlocks and re-queues on `visibilitychange`, and opts
+out of the iOS silent switch via `navigator.audioSession`. The same branch
+adds an interval beep to Timer mode — a toggle plus a period, for stretching
+sessions that need a cue every 30 or 60 seconds without entering each interval
+by hand. 34 unit tests plus four browser suites green; not yet tried on
+Ollie's own devices.
