@@ -225,7 +225,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     </div>
   </header>
 
-  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">5</span><span class="mono dim">of 6 projects</span></div><div class="vital" data-tone="calm"><span class="vital-label">agents running</span><span class="vital-value">0</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">10</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">8</span><span class="mono dim">needs a call</span></a></div>
+  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">5</span><span class="mono dim">of 6 projects</span></div><div class="vital" data-tone="calm"><span class="vital-label">agents running</span><span class="vital-value">0</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">11</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">9</span><span class="mono dim">needs a call</span></a></div>
 
   <section id="fleet">
     <div class="sec-head">
@@ -378,6 +378,14 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
           <li data-tone="warn">
             <span class="kind mono">verdict</span>
             <div>
+              <p class="what">Nachtrun kan geen subagents spawnen — bouwen zou stil zijn uitgevallen</p>
+              <p class="why">Een nachtrun die moet bouwen doet aantoonbaar één van twee dingen, zichtbaar in het night-log: (a) hij spawnt de builder- en checker-agents via de…</p>
+            </div>
+            <span class="where mono dim">no project</span>
+          </li>
+          <li data-tone="warn">
+            <span class="kind mono">verdict</span>
+            <div>
               <p class="what">Quizzly: lichter en vriendelijker app-chrome (design-expertpass)</p>
               <p class="why">Nog aan te scherpen — &quot;lichter en vriendelijker&quot; is een richting, geen finish. Voorstel eerst als DESIGN.md (paletttokens, typografie, spacing,…</p>
             </div>
@@ -482,7 +490,7 @@ manager/builder/checker rules, so it belongs here.</li><li>Shipped, both as PRs 
   </div>
 
   <details class="queue-wrap">
-    <summary>Full queue &mdash; 19 tasks, done included</summary>
+    <summary>Full queue &mdash; 20 tasks, done included</summary>
     <div class="table-scroll">
       <table class="queue">
         <thead><tr><th>status</th><th>task</th><th>project</th><th>effort</th><th>goes to</th></tr></thead>
@@ -518,6 +526,13 @@ manager/builder/checker rules, so it belongs here.</li><li>Shipped, both as PRs 
           <tr data-status="inbox">
             <td><span class="state mono">inbox</span></td>
             <td class="q-title">Crew management: één alinea of weg</td>
+            <td class="mono dim">&mdash;</td>
+            <td class="mono dim">S</td>
+            <td><span class="agent none" title="needs a project: with a repo:">no agent</span></td>
+          </tr>
+          <tr data-status="inbox">
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Nachtrun kan geen subagents spawnen — bouwen zou stil zijn uitgevallen</td>
             <td class="mono dim">&mdash;</td>
             <td class="mono dim">S</td>
             <td><span class="agent none" title="needs a project: with a repo:">no agent</span></td>
