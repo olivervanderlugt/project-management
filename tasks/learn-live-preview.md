@@ -1,7 +1,7 @@
 ---
 title: Put Learn online so it has a live preview
 project: learning-website
-status: doing
+status: done
 added: 2026-08-06
 effort: S
 branch:
@@ -17,6 +17,23 @@ push to its default branch, the site loads and the skill tree is usable, and
 
 Learn is Vite + React with no backend and no router — a static build, so Pages
 serves it with nothing to pay for and no database to provision.
+
+**Closed by the night run of 2026-08-08 — no code written, nothing to build.**
+The finish line was already crossed on 2026-08-07 in another session; this task
+was never checked off. Evidence, verified tonight:
+
+- `.github/workflows/deploy.yml` exists on `main` of
+  `olivervanderlugt/learning-website`.
+- The latest push to `main` (54d9d78, 2026-08-07) triggered "Deploy to GitHub
+  Pages" run #4, `completed` / `success`.
+- `projects/learning-website.md` carries
+  `preview: https://olivervanderlugt.github.io/learning-website/`.
+- "Site loads and the skill tree is usable": could not be re-fetched tonight
+  (the run sandbox blocks egress to github.io), but the project file records a
+  browser verification on 2026-08-07 of exactly this deployed commit. If the
+  site is down in the morning, reopen this task.
+
+No branch and no PR in the project repo, because no commit was needed there.
 
 Two things that will bite:
 
