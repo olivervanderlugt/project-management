@@ -18,6 +18,7 @@ supplies that skeleton itself.
 """
 
 import importlib.util
+import os
 import re
 from datetime import date
 from html import escape
@@ -29,6 +30,12 @@ EMPHASIS = re.compile(r"(\*\*|__|\*|_)")
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "dashboard" / "index.html"
 TODAY = date.today()
+
+# The commit this page was built from, stamped into the output so the workflow
+# can fetch the live URL and prove Pages is serving *this* build and not a
+# cached older one. Empty on a local build — only CI knows its own sha, and the
+# committed index.html should not churn on every run.
+COMMIT = (os.environ.get("GITHUB_SHA") or "")[:7]
 
 # The board is read-only, but capture has to work from a phone: this opens the
 # issue form that scripts/capture_issue.py turns into a tasks/ file.
@@ -1037,8 +1044,11 @@ def build():
     waiting_html = render_waiting(projects, tasks, by_slug)
     waiting_count = waiting_html.count("<li ")
 
+    stamp = TODAY.strftime("%d %b %Y") + (f" &middot; {COMMIT}" if COMMIT else "")
+    commit_meta = f'\n<meta name="hangar-commit" content="{COMMIT}">' if COMMIT else ""
+
     html = f"""<meta charset="utf-8">
-<title>The Hangar</title>
+<title>The Hangar</title>{commit_meta}
 <style>{CSS}</style>
 <main class="hangar">
   <header class="top">
@@ -1049,7 +1059,7 @@ def build():
     <div class="top-acts">
       <a class="act small" href="{CAPTURE_URL}" target="_blank" rel="noopener">+ capture</a>
       <a class="act small" href="{HANGAR_REPO}" target="_blank" rel="noopener">hangar repo</a>
-      <span class="mono dim">built {TODAY.strftime("%d %b %Y")}</span>
+      <span class="mono dim">built {stamp}</span>
     </div>
   </header>
 
