@@ -34,6 +34,7 @@ parser in `build.py` is simple on purpose, so keep it that way.
 ```
 ---
 title:   Human name of the project
+description: One line, what the thing actually is. The board shows it on the card.
 status:  active | paused | shipped | parked
 next:    One concrete next action. Never empty on an active project.
 due:     YYYY-MM-DD, or blank if nothing is actually due
@@ -48,6 +49,11 @@ tags:    comma, separated
 `repo` is what makes the Hangar an index into the code: the dashboard turns it
 into a link. It is also the key the repo importer matches on, so never write the
 same `repo` value into two project files.
+
+`description` is the one-line answer to "what was this again?" — the board prints
+it under the project's name, above `next`. Write it from the project's own
+`## What this is`, never from the repo name. If nothing is recorded, say that
+rather than inventing a plausible product.
 
 **`ideas/*.md`**
 

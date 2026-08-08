@@ -1,5 +1,6 @@
 ---
 title: Crew management system
+description: Nothing yet — an empty GitHub repo whose purpose was never written down.
 status: parked
 next:
 due:

@@ -68,6 +68,7 @@ a.vital:hover{border-color:var(--accent); text-decoration:none;}
 .card-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px;
   flex-wrap:wrap;}
 .card-head h3{font-size:1.06rem;}
+.card-desc{font-size:.88rem; color:var(--ink-2); text-wrap:pretty; margin-top:-4px;}
 .chips{display:flex; gap:6px; flex-wrap:wrap;}
 .pill{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.64rem; letter-spacing:.1em;
   text-transform:uppercase; border:1px solid var(--hair); border-radius:99px; padding:2px 8px;
@@ -241,6 +242,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Learn — personal learning app</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">A playable skill tree across CS, maths, physics and robotics — one shared knowledge graph, no backend.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">Next chain, Ollie&#x27;s call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data &amp; BI vs db-depth — see learning-website CLAUDE.md &#x27;Next items&#x27;</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="2 of 2 tasks done"><span style="width:100%"></span></div><span class="mono dim">2/2 done</span></div>
           
@@ -256,6 +258,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Percentile</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">Consent-first analytics for apps built by AI — one line of SDK, metrics read back through MCP, and a benchmark network that pays contributing apps a share</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">F-16 — stop publishing a deterministic function of an attacker-movable count (docs/11)</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="3 of 3 tasks done"><span style="width:100%"></span></div><span class="mono dim">3/3 done</span></div>
           
@@ -271,6 +274,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Quizzly</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">A live quiz platform — hosts build quizzes, players join from their phones with a PIN, self-hosted in one Docker container.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="2 of 7 tasks done"><span style="width:29%"></span></div><span class="mono dim">2/7 done</span></div>
           
@@ -290,8 +294,9 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>The Hangar</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">This board: a personal project HQ in markdown, with a generated dashboard and agents that work the queue.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text">Build weekly-review-automatic — the script that writes the weekly file from real commits</p></div>
-          <div class="progress"><div class="bar" role="img" aria-label="2 of 6 tasks done"><span style="width:33%"></span></div><span class="mono dim">2/6 done</span></div>
+          <div class="progress"><div class="bar" role="img" aria-label="3 of 7 tasks done"><span style="width:43%"></span></div><span class="mono dim">3/7 done</span></div>
           
           
           <div class="lane" data-tone="calm">
@@ -309,6 +314,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Versa</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
+          <p class="card-desc">Song lyrics read line-by-line next to a translation, AI-drafted and improved by the community.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text missing">No next action &mdash; decide one</p></div>
           <div class="progress"><div class="bar" role="img" aria-label="0 of 1 tasks done"><span style="width:0%"></span></div><span class="mono dim">0/1 done</span></div>
           
@@ -328,6 +334,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Crew management system</h3>
             <span class="chips"><span class="pill" data-tone="parked">parked</span></span>
           </div>
+          <p class="card-desc">Nothing yet — an empty GitHub repo whose purpose was never written down.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text idle">Nothing queued while parked</p></div>
           <div class="progress"><div class="bar empty" role="img" aria-label="no tasks filed"><span></span></div><span class="mono dim">no tasks filed</span></div>
           
@@ -343,6 +350,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <h3>Workout Timer</h3>
             <span class="chips"><span class="pill" data-tone="shipped">shipped</span></span>
           </div>
+          <p class="card-desc">A browser interval-training timer — EMOM, Tabata, AMRAP and more, zero dependencies, works offline.</p>
           <div class="next"><span class="lane-label">next</span><p class="next-text idle">Nothing queued while shipped</p></div>
           <div class="progress"><div class="bar empty" role="img" aria-label="no tasks filed"><span></span></div><span class="mono dim">no tasks filed</span></div>
           
@@ -513,7 +521,7 @@ score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
   </div>
 
   <details class="queue-wrap">
-    <summary>Full queue &mdash; 21 tasks, done included</summary>
+    <summary>Full queue &mdash; 22 tasks, done included</summary>
     <div class="table-scroll">
       <table class="queue">
         <thead><tr><th>status</th><th>task</th><th>project</th><th>effort</th><th>goes to</th></tr></thead>
@@ -601,6 +609,13 @@ score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
             <td class="mono dim">versa</td>
             <td class="mono dim">M</td>
             <td><span class="agent">versa <span class="model">sonnet</span></span></td>
+          </tr>
+          <tr data-status="done">
+            <td><span class="state mono">done</span></td>
+            <td class="q-title">Give every project a one-line description on the board</td>
+            <td class="mono dim">hangar</td>
+            <td class="mono dim">S</td>
+            <td><span class="dim">&mdash;</span></td>
           </tr>
           <tr data-status="done">
             <td><span class="state mono">done</span></td>

@@ -283,6 +283,10 @@ def render_card(meta, body, tasks, dispatch, routing):
     status = (meta.get("status") or "active").lower()
     title = meta.get("title") or meta["slug"]
     nxt = unquote(meta.get("next", ""))
+    # What the thing actually is. The card leads with `next`, which only makes
+    # sense once you remember what the project was — so this sits above it.
+    description = unquote(meta.get("description", ""))
+    desc_html = f'<p class="card-desc">{rich(description)}</p>' if description else ""
 
     done = [t for t in tasks if (t[0].get("status") or "").lower() == "done"]
     doing = [t for t in tasks if (t[0].get("status") or "").lower() == "doing"]
@@ -401,6 +405,7 @@ def render_card(meta, body, tasks, dispatch, routing):
             <h3>{escape(title)}</h3>
             <span class="chips">{"".join(chips)}</span>
           </div>
+          {desc_html}
           <div class="next"><span class="lane-label">next</span>{next_html}</div>
           <div class="progress">{bar}</div>
           {render_lane("running now", running_rows, "live")}
@@ -741,6 +746,7 @@ a.vital:hover{border-color:var(--accent); text-decoration:none;}
 .card-head{display:flex; align-items:baseline; justify-content:space-between; gap:10px;
   flex-wrap:wrap;}
 .card-head h3{font-size:1.06rem;}
+.card-desc{font-size:.88rem; color:var(--ink-2); text-wrap:pretty; margin-top:-4px;}
 .chips{display:flex; gap:6px; flex-wrap:wrap;}
 .pill{font-family:ui-monospace,Menlo,Consolas,monospace; font-size:.64rem; letter-spacing:.1em;
   text-transform:uppercase; border:1px solid var(--hair); border-radius:99px; padding:2px 8px;

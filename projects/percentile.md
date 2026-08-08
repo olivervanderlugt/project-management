@@ -1,5 +1,6 @@
 ---
 title: Percentile
+description: Consent-first analytics for apps built by AI — one line of SDK, metrics read back through MCP, and a benchmark network that pays contributing apps a share
 status: active
 next: F-16 — stop publishing a deterministic function of an attacker-movable count (docs/11)
 due:

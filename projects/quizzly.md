@@ -1,5 +1,6 @@
 ---
 title: Quizzly
+description: A live quiz platform — hosts build quizzes, players join from their phones with a PIN, self-hosted in one Docker container.
 status: active
 next: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo
 due:

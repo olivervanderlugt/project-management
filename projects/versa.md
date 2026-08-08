@@ -1,5 +1,6 @@
 ---
 title: Versa
+description: Song lyrics read line-by-line next to a translation, AI-drafted and improved by the community.
 status: active
 next:
 due:

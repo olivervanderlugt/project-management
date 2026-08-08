@@ -59,6 +59,17 @@ def title_from(name):
     return " ".join(words).capitalize()
 
 
+def one_line(text):
+    """A frontmatter value on a single line, prefixed, or an empty field.
+
+    GitHub's own description is the only honest one-liner available at import
+    time. When there is none the field stays blank — the board would rather show
+    nothing than a sentence derived from the repo name.
+    """
+    collapsed = " ".join((text or "").split())
+    return f" {collapsed}" if collapsed else ""
+
+
 def stub(full_name, description, pushed):
     repo_name = full_name.split("/")[-1]
     desc = description or (
@@ -67,6 +78,7 @@ def stub(full_name, description, pushed):
     seen = f"\n\nLast push seen at import: {pushed}." if pushed else ""
     return f"""---
 title: {title_from(repo_name)}
+description:{one_line(description)}
 status: parked
 next:
 due:

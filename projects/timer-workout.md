@@ -1,5 +1,6 @@
 ---
 title: Workout Timer
+description: A browser interval-training timer — EMOM, Tabata, AMRAP and more, zero dependencies, works offline.
 status: shipped
 next:
 due:
