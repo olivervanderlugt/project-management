@@ -54,6 +54,27 @@ maandelijks geld kost. Dit breekt besluit 0001 (markdown eerst, echte app pas
 als een project verdient). Als dit gebouwd wordt, hoort er eerst een nieuw
 besluit te liggen dat 0001 vervangt — niet stiekem eromheen.
 
+## Stand na de nachtrun van 2026-08-08
+
+Aangescherpt, niet gebouwd:
+
+- **Stap 2 is losgetrokken** als eigen taak: `tasks/hangar-prioriteit-score.md`,
+  `status: ready`, effort S. Volledig lokaal, kost niets. De koppeling
+  "nachtrun kiest op score" zit daar bewust NIET in — dat is een
+  CLAUDE.md-regelwijziging en dus Ollie's besluit.
+- **Stap 3 is grotendeels al gebeurd** sinds dit bestand geschreven werd:
+  `routing.yml` bestaat en `scripts/gen_agents.py` genereert er de agents uit
+  (zie besluit 0003, nog `proposed`). Wat van stap 3 overblijft: verbruik per
+  nacht loggen in `planning/night-log.md`. Dat wordt pas een taak als 0003
+  wordt aangenomen.
+- **Stap 1 blijft liggen tot Ollie twee dingen beslist**: (a) akkoord dat elke
+  issue een API-call kost, met welk maandplafond, en (b) hij moet zelf de
+  API-sleutel als repo-secret zetten — dat mag en kan een nachtrun niet.
+- **Stap 4 blijft liggen** tot er een besluit ligt dat 0001 vervangt, zoals het
+  bestand zelf al zegt.
+
+Deze paraplu-taak blijft `inbox` tot stap 1 en 4 beslist zijn of geschrapt.
+
 ## Notes
 
 Stap 1 tot en met 3 leveren het grootste deel van wat hij beschreef, zonder
