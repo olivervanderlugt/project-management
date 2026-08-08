@@ -195,6 +195,14 @@ def render_actions(meta, nxt):
             f'<a class="act" href="https://github.com/{escape(repo)}" '
             f'target="_blank" rel="noopener">code &#8599;</a>'
         )
+        # Talks to scripts/preview.py on localhost. Without the helper the
+        # button explains itself instead of doing nothing.
+        buttons.append(
+            f'<button class="act run-local" type="button" data-slug="{escape(meta["slug"])}">'
+            "run local</button>"
+            f'<a class="act local-link" data-slug="{escape(meta["slug"])}" target="_blank" '
+            'rel="noopener" hidden>local &#8599;</a>'
+        )
     buttons.append(
         '<a class="act" href="https://claude.ai/code" target="_blank" '
         'rel="noopener">open Claude Code &#8599;</a>'
@@ -576,6 +584,9 @@ body{
 .act:hover{border-color:var(--accent); background:var(--accent-soft);}
 .act:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 .act.copied{border-color:var(--good); color:var(--good);}
+.act[disabled]{opacity:.55; cursor:progress;}
+.act.run-local.on{border-color:var(--good); color:var(--good);}
+.act.run-local.failed{border-color:var(--crit); color:var(--crit);}
 
 .tasks{list-style:none; margin:0; padding:0; background:var(--rack);
   border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
@@ -663,6 +674,97 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   .strip-due{grid-column:2; border-left:0; border-top:1px solid var(--hair);
     justify-content:flex-start; padding:8px 18px 14px;}
 }
+"""
+
+
+# Talks to scripts/preview.py, which serves loopback-only on a fixed port. A
+# plain string, not an f-string, so the braces stay single. Browsers exempt
+# loopback from mixed-content blocking, so this works from the Pages copy too;
+# the Artifact copy runs under a CSP that blocks every host, and there the
+# catch() below turns the buttons into a pointer at the helper instead.
+PREVIEW_JS = """
+(function () {
+  var HELPER = "http://127.0.0.1:8642";
+  var buttons = document.querySelectorAll(".act.run-local");
+  if (!buttons.length) return;
+  var links = {};
+  document.querySelectorAll(".act.local-link").forEach(function (a) {
+    links[a.getAttribute("data-slug")] = a;
+  });
+  var timer = null;
+
+  function apply(data) {
+    var projects = (data && data.projects) || {};
+    var anyStarting = false;
+    buttons.forEach(function (btn) {
+      var slug = btn.getAttribute("data-slug");
+      var p = projects[slug];
+      var link = links[slug];
+      btn.classList.remove("on", "failed");
+      btn.removeAttribute("disabled");
+      btn.title = "";
+      if (!p || p.state === "stopped") {
+        btn.textContent = "run local";
+        if (link) link.hidden = true;
+      } else if (p.state === "running") {
+        btn.textContent = "stop local";
+        btn.classList.add("on");
+        if (link) { link.href = p.url; link.hidden = false; }
+      } else if (p.state === "starting") {
+        anyStarting = true;
+        btn.textContent = "starting\\u2026";
+        btn.setAttribute("disabled", "");
+        if (link) link.hidden = true;
+      } else if (p.state === "error") {
+        btn.textContent = "run local (failed)";
+        btn.classList.add("failed");
+        btn.title = (p.error || "failed") + " \\u2014 log: " + (p.log || "?");
+        if (link) link.hidden = true;
+      }
+    });
+    if (anyStarting) poll(2000);
+  }
+
+  function offline() {
+    buttons.forEach(function (btn) {
+      btn.textContent = "run local";
+      btn.classList.remove("on", "failed");
+      btn.removeAttribute("disabled");
+      btn.title = "start the helper first: python3 scripts/preview.py";
+    });
+    Object.keys(links).forEach(function (slug) { links[slug].hidden = true; });
+  }
+
+  function refresh() {
+    return fetch(HELPER + "/status")
+      .then(function (r) { return r.json(); })
+      .then(apply);
+  }
+
+  function poll(delay) {
+    clearTimeout(timer);
+    timer = setTimeout(function () { refresh().catch(offline); }, delay);
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var slug = btn.getAttribute("data-slug");
+      var action = btn.classList.contains("on") ? "stop" : "run";
+      btn.setAttribute("disabled", "");
+      btn.textContent = action === "run" ? "starting\\u2026" : "stopping\\u2026";
+      fetch(HELPER + "/" + action + "/" + encodeURIComponent(slug), { method: "POST" })
+        .then(function () { return refresh(); })
+        .then(function () { poll(2000); })
+        .catch(function () {
+          offline();
+          btn.textContent = "helper offline \\u2014 python3 scripts/preview.py";
+          setTimeout(function () { btn.textContent = "run local"; }, 3200);
+        });
+    });
+  });
+
+  refresh().catch(offline);
+})();
 """
 
 
@@ -768,6 +870,7 @@ document.querySelectorAll(".act[data-prompt]").forEach(function (button) {{
   }});
 }});
 </script>
+<script>{PREVIEW_JS}</script>
 """
     OUT.write_text(html, encoding="utf-8")
     print(f"built {OUT.relative_to(ROOT)}")

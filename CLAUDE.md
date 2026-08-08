@@ -236,6 +236,25 @@ Autosave is a safety net, not a substitute for a real commit. Still write a
 proper message at the end of a session — `Autosave <timestamp>` says nothing
 about what changed.
 
+## Local preview
+
+The dashboard's **run local** buttons talk to `scripts/preview.py`, a helper
+Ollie starts on his own machine:
+
+```
+python3 scripts/preview.py
+```
+
+It serves loopback-only on `127.0.0.1:8642`. A click clones the project's repo
+into `~/.hangar-previews/<slug>` (or fast-forwards an existing checkout),
+starts the right dev server — `npm run dev` with the port passed the way vite
+or next expects, `PORT` in the env otherwise, or a plain static server for an
+`index.html` project — and the button turns into a `local ↗` link. Every
+project gets a stable port; logs sit next to the checkouts. Without the helper
+the buttons explain themselves and do nothing. It never deploys, never pushes,
+and only runs repos named by a `repo:` line in `projects/`. Tests:
+`python3 scripts/test_preview.py`.
+
 ## Hosting
 
 `.github/workflows/dashboard.yml` rebuilds the board and deploys it to GitHub
