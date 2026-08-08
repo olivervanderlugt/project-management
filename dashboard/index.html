@@ -216,7 +216,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
     </div>
     <div class="stamp">
       <span class="eyebrow">Board built</span><br>
-      <span class="mono dim">07 Aug 2026</span>
+      <span class="mono dim">08 Aug 2026</span>
     </div>
   </header>
 
@@ -269,11 +269,11 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
         <li class="task" data-status="ready">
           <span class="task-state mono">ready</span>
           <div class="task-body">
-            <h4>Put Learn online so it has a live preview</h4>
-            <p><code>olivervanderlugt/learning-website</code> builds and deploys to GitHub Pages on every push to its default branch, the site loads and the skill tree is usable, and <code>projects/learning-website.md</code> in the Hangar has a working <code>preview:</code> URL.</p>
+            <h4>Prioriteitsscore per taak in build.py, bord toont &quot;dit nu&quot;</h4>
+            <p><code>dashboard/build.py</code> berekent voor elke open taak (<code>inbox</code>/<code>ready</code>/<code>blocked</code>) een deterministische prioriteitsscore uit vier factoren: een projectgewicht uit een tabel die in de repo staat (nieuw blok in <code>routing.yml</code> of een eigen <code>weights.yml</code>, gevuld met startwaarden afgeleid uit <code>reference/project-prioritering.md</code>, door Ollie aan te passen zonder code te raken), status (<code>ready</code> boven <code>inbox</code> boven <code>blocked</code>), effort (S boven M boven L) en ouderdom (ouder weegt zwaarder). Het bord toont de open taken gesorteerd op die score plus één duidelijke &quot;dit nu&quot;-regel bovenaan. Twee keer bouwen geeft twee keer exact hetzelfde resultaat; taken zonder project krijgen een neutraal gewicht in plaats van een crash. De formule staat met één commentaarblok uitgelegd bij de code.</p>
           </div>
-          <span class="task-meta mono">learning-website<br>S
-            <br><span class="task-agent">learning-website &middot; sonnet</span></span>
+          <span class="task-meta mono">hangar<br>S
+            <br><span class="task-agent">hangar &middot; sonnet</span></span>
         </li>
         <li class="task" data-status="ready">
           <span class="task-state mono">ready</span>
