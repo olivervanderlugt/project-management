@@ -120,6 +120,9 @@ body{
 .act:hover{border-color:var(--accent); background:var(--accent-soft);}
 .act:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 .act.copied{border-color:var(--good); color:var(--good);}
+.act[disabled]{opacity:.55; cursor:progress;}
+.act.run-local.on{border-color:var(--good); color:var(--good);}
+.act.run-local.failed{border-color:var(--crit); color:var(--crit);}
 
 .tasks{list-style:none; margin:0; padding:0; background:var(--rack);
   border:1px solid var(--hair); display:flex; flex-direction:column; gap:1px;}
@@ -223,7 +226,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   <div class="counters"><div class="counter">
               <span class="eyebrow">In flight</span>
               <span class="counter-value mono">5</span>
-              <span class="mono dim">6 total</span>
+              <span class="mono dim">7 total</span>
             </div><div class="counter">
               <span class="eyebrow">Parked</span>
               <span class="counter-value mono">0</span>
@@ -361,7 +364,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
   <section>
     <div class="section-head">
       <h2>On the apron</h2>
-      <span class="mono dim">6 projects</span>
+      <span class="mono dim">7 projects</span>
     </div>
     <div class="rack">
         <article class="strip" data-status="active">
@@ -374,7 +377,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p class='strip-next'>&quot;Next chain, Ollie&#x27;s call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data &amp; BI vs db-depth — see learning-website CLAUDE.md &#x27;Next items&#x27;&quot;</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/learning-website">olivervanderlugt/learning-website</a><span class=sep>&middot;</span><span>Vite, React, TypeScript, Tailwind v4, zustand, xyflow</span></div>
             <div class="strip-tags"><span class='tag'>learning</span><span class='tag'>robotics</span><span class='tag'>frontend</span></div>
-            <div class="strip-acts"><a class="act" href="https://olivervanderlugt.github.io/learning-website/" target="_blank" rel="noopener">live &#8599;</a><a class="act" href="https://github.com/olivervanderlugt/learning-website" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Learn — personal learning app (olivervanderlugt/learning-website). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: &quot;Next chain, Ollie&#x27;s call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data &amp; BI vs db-depth — see learning-website CLAUDE.md &#x27;Next items&#x27;&quot; When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://olivervanderlugt.github.io/learning-website/" target="_blank" rel="noopener">live &#8599;</a><a class="act" href="https://github.com/olivervanderlugt/learning-website" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="learning-website">run local</button><a class="act local-link" data-slug="learning-website" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Learn — personal learning app (olivervanderlugt/learning-website). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: &quot;Next chain, Ollie&#x27;s call: C#/.NET (smallest, cleanest fit) vs OOP+Java (multi-session) vs data &amp; BI vs db-depth — see learning-website CLAUDE.md &#x27;Next items&#x27;&quot; When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             
           <details class="preview">
             <summary>preview Learn — personal learning app</summary>
@@ -399,7 +402,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p class='strip-next'>F-16 — stop publishing a deterministic function of an attacker-movable count (docs/11)</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/percentile">olivervanderlugt/percentile</a><span class=sep>&middot;</span><span>TypeScript, Node 22, SDK + API + MCP server</span></div>
             <div class="strip-tags"><span class='tag'>startup</span><span class='tag'>analytics</span><span class='tag'>mcp</span></div>
-            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/percentile" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Percentile (olivervanderlugt/percentile). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: F-16 — stop publishing a deterministic function of an attacker-movable count (docs/11) When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/percentile" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="percentile">run local</button><a class="act local-link" data-slug="percentile" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Percentile (olivervanderlugt/percentile). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: F-16 — stop publishing a deterministic function of an attacker-movable count (docs/11) When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <p class="no-preview mono">not deployed yet &mdash; no preview to show</p>
           </div>
           <div class="strip-due mono" data-tone="none" title="no date set">—</div>
@@ -414,7 +417,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p class='strip-next'>Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/quizzly">olivervanderlugt/quizzly</a><span class=sep>&middot;</span><span>Next.js 15, Socket.IO, Prisma, PostgreSQL, Docker</span></div>
             <div class="strip-tags"><span class='tag'>product</span><span class='tag'>realtime</span></div>
-            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/quizzly" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Quizzly (olivervanderlugt/quizzly). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/quizzly" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="quizzly">run local</button><a class="act local-link" data-slug="quizzly" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Quizzly (olivervanderlugt/quizzly). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <p class="no-preview mono">not deployed yet &mdash; no preview to show</p>
           </div>
           <div class="strip-due mono" data-tone="none" title="no date set">—</div>
@@ -429,7 +432,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p class='strip-next'>Get a green Pages deploy and fill preview with the live board URL</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/project-management">olivervanderlugt/project-management</a><span class=sep>&middot;</span><span>Markdown, Python 3, GitHub Pages</span></div>
             <div class="strip-tags"><span class='tag'>tooling</span><span class='tag'>personal</span></div>
-            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on The Hangar (olivervanderlugt/project-management). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Get a green Pages deploy and fill preview with the live board URL When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="hangar">run local</button><a class="act local-link" data-slug="hangar" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on The Hangar (olivervanderlugt/project-management). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Get a green Pages deploy and fill preview with the live board URL When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <p class="no-preview mono">not deployed yet &mdash; no preview to show</p>
           </div>
           <div class="strip-due mono" data-tone="none" title="no date set">—</div>
@@ -444,7 +447,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p class='strip-next missing'>No next action &mdash; decide one</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/versa">olivervanderlugt/versa</a><span class=sep>&middot;</span><span>Next.js, Drizzle, Postgres, Docker, Playwright, pnpm</span></div>
             <div class="strip-tags"><span class='tag'>product</span><span class='tag'>ai</span><span class='tag'>lyrics</span></div>
-            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/versa" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Versa (olivervanderlugt/versa). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. There is no next action set. Work out what it should be, tell me, and write it into the Hangar. When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/versa" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="versa">run local</button><a class="act local-link" data-slug="versa" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Versa (olivervanderlugt/versa). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. There is no next action set. Work out what it should be, tell me, and write it into the Hangar. When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <p class="no-preview mono">not deployed yet &mdash; no preview to show</p>
           </div>
           <div class="strip-due mono" data-tone="none" title="no date set">—</div>
@@ -459,8 +462,33 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
             <p class='strip-next missing'>No next action &mdash; decide one</p>
             <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/crew-management-system">olivervanderlugt/crew-management-system</a></div>
             <div class="strip-tags"></div>
-            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/crew-management-system" target="_blank" rel="noopener">code &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Crew management system (olivervanderlugt/crew-management-system). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. There is no next action set. Work out what it should be, tell me, and write it into the Hangar. When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="strip-acts"><a class="act" href="https://github.com/olivervanderlugt/crew-management-system" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="crew-management-system">run local</button><a class="act local-link" data-slug="crew-management-system" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Crew management system (olivervanderlugt/crew-management-system). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. There is no next action set. Work out what it should be, tell me, and write it into the Hangar. When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <p class="no-preview mono">not deployed yet &mdash; no preview to show</p>
+          </div>
+          <div class="strip-due mono" data-tone="none" title="no date set">—</div>
+        </article>
+        <article class="strip" data-status="shipped">
+          <div class="strip-flag" aria-hidden="true"></div>
+          <div class="strip-body">
+            <div class="strip-top">
+              <h3>Workout Timer</h3>
+              <span class="status mono">shipped</span>
+            </div>
+            <p class='strip-next missing'>No next action &mdash; decide one</p>
+            <div class="strip-meta mono"><a class="repo" href="https://github.com/olivervanderlugt/timer-workout">olivervanderlugt/timer-workout</a><span class=sep>&middot;</span><span>vanilla HTML/CSS/JS, static, GitHub Pages</span></div>
+            <div class="strip-tags"><span class='tag'>tool</span><span class='tag'>fitness</span></div>
+            <div class="strip-acts"><a class="act" href="https://olivervanderlugt.github.io/timer-workout/" target="_blank" rel="noopener">live &#8599;</a><a class="act" href="https://github.com/olivervanderlugt/timer-workout" target="_blank" rel="noopener">code &#8599;</a><button class="act run-local" type="button" data-slug="timer-workout">run local</button><a class="act local-link" data-slug="timer-workout" target="_blank" rel="noopener" hidden>local &#8599;</a><a class="act" href="https://claude.ai/code" target="_blank" rel="noopener">open Claude Code &#8599;</a><button class="act" type="button" data-prompt="Work on Workout Timer (olivervanderlugt/timer-workout). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. There is no next action set. Work out what it should be, tell me, and write it into the Hangar. When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            
+          <details class="preview">
+            <summary>preview Workout Timer</summary>
+            <div class="preview-body">
+              <iframe src="https://olivervanderlugt.github.io/timer-workout/" title="Live preview of Workout Timer"
+                      loading="lazy" referrerpolicy="no-referrer"
+                      sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+              <a class="act" href="https://olivervanderlugt.github.io/timer-workout/" target="_blank" rel="noopener">
+                open in a tab &#8599;</a>
+            </div>
+          </details>
           </div>
           <div class="strip-due mono" data-tone="none" title="no date set">—</div>
         </article></div>
@@ -555,4 +583,88 @@ document.querySelectorAll(".act[data-prompt]").forEach(function (button) {
     }
   });
 });
+</script>
+<script>
+(function () {
+  var HELPER = "http://127.0.0.1:8642";
+  var buttons = document.querySelectorAll(".act.run-local");
+  if (!buttons.length) return;
+  var links = {};
+  document.querySelectorAll(".act.local-link").forEach(function (a) {
+    links[a.getAttribute("data-slug")] = a;
+  });
+  var timer = null;
+
+  function apply(data) {
+    var projects = (data && data.projects) || {};
+    var anyStarting = false;
+    buttons.forEach(function (btn) {
+      var slug = btn.getAttribute("data-slug");
+      var p = projects[slug];
+      var link = links[slug];
+      btn.classList.remove("on", "failed");
+      btn.removeAttribute("disabled");
+      btn.title = "";
+      if (!p || p.state === "stopped") {
+        btn.textContent = "run local";
+        if (link) link.hidden = true;
+      } else if (p.state === "running") {
+        btn.textContent = "stop local";
+        btn.classList.add("on");
+        if (link) { link.href = p.url; link.hidden = false; }
+      } else if (p.state === "starting") {
+        anyStarting = true;
+        btn.textContent = "starting\u2026";
+        btn.setAttribute("disabled", "");
+        if (link) link.hidden = true;
+      } else if (p.state === "error") {
+        btn.textContent = "run local (failed)";
+        btn.classList.add("failed");
+        btn.title = (p.error || "failed") + " \u2014 log: " + (p.log || "?");
+        if (link) link.hidden = true;
+      }
+    });
+    if (anyStarting) poll(2000);
+  }
+
+  function offline() {
+    buttons.forEach(function (btn) {
+      btn.textContent = "run local";
+      btn.classList.remove("on", "failed");
+      btn.removeAttribute("disabled");
+      btn.title = "start the helper first: python3 scripts/preview.py";
+    });
+    Object.keys(links).forEach(function (slug) { links[slug].hidden = true; });
+  }
+
+  function refresh() {
+    return fetch(HELPER + "/status")
+      .then(function (r) { return r.json(); })
+      .then(apply);
+  }
+
+  function poll(delay) {
+    clearTimeout(timer);
+    timer = setTimeout(function () { refresh().catch(offline); }, delay);
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var slug = btn.getAttribute("data-slug");
+      var action = btn.classList.contains("on") ? "stop" : "run";
+      btn.setAttribute("disabled", "");
+      btn.textContent = action === "run" ? "starting\u2026" : "stopping\u2026";
+      fetch(HELPER + "/" + action + "/" + encodeURIComponent(slug), { method: "POST" })
+        .then(function () { return refresh(); })
+        .then(function () { poll(2000); })
+        .catch(function () {
+          offline();
+          btn.textContent = "helper offline \u2014 python3 scripts/preview.py";
+          setTimeout(function () { btn.textContent = "run local"; }, 3200);
+        });
+    });
+  });
+
+  refresh().catch(offline);
+})();
 </script>
