@@ -6,8 +6,11 @@ onder de streep als eerste bericht.
 
 ---
 
-Work on Quizzly, the live quiz platform in this repo
-(github.com/olivervanderlugt/quizzly). Read CLAUDE.md and docs/ARCHITECTURE.md
+Work on Quizzly, the live quiz platform at
+https://github.com/olivervanderlugt/quizzly. If this session did not start
+inside the repo, clone it first:
+`git clone https://github.com/olivervanderlugt/quizzly.git && cd quizzly`
+(already cloned? `cd quizzly && git pull`). Read CLAUDE.md and docs/ARCHITECTURE.md
 before writing any code, and treat every invariant in CLAUDE.md as hard:
 players never receive correct answers before the reveal; src/lib/collab.ts is
 the only read path for group-quiz questions; live games run from
