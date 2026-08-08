@@ -286,11 +286,21 @@ and only runs repos named by a `repo:` line in `projects/`. Tests:
 
 ## Hosting
 
-`.github/workflows/dashboard.yml` rebuilds the board and deploys it to GitHub
-Pages on every push to `main` or `claude/**`. The live board is at
+`.github/workflows/dashboard.yml` rebuilds the board on every push to every
+branch, deploys it to GitHub Pages, and then fetches the live URL to check that
+Pages is really serving that commit — the build stamps its sha into the page for
+exactly that purpose. The live board is at
 <https://olivervanderlugt.github.io/project-management/> and needs nothing
 running locally. If it 404s, Pages has not been switched on: repo Settings →
 Pages → Source: "GitHub Actions".
+
+**If the board is stale, look at the deploy job first.** GitHub Pages runs
+through the `github-pages` environment, and that environment has its own list of
+branches it will accept a deploy from. A branch that is not on the list fails in
+about a second without ever picking up a runner — the build is green, the deploy
+is red, and the site quietly keeps serving the last good commit. Settings →
+Environments → `github-pages` → Deployment branches. This cost 2026-08-08: every
+`claude/**` branch except the default one had been publishing nothing all day.
 
 Deploy infrastructure — Docker, Vercel, Supabase, Stripe — belongs to the
 individual project repos, never to the Hangar. The Hangar records `stack` and
