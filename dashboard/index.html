@@ -216,7 +216,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
     </div>
     <div class="stamp">
       <span class="eyebrow">Board built</span><br>
-      <span class="mono dim">07 Aug 2026</span>
+      <span class="mono dim">08 Aug 2026</span>
     </div>
   </header>
 
@@ -305,6 +305,15 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
         <li class="task" data-status="inbox">
           <span class="task-state mono">inbox</span>
           <div class="task-body">
+            <h4>Nachtrun kan geen subagents spawnen — bouwen zou stil zijn uitgevallen</h4>
+            <p>Een nachtrun die moet bouwen doet aantoonbaar één van twee dingen, zichtbaar in het night-log: (a) hij spawnt de builder- en checker-agents via de Task-tool, of (b) hij bouwt zelf en doet daarna een expliciete, vijandige zelf-check van het diff tegen de <code>## Done means</code>, met de notitie dat dit inline gebeurde. Stil overslaan van de check telt niet als af.</p>
+          </div>
+          <span class="task-meta mono"><br>S
+            <br><span class="task-agent unassigned">no agent</span></span>
+        </li>
+        <li class="task" data-status="inbox">
+          <span class="task-state mono">inbox</span>
+          <div class="task-body">
             <h4>Vanuit de browser tegen de Hangar praten, met automatische routing</h4>
             <p>Nog niet schrijfbaar als één taak — hij is te groot en hij valt uiteen in vier stappen die los waarde hebben. Zie hieronder. Per stap is een echte finish line te schrijven; voor het geheel niet.</p>
           </div>
@@ -319,7 +328,7 @@ a:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
           </div>
           <span class="task-meta mono">versa<br>M
             <br><span class="task-agent">versa &middot; sonnet</span></span>
-        </li></ul><p class="mono dim queue-sum">3 inbox &middot; 4 ready</p>
+        </li></ul><p class="mono dim queue-sum">4 inbox &middot; 4 ready</p>
   </section>
 
   <section>

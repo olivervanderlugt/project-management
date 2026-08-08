@@ -154,6 +154,13 @@ suggestions — they exist because nobody is awake to catch a mistake:
 6. **Never touch credentials, deploys or anything that costs money.**
 7. **Leave a trail.** Every night writes to `planning/night-log.md`: what it
    did, what it refused to do, and why.
+8. **No subagents? Play both roles yourself.** Routine-fired sessions may lack
+   the Agent/Task tool (seen on 2026-08-08) — check at the start. If delegation
+   works, use the builder and checker agents as designed. If not: build first,
+   then, as a separate step, adversarially check your own diff against the
+   task's `## Done means` as if someone else wrote it and you must prove it is
+   *not* done. Never push a build that skipped the check, and note in the
+   night-log that the check ran inline.
 
 If a task turns out to be bigger or vaguer than it looked, stop and rewrite it
 as two smaller `ready` tasks. Half-finished code is worse than none.
