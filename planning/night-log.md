@@ -8,6 +8,56 @@ pull requests to find out.
 
 ---
 
+## 2026-08-09
+
+**Subagents beschikbaar bij start** (Task-tool + `.claude/agents/` werkten
+gewoon) — de builder/checker-rolverdeling uit CLAUDE.md is dus echt gebruikt,
+niet de inline-fallback. Open overnight-PR's bij start: 2
+(`percentile/night/percentile-f16-count-ladder`,
+`learning-website/night/learn-csharp-chain`) — onder de grens van 3, dus
+gebouwd.
+
+**Taak: `weekly-review-automatic`** (oudste `ready`, `added: 2026-08-06`,
+project `hangar` → repo is de Hangar zelf). Gebouwd:
+`scripts/weekly_review.py` + `scripts/test_weekly_review.py` (23 tests) op
+branch `claude/night-weekly-review-automatic`, PR
+olivervanderlugt/project-management#3. Eerste versie ging naar de
+`hangar-checker`-agent voor een vijandige review tegen de `## Done means`;
+die vond vijf echte bugs (stale cache doordat een gecachte clone alleen
+`git fetch` draaide zonder ooit tegen een remote-tracking ref te loggen, een
+lege repo verward met een onbereikbare, onbereikbare repo's die stilzwijgend
+uit de uitvoer vielen, een eerste run zonder eerdere week die de volledige
+geschiedenis van elke repo in één bestand dumpte, en een handgeschreven
+sectie buiten Wins/Slipped/Next week die een herhaalde run wiste). Alle vijf
+gefixt, elk met een regressietest, checker's bevindingen zaten dus niet in
+wat uiteindelijk gepusht is. Bewust NIET tegen het echte
+`planning/weekly/2026-W32.md` gedraaid — vandaag valt nog in ISO-week 32,
+hetzelfde bestand dat Ollie al met de hand schreef; een eerste echte run had
+zijn Wins overschreven met automatisch afgeleide regels. Geverifieerd tegen
+een synthetische toekomstige week in een losse tijdelijke map. Taak op
+`done`.
+
+**Aangescherpt:** `nachtrun-subagents-kapot` (inbox, S) → gesloten als `done`
+zonder één regel code. De branch die de notities noemden
+(`claude/hangar-nightrun-push-issue-njdjly`, regel 8 "No subagents? Play both
+roles yourself" in CLAUDE.md) bleek al gemerged in de default branch —
+merge-commit `139192e`, 2026-08-08 11:52 UTC+2, ruim voor deze run. Deze
+run is er zelf het bewijs van: subagents bleken beschikbaar, dus de
+`hangar-checker` deed de echte vijandige check hierboven in plaats van een
+inline zelf-check. Details in de taak zelf.
+
+**Bewust niet gedaan:** geen tweede taak gebouwd (limiet: één per nacht).
+Geen andere inbox-taken aangescherpt (`hangar-in-de-browser`,
+`lege-repos-beslissen`, `versa-hosting-besluit` wachten alle drie
+expliciet op een besluit van Ollie — niet iets dat onderzoek oplost;
+`quizzly-design-pass`/`quizzly-legal-review-west`/`quizzly-slide-designer`
+zijn nieuwer en bewust overgeslagen omdat `nachtrun-subagents-kapot` een
+scherpe, met bronvermelding te bewijzen bevinding had). Geen deploy, geen
+secrets aangeraakt, geen andere branch dan de eigen twee van vannacht
+gebruikt.
+
+---
+
 ## 2026-08-08
 
 **Taak: `learn-live-preview` (oudste `ready`, gelijk oud met

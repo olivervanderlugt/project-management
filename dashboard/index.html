@@ -225,11 +225,11 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <div class="top-acts">
       <a class="act small" href="https://github.com/olivervanderlugt/project-management/issues/new?template=vangen.yml" target="_blank" rel="noopener">+ capture</a>
       <a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener">hangar repo</a>
-      <span class="mono dim">built 08 Aug 2026</span>
+      <span class="mono dim">built 09 Aug 2026</span>
     </div>
   </header>
 
-  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">6</span><span class="mono dim">of 7 projects</span></div><div class="vital" data-tone="calm"><span class="vital-label">agents running</span><span class="vital-value">0</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">12</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">9</span><span class="mono dim">needs a call</span></a></div>
+  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">6</span><span class="mono dim">of 7 projects</span></div><div class="vital" data-tone="calm"><span class="vital-label">agents running</span><span class="vital-value">0</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">11</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">8</span><span class="mono dim">needs a call</span></a></div>
 
   <section id="fleet">
     <div class="sec-head">
@@ -404,14 +404,6 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
           <li data-tone="warn">
             <span class="kind mono">verdict</span>
             <div>
-              <p class="what">Nachtrun kan geen subagents spawnen — bouwen zou stil zijn uitgevallen</p>
-              <p class="why">Een nachtrun die moet bouwen doet aantoonbaar één van twee dingen, zichtbaar in het night-log: (a) hij spawnt de builder- en checker-agents via de…</p>
-            </div>
-            <span class="where mono dim">no project</span>
-          </li>
-          <li data-tone="warn">
-            <span class="kind mono">verdict</span>
-            <div>
               <p class="what">Quizzly: lichter en vriendelijker app-chrome (design-expertpass)</p>
               <p class="why">Nog aan te scherpen — &quot;lichter en vriendelijker&quot; is een richting, geen finish. Voorstel eerst als DESIGN.md (paletttokens, typografie, spacing,…</p>
             </div>
@@ -507,16 +499,18 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
         <h2>Night log</h2>
         <span class="mono dim">planning/night-log.md</span>
       </div>
-      <ul class="plain-list"><li>Taak: `learn-live-preview` (oudste `ready`, gelijk oud met
-`weekly-review-automatic` — zelfde commit; S gekozen boven M). Uitkomst:
-gesloten als `done` zonder één regel code. De finish line bleek op 2026-08-07
-al gehaald in een andere sessie en nooit…</li><li>Aangescherpt: `hangar-in-de-browser` (inbox, L). Stap 2 losgetrokken als
-nieuwe `ready` taak `hangar-prioriteit-score` (S, volledig lokaal, gratis).
-Genoteerd dat stap 3 grotendeels al bestaat (`routing.yml` + agents), en dat
-stap 1 en 4 op besluiten van…</li><li>Bewust niet gedaan: geen tweede taak gebouwd (één per nacht, ook al kostte
-de eerste geen code); de nachtrun-selectieregel niet aangepast aan de nieuwe
-score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
-(egress geblokkeerd —…</li><li>---</li></ul>
+      <ul class="plain-list"><li>Subagents beschikbaar bij start (Task-tool + `.claude/agents/` werkten
+gewoon) — de builder/checker-rolverdeling uit CLAUDE.md is dus echt gebruikt,
+niet de inline-fallback. Open overnight-PR&#x27;s bij start:…</li><li>Taak: `weekly-review-automatic` (oudste `ready`, `added: 2026-08-06`,
+project `hangar` → repo is de Hangar zelf). Gebouwd:
+`scripts/weeklyreview.py` + `scripts/testweeklyreview.py` (23 tests) op
+branch `claude/night-weekly-review-automatic`,…</li><li>Aangescherpt: `nachtrun-subagents-kapot` (inbox, S) → gesloten als `done`
+zonder één regel code. De branch die de notities noemden
+(`claude/hangar-nightrun-push-issue-njdjly`, regel 8 &quot;No subagents? Play both
+roles yourself&quot; in CLAUDE.md) bleek al…</li><li>Bewust niet gedaan: geen tweede taak gebouwd (limiet: één per nacht).
+Geen andere inbox-taken aangescherpt (`hangar-in-de-browser`,
+`lege-repos-beslissen`, `versa-hosting-besluit` wachten alle drie
+expliciet op een besluit van Ollie — niet iets dat…</li></ul>
     </section>
   </div>
 
@@ -570,13 +564,6 @@ score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
           </tr>
           <tr data-status="inbox">
             <td><span class="state mono">inbox</span></td>
-            <td class="q-title">Nachtrun kan geen subagents spawnen — bouwen zou stil zijn uitgevallen</td>
-            <td class="mono dim">&mdash;</td>
-            <td class="mono dim">S</td>
-            <td><span class="agent none" title="needs a project: with a repo:">no agent</span></td>
-          </tr>
-          <tr data-status="inbox">
-            <td><span class="state mono">inbox</span></td>
             <td class="q-title">Vanuit de browser tegen de Hangar praten, met automatische routing</td>
             <td class="mono dim">hangar</td>
             <td class="mono dim">L</td>
@@ -609,6 +596,13 @@ score-taak (regelwijziging = Ollie); geen verse browser-check van de live site
             <td class="mono dim">versa</td>
             <td class="mono dim">M</td>
             <td><span class="agent">versa <span class="model">sonnet</span></span></td>
+          </tr>
+          <tr data-status="done">
+            <td><span class="state mono">done</span></td>
+            <td class="q-title">Nachtrun kan geen subagents spawnen — bouwen zou stil zijn uitgevallen</td>
+            <td class="mono dim">&mdash;</td>
+            <td class="mono dim">S</td>
+            <td><span class="dim">&mdash;</span></td>
           </tr>
           <tr data-status="done">
             <td><span class="state mono">done</span></td>
