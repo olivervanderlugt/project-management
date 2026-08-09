@@ -11,15 +11,17 @@ mattered, only what happened.
 `--date` overrides "today", for testing; the real run always means today.
 
 No dependencies beyond the standard library and a local (or shallow-clonable)
-checkout of each repo. Never invents a win: a repo with no commits that week is
-left out rather than listed as empty, and a week with nothing anywhere says so
-in plain words instead of an empty bullet list.
+checkout of each repo. Never invents a win: a repo with no commits in range is
+left out rather than listed as empty, a week with nothing anywhere says so in
+plain words instead of an empty bullet list, and a repo that could not be
+reached at all is reported as unreachable rather than silently skipped —
+"nothing happened" and "never checked" are different facts.
 
 Idempotent by design: re-running for the same week recomputes Wins from
-scratch and overwrites the Wins section only. Focus/Slipped/Next week, if a
-human already wrote something there, are read back out of the existing file
-and carried forward untouched — the second run of the day must not eat the
-first run's manual edits.
+scratch and overwrites only the Wins section. Focus, Slipped, Next week, and
+any other section a human already wrote (a "## Notes", say) are read back out
+of the existing file and carried forward untouched — the second run of the
+day must not eat the first run's manual edits.
 """
 
 import argparse
@@ -86,10 +88,16 @@ def existing_weekly_weeks():
 
 
 def since_date(current_week_code, weeks):
-    """The day after the last *reviewed* week ended, or None for all history."""
+    """The day after the last *reviewed* week ended.
+
+    With no earlier week on record — the very first run — falls back to the
+    Monday of the current week rather than the whole history of every repo:
+    a "weekly" review that silently means "since the beginning of time" on
+    day one is not weekly, and it is not a fallback anyone asked for.
+    """
     earlier = sorted(w for w in weeks if w < current_week_code)
     if not earlier:
-        return None
+        return week_code_to_monday(current_week_code)
     return week_code_to_monday(earlier[-1]) + timedelta(days=7)
 
 
@@ -122,17 +130,52 @@ def shallow_clone(repo):
     return dest if result.returncode == 0 else None
 
 
+def default_ref(clone):
+    """The ref that stands for `repo`'s real history: origin's default branch
+    when it can be discovered, this checkout's own HEAD otherwise.
+
+    A plain `git log` with no ref reads whatever the local checkout happens
+    to have out — which, for a cached clone that only ever gets `git fetch`
+    (a fetch moves remote-tracking refs, never the local branch), never
+    moves past the commit it was cloned at. Reading a remote-tracking ref
+    instead means a fetch is enough to see new commits, and it means a local
+    sibling checkout sitting on a feature branch still reports the project's
+    real branch instead of whatever a person happened to have open.
+
+    Returns None if no ref resolves at all — a repo that has never had a
+    single commit, which is "reached" but has nothing to read.
+    """
+    subprocess.run(
+        ["git", "remote", "set-head", "origin", "--auto"],
+        cwd=clone, capture_output=True,
+    )
+    result = subprocess.run(
+        ["git", "symbolic-ref", "--quiet", "--short", "refs/remotes/origin/HEAD"],
+        cwd=clone, capture_output=True, text=True,
+    )
+    ref = result.stdout.strip() or "HEAD"
+    resolves = subprocess.run(
+        ["git", "rev-parse", "--verify", "--quiet", ref],
+        cwd=clone, capture_output=True,
+    ).returncode == 0
+    return ref if resolves else None
+
+
 def commits_since(repo, since):
     """One-line commit messages for `repo` since `since` (None = all history).
 
     Returns None if the repo could not be reached at all — distinct from an
-    empty list, which means "reached, nothing happened."
+    empty list, which means "reached, and either genuinely no commits since
+    `since`, or no commits ever."
     """
     clone = local_clone(repo) or shallow_clone(repo)
     if clone is None:
         return None
     subprocess.run(["git", "fetch", "--quiet"], cwd=clone, capture_output=True)
-    args = ["git", "log", "--no-merges", "--pretty=format:%s"]
+    ref = default_ref(clone)
+    if ref is None:
+        return []
+    args = ["git", "log", "--no-merges", "--pretty=format:%s", ref]
     if since:
         args.append(f"--since={since.isoformat()}")
     result = subprocess.run(args, cwd=clone, capture_output=True, text=True)
@@ -142,21 +185,30 @@ def commits_since(repo, since):
 
 
 def build_wins(since):
-    """Wins lines, one per commit, prefixed with the repo slug. Skips silence."""
-    wins = []
-    reached_any = False
-    for repo in project_repos():
+    """Wins lines, one per commit, prefixed with the repo slug.
+
+    A repo with no commits in range is left out, per the task's own rule —
+    that is silence, not news. A repo that could not be reached at all is
+    NOT left out: it is reported as unreachable, because "checked, nothing
+    happened" and "never checked" are different facts and the file should
+    not claim the first when it only knows the second.
+    """
+    repos = project_repos()
+    if not repos:
+        return ["Nothing — no repos to check"]
+
+    wins, unreachable = [], []
+    for repo in repos:
+        slug = repo.rsplit("/", 1)[-1]
         commits = commits_since(repo, since)
         if commits is None:
+            unreachable.append(slug)
             continue
-        reached_any = True
-        slug = repo.rsplit("/", 1)[-1]
         wins.extend(f"{slug}: {message}" for message in commits)
-    if wins:
-        return wins
-    if reached_any:
-        return ["Nothing — no commits anywhere this week"]
-    return ["Nothing — no repo could be reached to check"]
+
+    lines = wins or ["Nothing — no commits anywhere this week"]
+    lines += [f"{slug}: could not be checked — repo unreachable" for slug in unreachable]
+    return lines
 
 
 def read_sections(path):
@@ -189,26 +241,16 @@ def section_lines(sections, heading, default):
     return lines if lines else default
 
 
-def render(week_code, focus, wins, slipped, next_week):
-    body = [
-        "---",
-        f"week: {week_code}",
-        f"focus: {focus}",
-        "---",
-        "",
-        "## Wins",
-        "",
-        *[f"- {w}" for w in wins],
-        "",
-        "## Slipped",
-        "",
-        *slipped,
-        "",
-        "## Next week",
-        "",
-        *next_week,
-        "",
-    ]
+def render(week_code, focus, sections):
+    """`sections` is {heading: [body lines]}, in the order to render them —
+    whatever order they were read back in, so a hand-added section (e.g. a
+    "## Notes") keeps its place across a rerun instead of being dropped."""
+    body = ["---", f"week: {week_code}", f"focus: {focus}", "---", ""]
+    for heading, lines in sections.items():
+        body.append(f"## {heading}")
+        body.append("")
+        body.extend(lines)
+        body.append("")
     return "\n".join(body)
 
 
@@ -220,14 +262,16 @@ def write_weekly(today):
 
     out_path = WEEKLY_DIR / f"{week_code}.md"
     existing_meta, _ = parse_doc(out_path) if out_path.exists() else ({}, "")
-    sections = read_sections(out_path)
+    existing_sections = read_sections(out_path)
 
     focus = existing_meta.get("focus", "")
-    slipped = section_lines(sections, "Slipped", ["-"])
-    next_week = section_lines(sections, "Next week", ["-"])
+    sections = dict(existing_sections)
+    sections["Wins"] = [f"- {w}" for w in wins]
+    sections["Slipped"] = section_lines(existing_sections, "Slipped", ["-"])
+    sections["Next week"] = section_lines(existing_sections, "Next week", ["-"])
 
     WEEKLY_DIR.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(render(week_code, focus, wins, slipped, next_week), encoding="utf-8")
+    out_path.write_text(render(week_code, focus, sections), encoding="utf-8")
     return out_path, wins
 
 
