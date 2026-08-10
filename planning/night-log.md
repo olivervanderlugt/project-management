@@ -8,6 +8,21 @@ pull requests to find out.
 
 ---
 
+## 2026-08-10
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
+builder/checker-rolverdeling van CLAUDE.md wordt dus echt gebruikt. Open
+overnight-PR's bij start: 2 (`percentile#1` `night/percentile-f16-count-ladder`,
+`learning-website#3` `night/learn-csharp-chain`) — onder de grens van 3, dus
+gebouwd. (`quizzly#1` en `percentile#3` zijn geen nachtrun-PR's — andere
+branch-conventie, niet meegeteld.)
+
+**Taak: `hangar-prioriteit-score`** (oudste `ready`, `added: 2026-08-08`,
+project `hangar` → repo is de Hangar zelf, geen aparte clone nodig). Op
+`doing` gezet, branch `claude/night-hangar-prioriteit-score`. In uitvoering —
+rest van dit blok wordt bijgewerkt na afronding.
+
+
 ## 2026-08-09
 
 **Subagents beschikbaar bij start** (Task-tool + `.claude/agents/` werkten
