@@ -207,6 +207,15 @@ details.queue-wrap[open] summary::before{content:"\25BE";}
 .q-title{color:var(--ink); text-wrap:pretty;}
 .table-scroll{overflow-x:auto;}
 
+/* priority */
+.do-now{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px;
+  background:var(--panel); border:1px solid var(--hair); border-left:3px solid var(--accent);
+  border-radius:var(--radius); padding:12px 16px;}
+.do-now-label{text-transform:uppercase; letter-spacing:.16em; color:var(--accent);}
+.do-now-task{font-size:1.05rem; font-weight:600; color:var(--ink); text-wrap:pretty;}
+.queue.priority{margin-top:10px;}
+.queue.priority .score{color:var(--ink-2); font-size:.8rem;}
+
 footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
   border-top:1px solid var(--hair); padding-top:14px;}
 
@@ -225,11 +234,112 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <div class="top-acts">
       <a class="act small" href="https://github.com/olivervanderlugt/project-management/issues/new?template=vangen.yml" target="_blank" rel="noopener">+ capture</a>
       <a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener">hangar repo</a>
-      <span class="mono dim">built 09 Aug 2026</span>
+      <span class="mono dim">built 10 Aug 2026</span>
     </div>
   </header>
 
-  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">6</span><span class="mono dim">of 7 projects</span></div><div class="vital" data-tone="calm"><span class="vital-label">agents running</span><span class="vital-value">0</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">10</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">8</span><span class="mono dim">needs a call</span></a></div>
+  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">6</span><span class="mono dim">of 7 projects</span></div><div class="vital" data-tone="live"><span class="vital-label">agents running</span><span class="vital-value">1</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">9</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">8</span><span class="mono dim">needs a call</span></a></div>
+
+  <section id="priority">
+    <div class="sec-head">
+      <h2>What to start &mdash; open tasks by score</h2>
+      <span class="mono dim">status &middot; weights.yml &middot; effort &middot; age</span>
+    </div>
+    
+      <p class="do-now">
+        <span class="do-now-label mono">Dit nu</span>
+        <span class="do-now-task">Quizzly: wachtwoord tonen/verbergen op elk wachtwoordveld</span>
+        <span class="mono dim">highest score in the queue &middot; Quizzly &middot; ready to hand out &middot; score 710</span>
+      </p>
+      <div class="table-scroll">
+        <table class="queue priority">
+          <thead><tr><th>score</th><th>status</th><th>task</th><th>project</th>
+            <th>weight</th><th>effort</th><th>age</th></tr></thead>
+          <tbody>
+          <tr data-status="ready">
+            <td class="mono score">710</td>
+            <td><span class="state mono">ready</span></td>
+            <td class="q-title">Quizzly: wachtwoord tonen/verbergen op elk wachtwoordveld</td>
+            <td class="mono dim">quizzly</td>
+            <td class="mono dim" title="weights.yml">3</td>
+            <td class="mono dim">S</td>
+            <td class="mono dim">2d</td>
+          </tr>
+          <tr data-status="ready">
+            <td class="mono score">700</td>
+            <td><span class="state mono">ready</span></td>
+            <td class="q-title">Quizzly: afbeeldingen uploaden op slides (nu alleen URL)</td>
+            <td class="mono dim">quizzly</td>
+            <td class="mono dim" title="weights.yml">3</td>
+            <td class="mono dim">M</td>
+            <td class="mono dim">2d</td>
+          </tr>
+          <tr data-status="inbox">
+            <td class="mono score">460</td>
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Beslissen waar Versa draait, en hem daar neerzetten</td>
+            <td class="mono dim">versa</td>
+            <td class="mono dim" title="weights.yml">5</td>
+            <td class="mono dim">M</td>
+            <td class="mono dim">4d</td>
+          </tr>
+          <tr data-status="inbox">
+            <td class="mono score">410</td>
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Crew management: één alinea of weg</td>
+            <td class="mono dim">&mdash;</td>
+            <td class="mono dim" title="weights.yml">3</td>
+            <td class="mono dim">S</td>
+            <td class="mono dim">4d</td>
+          </tr>
+          <tr data-status="inbox">
+            <td class="mono score">400</td>
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Quizzly: lichter en vriendelijker app-chrome (design-expertpass)</td>
+            <td class="mono dim">quizzly</td>
+            <td class="mono dim" title="weights.yml">3</td>
+            <td class="mono dim">M</td>
+            <td class="mono dim">2d</td>
+          </tr>
+          <tr data-status="inbox">
+            <td class="mono score">400</td>
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Quizzly: compliance-review westerse landen (EU/VK/VS/CA/AU)</td>
+            <td class="mono dim">quizzly</td>
+            <td class="mono dim" title="weights.yml">3</td>
+            <td class="mono dim">M</td>
+            <td class="mono dim">2d</td>
+          </tr>
+          <tr data-status="inbox">
+            <td class="mono score">390</td>
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Quizzly: slide-designer — per-slide design, media, geluid, live preview</td>
+            <td class="mono dim">quizzly</td>
+            <td class="mono dim" title="weights.yml">3</td>
+            <td class="mono dim">L</td>
+            <td class="mono dim">2d</td>
+          </tr>
+          <tr data-status="inbox">
+            <td class="mono score">360</td>
+            <td><span class="state mono">inbox</span></td>
+            <td class="q-title">Vanuit de browser tegen de Hangar praten, met automatische routing</td>
+            <td class="mono dim">hangar</td>
+            <td class="mono dim" title="weights.yml">2</td>
+            <td class="mono dim">L</td>
+            <td class="mono dim">4d</td>
+          </tr>
+          <tr data-status="blocked">
+            <td class="mono score">80</td>
+            <td><span class="state mono">blocked</span></td>
+            <td class="q-title">Night run vs usage limits — three account-level decisions</td>
+            <td class="mono dim">hangar</td>
+            <td class="mono dim" title="weights.yml">2</td>
+            <td class="mono dim">S</td>
+            <td class="mono dim">3d</td>
+          </tr></tbody>
+        </table>
+      </div>
+  </section>
 
   <section id="fleet">
     <div class="sec-head">
@@ -237,6 +347,30 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
       <span class="mono dim">projects/</span>
     </div>
     <div class="fleet">
+        <article class="card" data-status="active">
+          <div class="card-head">
+            <h3>The Hangar</h3>
+            <span class="chips"><span class="pill" data-tone="active">active</span><span class="pill" data-tone="live">1 running</span></span>
+          </div>
+          <p class="card-desc">The board you&#x27;re looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.</p>
+          <div class="next"><span class="lane-label">next</span><p class="next-text">Build weekly-review-automatic — the script that writes the weekly file from real commits</p></div>
+          <div class="progress"><div class="bar" role="img" aria-label="4 of 7 tasks done"><span style="width:57%"></span></div><span class="mono dim">4/7 done</span></div>
+          
+          <div class="lane" data-tone="live">
+            <span class="lane-label">running now</span>
+            <ul class="lane-list"><li><span class="dot live" aria-hidden="true"></span><span class="lane-text">Prioriteitsscore per taak in build.py, bord toont &quot;dit nu&quot;</span><span class="agent">hangar <span class="model">sonnet</span></span><span class="mono dim branch">claude/night-hangar-prioriteit-score</span></li></ul>
+          </div>
+          
+          <div class="lane" data-tone="calm">
+            <span class="lane-label">to do</span>
+            <ul class="lane-list"><li><span class="dot" data-status="blocked" aria-hidden="true"></span><span class="state mono">blocked</span><span class="lane-text">Night run vs usage limits — three account-level decisions</span><span class="mono dim">Blocked on: Ollie. Background and the reasoning for each option:…</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">Vanuit de browser tegen de Hangar praten, met automatische routing</span><span class="mono dim">needs a verdict</span></li></ul>
+          </div>
+          <div class="card-foot">
+            <div class="acts"><a class="act primary live" href="https://olivervanderlugt.github.io/project-management/" target="_blank" rel="noopener" title="https://olivervanderlugt.github.io/project-management/"><span class="dot live" aria-hidden="true"></span>Preview &#8599;</a><a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener" title="olivervanderlugt/project-management">repo</a><button class="act small run-local" type="button" data-slug="hangar">run local</button><a class="act small local-link" data-slug="hangar" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on The Hangar (olivervanderlugt/project-management). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Build weekly-review-automatic — the script that writes the weekly file from real commits When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="card-meta mono dim">Markdown, Python 3, GitHub Pages</div>
+            <div class="tags"><span class="tag">tooling</span><span class="tag">personal</span></div>
+          </div>
+        </article>
         <article class="card" data-status="active">
           <div class="card-head">
             <h3>Learn — personal learning app</h3>
@@ -287,26 +421,6 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <div class="acts"><a class="act primary guess" href="https://olivervanderlugt.github.io/quizzly/" target="_blank" rel="noopener" title="Derived GitHub Pages URL, never opened by anyone here: https://olivervanderlugt.github.io/quizzly/">Preview &#8599;<span class="guess-flag">unverified</span></a><a class="act small" href="https://github.com/olivervanderlugt/quizzly" target="_blank" rel="noopener" title="olivervanderlugt/quizzly">repo</a><button class="act small run-local" type="button" data-slug="quizzly">run local</button><a class="act small local-link" data-slug="quizzly" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on Quizzly (olivervanderlugt/quizzly). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <div class="card-meta mono dim">Next.js 15, Socket.IO, Prisma, PostgreSQL, Docker</div>
             <div class="tags"><span class="tag">product</span><span class="tag">realtime</span></div>
-          </div>
-        </article>
-        <article class="card" data-status="active">
-          <div class="card-head">
-            <h3>The Hangar</h3>
-            <span class="chips"><span class="pill" data-tone="active">active</span></span>
-          </div>
-          <p class="card-desc">The board you&#x27;re looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.</p>
-          <div class="next"><span class="lane-label">next</span><p class="next-text">Build weekly-review-automatic — the script that writes the weekly file from real commits</p></div>
-          <div class="progress"><div class="bar" role="img" aria-label="4 of 7 tasks done"><span style="width:57%"></span></div><span class="mono dim">4/7 done</span></div>
-          
-          
-          <div class="lane" data-tone="calm">
-            <span class="lane-label">to do</span>
-            <ul class="lane-list"><li><span class="dot" data-status="blocked" aria-hidden="true"></span><span class="state mono">blocked</span><span class="lane-text">Night run vs usage limits — three account-level decisions</span><span class="mono dim">Blocked on: Ollie. Background and the reasoning for each option:…</span></li><li><span class="dot" data-status="ready" aria-hidden="true"></span><span class="state mono">ready</span><span class="lane-text">Prioriteitsscore per taak in build.py, bord toont &quot;dit nu&quot;</span><span class="agent">hangar <span class="model">sonnet</span></span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">Vanuit de browser tegen de Hangar praten, met automatische routing</span><span class="mono dim">needs a verdict</span></li></ul>
-          </div>
-          <div class="card-foot">
-            <div class="acts"><a class="act primary live" href="https://olivervanderlugt.github.io/project-management/" target="_blank" rel="noopener" title="https://olivervanderlugt.github.io/project-management/"><span class="dot live" aria-hidden="true"></span>Preview &#8599;</a><a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener" title="olivervanderlugt/project-management">repo</a><button class="act small run-local" type="button" data-slug="hangar">run local</button><a class="act small local-link" data-slug="hangar" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on The Hangar (olivervanderlugt/project-management). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Build weekly-review-automatic — the script that writes the weekly file from real commits When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
-            <div class="card-meta mono dim">Markdown, Python 3, GitHub Pages</div>
-            <div class="tags"><span class="tag">tooling</span><span class="tag">personal</span></div>
           </div>
         </article>
         <article class="card" data-status="active">
@@ -499,18 +613,18 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
         <h2>Night log</h2>
         <span class="mono dim">planning/night-log.md</span>
       </div>
-      <ul class="plain-list"><li>Subagents beschikbaar bij start (Task-tool + `.claude/agents/` werkten
+      <ul class="plain-list"><li>Start. Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
+builder/checker-rolverdeling van CLAUDE.md wordt dus echt gebruikt. Open
+overnight-PR&#x27;s bij start: 2 (`percentile#1` `night/percentile-f16-count-ladder`,
+`learning-website#3`…</li><li>Taak: `hangar-prioriteit-score` (oudste `ready`, `added: 2026-08-08`,
+project `hangar` → repo is de Hangar zelf, geen aparte clone nodig). Op
+`doing` gezet, branch `claude/night-hangar-prioriteit-score`. In uitvoering —
+rest van dit blok wordt bijgewerkt…</li><li>Subagents beschikbaar bij start (Task-tool + `.claude/agents/` werkten
 gewoon) — de builder/checker-rolverdeling uit CLAUDE.md is dus echt gebruikt,
 niet de inline-fallback. Open overnight-PR&#x27;s bij start:…</li><li>Taak: `weekly-review-automatic` (oudste `ready`, `added: 2026-08-06`,
 project `hangar` → repo is de Hangar zelf). Gebouwd:
 `scripts/weeklyreview.py` + `scripts/testweeklyreview.py` (23 tests) op
-branch `claude/night-weekly-review-automatic`,…</li><li>Aangescherpt: `nachtrun-subagents-kapot` (inbox, S) → gesloten als `done`
-zonder één regel code. De branch die de notities noemden
-(`claude/hangar-nightrun-push-issue-njdjly`, regel 8 &quot;No subagents? Play both
-roles yourself&quot; in CLAUDE.md) bleek al…</li><li>Bewust niet gedaan: geen tweede taak gebouwd (limiet: één per nacht).
-Geen andere inbox-taken aangescherpt (`hangar-in-de-browser`,
-`lege-repos-beslissen`, `versa-hosting-besluit` wachten alle drie
-expliciet op een besluit van Ollie — niet iets dat…</li></ul>
+branch `claude/night-weekly-review-automatic`,…</li></ul>
     </section>
   </div>
 
@@ -520,16 +634,16 @@ expliciet op een besluit van Ollie — niet iets dat…</li></ul>
       <table class="queue">
         <thead><tr><th>status</th><th>task</th><th>project</th><th>effort</th><th>goes to</th></tr></thead>
         <tbody>
-          <tr data-status="blocked">
-            <td><span class="state mono">blocked</span></td>
-            <td class="q-title">Night run vs usage limits — three account-level decisions</td>
+          <tr data-status="doing">
+            <td><span class="state mono">doing</span></td>
+            <td class="q-title">Prioriteitsscore per taak in build.py, bord toont &quot;dit nu&quot;</td>
             <td class="mono dim">hangar</td>
             <td class="mono dim">S</td>
             <td><span class="agent">hangar <span class="model">sonnet</span></span></td>
           </tr>
-          <tr data-status="ready">
-            <td><span class="state mono">ready</span></td>
-            <td class="q-title">Prioriteitsscore per taak in build.py, bord toont &quot;dit nu&quot;</td>
+          <tr data-status="blocked">
+            <td><span class="state mono">blocked</span></td>
+            <td class="q-title">Night run vs usage limits — three account-level decisions</td>
             <td class="mono dim">hangar</td>
             <td class="mono dim">S</td>
             <td><span class="agent">hangar <span class="model">sonnet</span></span></td>
