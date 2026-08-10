@@ -18,9 +18,50 @@ gebouwd. (`quizzly#1` en `percentile#3` zijn geen nachtrun-PR's — andere
 branch-conventie, niet meegeteld.)
 
 **Taak: `hangar-prioriteit-score`** (oudste `ready`, `added: 2026-08-08`,
-project `hangar` → repo is de Hangar zelf, geen aparte clone nodig). Op
-`doing` gezet, branch `claude/night-hangar-prioriteit-score`. In uitvoering —
-rest van dit blok wordt bijgewerkt na afronding.
+project `hangar` → repo is de Hangar zelf, geen aparte clone nodig). Gebouwd
+op branch `claude/night-hangar-prioriteit-score`: `weights.yml` (nieuw, plat
+`slug: gewicht`, gezaaid uit de "Aanbevolen volgorde" in
+`reference/project-prioritering.md` — de ●-tabel zelf telt gelijk op tot een
+tie tussen Versa/Percentile/Learn/Hangar en kon dus niet direct als gewicht
+dienen), een deterministische score in `dashboard/build.py` uit vier
+factoren (status, projectgewicht, effort, ouderdom) met één uitleg-
+commentaarblok erbij, een "Dit nu"-regel bovenaan een nieuwe
+prioriteitstabel op het bord, en `scripts/test_priority.py` (30 tests). De
+`hangar-builder`-agent bouwde, de `hangar-checker`-agent deed de vijandige
+review — dus de builder/checker-rolverdeling uit CLAUDE.md is écht gebruikt,
+niet de inline-fallback. Checker draaide alles zelf opnieuw (build tweemaal
+diffen, alle 7 testsuites, 15 kapotte-invoer-probes, CLAUDE.md-diff = 0
+regels) en keurde de taak `DONE`. Taak op `done`, niet naar main gepusht —
+gaat als PR.
+
+De checker vond drie niet-blokkerende gebreken. Twee zijn bewust genoteerd en
+niet aangepakt (project-gewicht buiten het gedocumenteerde bereik 1-5 kan de
+status-voorrang doorbreken — geen eis uit de Done means, alleen een extra
+garantie die de bouwer zelf toevoegde; een test die de echte
+`dashboard/index.html` wegschrijft, onschadelijk zolang de build
+deterministisch blijft). Het derde — een dubbele HTML-escape die een lege
+`effort:` als de letterlijke tekst `&amp;mdash;` toont in plaats van een
+gedachtestreepje — is meteen gevangen als nieuwe taak
+`hangar-priority-effort-escaping` en, omdat de exacte regel en fix al bekend
+waren uit de check, in dezelfde nacht direct aangescherpt naar `ready` (dit
+telt niet als een tweede bouw-taak vannacht; er is geen regel code voor
+geschreven).
+
+**Aangescherpt:** naast de escaping-taak hierboven zijn de overige inbox-
+taken bekeken en bewust met rust gelaten: `quizzly-design-pass` /
+`quizzly-legal-review-west` / `quizzly-slide-designer` vragen elk een
+voorstel dat Ollie eerst moet zien (smaak, juridisch, visie) — geen
+onderzoeksvraag die een nachtrun voor hem kan beslissen. `hangar-in-de-
+browser` is al grotendeels aangescherpt in eerdere nachten; de resterende
+stappen 1 en 4 wachten op zijn besluiten (API-budget/secret, resp. een
+besluit dat 0001 vervangt). `lege-repos-beslissen` en `versa-hosting-
+besluit` zijn hetzelfde: onderzoek lost ze niet op, een keuze van Ollie wel.
+
+**Bewust niet gedaan:** geen tweede taak gebouwd (limiet: één per nacht).
+Geen deploy, geen secrets aangeraakt, geen andere branch dan de eigen
+`claude/night-hangar-prioriteit-score` (taak) en `claude/night-2026-08-10`
+(dit afsluitende blok) gebruikt. Geen andere repo aangeraakt dan de Hangar
+zelf — deze taak had er geen nodig.
 
 
 ## 2026-08-09

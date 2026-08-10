@@ -1,7 +1,7 @@
 ---
 title: Prioriteitsscore per taak in build.py, bord toont "dit nu"
 project: hangar
-status: doing
+status: done
 added: 2026-08-08
 effort: S
 branch: claude/night-hangar-prioriteit-score
