@@ -155,8 +155,20 @@ suggestions — they exist because nobody is awake to catch a mistake:
    Ollie is working on. Record the branch in the task's `branch:` field.
 4. **Tests must pass.** If the project has tests, run them. Red means: do not
    push code, write down what broke, set the task to `blocked`.
-5. **Stop at three open overnight PRs.** Review debt compounds. At the limit,
-   skip building and spend the night sharpening `inbox` tasks instead.
+5. **PR ceiling, measured by `scripts/pr_limits.py`.** Collect every currently
+   open PR across the repos in scope — repo, head branch, when it was opened,
+   its review state (`APPROVED` / `CHANGES_REQUESTED` / `PENDING` / none) —
+   and run them through `scripts/pr_limits.py` rather than counting by eye.
+   Only a PR whose branch starts with `claude/night-` or `night/` counts as a
+   "nightrun PR" at all; a nightrun PR with an `APPROVED` review is not review
+   debt — it is only waiting on a merge click. Cap: max 2 debt PRs per repo,
+   max 8 total. If the top-ranked `ready` task's repo is at its cap, don't
+   skip the whole night — try the next `ready` task whose repo still has room
+   (`pr_limits.first_open_repo`). Only skip building entirely when nothing
+   `ready` has room left. A nightrun PR open more than 14 days with no review
+   at all doesn't count against the cap but must be named in the night-log as
+   stale — a higher ceiling must never make an ignored PR invisible. Reasoning
+   and the numbers: `decisions/0004`.
 6. **Never touch credentials, deploys or anything that costs money.**
 7. **Leave a trail.** Every night writes to `planning/night-log.md`: what it
    did, what it refused to do, and why.

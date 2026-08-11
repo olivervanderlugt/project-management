@@ -225,7 +225,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <div class="top-acts">
       <a class="act small" href="https://github.com/olivervanderlugt/project-management/issues/new?template=vangen.yml" target="_blank" rel="noopener">+ capture</a>
       <a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener">hangar repo</a>
-      <span class="mono dim">built 09 Aug 2026</span>
+      <span class="mono dim">built 11 Aug 2026</span>
     </div>
   </header>
 
@@ -466,9 +466,17 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <section class="panel">
       <div class="panel-head">
         <h2>Decision log</h2>
-        <span class="mono dim">3</span>
+        <span class="mono dim">4</span>
       </div>
       <ul class="rows">
+        <li class="decision" data-status="accepted">
+          <span class="adr mono">0004</span>
+          <div>
+            <h4>Nachtrun-PR-plafond verhoogd, maar slimmer geteld</h4>
+            <p>1. **Alleen echte review-schuld telt mee.** Een nachtrun-PR met een <code>APPROVED</code>-review telt niet meer mee voor het plafond — die wacht alleen op een merge-klik, niet op een oordeel. Dat is de kern van &quot;slimmer&quot;: het plafond meet nu wat Ollie nog moet *beoordelen*, niet hoeveel PR&#x27;s er toevallig openstaan. 2. **Plafond per repo én totaal**, niet één platte teller: max 2 openstaande review-schuld-PR&#x27;s per repo, max 8 in totaal. Per-repo voorkomt dat één project de hele nacht-capaciteit opsoupeert; het totaal voorkomt dat zeven repo&#x27;s samen alsnog een onbeheersbare stapel worden. 3. **Bij een vol plafond wordt niet meteen de hele nacht overgeslagen.** De nachtrun probeert de eerstvolgende <code>ready</code>-taak waarvan de repo nog onder zijn per-repo-plafond zit. Pas als niets meer past — elke repo met een <code>ready</code>-taak zit aan zijn plafond, of het totaal zit vol — gaat de nacht naar stap 3 (aanscherpen). 4. **Stale-signaal in plaats van eeuwige onzichtbaarheid.** Een nachtrun-PR die langer dan 14 dagen open staat zonder ooit een review te hebben gehad, telt niet mee voor het plafond (het hoger plafond mag zoiets niet permanent onder het tapijt vegen) maar wordt wél in het night-log genoemd. Dat is de andere helft van &quot;veiliger&quot;: een hoger plafond mag nooit betekenen dat een genegeerde PR onzichtbaar blijft. 5. **Geteld met code, niet met avond-voor-avond interpretatie.** <code>scripts/pr_limits.py</code> beslist dit deterministisch uit de PR-gegevens die de nachtrun ophaalt (repo, branch, wanneer geopend, review-status) — geen losse afweging meer per nacht over wat wel/niet als &quot;nachtrun-PR&quot; telt (dat leverde eerder al twee keer discussie op: <code>quizzly#1</code> en <code>percentile#3</code> telden niet mee omdat de branch-naam niet paste, en dat stond alleen in het night-log, niet vast in code).</p>
+            <span class="mono dim">11 Aug 2026 &middot; accepted</span>
+          </div>
+        </li>
         <li class="decision" data-status="proposed">
           <span class="adr mono">0003</span>
           <div>
