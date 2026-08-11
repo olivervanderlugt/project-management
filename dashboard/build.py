@@ -162,6 +162,115 @@ def clip(text, limit=150):
     return text[: limit - 1].rsplit(" ", 1)[0] + "…"
 
 
+# ------------------------------------------------------------------- priority
+#
+# What the board should tell Ollie to do next, as one number per open task.
+#
+# score = status + weight + effort + age, and the point values are picked so
+# that each term strictly outranks everything under it. The gap between two
+# status values (300) is larger than the largest possible weight+effort+age
+# (150+20+9 = 179); one step of project weight (30) is larger than the largest
+# possible effort+age (29); one step of effort (10) is larger than the largest
+# possible age (9). So the four factors read as a ranking in that order and the
+# number is only a compact way of writing it down:
+#
+#   1. status   ready 600, inbox 300, blocked 0.
+#      Ready first, because it is the only thing that can be picked up without
+#      a decision. Blocked last, because it cannot move at all — this is what
+#      keeps "do this now" from ever naming something nobody can start.
+#   2. weight   the project's row in weights.yml (1..5) times 30.
+#      Data, not code: the only knob Ollie turns. A task with no project:, or
+#      one whose project is not in the table, gets the `neutral` row instead of
+#      a crash and instead of a zero.
+#   3. effort   S 20, M 10, L 0. Small first — finishing beats starting.
+#   4. age      (TODAY - added) in days, capped at 90, in whole tens: 0..9.
+#      Older weighs heavier, and only ever as a tiebreak, so nothing rots at
+#      the bottom of the queue forever. No `added:` reads as 0 days old.
+#
+# The one thing that moves on its own is age, and it moves with the calendar,
+# not with the clock: two builds on the same day produce the same score, the
+# same order and the same file.
+
+WEIGHTS = ROOT / "weights.yml"
+NEUTRAL_KEY = "neutral"
+NEUTRAL_FALLBACK = 3.0
+
+OPEN_STATUSES = ("ready", "inbox", "blocked")
+STATUS_POINTS = {"ready": 600, "inbox": 300, "blocked": 0}
+EFFORT_POINTS = {"S": 20, "M": 10, "L": 0}
+WEIGHT_POINTS = 30
+AGE_CAP_DAYS = 90
+AGE_PER_POINT = 10
+
+
+def read_weights(path=None):
+    """weights.yml as {slug: number}. Flat key: value, same shape as everywhere.
+
+    A missing file, a junk line or an unparseable number is not an error worth
+    failing a build over: the row is skipped and its project falls back to
+    neutral, which is what an unlisted project gets anyway.
+    """
+    path = Path(path) if path else WEIGHTS
+    table = {}
+    if not path.is_file():
+        return table
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or ":" not in line:
+            continue
+        key, _, value = line.partition(":")
+        try:
+            table[key.strip().lower()] = float(value.strip())
+        except ValueError:
+            continue
+    return table
+
+
+def project_weight(task, weights):
+    """The weights.yml row for a task's project, or the neutral one."""
+    slug = (task.get("project") or "").strip().lower()
+    neutral = weights.get(NEUTRAL_KEY, NEUTRAL_FALLBACK)
+    if not slug:
+        return neutral
+    return weights.get(slug, neutral)
+
+
+def task_age_days(task, today=None):
+    """How long a task has been open, in days. Never negative, never a crash."""
+    added = parse_date(task.get("added", ""))
+    if added is None:
+        return 0
+    return max(0, ((today or TODAY) - added).days)
+
+
+def priority_score(task, weights, today=None):
+    """The four factors as one number. See the comment block above."""
+    status = (task.get("status") or "inbox").strip().lower()
+    effort = (task.get("effort") or "").strip().upper()
+    age_points = min(task_age_days(task, today), AGE_CAP_DAYS) // AGE_PER_POINT
+    return (
+        STATUS_POINTS.get(status, 0)
+        + project_weight(task, weights) * WEIGHT_POINTS
+        + EFFORT_POINTS.get(effort, 0)
+        + age_points
+    )
+
+
+def open_tasks_by_score(tasks, weights, today=None):
+    """Open tasks, highest score first, as (score, meta, body).
+
+    Ties break on the older task and then on the slug, so the order is settled
+    by the files alone — two builds of the same tree cannot disagree.
+    """
+    scored = [
+        (priority_score(meta, weights, today), meta, body)
+        for meta, body in tasks
+        if (meta.get("status") or "inbox").strip().lower() in OPEN_STATUSES
+    ]
+    scored.sort(key=lambda row: (-row[0], row[1].get("added", "9999-99-99"), row[1]["slug"]))
+    return scored
+
+
 # ------------------------------------------------------------------- rendering
 
 
@@ -616,6 +725,58 @@ def render_nightlog():
     return f'<ul class="plain-list">{items}</ul>'
 
 
+def render_priority(tasks, by_slug, weights):
+    """Open tasks by score, led by the one line that says which to start."""
+    scored = open_tasks_by_score(tasks, weights)
+    if not scored:
+        return (
+            '<p class="all-clear">Nothing open. No ready task, no inbox task and nothing '
+            "blocked &mdash; the queue is clear.</p>"
+        )
+
+    top_score, top_meta, _ = scored[0]
+    top_status = (top_meta.get("status") or "inbox").strip().lower()
+    top_project = (top_meta.get("project") or "").strip()
+    where = by_slug.get(top_project, {}).get("title", top_project) or "no project"
+    if top_status == "ready":
+        why = f"highest score in the queue &middot; {escape(where)} &middot; ready to hand out"
+    elif top_status == "inbox":
+        # Nothing is ready, so the top of the queue is a decision, not a build.
+        why = f"nothing is ready &middot; {escape(where)} &middot; needs a finish line first"
+    else:
+        why = f"everything open is blocked &middot; {escape(where)} &middot; unblock this one"
+
+    rows = []
+    for score, meta, _ in scored:
+        status = (meta.get("status") or "inbox").strip().lower()
+        slug = (meta.get("project") or "").strip()
+        age = task_age_days(meta)
+        rows.append(f"""
+          <tr data-status="{escape(status)}">
+            <td class="mono score">{escape(f"{score:g}")}</td>
+            <td><span class="state mono">{escape(status)}</span></td>
+            <td class="q-title">{rich(meta.get("title") or meta["slug"])}</td>
+            <td class="mono dim">{escape(slug) if slug else "&mdash;"}</td>
+            <td class="mono dim" title="weights.yml">{escape(f"{project_weight(meta, weights):g}")}</td>
+            <td class="mono dim">{escape(meta.get("effort", "") or "&mdash;")}</td>
+            <td class="mono dim">{escape(f"{age}d")}</td>
+          </tr>""")
+
+    return f"""
+      <p class="do-now">
+        <span class="do-now-label mono">Dit nu</span>
+        <span class="do-now-task">{rich(top_meta.get("title") or top_meta["slug"])}</span>
+        <span class="mono dim">{why} &middot; score {escape(f"{top_score:g}")}</span>
+      </p>
+      <div class="table-scroll">
+        <table class="queue priority">
+          <thead><tr><th>score</th><th>status</th><th>task</th><th>project</th>
+            <th>weight</th><th>effort</th><th>age</th></tr></thead>
+          <tbody>{"".join(rows)}</tbody>
+        </table>
+      </div>"""
+
+
 def render_queue(tasks, by_slug, dispatch, routing):
     """Every task, done ones included, as the one complete list on the page."""
     if not tasks:
@@ -892,6 +1053,15 @@ details.queue-wrap[open] summary::before{content:"\\25BE";}
 .q-title{color:var(--ink); text-wrap:pretty;}
 .table-scroll{overflow-x:auto;}
 
+/* priority */
+.do-now{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px;
+  background:var(--panel); border:1px solid var(--hair); border-left:3px solid var(--accent);
+  border-radius:var(--radius); padding:12px 16px;}
+.do-now-label{text-transform:uppercase; letter-spacing:.16em; color:var(--accent);}
+.do-now-task{font-size:1.05rem; font-weight:600; color:var(--ink); text-wrap:pretty;}
+.queue.priority{margin-top:10px;}
+.queue.priority .score{color:var(--ink-2); font-size:.8rem;}
+
 footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
   border-top:1px solid var(--hair); padding-top:14px;}
 
@@ -1034,6 +1204,7 @@ def build():
     tasks = read_dir("tasks")
 
     dispatch, routing = load_dispatch()
+    weights = read_weights()
     by_slug = {meta["slug"]: meta for meta, _ in projects}
     by_project = {}
     for doc in tasks:
@@ -1064,6 +1235,14 @@ def build():
   </header>
 
   <div class="vitals">{render_vitals(projects, tasks, waiting_count)}</div>
+
+  <section id="priority">
+    <div class="sec-head">
+      <h2>What to start &mdash; open tasks by score</h2>
+      <span class="mono dim">status &middot; weights.yml &middot; effort &middot; age</span>
+    </div>
+    {render_priority(tasks, by_slug, weights)}
+  </section>
 
   <section id="fleet">
     <div class="sec-head">

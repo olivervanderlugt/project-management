@@ -1,0 +1,37 @@
+# How much a project's tasks weigh when the board scores what to do next.
+#
+# One place, so "which project first" is a decision on paper instead of a mood.
+# dashboard/build.py reads this; nothing else does. Edit the numbers here — the
+# formula in build.py never needs touching to change a priority.
+#
+# Deliberately flat key: value, one line per project slug, same as the
+# frontmatter contract and routing.yml. No nesting, no lists.
+#
+#   <project slug>: 1..5      higher = its tasks rank above another project's
+#   neutral:        1..5      what a task with no project: (or a project not
+#                             listed here) gets — never a crash, never a zero
+#
+# WHERE THE STARTING NUMBERS COME FROM (reference/project-prioritering.md):
+# that note scores four projects across nine goals in ●/●●/●●● but deliberately
+# refuses to weigh the goals against each other. Read as 1/2/3 and summed flat,
+# the four land on 17 (Versa) and 18 (Percentile, Learn, Hangar) — a dead heat,
+# so the ●-table alone cannot produce a ranking. Its closing "Aanbevolen
+# volgorde" can, and does: 1 Versa live, 2 Percentile diagnose, 3 Learn on
+# Pages, 4 keep the Hangar lean, 5 Quizzly and Crew management get a paragraph
+# or go. The seeds below are that order, top to bottom. That is a judgment
+# call, and it is Ollie's to overrule — which is exactly why it is data.
+
+versa: 5
+percentile: 4
+learning-website: 3
+hangar: 2
+crew-management-system: 1
+
+# Not in that note, so not ranked by it. Quizzly is listed there as an empty
+# repo, which is stale (it is an active project with a launch checklist), and
+# the Workout Timer postdates the note entirely. Both sit at neutral until
+# someone writes down where they belong rather than guessing here.
+quizzly: 3
+timer-workout: 3
+
+neutral: 3

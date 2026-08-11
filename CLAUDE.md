@@ -151,12 +151,30 @@ suggestions — they exist because nobody is awake to catch a mistake:
    queue — the limit is Ollie's usage budget, not the machine.
 2. **`ready` only.** An `inbox` task gets investigated and sharpened into a
    proposal. Never built.
-3. **Its own branch, then a PR.** Never commit to `main`, never to a branch
-   Ollie is working on. Record the branch in the task's `branch:` field.
+3. **Its own branch, then a PR — merged automatically once it's actually been
+   checked.** Never commit to `main` directly, never to a branch Ollie is
+   working on. Record the branch in the task's `branch:` field. Decided
+   2026-08-10 (Ollie, in chat, applies to every run from then on): once tests
+   are green (rule 4) and the diff has passed a real adversarial check against
+   the task's `## Done means` — the `hangar-checker` agent when subagents are
+   available, the inline self-check from rule 8 when they are not — merge the
+   PR immediately instead of leaving it open for Ollie to review by hand. The
+   checker's pass *is* the review gate now; it does not additionally wait for
+   a human. If the check finds the work is not done, do not merge — fix it or
+   set the task `blocked`, same as a red test. A PR only stays open if GitHub
+   itself refuses the merge (a failing required check, a real conflict, branch
+   protection) — never because "someone should look at this first." Then the
+   run is done: commit the wrap-up (rule 7), push, and stop. Do not keep
+   building because there is budget left.
 4. **Tests must pass.** If the project has tests, run them. Red means: do not
    push code, write down what broke, set the task to `blocked`.
-5. **Stop at three open overnight PRs.** Review debt compounds. At the limit,
-   skip building and spend the night sharpening `inbox` tasks instead.
+5. **Stop at three open overnight PRs.** Since rule 3 now merges on its own,
+   a PR still open at the start of a run means a previous night's merge got
+   stuck — a failing check, a conflict, branch protection — not that it is
+   awaiting review. Look into why before doing anything else with it; do not
+   force past whatever GitHub is blocking on. Three or more still-stuck PRs:
+   skip building and spend the night sharpening `inbox` tasks instead. Review
+   debt still compounds — it is just debt in *stuck* PRs now, not unread ones.
 6. **Never touch credentials, deploys or anything that costs money.**
 7. **Leave a trail.** Every night writes to `planning/night-log.md`: what it
    did, what it refused to do, and why.
