@@ -8,6 +8,24 @@ pull requests to find out.
 
 ---
 
+## 2026-08-11
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
+de builder/checker-rolverdeling uit CLAUDE.md kan dus gebruikt worden zodra er
+gebouwd wordt.
+
+Open overnight-PR's bij start (branch-conventie `night/...` of
+`claude/night-...`, zelfde telling als de vorige nacht): 3 —
+`project-management#5` (`claude/night-hangar-prioriteit-score`, nog niet
+gemerged in de default branch), `percentile#1`
+(`night/percentile-f16-count-ladder`), `learning-website#3`
+(`night/learn-csharp-chain`). (`quizzly#1` en `percentile#3` zijn geen
+nachtrun-PR's — andere branch-conventie, niet meegeteld, zelfde
+onderbouwing als de vorige nacht.) Dat is de grens uit CLAUDE.md ("stop bij
+drie open overnight PR's") — dus vannacht wordt er niets gebouwd. Verder
+naar stap 3: een inbox-taak aanscherpen. In uitvoering — rest van dit blok
+wordt bijgewerkt.
+
 ## 2026-08-09
 
 **Subagents beschikbaar bij start** (Task-tool + `.claude/agents/` werkten
