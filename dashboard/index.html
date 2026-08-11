@@ -234,7 +234,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <div class="top-acts">
       <a class="act small" href="https://github.com/olivervanderlugt/project-management/issues/new?template=vangen.yml" target="_blank" rel="noopener">+ capture</a>
       <a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener">hangar repo</a>
-      <span class="mono dim">built 10 Aug 2026</span>
+      <span class="mono dim">built 11 Aug 2026</span>
     </div>
   </header>
 
@@ -263,7 +263,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">quizzly</td>
             <td class="mono dim" title="weights.yml">3</td>
             <td class="mono dim">S</td>
-            <td class="mono dim">2d</td>
+            <td class="mono dim">3d</td>
           </tr>
           <tr data-status="ready">
             <td class="mono score">700</td>
@@ -272,7 +272,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">quizzly</td>
             <td class="mono dim" title="weights.yml">3</td>
             <td class="mono dim">M</td>
-            <td class="mono dim">2d</td>
+            <td class="mono dim">3d</td>
           </tr>
           <tr data-status="ready">
             <td class="mono score">680</td>
@@ -281,7 +281,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">hangar</td>
             <td class="mono dim" title="weights.yml">2</td>
             <td class="mono dim">S</td>
-            <td class="mono dim">0d</td>
+            <td class="mono dim">1d</td>
           </tr>
           <tr data-status="inbox">
             <td class="mono score">460</td>
@@ -290,7 +290,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">versa</td>
             <td class="mono dim" title="weights.yml">5</td>
             <td class="mono dim">M</td>
-            <td class="mono dim">4d</td>
+            <td class="mono dim">5d</td>
           </tr>
           <tr data-status="inbox">
             <td class="mono score">410</td>
@@ -299,7 +299,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">&mdash;</td>
             <td class="mono dim" title="weights.yml">3</td>
             <td class="mono dim">S</td>
-            <td class="mono dim">4d</td>
+            <td class="mono dim">5d</td>
           </tr>
           <tr data-status="inbox">
             <td class="mono score">400</td>
@@ -308,7 +308,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">quizzly</td>
             <td class="mono dim" title="weights.yml">3</td>
             <td class="mono dim">M</td>
-            <td class="mono dim">2d</td>
+            <td class="mono dim">3d</td>
           </tr>
           <tr data-status="inbox">
             <td class="mono score">400</td>
@@ -317,7 +317,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">quizzly</td>
             <td class="mono dim" title="weights.yml">3</td>
             <td class="mono dim">M</td>
-            <td class="mono dim">2d</td>
+            <td class="mono dim">3d</td>
           </tr>
           <tr data-status="inbox">
             <td class="mono score">390</td>
@@ -326,7 +326,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">quizzly</td>
             <td class="mono dim" title="weights.yml">3</td>
             <td class="mono dim">L</td>
-            <td class="mono dim">2d</td>
+            <td class="mono dim">3d</td>
           </tr>
           <tr data-status="inbox">
             <td class="mono score">360</td>
@@ -335,7 +335,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">hangar</td>
             <td class="mono dim" title="weights.yml">2</td>
             <td class="mono dim">L</td>
-            <td class="mono dim">4d</td>
+            <td class="mono dim">5d</td>
           </tr>
           <tr data-status="blocked">
             <td class="mono score">80</td>
@@ -344,7 +344,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">hangar</td>
             <td class="mono dim" title="weights.yml">2</td>
             <td class="mono dim">S</td>
-            <td class="mono dim">3d</td>
+            <td class="mono dim">4d</td>
           </tr></tbody>
         </table>
       </div>
@@ -585,9 +585,17 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <section class="panel">
       <div class="panel-head">
         <h2>Decision log</h2>
-        <span class="mono dim">3</span>
+        <span class="mono dim">4</span>
       </div>
       <ul class="rows">
+        <li class="decision" data-status="accepted">
+          <span class="adr mono">0004</span>
+          <div>
+            <h4>Overnight runs merge their own PR instead of leaving it for review</h4>
+            <p>From 2026-08-10, an overnight run merges its own PR immediately once tests are green and the checker (or the inline self-check, per <code>CLAUDE.md</code> rule 8) has passed the diff against the task&#x27;s <code>## Done means</code>. It does not wait for Ollie to look at it first. The checker&#x27;s pass is the review gate now.</p>
+            <span class="mono dim">10 Aug 2026 &middot; accepted</span>
+          </div>
+        </li>
         <li class="decision" data-status="proposed">
           <span class="adr mono">0003</span>
           <div>
@@ -622,14 +630,15 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
 builder/checker-rolverdeling van CLAUDE.md wordt dus echt gebruikt. Open
 overnight-PR&#x27;s bij start: 2 (`percentile#1` `night/percentile-f16-count-ladder`,
 `learning-website#3`…</li><li>Taak: `hangar-prioriteit-score` (oudste `ready`, `added: 2026-08-08`,
-project `hangar` → repo is de Hangar zelf, geen aparte clone nodig). Op
-`doing` gezet, branch `claude/night-hangar-prioriteit-score`. In uitvoering —
-rest van dit blok wordt bijgewerkt…</li><li>Subagents beschikbaar bij start (Task-tool + `.claude/agents/` werkten
-gewoon) — de builder/checker-rolverdeling uit CLAUDE.md is dus echt gebruikt,
-niet de inline-fallback. Open overnight-PR&#x27;s bij start:…</li><li>Taak: `weekly-review-automatic` (oudste `ready`, `added: 2026-08-06`,
-project `hangar` → repo is de Hangar zelf). Gebouwd:
-`scripts/weeklyreview.py` + `scripts/testweeklyreview.py` (23 tests) op
-branch `claude/night-weekly-review-automatic`,…</li></ul>
+project `hangar` → repo is de Hangar zelf, geen aparte clone nodig). Gebouwd
+op branch `claude/night-hangar-prioriteit-score`: `weights.yml` (nieuw, plat
+`slug: gewicht`, gezaaid uit…</li><li>De checker vond drie niet-blokkerende gebreken. Twee zijn bewust genoteerd en
+niet aangepakt (project-gewicht buiten het gedocumenteerde bereik 1-5 kan de
+status-voorrang doorbreken — geen eis uit de Done means, alleen een extra
+garantie die de bouwer zelf…</li><li>Aangescherpt: naast de escaping-taak hierboven zijn de overige inbox-
+taken bekeken en bewust met rust gelaten: `quizzly-design-pass` /
+`quizzly-legal-review-west` / `quizzly-slide-designer` vragen elk een
+voorstel dat Ollie eerst moet zien (smaak,…</li></ul>
     </section>
   </div>
 
