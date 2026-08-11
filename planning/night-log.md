@@ -17,14 +17,48 @@ gebouwd wordt.
 Open overnight-PR's bij start (branch-conventie `night/...` of
 `claude/night-...`, zelfde telling als de vorige nacht): 3 —
 `project-management#5` (`claude/night-hangar-prioriteit-score`, nog niet
-gemerged in de default branch), `percentile#1`
-(`night/percentile-f16-count-ladder`), `learning-website#3`
-(`night/learn-csharp-chain`). (`quizzly#1` en `percentile#3` zijn geen
-nachtrun-PR's — andere branch-conventie, niet meegeteld, zelfde
-onderbouwing als de vorige nacht.) Dat is de grens uit CLAUDE.md ("stop bij
-drie open overnight PR's") — dus vannacht wordt er niets gebouwd. Verder
-naar stap 3: een inbox-taak aanscherpen. In uitvoering — rest van dit blok
-wordt bijgewerkt.
+gemerged in de default branch — de PR zelf bevat overigens al de volledige
+afronding: taak op `done`, `hangar-priority-effort-escaping` als nieuwe
+`ready`-taak, night-log-entry; er hangt dus niets in de lucht, hij wacht
+alleen op merge), `percentile#1` (`night/percentile-f16-count-ladder`),
+`learning-website#3` (`night/learn-csharp-chain`). (`quizzly#1` en
+`percentile#3` zijn geen nachtrun-PR's — andere branch-conventie, niet
+meegeteld, zelfde onderbouwing als de vorige nacht.) Dat is de grens uit
+CLAUDE.md ("stop bij drie open overnight PR's") — dus vannacht wordt er
+niets gebouwd. Direct naar stap 3.
+
+**Aangescherpt: `quizzly-design-pass`** (inbox, M, "lichter en vriendelijker
+app-chrome"). De oorspronkelijke Done means bundelde twee stappen die niet
+hetzelfde soort werk zijn: een ontwerpvoorstel schrijven (onderzoek, geen
+smaakbesluit) en dat voorstel doorvoeren (wél een smaakbesluit van Ollie).
+Uitgezocht wat er staat: `src/app/globals.css` definieert het hele
+app-chrome-palet in één `@theme`-blok (`--color-ink-50..950`,
+`--color-brand-400..700`), en het is vandaag al consistent — geen losse
+Tailwind `gray-`/`slate-`/`zinc-`/`neutral-` klassen ernaast in `src/app` of
+`src/components` buiten de quiz-surface. Dat maakt "lichter en
+vriendelijker" een echte richtingskeuze, geen opruimklus, en dat kan een
+nachtrun niet voor hem beslissen.
+
+Gesplitst in twee taken, zelfde patroon als `hangar-in-de-browser` stap 2
+eerder:
+- `quizzly-design-pass` (hernoemd naar "fase 1: ontwerpvoorstel") → `ready`,
+  effort S. Done means: `docs/DESIGN.md` met 2-3 concrete richtingen (elk een
+  eigen ink-/brand-ramp met hex, een berekende WCAG AA-contrastcheck, een
+  voor/na voor dashboard + editor), harde randen expliciet herbevestigd
+  (quiz-surface ongemoeid, 44px targets, focus-ring), één aanbeveling maar
+  niets doorgevoerd. Wijzigt geen `src/`-code, dus geen testrisico.
+- `quizzly-design-pass-toepassen` (nieuw) → `inbox`. Blijft liggen tot Ollie
+  een richting uit `docs/DESIGN.md` kiest — pas dan is "consistent
+  doorvoeren" een finish line die iemand kan afvinken.
+
+**Bewust niet gedaan:** geen andere inbox-taak aangescherpt (`hangar-in-de-
+browser` en `versa-hosting-besluit` wachten op Ollie's besluit resp. budget;
+`lege-repos-beslissen` kan alleen Ollie invullen — alleen hij weet wat de
+lege repo moest worden; `quizzly-legal-review-west` wacht expliciet op merge
+van `quizzly#1`, dat nog open staat). Geen code gebouwd, geen tweede taak
+aangeraakt, geen deploy, geen secrets, geen andere branch dan de eigen
+`claude/night-2026-08-11` gebruikt, geen andere repo dan de Hangar zelf
+nodig gehad.
 
 ## 2026-08-09
 
