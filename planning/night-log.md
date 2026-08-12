@@ -8,6 +8,89 @@ pull requests to find out.
 
 ---
 
+## 2026-08-12
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
+maar er is deze nacht niets gebouwd (zie hieronder), dus de builder/checker-
+rolverdeling kwam niet in actie. Geen inline-fallback nodig.
+
+**Stap 1 — 3 open overnight-PR's, dus niet gebouwd.**
+`project-management#6` (`claude/night-2026-08-11`), `percentile#1`
+(`night/percentile-f16-count-ladder`), `learning-website#3`
+(`night/learn-csharp-chain`). Op de grens — direct naar stap 3, maar eerst
+uitgezocht *waarom* elk vastzit, zoals regel 5 vraagt, in plaats van er verder
+niets mee te doen:
+
+- **`percentile#1`** — echt conflict. `mergeable_state: dirty`, bevestigd door
+  een proefmerge in een los worktree: conflicten in `CLAUDE.md`,
+  `src/core/privacy/release-gate.ts` en `test/adversarial.test.ts`. Oorzaak:
+  `main` liep door na deze PR (7 aug) met PR #2 "fix/consent-and-jurisdiction"
+  (9 aug, de F-3/F-4/F-12-fixes), die dezelfde bestanden raakte. CI op de
+  PR-commit zelf staat groen (`test`, 2×). Niet opgelost vannacht — een
+  privacy-kritische rebase hoort niet onbeheerd te gebeuren op een taak die
+  niet de mijne is vanavond.
+- **`project-management#6`** — ook een echt conflict, bevestigd op dezelfde
+  manier: `dashboard/index.html` (gegenereerd bestand, triviaal) en
+  `planning/night-log.md` (beide nachten voegen bovenaan een entry toe —
+  klassiek append-only-conflict) tegen de echte default branch
+  (`claude/hangar-project-setup-kvhcad`, niet `main` — dit is geen `main`-repo
+  met een `main`-branch). Checks op de PR-commit: 3× groen (`build`, `deploy`,
+  `verify`). Niet opgelost vannacht, om dezelfde reden: die PR is niet van
+  deze sessie en de conflict-resolutie (welke night-log-tekst wint) is een
+  editoriale keuze die bij de oorspronkelijke inhoud hoort.
+- **`learning-website#3`** — **geen** conflict en **geen** falende check:
+  `mergeable_state: clean`, 0 check-runs (deze repo heeft geen PR-CI, alleen
+  een deploy-on-push-naar-main workflow). Dit is dus niet "vastzittend" in de
+  zin van regel 5 — er zit hier geen GitHub-blokkade. Toch niet zelf gemerged:
+  de PR is drie dagen oud, gebouwd en gecheckt door een sessie die niet deze
+  sessie is, en vóór regel 3 (het besluit van 2026-08-10) bestond — ik heb de
+  checker-stap niet zelf herhaald en wil geen vreemd werk ongezien in een
+  live, publiek gedeployde app mergen op een onbewaakte nachtrun. Voor Ollie:
+  dit is de PR die het snelst en veiligst te mergen is als hij zelf even
+  kijkt — er is hier niets dat blokkeert.
+
+Netto: de telling van "3 open PR's" klopt letterlijk, maar slechts 2 van de 3
+zijn ook daadwerkelijk GitHub-geblokkeerd; de derde ligt open om een reden die
+niet in regel 5 past (nooit zelf gemerged na het bouwen, van vóór het
+auto-merge-besluit). Vannacht dus niets gebouwd, conform de simpele telling
+uit stap 1.
+
+**Stap 3 — `quizzly-slide-designer` aangescherpt.** Was een visietaak die zijn
+eigen onderzoek al beschreef zonder een bouwbare finish line. Gesplitst,
+zelfde patroon als eerder bij `hangar-in-de-browser` en `quizzly-design-pass`:
+
+- `tasks/quizzly-slide-designer.md` → **fase 1**, nu `ready` (effort M):
+  schrijf `docs/SLIDE-DESIGNER.md` in de Quizzly-repo — de volledige
+  mogelijkhedenruimte (per-slide design, emoji, GIF's, geluid/muziek,
+  transitions, hostsoundboard, live preview), haalbaarheid expliciet getoetst
+  aan de echte architectuur (theming zit vandaag op `Quiz`, niet op
+  `Question` — per-slide is dus een schema-uitbreiding; moet door
+  `Game.quizSnapshot` en `toPublicPayload()` heen blijven werken), de
+  licentie-/privacyhaken (GIPHY, muziekrechten — `docs/LEGAL.md` noemt vandaag
+  geen media van derden), en één aanbevolen, in één sessie bouwbare fase 1.
+  Geen `src/`-wijziging.
+- `tasks/quizzly-slide-designer-bouwen.md` → **fase 2**, nieuw, blijft `inbox`
+  tot het document bestaat én Ollie een fase kiest — dat is een smaakbesluit,
+  geen onderzoeksvraag.
+
+Grondslag gecheckt in de echte Quizzly-repo (niet aangenomen): `src/lib/theme.ts`
+bevestigt theming per quiz, `prisma/schema.prisma` bevestigt `Game.quizSnapshot`,
+`docs/LEGAL.md` bevat inderdaad geen enkele vermelding van media van derden.
+
+**Bewust niet gedaan:** geen van de drie vastzittende/open PR's zelf gemerged
+of geconflicteerd-opgelost (zie boven — twee zijn echte conflicten die niet
+van vannacht zijn, één is mergeable maar ongezien-vreemd-werk-mergen op een
+live app voelt niet als "kijk eerst waarom" maar als forceren voorbij een
+grens die er niet expliciet voor vannacht stond). Geen andere inbox-taak
+aangescherpt (`hangar-in-de-browser` / `versa-hosting-besluit` /
+`lege-repos-beslissen` wachten nog steeds op Ollie's besluit resp. budget;
+`quizzly-legal-review-west` wacht expliciet op het nog-open `quizzly#1`;
+`quizzly-design-pass` is al gesplitst in het nog-open `project-management#6`
+— opnieuw splitsen zou dat werk dupliceren). Geen code gebouwd, geen deploy,
+geen secrets aangeraakt, geen andere repo dan de Hangar zelf en een
+lees-only-verkenning van Quizzly nodig gehad.
+
+
 ## 2026-08-10
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
