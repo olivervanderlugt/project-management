@@ -1,10 +1,10 @@
 ---
 title: "Quizzly app-chrome, fase 1: ontwerpvoorstel (DESIGN.md)"
 project: quizzly
-status: ready
+status: doing
 added: 2026-08-08
 effort: S
-branch:
+branch: claude/night-quizzly-design-pass
 ---
 
 ## Done means

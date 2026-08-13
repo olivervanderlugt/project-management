@@ -8,7 +8,46 @@ pull requests to find out.
 
 ---
 
-## 2026-08-12
+## 2026-08-13
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen (o.a.
+`quizzly`, `hangar-checker`) beschikbaar — de builder/checker-rolverdeling
+uit CLAUDE.md wordt dus echt gebruikt.
+
+**Stap 1 — queue-herstel, geen bouwwerk uit de letterlijke telling.** Open
+overnight-PR's bij start: 4 — `project-management#6`, `project-management#7`,
+`percentile#1`, `learning-website#3`. Uitgezocht *waarom* elk vastzit
+(regel 5) in plaats van er verder niets mee te doen:
+
+- **`project-management#7`** — `mergeable_state: clean`, drie checks groen
+  (`build`, `deploy`, `verify`), wijzigde alleen `tasks/`, `night-log.md` en
+  het gegenereerde dashboard. Volgens besluit 0004 had dit vanzelf moeten
+  mergen en is dat gewoon niet gebeurd. Direct gemerged — geen codewijziging,
+  geen risico.
+- **`project-management#6`** — was oorspronkelijk in dezelfde situatie, maar
+  raakte pas écht in conflict doordat `#7` intussen op dezelfde stale basis
+  was geland (beide voegen bovenaan iets toe aan `night-log.md` en raken het
+  gegenereerde dashboard). De inhoud zelf (het splitsen van
+  `quizzly-design-pass` in een onderzoeksfase en een bouwfase) stond niet ter
+  discussie, dus met de hand overgezet naar een nieuwe branch bovenop de
+  actuele default, alle 7 Hangar-testsuites nogmaals groen gedraaid, gemerged
+  als `project-management#8`, en `#6` gesloten met een verwijzing ernaar.
+- **`percentile#1`** — echt conflict tegen `main` in privacy-kritische
+  bestanden (`release-gate.ts`, `adversarial.test.ts`). Met rust gelaten —
+  een rebase daar hoort niet onbeheerd op andermans taak te gebeuren.
+- **`learning-website#3`** — `mergeable_state: clean`, maar gebouwd en
+  gecheckt door een andere sessie van vóór het auto-merge-besluit. Met rust
+  gelaten, zoals eerdere nachten ook oordeelden.
+
+Na dit herstel staan nog 2 PR's écht vast (niet 4) — onder de grens van
+regel 5. Dus toch doorgebouwd vanavond in plaats van meteen naar stap 3.
+
+**Taakkeuze:** de vier `ready`-taken die op 2026-08-08 zijn aangemaakt stonden
+gelijk op `added`. Het bord se eigen prioriteitsscore (`dashboard/build.py`,
+score → added → slug als sorteersleutel) wijst `quizzly-design-pass`
+("fase 1: ontwerpvoorstel") aan als hoogste (score 710, gelijk met
+`quizzly-wachtwoord-toggle`, gewonnen op slug-alfabet).
+
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
 maar er is deze nacht niets gebouwd (zie hieronder), dus de builder/checker-
