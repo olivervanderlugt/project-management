@@ -1,7 +1,7 @@
 ---
 title: "Quizzly app-chrome, fase 1: ontwerpvoorstel (DESIGN.md)"
 project: quizzly
-status: doing
+status: done
 added: 2026-08-08
 effort: S
 branch: claude/night-quizzly-design-pass

@@ -43,10 +43,60 @@ Na dit herstel staan nog 2 PR's écht vast (niet 4) — onder de grens van
 regel 5. Dus toch doorgebouwd vanavond in plaats van meteen naar stap 3.
 
 **Taakkeuze:** de vier `ready`-taken die op 2026-08-08 zijn aangemaakt stonden
-gelijk op `added`. Het bord se eigen prioriteitsscore (`dashboard/build.py`,
+gelijk op `added`. Het bord's eigen prioriteitsscore (`dashboard/build.py`,
 score → added → slug als sorteersleutel) wijst `quizzly-design-pass`
 ("fase 1: ontwerpvoorstel") aan als hoogste (score 710, gelijk met
 `quizzly-wachtwoord-toggle`, gewonnen op slug-alfabet).
+
+**Stap 2 — `quizzly-design-pass` gebouwd.** De `quizzly`-builder-agent schreef
+`docs/DESIGN.md` (612 regels) op branch `claude/night-quizzly-design-pass` in
+de Quizzly-repo: drie richtingen (A "Daglicht" licht, B "Haard" donker/warm,
+C "Twee standen" licht+donker), elk met een volledige 11-staps
+`--color-ink-*`-ramp en `--color-brand-*`-ramp, WCAG-contrast per paar
+zelf berekend (niet aangenomen), expliciete herbevestiging per richting dat
+`.quiz-surface`/`--q-*`/44px-targets/focus-ring ongemoeid blijven, een
+voor/na voor dashboard en editor, en één aanbeveling (richting B) die niet is
+doorgevoerd. Geen `src/`-wijziging; trio (`typecheck`/`test`/`build`) groen.
+PR olivervanderlugt/quizzly#2.
+
+De `hangar-checker`-agent deed de vijandige review: eigen herimplementatie
+van de WCAG-luminantieformule op alle 47 gepubliceerde ratio's (allemaal
+correct op één cosmetische afronding in de kritiek-tekst na, die geen enkele
+tabel beïnvloedt), eigen `git diff --stat` tegen de PR (alleen `docs/DESIGN.md`,
+612 toevoegingen, nul `src/`), en zelf `npm run typecheck && npm test && npm
+run build` gedraaid op de PR-commit. Verdict: **DONE**. PR gemerged
+(besluit 0004 — de checker's pass is het reviewmoment, niet Ollie 's ochtends).
+Taak op `done`.
+
+**Bijvangst, meteen gevangen als taak (regel "Capture, then build"):** het
+DESIGN.md-onderzoek en de checker's herrekening vonden vier echte, van de
+gekozen richting onafhankelijke a11y/CSS-bugs in de bestaande chrome
+(`text-ink-500` faalt AA op 44 plekken, `.btn-primary:hover` zakt net onder
+AA, `.app-input` heeft geen 3:1-randcontrast, vijf `brand`-tinten worden
+gebruikt maar bestaan niet in `@theme`). Nieuwe taak
+`quizzly-chrome-contrast-bugs`, direct op `ready` gezet (geen smaakbesluit
+nodig — mechanische fixes, gelden ongeacht welke richting uit DESIGN.md wint)
+maar niet vannacht gebouwd (limiet: één bouwtaak per nacht).
+
+**Stap 3 — inbox aangescherpt.** `quizzly-legal-review-west` herchecked:
+`quizzly#1` (de finalization/launch-PR) staat nog open, dus de blokkade geldt
+onveranderd. Die PR bevat naast compliance-features ook een versiebump naar
+1.0.0 en `fly.toml` — sowieso niet iets dat een nachtrun zelf mag mergen
+(regel 6). Blijft `inbox`, met de expliciete vraag aan Ollie genoteerd in de
+taak (wanneer wil je `quizzly#1` mergen?). De overige inbox-taken
+(`hangar-in-de-browser`, `versa-hosting-besluit`, `lege-repos-beslissen`,
+`quizzly-design-pass-toepassen`, `quizzly-slide-designer-bouwen`) wachten
+allemaal op een besluit van Ollie zelf (geld, smaak, of "wat moest deze lege
+repo worden") en zijn bewust niet opnieuw aangescherpt — kort geverifieerd
+dat er niets veranderd is (bijv. `crew-management-system` heeft nog steeds
+nul commits).
+
+**Bewust niet gedaan:** geen tweede bouwtaak (limiet: één per nacht — de
+queue-herstelcommits van stap 1 zijn geen "bouw", er is geen `src/`-code
+in aangeraakt). `percentile#1` en `learning-website#3` niet aangeraakt (zie
+stap 1). Geen deploy, geen secrets, geen `quizzly#1` gemerged (dat is Ollie's
+launch-besluit). Andere branches dan de eigen `claude/charming-fermat-kb8te9`
+(Hangar) en `claude/night-quizzly-design-pass` (Quizzly) niet gebruikt.
 
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/` beschikbaar —
