@@ -1,8 +1,17 @@
 ---
-updated: 2026-08-07
-focus: Review and merge the two open PRs, then decide the three night-run limit questions
+updated: 2026-08-14
+focus: Four ready tasks are being built in parallel this session; then the PR pile
 ---
 
+- **In flight right now (2026-08-14, session op jouw verzoek, niet de nachtrun):**
+  alle vier de `ready` taken tegelijk, elk in een eigen kloon en op een eigen
+  branch, elk met een aparte checker erachter — `hangar-prioriteit-score`,
+  `weekly-review-automatic`, `quizzly-wachtwoord-toggle`, `quizzly-media-upload`.
+  Ze staan op `doing` met hun branch in het taakbestand. Blijft er één op `doing`
+  staan zonder dat er iemand op zit, dan is dit blok het spoor: zet hem terug op
+  `ready` of `blocked`.
+- **Four PRs already waiting on you** (was two): learning-website#3, percentile#1,
+  percentile#3, quizzly#1. Dat is de echte achterstand, niet het bouwen.
 - **Two PRs waiting on you to merge:** Learn C#/.NET chain
   (learning-website#3 — also carries a rendering fix that repairs already-live
   lessons) and Percentile F-16 (percentile#1 — count bands + closed leak, with

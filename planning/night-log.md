@@ -8,41 +8,6 @@ pull requests to find out.
 
 ---
 
-## 2026-08-14 — daglopen, vier taken tegelijk (interactief, Ollie wakker)
-
-Geen nachtrun: Ollie vroeg om de Hangar met meerdere agents tegelijk te laten
-doorbouwen. Daarom is regel 1 ("één taak per nacht") hier bewust niet gevolgd —
-die bestaat omdat niemand wakker is om een fout te vangen, en dat gold nu niet.
-Alle andere regels wel: eigen branch per taak, geen commit op `main`, tests
-groen of niet pushen, checker apart van de bouwer.
-
-**Alle vier de `ready` taken, parallel, elk in een eigen kloon in scratch:**
-
-- `hangar-prioriteit-score` (S, sonnet) → `night/hangar-prioriteit-score`
-- `weekly-review-automatic` (M, opus) → `night/weekly-review-automatic`
-- `quizzly-wachtwoord-toggle` (S, sonnet) → `night/quizzly-wachtwoord-toggle`
-- `quizzly-media-upload` (M, opus) → `night/quizzly-media-upload`
-
-De twee Hangar-taken raken dezelfde repo. Anders dan op 2026-08-08 is dat nu
-wel gedaan, maar met de failure mode expliciet afgedekt: aparte klonen buiten
-Ollie's werkboom, aparte branches vanaf de default branch, aparte PR's. Niemand
-schrijft in `/Users/oliverlugt/Claude/Projects/project-management` behalve deze
-sessie zelf, en die doet alleen de boekhouding hieronder.
-
-Model, effort en plafond per taak uit `routing.yml` — niets naar boven
-bijgesteld. Elke bouwer wordt gevolgd door een checker die alleen de diff en de
-finish line ziet; wat de checker weerlegt gaat terug naar de bouwer en daarna
-naar een tweede, verse checker.
-
-**Status bij aanvang:** vier PR's stonden al open (quizzly#1, percentile#1,
-percentile#3, learning-website#3). Regel 5 (stoppen bij drie open nacht-PR's)
-is een rem op reviewschuld bij onbewaakt werk; met Ollie erbij en op zijn
-verzoek is er doorgebouwd. Het blijft waar dat er nu review-achterstand ligt.
-
-_Uitkomst per taak wordt hieronder aangevuld zodra de run klaar is._
-
----
-
 ## 2026-08-08
 
 **Taak: `learn-live-preview` (oudste `ready`, gelijk oud met
