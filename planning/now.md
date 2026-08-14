@@ -1,6 +1,6 @@
 ---
 updated: 2026-08-14
-focus: Zeven PR's wachten op jouw merge — vier daarvan van vandaag, alle vier gecheckt
+focus: Acht PR's wachten op jouw merge — vier daarvan van vandaag, alle vier gecheckt
 ---
 
 - **Tweede ronde af (2026-08-14).** Drie taken gebouwd, twee al gecheckt en
