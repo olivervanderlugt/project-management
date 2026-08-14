@@ -1,10 +1,10 @@
 ---
 title: Prioriteitsscore per taak in build.py, bord toont "dit nu"
 project: hangar
-status: ready
+status: doing
 added: 2026-08-08
 effort: S
-branch:
+branch: night/hangar-prioriteit-score
 ---
 
 ## Done means

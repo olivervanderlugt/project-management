@@ -1,10 +1,10 @@
 ---
 title: Quizzly: wachtwoord tonen/verbergen op elk wachtwoordveld
 project: quizzly
-status: ready
+status: doing
 added: 2026-08-08
 effort: S
-branch:
+branch: night/quizzly-wachtwoord-toggle
 ---
 
 ## Done means
