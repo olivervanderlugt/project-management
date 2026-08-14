@@ -750,6 +750,7 @@ def render_priority(tasks, by_slug, weights):
     for score, meta, _ in scored:
         status = (meta.get("status") or "inbox").strip().lower()
         slug = (meta.get("project") or "").strip()
+        eff = (meta.get("effort") or "").strip()
         age = task_age_days(meta)
         rows.append(f"""
           <tr data-status="{escape(status)}">
@@ -758,7 +759,7 @@ def render_priority(tasks, by_slug, weights):
             <td class="q-title">{rich(meta.get("title") or meta["slug"])}</td>
             <td class="mono dim">{escape(slug) if slug else "&mdash;"}</td>
             <td class="mono dim" title="weights.yml">{escape(f"{project_weight(meta, weights):g}")}</td>
-            <td class="mono dim">{escape(meta.get("effort", "") or "&mdash;")}</td>
+            <td class="mono dim">{escape(eff) if eff else "&mdash;"}</td>
             <td class="mono dim">{escape(f"{age}d")}</td>
           </tr>""")
 
