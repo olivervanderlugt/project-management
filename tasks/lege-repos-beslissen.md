@@ -28,3 +28,9 @@ Een lege repo kost geen geld en wel aandacht: het is een besluit dat je elke
 keer opnieuw neemt als je het bord opent.
 
 Niet automatisch opruimen. Repo's verwijderen doet de nachtrun nooit.
+
+**Herchecked 2026-08-14 (nachtrun):** `olivervanderlugt/crew-management-system`
+staat nog steeds op nul commits (`git log` op de default branch geeft "does
+not have any commits yet"). Geen wijziging sinds 2026-08-06 — de blokkade
+geldt onveranderd, blijft `inbox`. Vraag voor Ollie is nog steeds dezelfde:
+wat moest deze repo worden, of mag hij weg?

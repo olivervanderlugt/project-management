@@ -8,6 +8,79 @@ pull requests to find out.
 
 ---
 
+## 2026-08-14
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`quizzly`, `hangar-checker`, …) beschikbaar — builder/checker-verdeling uit
+CLAUDE.md wordt gebruikt.
+
+**Stap 1 — open overnight-PR's: 2, dus bouwen.** `night/percentile-f16-count-ladder`
+(percentile#1, `mergeable_state: dirty` — echt conflict tegen `main`) en
+`night/learn-csharp-chain` (learning-website#3, `mergeable_state: clean`, geen
+CI in die repo, maar gebouwd/gecheckt vóór het auto-merge-besluit) staan al
+sinds 2026-08-07 open. Zelfde oordeel als vorige nachten: met rust gelaten —
+een conflict-rebase of het met-terugwerkende-kracht mergen van een oude,
+niet-door-mij-gecheckte PR hoort niet onbeheerd te gebeuren. Twee stuck PR's,
+niet drie: geen queue-herstel nodig, door naar bouwen.
+
+Oudste `ready`-taak: drie kandidaten (`quizzly-media-upload`,
+`quizzly-slide-designer`, `quizzly-wachtwoord-toggle`) delen exact dezelfde
+`added: 2026-08-08` én zijn in dezelfde commit toegevoegd — geen chronologisch
+onderscheid mogelijk. Tiebreak op slug-alfabet, dezelfde secundaire sleutel die
+`build.py`'s eigen prioriteitssortering (regel 270) al gebruikt: **`quizzly-media-upload`**.
+
+**Stap 2 — gebouwd: `quizzly-media-upload` (M) → gemerged als quizzly#3.**
+Builder (`quizzly`-agent) bouwde de volledige feature op `night/quizzly-media-upload`:
+upload i.p.v. alleen URL-plakken, grootte-cap (5 MiB, op echte bytes),
+magic-byte sniffing (client-Content-Type wordt nergens vertrouwd), EXIF-strip
+via een `sharp`-her-encode naar WebP, path-traversal-bestendige key-resolving,
+owner-only op zowel het vraagafbeelding- als het cover-image-schrijfpad
+(`Quiz.coverImage` was een dode kolom, nu echt bruikbaar), `docker-compose.yml`
+kreeg het `media-uploads`-volume, README/SECURITY.md de limieten. Trio
+(typecheck/test/build) groen, 106 tests (was 72).
+
+`hangar-checker` deed een echte adversariële poging het tegendeel te bewijzen:
+zelf de trio gedraaid, EXIF-strip losgetest op alle drie toegestane formaten
+(niet alleen JPEG, wat de builder zelf alleen had aangetoond), beide
+owner-checks nagelopen, path-traversal actief geprobeerd, en de interpretatie
+van "alleen door de quiz-eigenaar" (schrijven, niet lezen — spelers zijn
+anoniem en moeten de afbeelding wel kunnen zien) expliciet beargumenteerd i.p.v.
+aangenomen. Verdict: finish line volledig gehaald.
+
+Eén complicatie, geen makkelijk excuus om te wachten: de branch was gecut vóór
+commit `41e8abf` op `main` landde (dezelfde compose-parse-fix, onafhankelijk
+door een andere sessie gemaakt) — een echt, klein merge-conflict (alleen
+commentaartekst verschilde). Zelf `origin/main` erin gemerged, het conflict met
+de hand opgelost, en de volledige trio opnieuw zelf gedraaid op de gemergede
+staat vóórdat er gepusht werd — groen. PR #3 geopend, CI (GitHub Actions)
+afgewacht tot die zelf groen was, daarna pas gemerged. Taak op `done`, branch
+`night/quizzly-media-upload`.
+
+**Stap 3 — inbox aangescherpt: geen van de zes kon naar `ready`.** Alle zes
+inbox-taken zijn opnieuw gecontroleerd (niet aangenomen dat ze nog kloppen):
+`hangar-in-de-browser` en `versa-hosting-besluit` wachten expliciet op
+besluiten van Ollie; `quizzly-legal-review-west` wacht nog op het mergen van
+`quizzly#1` (nog open); `quizzly-slide-designer-bouwen` wacht op
+`docs/SLIDE-DESIGNER.md`, dat pas ontstaat zodra de `ready`-taak
+`quizzly-slide-designer` gebouwd wordt (niet vannacht, één taak per nacht);
+`quizzly-design-pass-toepassen` wacht op Ollie's kleurrichting uit
+`docs/DESIGN.md` — geen vervolgcommit sinds 2026-08-13 die op een keuze wijst.
+`lege-repos-beslissen` opnieuw gecontroleerd: `crew-management-system` staat
+nog steeds op nul commits, blokkade ongewijzigd — recheck vastgelegd in de
+taak zelf. Niets kon eerlijk een concrete Done means krijgen; niets gepromoveerd.
+
+**Nog steeds open, niet aangeraakt (zelfde oordeel als 2026-08-13):**
+`night/percentile-f16-count-ladder` (echt conflict, privacy-kritische bestanden
+— een rebase daar hoort niet onbeheerd op andermans taak te gebeuren) en
+`night/learn-csharp-chain` (mergeable maar gebouwd vóór het auto-merge-besluit
+— met rust gelaten, zoals eerdere nachten ook oordeelden).
+
+**Niet gedaan, met opzet:** geen tweede taak opgepakt ondanks resterend budget
+(regel 1/3: één taak per nacht, stoppen zodra hij af is); geen van de twee
+oude stuck PR's aangeraakt (zie boven); geen enkele inbox-taak naar `ready`
+geforceerd zonder een echte Done means.
+Status → `doing`, branch → `night/quizzly-media-upload`.
+
 ## 2026-08-13
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen (o.a.
