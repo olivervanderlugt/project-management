@@ -1,10 +1,10 @@
 ---
 title: Quizzly: afbeeldingen uploaden op slides (nu alleen URL)
 project: quizzly
-status: ready
+status: doing
 added: 2026-08-08
 effort: M
-branch:
+branch: night/quizzly-media-upload
 ---
 
 ## Done means

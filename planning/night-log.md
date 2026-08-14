@@ -8,6 +8,28 @@ pull requests to find out.
 
 ---
 
+## 2026-08-14
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`quizzly`, `hangar-checker`, …) beschikbaar — builder/checker-verdeling uit
+CLAUDE.md wordt gebruikt.
+
+**Stap 1 — open overnight-PR's: 2, dus bouwen.** `night/percentile-f16-count-ladder`
+(percentile#1, `mergeable_state: dirty` — echt conflict tegen `main`) en
+`night/learn-csharp-chain` (learning-website#3, `mergeable_state: clean`, geen
+CI in die repo, maar gebouwd/gecheckt vóór het auto-merge-besluit) staan al
+sinds 2026-08-07 open. Zelfde oordeel als vorige nachten: met rust gelaten —
+een conflict-rebase of het met-terugwerkende-kracht mergen van een oude,
+niet-door-mij-gecheckte PR hoort niet onbeheerd te gebeuren. Twee stuck PR's,
+niet drie: geen queue-herstel nodig, door naar bouwen.
+
+Oudste `ready`-taak: drie kandidaten (`quizzly-media-upload`,
+`quizzly-slide-designer`, `quizzly-wachtwoord-toggle`) delen exact dezelfde
+`added: 2026-08-08` én zijn in dezelfde commit toegevoegd — geen chronologisch
+onderscheid mogelijk. Tiebreak op slug-alfabet, dezelfde secundaire sleutel die
+`build.py`'s eigen prioriteitssortering (regel 270) al gebruikt: **`quizzly-media-upload`**.
+Status → `doing`, branch → `night/quizzly-media-upload`.
+
 ## 2026-08-13
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen (o.a.
