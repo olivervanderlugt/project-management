@@ -21,7 +21,7 @@ dit is geen nachtrun, dit is mijn eigen verzoek.
 Dat is geen leesfout van die ene sessie. Elke regel begint met "de nachtrun
 doet X", maar staat in het bestand dat zegt: dit geldt altijd. De kosten zijn
 niet cosmetisch. Een sessie die zichzelf op één taak zet terwijl Ollie er vier
-vraagt, of die weigert te bouwen omdat er drie PR's openstaan, doet minder dan
+vraagt, of die weigert te bouwen omdat er PR's openstaan, doet minder dan
 gevraagd en verkoopt dat als zorgvuldigheid. En het night-log raakt vervuild met
 dagwerk, waardoor het zijn enige functie verliest: in één blik zien wat er is
 gebeurd terwijl je sliep.
@@ -31,17 +31,22 @@ wakker om een fout te vangen — en dat feit is 's ochtends niet waar.
 
 ## Decision
 
-De elf regels verhuizen naar `reference/nightrun-rules.md`, ongewijzigd. Dat
-bestand opent met wie het bindt en wie niet.
+De elf regels verhuizen ongewijzigd naar `reference/nightrun-rules.md`, in de
+tekst zoals die op 2026-08-14 in `CLAUDE.md` stond — dus mét regel 3's
+auto-merge en de herschreven regel 5 uit besluit `0004`. Dat bestand opent met
+wie het bindt en wie niet.
 
 `CLAUDE.md` houdt een korte sectie over die drie dingen doet: zeggen dát er
 nachtrunregels zijn, waar ze staan, en expliciet dat ze **niet** gelden voor een
 sessie die Ollie zelf begonnen is. Met de instructie erbij: vraagt hij vier
-taken, bouw er vier; zeg nooit dat een regel het verbiedt.
+taken, bouw er vier; zeg nooit dat een regel het verbiedt. Eén uitzondering
+staat er met zoveel woorden bij: zijn eigen PR mergen is de nachtrun z'n regel,
+niet die van een dagsessie — met Ollie erbij vraag je het.
 
-De nachtrun krijgt ze doordat zijn eigen prompt hem opdraagt het regelbestand
-als eerste te lezen. Die prompt staat in `reference/startprompt-nightrun.md` en
-moet één keer in de Routine op claude.ai geplakt worden.
+De nachtrun krijgt de regels doordat zijn eigen prompt hem opdraagt het
+regelbestand als eerste te lezen. Die prompt staat in
+`reference/startprompt-nightrun.md` en moet één keer in de Routine op claude.ai
+geplakt worden.
 
 Een sessie met Ollie erbij laat een ander spoor achter: `planning/now.md` plus
 eerlijke `status:` en `branch:` in de taakbestanden. Het night-log blijft van de
@@ -63,6 +68,14 @@ bestand, in plaats van één regel die stilzwijgend weg kan vallen.
 Regels die overal gelden zijn niet meeverhuisd: niets verzinnen, dashboard
 herbouwen, vangen vóór bouwen, besluiten zijn append-only, en de guard. Die
 staan in `CLAUDE.md` waar ze horen.
+
+Er is één regel bijgekomen die niets met de nachtrun te maken heeft, uit een
+tweede fout van dezelfde sessie: **fetch voordat je de werkboom gelooft.** De
+lokale kloon was een week oud, de nachtrun had zes nachten doorgewerkt, en de
+sessie stuurde agents op drie taken af die al gebouwd en gemerged waren. `git
+status` was de hele tijd schoon. Dat staat nu als eigen sectie in `CLAUDE.md`,
+en als taak `hangar-stale-clone-guard` in de wachtrij, omdat een regel die je
+moet onthouden zwakker is dan een controle die vanzelf gaat.
 
 Wat dit niet oplost: er is nog steeds geen manier waarop een sessie zeker weet
 of hij de nachtrun is. Dit besluit vertrouwt erop dat de Routine zijn eigen

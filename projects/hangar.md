@@ -1,5 +1,6 @@
 ---
 title: The Hangar
+description: The board you're looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.
 status: active
 next: Build weekly-review-automatic — the script that writes the weekly file from real commits
 due:
@@ -30,6 +31,13 @@ filling `preview:` — the 2026-08-06 runs had all died on a GitHub incident or
 been cancelled by the concurrency group, which is why the field stayed blank a
 day). The dashboard itself was rebuilt 2026-08-07 around an all-projects
 status view with per-project Preview buttons.
+
+2026-08-08: the board had been publishing from one branch only. The
+`github-pages` environment accepts deploys from the default branch and refuses
+every other, so work pushed from any other `claude/**` branch built green and
+deployed never — the site kept serving the morning's commit. The workflow now
+rebuilds on every push to every branch and verifies the live page is serving the
+commit it just built, so a stale board is a red run instead of a surprise.
 
 The two active projects that sat there with no next action both got one on
 2026-08-06 (Learn: merge the parked A+B branches; Percentile: F-8 from the

@@ -1,5 +1,6 @@
 ---
 title: Project name
+description: What this is in one line, so the board reads without opening the file
 status: active
 next: The single next concrete action
 due:

@@ -7,19 +7,12 @@ name: Dashboard
 
 on:
   push:
-    branches: [main, "claude/**"]
-    # Only what the board is made of. A push that touches scripts or agent
-    # definitions does not change a pixel, and triggering a run for it just
-    # cancels the one already waiting for a runner.
-    paths:
-      - "planning/**"
-      - "projects/**"
-      - "ideas/**"
-      - "decisions/**"
-      - "reference/**"
-      - "tasks/**"
-      - "dashboard/**"
-      - ".github/workflows/dashboard.yml"
+    # Every branch, every push. There used to be a `paths:` filter here on the
+    # theory that only content changes a pixel; that was wrong — the board also
+    # renders agent and model names out of scripts/dispatch.py and routing.yml —
+    # and a board that silently skips a rebuild is worse than one that rebuilds
+    # for nothing. A run costs seconds.
+    branches: ["**"]
   workflow_dispatch:
 
 permissions:
@@ -51,12 +44,42 @@ jobs:
         with:
           path: dashboard
 
+  # If this job is skipped or fails in about a second without ever picking up a
+  # runner, it was refused before it started: the `github-pages` environment
+  # only accepts deployments from the branches named in its deployment-branch
+  # policy. Settings -> Environments -> github-pages -> Deployment branches.
   deploy:
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # A green deploy is not proof the board changed. This fetches the live page
+  # and looks for the commit it was built from, so a stale site is a red run
+  # instead of something you notice days later.
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: The live board must be this commit
+        env:
+          PAGE_URL: ${{ needs.deploy.outputs.page_url }}
+        run: |
+          url="${PAGE_URL:-https://olivervanderlugt.github.io/project-management/}"
+          want="${GITHUB_SHA:0:7}"
+          for attempt in 1 2 3 4 5 6; do
+            if curl -fsSL "$url" | grep -q "hangar-commit\" content=\"$want\""; then
+              echo "$url is serving $want"
+              exit 0
+            fi
+            echo "attempt $attempt: $url is not serving $want yet"
+            sleep 10
+          done
+          echo "::error::$url did not serve $want within a minute — the board is stale"
+          exit 1

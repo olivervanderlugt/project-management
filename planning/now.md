@@ -1,27 +1,33 @@
 ---
 updated: 2026-08-14
-focus: Four ready tasks are being built in parallel this session; then the PR pile
+focus: Quizzly PR #4 checken en mergen; dan de vier oude PR's die al een week openstaan
 ---
 
-- **In flight right now (2026-08-14, session op jouw verzoek, niet de nachtrun):**
-  alle vier de `ready` taken tegelijk, elk in een eigen kloon en op een eigen
-  branch, elk met een aparte checker erachter — `hangar-prioriteit-score`,
-  `weekly-review-automatic`, `quizzly-wachtwoord-toggle`, `quizzly-media-upload`.
-  Ze staan op `doing` met hun branch in het taakbestand. Blijft er één op `doing`
-  staan zonder dat er iemand op zit, dan is dit blok het spoor: zet hem terug op
-  `ready` of `blocked`.
-- **Four PRs already waiting on you** (was two): learning-website#3, percentile#1,
-  percentile#3, quizzly#1. Dat is de echte achterstand, niet het bouwen.
-- **Two PRs waiting on you to merge:** Learn C#/.NET chain
-  (learning-website#3 — also carries a rendering fix that repairs already-live
-  lessons) and Percentile F-16 (percentile#1 — count bands + closed leak, with
-  the dominance-cap oracle honestly left open as F-6's). Both built and
-  adversarially checked; neither auto-merged.
-- **Three account-level night-run decisions** are yours to make (blocked task
-  `nightrun-limits-decisions`): firing time vs your weekly reset, usage credits
-  with a cap, and whether to add a catch-up run. Background in
+- **Deze sessie (2026-08-14, op jouw verzoek — geen nachtrun).** Gevraagd: vier
+  taken tegelijk bouwen met meerdere agents. Uitkomst: er was er nog maar één te
+  bouwen. De lokale kloon liep een week achter, en de nachtrun had er in zes
+  nachten drie van de vier al gebouwd én gemerged. De agents merkten dat zelf en
+  hebben de gemergede code geverifieerd in plaats van hem opnieuw te bouwen.
+  - **`quizzly-wachtwoord-toggle`** — echt gebouwd, **quizzly#4** staat open.
+    Nog niet adversarieel gecheckt op het moment dat dit blok geschreven werd.
+  - `hangar-prioriteit-score`, `weekly-review-automatic`, `quizzly-media-upload`
+    — waren al `done`. Niets gebouwd, niets gepusht.
+  - Bijvangst: de media-upload van vannacht is onafhankelijk nagelopen, 11 van
+    de 12 regels gehaald. De uitzondering staat als taak
+    `quizzly-media-read-authz` en is een vraag aan jou, geen bug.
+- **Vijf PR's staan open.** quizzly#4 (vandaag, van deze sessie), quizzly#1
+  (finalisatie, sinds 08-07), percentile#1 (F-16, écht conflict tegen `main`),
+  percentile#3 (MVP launchable), learning-website#3 (C#-keten). De nachtrun laat
+  percentile#1 en learning-website#3 al vier nachten bewust liggen: de eerste
+  heeft een conflict in privacy-kritische bestanden, de tweede is gebouwd vóór
+  het auto-merge-besluit. Die twee wachten echt op jou.
+- **Drie account-brede nachtrun-besluiten** liggen nog bij jou (blocked taak
+  `nightrun-limits-decisions`): vuurtijd versus je weekly reset, usage credits
+  met een cap, en of er een inhaalrun bij moet. Achtergrond in
   `reference/nightrun-usage-limits.md`.
-- Next Learn chain after C#: OOP+Java (multi-session) vs data & BI vs db-depth.
-  Percentile's next after F-16: F-3/F-4, then F-6 proper (the boundary oracle).
-- Still open from before: say what Crew management was meant to be or delete it;
-  decide where Versa runs; dump the ideas in your head into `ideas/`.
+- **Eenmalige actie:** plak `reference/startprompt-nightrun.md` in de Routine op
+  claude.ai. Zonder dat leest de nachtrun zijn regels nog steeds, maar via een
+  verwijzing in `CLAUDE.md` in plaats van omdat het hem opgedragen is. Besluit
+  `0005`.
+- Nog steeds open van eerder: zeg wat Crew management moest worden of gooi hem
+  weg; beslis waar Versa draait; de ideeën in je hoofd in `ideas/` zetten.

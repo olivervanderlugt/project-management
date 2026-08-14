@@ -34,6 +34,7 @@ parser in `build.py` is simple on purpose, so keep it that way.
 ```
 ---
 title:   Human name of the project
+description: One line, what the thing actually is. The board shows it on the card.
 status:  active | paused | shipped | parked
 next:    One concrete next action. Never empty on an active project.
 due:     YYYY-MM-DD, or blank if nothing is actually due
@@ -48,6 +49,11 @@ tags:    comma, separated
 `repo` is what makes the Hangar an index into the code: the dashboard turns it
 into a link. It is also the key the repo importer matches on, so never write the
 same `repo` value into two project files.
+
+`description` is the one-line answer to "what was this again?" — the board prints
+it under the project's name, above `next`. Write it from the project's own
+`## What this is`, never from the repo name. If nothing is recorded, say that
+rather than inventing a plausible product.
 
 **`ideas/*.md`**
 
@@ -138,10 +144,10 @@ keeps the overnight run from producing work that gets thrown away.
 
 ## Overnight runs — not your rules unless you are one
 
-A Routine fires nightly and works the queue in `tasks/` under eleven rules:
-one task per night, `ready` only, own branch and a PR, tests green or no push,
-stop at three open PRs, no credentials or deploys, a trail in
-`planning/night-log.md`, and the rest.
+A Routine fires nightly and works the queue in `tasks/` under eleven rules: one
+task per night, `ready` only, its own branch and a PR that it merges itself once
+a real adversarial check has passed, tests green or no push, stop at three
+*stuck* PRs, no credentials or deploys, and a trail in `planning/night-log.md`.
 
 **Those rules are in `reference/nightrun-rules.md`, not here, and they do not
 apply to you unless you were fired by the nightly Routine.** The Routine loads
@@ -150,19 +156,32 @@ Every one of them follows from *nobody is awake to catch a mistake*. In a
 session Ollie started, that premise is false, and so is the rule.
 
 So: if Ollie asks for four tasks at once, build four. If he asks you to build
-with a fifth PR already open, build. Do not cap yourself, do not file your trail
-in the night-log, and do not tell him a rule forbids it. What you leave behind
-instead is `planning/now.md` plus honest `status:` and `branch:` fields on the
-tasks — that is the trail for a session with a person in it.
+with PRs already open, build. Do not cap yourself, do not file your trail in the
+night-log, and do not tell him a rule forbids it. What you leave behind instead
+is `planning/now.md` plus honest `status:` and `branch:` fields on the tasks —
+that is the trail for a session with a person in it. Merging your own PR is the
+night run's rule, not yours: with Ollie there, ask.
 
 Read the file when you need the detail: you are the night run, you are changing
-how it works, or you are reasoning about something it left behind (a `doing`
-task with no session on it, a night branch, a night-log entry). Decision `0004`
-is why it moved.
+how it works, or you are reasoning about something it left behind — a `doing`
+task with no session on it, a night branch, a night-log entry. Decision `0005`
+is why it moved; `0004` is the auto-merge rule inside it.
 
 What *does* bind you is `## Working rules` above: never invent progress, rebuild
 after every content change, capture before you build, decisions are append-only.
 Plus the guard, which binds everything whether or not it read anything.
+
+## Before you trust this working tree
+
+`git fetch` and compare against the remote before you read a status, pick a task
+or plan work. The nightly Routine pushes to the default branch every night, so a
+clone that sat for a week is a week of finished work you cannot see. On
+2026-08-14 a session read a stale tree, believed four tasks were still `ready`,
+and dispatched agents to build three that were already built and merged. The
+tree looked clean the whole time — `git status` cannot tell you this.
+
+Other sessions run against this same repo concurrently. If a task is `doing`,
+someone may be on it right now.
 
 ## Agents per project
 
@@ -263,11 +282,21 @@ and only runs repos named by a `repo:` line in `projects/`. Tests:
 
 ## Hosting
 
-`.github/workflows/dashboard.yml` rebuilds the board and deploys it to GitHub
-Pages on every push to `main` or `claude/**`. The live board is at
+`.github/workflows/dashboard.yml` rebuilds the board on every push to every
+branch, deploys it to GitHub Pages, and then fetches the live URL to check that
+Pages is really serving that commit — the build stamps its sha into the page for
+exactly that purpose. The live board is at
 <https://olivervanderlugt.github.io/project-management/> and needs nothing
 running locally. If it 404s, Pages has not been switched on: repo Settings →
 Pages → Source: "GitHub Actions".
+
+**If the board is stale, look at the deploy job first.** GitHub Pages runs
+through the `github-pages` environment, and that environment has its own list of
+branches it will accept a deploy from. A branch that is not on the list fails in
+about a second without ever picking up a runner — the build is green, the deploy
+is red, and the site quietly keeps serving the last good commit. Settings →
+Environments → `github-pages` → Deployment branches. This cost 2026-08-08: every
+`claude/**` branch except the default one had been publishing nothing all day.
 
 Deploy infrastructure — Docker, Vercel, Supabase, Stripe — belongs to the
 individual project repos, never to the Hangar. The Hangar records `stack` and
