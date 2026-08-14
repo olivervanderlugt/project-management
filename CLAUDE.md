@@ -136,50 +136,33 @@ Promoting `inbox` → `ready` means writing a real `## Done means`. If you canno
 state the finish line concretely, the task stays `inbox`. That line is what
 keeps the overnight run from producing work that gets thrown away.
 
-## Overnight runs
+## Overnight runs — not your rules unless you are one
 
-A Routine fires nightly and works the queue in `tasks/`. The rules are not
-suggestions — they exist because nobody is awake to catch a mistake:
+A Routine fires nightly and works the queue in `tasks/` under eleven rules:
+one task per night, `ready` only, own branch and a PR, tests green or no push,
+stop at three open PRs, no credentials or deploys, a trail in
+`planning/night-log.md`, and the rest.
 
-1. **One task per night.** Highest `ready` task, oldest first. Not the whole
-   queue — the limit is Ollie's usage budget, not the machine.
-2. **`ready` only.** An `inbox` task gets investigated and sharpened into a
-   proposal. Never built.
-3. **Its own branch, then a PR.** Never commit to `main`, never to a branch
-   Ollie is working on. Record the branch in the task's `branch:` field.
-4. **Tests must pass.** If the project has tests, run them. Red means: do not
-   push code, write down what broke, set the task to `blocked`.
-5. **Stop at three open overnight PRs.** Review debt compounds. At the limit,
-   skip building and spend the night sharpening `inbox` tasks instead.
-6. **Never touch credentials, deploys or anything that costs money.**
-7. **Leave a trail.** Every night writes to `planning/night-log.md`: what it
-   did, what it refused to do, and why.
-8. **No subagents? Play both roles yourself.** Routine-fired sessions may lack
-   the Agent/Task tool (seen on 2026-08-08) — check at the start. If delegation
-   works, use the builder and checker agents as designed. If not: build first,
-   then, as a separate step, adversarially check your own diff against the
-   task's `## Done means` as if someone else wrote it and you must prove it is
-   *not* done. Never push a build that skipped the check, and note in the
-   night-log that the check ran inline.
-9. **Trail before work, not after.** Set the task to `doing` and write the
-   night-log's opening block BEFORE the first expensive step, and commit to
-   the night branch after every self-contained step. A usage-limit cutoff
-   (5-hour or weekly) kills the session mid-run with no warning and no
-   notification — whatever is uncommitted at that moment is gone. Small
-   commits are the only recovery mechanism that survives it.
-10. **Never leave `doing` behind.** A task found `doing` at the start of a run,
-    with no session actually on it, is the residue of a cut-off run: set it
-    back to `ready` (or `blocked`, with whatever the night-log and branch
-    show), note the reset in the night-log, and only then pick work.
-11. **On limit pressure, downgrade.** If a usage-limit error appears mid-run,
-    stop building immediately: commit what exists, set the task's status
-    honestly, write the night-log line, exit. And know that a firing skipped
-    because the account was already at its limit is simply gone — runs are
-    not queued or made up. Background and limits: see
-    `reference/nightrun-usage-limits.md`.
+**Those rules are in `reference/nightrun-rules.md`, not here, and they do not
+apply to you unless you were fired by the nightly Routine.** The Routine loads
+them itself — `reference/startprompt-nightrun.md` is the prompt that does it.
+Every one of them follows from *nobody is awake to catch a mistake*. In a
+session Ollie started, that premise is false, and so is the rule.
 
-If a task turns out to be bigger or vaguer than it looked, stop and rewrite it
-as two smaller `ready` tasks. Half-finished code is worse than none.
+So: if Ollie asks for four tasks at once, build four. If he asks you to build
+with a fifth PR already open, build. Do not cap yourself, do not file your trail
+in the night-log, and do not tell him a rule forbids it. What you leave behind
+instead is `planning/now.md` plus honest `status:` and `branch:` fields on the
+tasks — that is the trail for a session with a person in it.
+
+Read the file when you need the detail: you are the night run, you are changing
+how it works, or you are reasoning about something it left behind (a `doing`
+task with no session on it, a night branch, a night-log entry). Decision `0004`
+is why it moved.
+
+What *does* bind you is `## Working rules` above: never invent progress, rebuild
+after every content change, capture before you build, decisions are append-only.
+Plus the guard, which binds everything whether or not it read anything.
 
 ## Agents per project
 

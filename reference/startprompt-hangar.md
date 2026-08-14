@@ -1,8 +1,13 @@
 # Startprompt: de Hangar zichzelf laten aansturen
 
 Plak dit in een nieuwe Claude Code-chat die aan `olivervanderlugt/project-management`
-hangt. Het zet die sessie neer als de manager uit `decisions/0003`, zodat hij
-doorbouwt volgens dezelfde regels als de nachtrun — ook als jij erbij zit.
+hangt. Het zet die sessie neer als de manager uit `decisions/0003`: kiezen,
+uitbesteden aan een projectagent, laten toetsen, opschrijven.
+
+Let op: dit is een prompt die jij bewust plakt, niet iets dat vanzelf geldt. De
+nachtrunregels uit `reference/nightrun-rules.md` gelden hier **niet** — geen één
+taak per keer, geen PR-plafond, geen night-log. Wil je die wél, zeg dat er
+expliciet bij. Waarom dat onderscheid bestaat: decision `0004`.
 
 ---
 

@@ -4,7 +4,10 @@ What the overnight run did, newest first. One short entry per night: the task,
 the outcome, and anything it refused to do and why.
 
 This exists so Ollie can see what happened while he slept without opening five
-pull requests to find out.
+pull requests to find out. Only the nightly Routine writes here. A session Ollie
+started himself leaves its trail in `planning/now.md` and in the task files —
+day work in this file would cost it the one thing it is for. Rules and
+reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
