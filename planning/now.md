@@ -3,13 +3,23 @@ updated: 2026-08-14
 focus: Vijf PR's wachten op jouw merge; ondertussen bouwt deze sessie de drie resterende ready taken
 ---
 
-- **Tweede ronde, nu in de lucht (2026-08-14).** De drie overgebleven `ready`
-  taken tegelijk, elk in een eigen kloon en branch, elk met een checker erachter:
-  `hangar-priority-effort-escaping` (S), `quizzly-chrome-contrast-bugs` (S) en
-  `quizzly-slide-designer` (M, document — geen `src/`-wijziging). Ze staan op
-  `doing` met hun branch. Blijft er één `doing` staan zonder sessie erop, dan is
-  dit het spoor: terug naar `ready`. Daarnaast wordt `hangar-stale-clone-guard`
-  aangescherpt tot een echte finish line.
+- **Tweede ronde af (2026-08-14).** Drie taken gebouwd, twee al gecheckt en
+  goedgekeurd, alle drie wachten op jouw merge:
+  - **project-management#11** — `hangar-priority-effort-escaping`. Gecheckt, en de
+    checker deed een negatieve controle: oude code terug, suite faalt. De test
+    vangt echt iets.
+  - **quizzly#5** — `quizzly-chrome-contrast-bugs`. Vier WCAG-fixes, elke ratio
+    twee keer onafhankelijk herrekend. De checker keurde ronde 1 af omdat
+    `.app-input::placeholder` was blijven staan; gefixt, hercheck groen.
+  - **quizzly#6** — `quizzly-slide-designer`, alleen `docs/SLIDE-DESIGNER.md`
+    (922 regels). De checker viel om op een API-fout; opnieuw gestart. Nog niet
+    goedgekeurd.
+  - `hangar-stale-clone-guard` is aangescherpt en staat nu op `ready`, met één
+    voorbehoud dat de bouwer eerst zelf moet verifiëren (hoe `SessionStart`-hooks
+    zich echt gedragen).
+  - Bijvangst om te bevestigen: `quizzly-presentation-broadcast-ongefilterd` —
+    `presentation` zou buiten `toPublicPayload()` om naar de speler gaan. Vandaag
+    onschuldig, morgen een lek als iemand er een privéveld bij zet.
 
 - **Deze sessie (2026-08-14, op jouw verzoek — geen nachtrun).** Gevraagd: vier
   taken tegelijk bouwen met meerdere agents. Uitkomst: er was er nog maar één te

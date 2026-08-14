@@ -1,7 +1,7 @@
 ---
 title: Priority board double-escapes the empty-effort placeholder
 project: hangar
-status: doing
+status: blocked
 added: 2026-08-10
 effort: S
 branch: night/hangar-priority-effort-escaping
@@ -32,3 +32,18 @@ same night once the exact line and fix were already known from the check.
 Latent today: every open task in `tasks/` currently has an `effort:` value,
 so nothing on the live board shows it. It will surface the first time a task
 is captured without one.
+
+## Waar het staat (2026-08-14)
+
+Gebouwd en gecheckt in een sessie op Ollie's verzoek. **project-management#11**
+staat open en wacht op zijn merge — een dagsessie mergt zijn eigen PR niet.
+
+`dashboard/build.py`: `eff = (meta.get("effort") or "").strip()` en
+`{escape(eff) if eff else "&mdash;"}`, dezelfde vorm als de slug-cel erboven, dus
+de fallback-entity gaat nooit meer door `escape()`. Regressietest toegevoegd in
+`scripts/test_priority.py`.
+
+De checker deed een negatieve controle: hij zette de oude `build.py` terug en
+draaide de suite opnieuw — die faalde. De test vangt het echte oude gedrag, hij
+is niet vacuum-groen. Alle zeven Hangar-testsuites groen na rebase op de actuele
+default branch.
