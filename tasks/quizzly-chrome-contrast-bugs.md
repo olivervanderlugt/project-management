@@ -1,10 +1,10 @@
 ---
 title: "Quizzly: vier a11y/CSS-bugs in de app-chrome (onafhankelijk van kleurrichting)"
 project: quizzly
-status: ready
+status: doing
 added: 2026-08-13
 effort: S
-branch:
+branch: night/quizzly-chrome-contrast-bugs
 ---
 
 ## Done means

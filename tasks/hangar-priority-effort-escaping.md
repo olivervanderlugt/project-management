@@ -1,10 +1,10 @@
 ---
 title: Priority board double-escapes the empty-effort placeholder
 project: hangar
-status: ready
+status: doing
 added: 2026-08-10
 effort: S
-branch:
+branch: night/hangar-priority-effort-escaping
 ---
 
 ## Done means

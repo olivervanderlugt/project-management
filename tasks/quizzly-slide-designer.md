@@ -1,10 +1,10 @@
 ---
 title: Quizzly: slide-designer — verkenning en gefaseerde roadmap
 project: quizzly
-status: ready
+status: doing
 added: 2026-08-08
 effort: M
-branch:
+branch: night/quizzly-slide-designer
 ---
 
 ## Done means

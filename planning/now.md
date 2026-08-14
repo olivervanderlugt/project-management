@@ -1,7 +1,15 @@
 ---
 updated: 2026-08-14
-focus: Quizzly PR #4 checken en mergen; dan de vier oude PR's die al een week openstaan
+focus: Vijf PR's wachten op jouw merge; ondertussen bouwt deze sessie de drie resterende ready taken
 ---
+
+- **Tweede ronde, nu in de lucht (2026-08-14).** De drie overgebleven `ready`
+  taken tegelijk, elk in een eigen kloon en branch, elk met een checker erachter:
+  `hangar-priority-effort-escaping` (S), `quizzly-chrome-contrast-bugs` (S) en
+  `quizzly-slide-designer` (M, document — geen `src/`-wijziging). Ze staan op
+  `doing` met hun branch. Blijft er één `doing` staan zonder sessie erop, dan is
+  dit het spoor: terug naar `ready`. Daarnaast wordt `hangar-stale-clone-guard`
+  aangescherpt tot een echte finish line.
 
 - **Deze sessie (2026-08-14, op jouw verzoek — geen nachtrun).** Gevraagd: vier
   taken tegelijk bouwen met meerdere agents. Uitkomst: er was er nog maar één te
