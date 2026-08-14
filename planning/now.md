@@ -8,8 +8,13 @@ focus: Quizzly PR #4 checken en mergen; dan de vier oude PR's die al een week op
   bouwen. De lokale kloon liep een week achter, en de nachtrun had er in zes
   nachten drie van de vier al gebouwd én gemerged. De agents merkten dat zelf en
   hebben de gemergede code geverifieerd in plaats van hem opnieuw te bouwen.
-  - **`quizzly-wachtwoord-toggle`** — echt gebouwd, **quizzly#4** staat open.
-    Nog niet adversarieel gecheckt op het moment dat dit blok geschreven werd.
+  - **`quizzly-wachtwoord-toggle`** — echt gebouwd én adversarieel gecheckt:
+    trio groen (112 tests), elke regel van de finish line vastgepind op
+    coderegels. **quizzly#4 staat open en wacht op jouw merge** — een dagsessie
+    mergt zijn eigen PR niet. Taak op `blocked`, want hij wacht op jou.
+    Kanttekening van de checker, geen fout: de test toetst alleen de statische
+    markup, dat `aria-pressed` bij een klik echt omklapt is gelezen en niet
+    getest.
   - `hangar-prioriteit-score`, `weekly-review-automatic`, `quizzly-media-upload`
     — waren al `done`. Niets gebouwd, niets gepusht.
   - Bijvangst: de media-upload van vannacht is onafhankelijk nagelopen, 11 van
