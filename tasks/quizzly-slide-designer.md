@@ -1,7 +1,7 @@
 ---
 title: Quizzly: slide-designer — verkenning en gefaseerde roadmap
 project: quizzly
-status: doing
+status: blocked
 added: 2026-08-08
 effort: M
 branch: night/quizzly-slide-designer
@@ -50,3 +50,31 @@ nacht van 2026-08-12 naar hetzelfde patroon als `quizzly-design-pass`: een
 onderzoeksfase (deze taak, nu wel bouwbaar) en een toepassingsfase
 (`quizzly-slide-designer-bouwen`, blijft `inbox` tot Ollie een fase kiest uit
 de roadmap die deze taak oplevert).
+
+## Waar het staat (2026-08-14)
+
+Gebouwd en adversarieel gecheckt. **quizzly#6** staat open en wacht op Ollie's
+merge. Eén bestand: `docs/SLIDE-DESIGNER.md`, 922 regels, 0 verwijderingen.
+Niets in `src/`, geen dependency, geen migratie, en de wegwerp-probe is niet
+meegecommit — de checker heeft dat apart geverifieerd met `gh pr view 6 --json
+files` en `git diff --stat`.
+
+Trio groen vanaf een schone kloon: typecheck zonder diagnostics, 106 tests in 8
+bestanden, build compleet.
+
+**Het interessante:** de taak stelde twee dingen als waar die niet waar bleken.
+De bouwer heeft ze gemeten in plaats van overgeschreven, en de checker heeft
+beide onafhankelijk bevestigd — zie de aparte taak
+`quizzly-presentation-broadcast-ongefilterd`.
+
+De checker heeft elke `file:line`-verwijzing in het document zelf afgedrukt en
+vergeleken. Vijf zaten er in de eerste versie één regel naast en waren al
+gecorrigeerd vóór de commit. Ook nagekeken: het document beweert nergens een
+GIPHY-licentievoorwaarde die het niet heeft kunnen lezen — elke
+`support.giphy.com`-URL gaf 403, en dat staat er zo in, met vijf concrete dingen
+om na te vragen in plaats van een verzonnen samenvatting.
+
+Eén kanttekening van de checker, geen fout: het document is 922 regels tegen
+`docs/DESIGN.md`'s 612. Te rechtvaardigen door de scope (negen
+haalbaarheidsoordelen, vijf juridische subsecties, vier fases), maar als je hem
+korter wilt is dat een redactieklus, geen herbouw.

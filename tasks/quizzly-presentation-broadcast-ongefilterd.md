@@ -1,7 +1,7 @@
 ---
-title: "Quizzly: gaat Question.presentation ongefilterd naar de speler?"
+title: "Quizzly: presentation gaat om het spelerfilter heen — regel vastleggen vóór iemand er een privéveld bij zet"
 project: quizzly
-status: inbox
+status: ready
 added: 2026-08-14
 effort: S
 branch:
@@ -9,48 +9,62 @@ branch:
 
 ## Done means
 
-Nog niet schrijfbaar: eerst moet de bewering bevestigd zijn, en daarna is het
-antwoord waarschijnlijk "opschrijven", niet "repareren".
+Twee architectuurfeiten die nu alleen in een roadmapdocument staan, staan waar
+de volgende bouwer ze tegenkomt, met een test die het bewaakt in plaats van een
+zin die het vraagt.
 
-## Wat er beweerd wordt
+1. **Bij de emit zelf staat waarom `presentation` niet gefilterd wordt.** Een
+   comment bij `server/realtime/engine.ts:345` (`presentation: question.presentation`)
+   én bij `toPublicPayload()` in `src/lib/question-schema.ts`, dat zegt: alles in
+   `presentationSchema` gaat ongefilterd naar élke speler in de room, dus een
+   veld dat de speler niet hoort te zien hoort niet in dit schema — of moet
+   langs een filter dat er vandaag niet is. Kort, en op beide plekken, want wie
+   een veld toevoegt kijkt naar het schema, niet naar de emit.
+2. **Een test die faalt als een nieuw `presentation`-veld verplicht wordt.**
+   Parse een oud snapshot-object — eentje zonder het nieuwste veld — met
+   `presentationSchema` en assert dat het nog steeds parseert. Dat is de test
+   die `docs/SLIDE-DESIGNER.md` §6 zelf al voorschrijft voor fase 1; hij hoort
+   er te staan vóórdat fase 1 gebouwd wordt, niet erna.
+3. Hetzelfde in `docs/ARCHITECTURE.md` in twee zinnen, zodat het niet alleen in
+   een slide-designer-roadmap staat die niemand leest als hij aan iets anders
+   werkt.
 
-De agent die op 2026-08-14 `docs/SLIDE-DESIGNER.md` schreef (quizzly#6) zegt
-twee dingen te hebben gevonden die inggaan tegen wat de taakomschrijving zelf
-als waar aannam. Beide zijn gemeten met een wegwerp-probe (`npx tsx`), niet
-beredeneerd — maar op het moment van dit schrijven nog niet door een tweede
-agent geverifieerd, want die checker viel om op een API-fout. **Behandel dit als
-een bewering, niet als een feit, tot dat rond is.**
+Trio groen. Geen gedragswijziging: dit legt vast wat er al is, het repareert
+niets.
 
-1. **`toPublicPayload()` is niet de enige weg naar de speler.**
-   `src/lib/question-schema.ts` filtert wat een speler van een vraag ziet, maar
-   `presentation` zou daar helemaal niet doorheen gaan — het wordt ongefilterd
-   meegestuurd. Als dat klopt, is de vraag: staat er ooit iets in `presentation`
-   dat een speler niet hoort te zien? Vandaag zijn dat `layout`, `media`,
-   `mediaAlt`, `accentOverride` en `hideTimer` — allemaal onschuldig, en de
-   speler moet ze grotendeels zien ook. Dus waarschijnlijk geen lek vandaag,
-   maar wel een latente valkuil: wie er morgen een veld bij zet dat wél privé is
-   (een hostnotitie, een hint, een antwoordtoelichting), lekt het zonder dat
-   iets hem tegenhoudt.
-2. **Een verplicht nieuw veld op het presentation-schema sloopt elk lopend
-   spel.** Live games draaien van `Game.quizSnapshot`; oude snapshots missen het
-   nieuwe veld en zouden niet meer parsen. Een nieuw veld moet dus optioneel
-   zijn, met een test die bewijst dat een oude snapshot nog parseert.
+## Wat bevestigd is (en wat niet)
 
-## Waarom dit een eigen taak is
+Op 2026-08-14 gemeten door de bouwer van `docs/SLIDE-DESIGNER.md` en daarna
+**onafhankelijk bevestigd** door een checker die de code zelf afdrukte:
 
-De slide-designer-taak leverde een document op; dit zijn twee
-architectuurfeiten die dat document gebruikt en die groter zijn dan dat
-document. Punt 1 hoort in `docs/ARCHITECTURE.md` of als commentaar bij
-`toPublicPayload()` te staan, zodat de volgende die een veld toevoegt het ziet.
-Punt 2 hoort een test te zijn, niet een zin in een roadmap.
+- `toPublicPayload()` wordt precies één keer gebruikt in het realtime-pad, op
+  `payload` (`server/realtime/engine.ts:341`). Vier regels lager gaat
+  `presentation: question.presentation` (`:345`) ongefilterd in hetzelfde object,
+  en `:354` stuurt dat naar de hele room. Het wiretype bevestigt het:
+  `src/types/realtime.ts:42` is `presentation: Presentation` — het volle type,
+  niet de gestripte `PublicPayload`-variant.
+- **Vandaag lekt er niets.** Vóór de emit gaat elk snapshot langs
+  `presentationSchema.parse` (`server/realtime/gameServer.ts:149`), en dat schema
+  heeft precies vijf velden (`src/lib/theme.ts:441-457`): `layout`, `media`,
+  `mediaAlt`, `accentOverride`, `hideTimer`. Allemaal dingen die de speler móét
+  zien, en Zod stript onbekende sleutels, dus een auteur kan er ook niets in
+  smokkelen. Dit is een latente valkuil, geen actief lek — en het document
+  beweert dat ook nergens.
+- Een **verplicht** nieuw veld op dat schema laat oude `Game.quizSnapshot`-rijen
+  omvallen op regel 149; de `catch` geeft `null` terug en de speler krijgt
+  "Game not found." of "That game has finished." Nuance van de checker: er zit
+  een in-memory roomcache vóór die parse (`loadRoom`), dus een spel dat al
+  draait blijft draaien tot het proces herstart. De pijn komt bij een deploy,
+  niet op het moment van mergen.
 
-En het raakt een belofte die Quizzly expliciet maakt: bij een blinde groepsquiz
-mogen bijdragers elkaars vragen niet zien. Een pad dat om het filter heen gaat
-is precies waar zo'n belofte stukgaat.
+## Notes
 
-## Eerst dit
+Dit is bijvangst van `quizzly-slide-designer` (quizzly#6). Het staat los van of
+die PR gemerged wordt: de feiten gelden nu al.
 
-Bevestig of ontken punt 1 tegen de echte code (`toPublicPayload()`, de
-socket-broadcast in de gameserver, `Game.quizSnapshot`). Klopt het niet, dan kan
-deze taak weg — en dan moet `docs/SLIDE-DESIGNER.md` gecorrigeerd worden, want
-dan staat er een onjuist architectuurfeit in.
+Waarom het de moeite waard is en niet alleen netjes: Quizzly belooft bij een
+blinde groepsquiz dat bijdragers elkaars vragen niet zien. Een pad dat om het
+enige spelerfilter heen gaat is precies waar zo'n belofte stukgaat — niet
+vandaag, maar op de dag dat iemand een hostnotitie, een hint of een
+antwoordtoelichting aan het presentatieschema toevoegt omdat het daar logisch
+lijkt te horen.

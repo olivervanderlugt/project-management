@@ -1,6 +1,6 @@
 ---
 updated: 2026-08-14
-focus: Vijf PR's wachten op jouw merge; ondertussen bouwt deze sessie de drie resterende ready taken
+focus: Zeven PR's wachten op jouw merge — vier daarvan van vandaag, alle vier gecheckt
 ---
 
 - **Tweede ronde af (2026-08-14).** Drie taken gebouwd, twee al gecheckt en
@@ -12,14 +12,17 @@ focus: Vijf PR's wachten op jouw merge; ondertussen bouwt deze sessie de drie re
     twee keer onafhankelijk herrekend. De checker keurde ronde 1 af omdat
     `.app-input::placeholder` was blijven staan; gefixt, hercheck groen.
   - **quizzly#6** — `quizzly-slide-designer`, alleen `docs/SLIDE-DESIGNER.md`
-    (922 regels). De checker viel om op een API-fout; opnieuw gestart. Nog niet
-    goedgekeurd.
+    (922 regels). Gecheckt en goedgekeurd: elke `file:line` in het document is
+    door de checker afgedrukt en vergeleken, en het beweert nergens een
+    GIPHY-voorwaarde die het niet heeft kunnen lezen.
   - `hangar-stale-clone-guard` is aangescherpt en staat nu op `ready`, met één
     voorbehoud dat de bouwer eerst zelf moet verifiëren (hoe `SessionStart`-hooks
     zich echt gedragen).
-  - Bijvangst om te bevestigen: `quizzly-presentation-broadcast-ongefilterd` —
-    `presentation` zou buiten `toPublicPayload()` om naar de speler gaan. Vandaag
-    onschuldig, morgen een lek als iemand er een privéveld bij zet.
+  - Bijvangst, inmiddels **bevestigd** en op `ready`:
+    `quizzly-presentation-broadcast-ongefilterd`. `presentation` gaat echt buiten
+    `toPublicPayload()` om naar elke speler. Vandaag lekt er niets — het schema
+    heeft vijf velden die de speler moet zien en Zod stript de rest — maar er is
+    geen filter dat de zesde tegenhoudt. Vastleggen bij de code, met een test.
 
 - **Deze sessie (2026-08-14, op jouw verzoek — geen nachtrun).** Gevraagd: vier
   taken tegelijk bouwen met meerdere agents. Uitkomst: er was er nog maar één te
