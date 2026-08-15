@@ -10,16 +10,18 @@ branch:
 ## Done means
 
 Nog niet schrijfbaar: dit is een vraag aan Ollie, geen bug met een duidelijke
-fix. Er zijn drie eerlijke uitkomsten en alleen hij kiest welke:
+fix. Er zijn twee eerlijke uitkomsten en alleen hij kiest welke:
 
 1. **Zo laten en het opschrijven.** De capability-URL is het ontwerp; leg vast
    dat een geüploade afbeelding zo publiek is als de link die hem draagt.
 2. **Sessie-gebonden lezen** voor afbeeldingen die bij een niet-gepubliceerde
    quiz horen, en publiek zodra een spel loopt. Duurder: spelers zijn anoniem
    en hebben midden in een spel geen sessie, dus dit vraagt een spel-token.
-3. **Opruimen bij verwijderen.** Ongeacht 1 of 2: een afbeelding die je uit een
-   vraag haalt blijft nu voor altijd opvraagbaar. Dat is los van de authz-vraag
-   te repareren en is waarschijnlijk sowieso wenselijk.
+
+(Voorheen stond hier ook "opruimen bij verwijderen" als derde punt. Dat is
+op 2026-08-15 afgesplitst naar `quizzly-media-orphan-cleanup` — onafhankelijk
+van welke van de twee bovenstaande opties wint, en had dus al een concrete
+finish line. Zie die taak.)
 
 ## Notes
 
@@ -47,3 +49,7 @@ beslissen in plaats van het te laten staan omdat het in een commentaarblok
 verantwoord is.
 
 Rationale staat in de route-header en in `SECURITY.md` van de Quizzly-repo.
+
+**Herchecked 2026-08-15 (nachtrun, stap 3).** De authz-keuze (1 vs 2) blijft
+een smaakbesluit dat alleen Ollie kan maken — geen nieuwe informatie sinds
+2026-08-14 die dat verandert. Blijft `inbox` met de vraag hierboven open.
