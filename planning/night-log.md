@@ -11,6 +11,44 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-15
+
+**Start.** `git fetch` + vergeleken tegen `origin`'s echte default branch
+(`claude/hangar-project-setup-kvhcad`, niet `main`) — lokale
+`claude/charming-fermat-9nkqtc` bleek al gelijk (0 commits verschil), tree dus
+vers. Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen (`hangar`,
+`hangar-checker`, …) beschikbaar — builder/checker-verdeling wordt gebruikt.
+
+**Stap 1 — open overnight-PR's: 2, dus bouwen.** Geteld op branch-conventie
+(`night/...`), zoals elke eerdere nacht: `percentile#1`
+(`night/percentile-f16-count-ladder`) en `learning-website#3`
+(`night/learn-csharp-chain`) staan al sinds 08-07 open, zelfde bekende
+oorzaken als vorige nachten (echt conflict resp. gebouwd vóór het
+auto-merge-besluit) — met rust gelaten, geen nieuwe informatie.
+
+Vier andere open PR's met een `night/`-branchnaam zijn NIET meegeteld:
+`project-management#11`, `quizzly#4`, `quizzly#5`, `quizzly#6`. De git-historie
+(commits `0d7ed9f`…`8e870ee`, "Ronde 2", "op jouw verzoek — geen nachtrun",
+trail in `now.md` i.p.v. dit logboek) laat zien dat die vier zijn gebouwd door
+dagsessies op Ollie's verzoek, niet door deze Routine — een dagsessie mergt
+zijn eigen PR bewust niet (zie `now.md`), dat is geen vastgelopen automerge.
+Ze gebruiken toevallig dezelfde `night/`-naamgevingsconventie als een
+nachtrun-branch, maar de inhoud van de logs is ondubbelzinnig. Twee echte
+nachtrun-PR's, onder de grens van drie: bouwen.
+
+**Taakkeuze.** Twee `ready`-taken, beide `added: 2026-08-14`:
+`hangar-stale-clone-guard` en `quizzly-presentation-broadcast-ongefilterd`.
+Zelfde dag, dus op de daadwerkelijke promotie-naar-`ready`-commit gekeken:
+`hangar-stale-clone-guard` werd `ready` om 19:11:43 (`c8c281f`);
+`quizzly-presentation-broadcast-ongefilterd` bestond op dat moment nog als
+`inbox` en werd pas om 19:14:35 (`8f82857`) `ready`. **`hangar-stale-clone-guard`**
+is dus de oudste.
+
+**Stap 2 — gebouwd:** in voortgang, zie hieronder.
+Status → `doing`, branch → `night/hangar-stale-clone-guard`.
+
+---
+
 ## 2026-08-14
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen

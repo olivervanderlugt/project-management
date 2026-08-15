@@ -1,10 +1,10 @@
 ---
 title: Een sessie moet merken dat zijn kloon achterloopt vóór hij werk uitdeelt
 project: hangar
-status: ready
+status: doing
 added: 2026-08-14
 effort: S
-branch:
+branch: night/hangar-stale-clone-guard
 ---
 
 ## Done means
