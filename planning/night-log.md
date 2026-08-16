@@ -11,6 +11,94 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-16
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`quizzly`, `hangar-checker`) beschikbaar — builder/checker-verdeling uit
+CLAUDE.md gebruikt.
+
+**Kloon-check vóór alles.** `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`) legde iets bloot: een branch
+`claude/night-2026-08-15` bestond op de remote met één commit erbovenop de
+default die nooit gemerged was, en er was nooit een PR voor geopend. Diff
+gelezen: een echte, correcte stap-3-taak (`quizzly-media-read-authz` gesplitst
+in de authz-vraag zelf plus een nu-`ready` `quizzly-media-orphan-cleanup`) —
+geen halfbakken of kapotte staat. De nacht van 08-15 is kennelijk gestopt na
+die commit, vóór stap 4 (night-log + wrap-up-PR). Niet opnieuw gedaan of
+weggegooid: fast-forward gemerged op deze branch, zodat het werk niet verloren
+gaat. Geen enkele `doing`-taak stond nog open (regel 10 niet van toepassing —
+dit was een hele niet-afgemaakte run, geen achtergebleven taak).
+
+**Stap 1 — open overnight-PR's.** Geteld over alle zeven aangekoppelde repo's,
+niet alleen de Hangar: acht open PR's in totaal, maar de meeste zijn
+dagsessie-werk dat wacht op Ollie's eigen merge (project-management#11,
+quizzly#4/#5/#6, quizzly#1, percentile#3) — een dagsessie mergt zijn eigen PR
+niet, dus die zijn niet "vastgelopen nachtrun-werk". Van de nachtrun zelf staan
+er twee nog open, allebei al meerdere nachten bewust met rust gelaten en
+vanavond opnieuw gecontroleerd, niet aangenomen:
+- **`percentile#1`** (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main` in privacy-kritische
+  bestanden. Met rust gelaten.
+- **`learning-website#3`** (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, maar gebouwd vóór het auto-merge-besluit (0004) door een andere
+  sessie. Met rust gelaten, zelfde oordeel als eerdere nachten.
+
+Twee stuck, niet drie: onder de grens van regel 5, dus doorgebouwd.
+
+**Taakkeuze.** Twee `ready`-taken delen `added: 2026-08-14`:
+`quizzly-presentation-broadcast-ongefilterd` en `hangar-stale-clone-guard`.
+Geen chronologisch onderscheid, dus tiebreak op het bord's eigen
+prioriteitsscore (zelfde precedent als 2026-08-13): 710 tegen 680 — de
+quizzly-taak wint. (`quizzly-media-orphan-cleanup`, net hersteld uit de 08-15
+kloon, is `added: 2026-08-15` — jonger, dus geen kandidaat vanavond ondanks een
+hogere score; regel 1 is oudste-eerst, niet hoogste-score-eerst.)
+
+**Stap 2 — gebouwd en gemerged: `quizzly-presentation-broadcast-ongefilterd`
+(S) → quizzly#7.** Builder (`quizzly`-agent) legde op branch
+`claude/dreamy-knuth-n4hya3` vast waarom `presentation` ongefilterd naar elke
+speler gaat: commentaar bij de emit (`server/realtime/engine.ts:345`) én bij
+`toPublicPayload()` (`src/lib/question-schema.ts`), plus — eigen, gemotiveerde
+keuze — een derde bij `presentationSchema` zelf in `src/lib/theme.ts`, met de
+redenering dat wie een veld toevoegt naar het schema kijkt, niet naar de emit.
+Nieuwe test `src/lib/theme.test.ts` bewaakt dat een toekomstig verplicht veld
+breekt. Twee zinnen in `docs/ARCHITECTURE.md`. Trio groen, 106→108 tests. Eén
+afwijking gemeld: `docs/SLIDE-DESIGNER.md` (waar de taak naar §6 verwijst)
+bestaat niet op `main`, alleen op de nog niet gemergede quizzly#6 — de bouwer
+werkte vanuit de taakomschrijving zelf in plaats van dat document.
+
+`hangar-checker` deed een echte adversariële poging: zelf de twee comment-
+plekken gelezen, zelf een negatieve controle gedraaid (tijdelijk een verplicht
+veld toegevoegd, beide nieuwe tests faalden écht, teruggezet), zelf de
+`Game.quizSnapshot`-herparse-aanname op `server/realtime/gameServer.ts:149`
+geverifieerd in plaats van aangenomen, zelf de volledige trio gedraaid, en
+bevestigd dat er geen enkele gedragswijziging in de diff zit en niets buiten de
+vijf genoemde bestanden geraakt is. Verdict: `ship: true`, niets onvermeld
+gebleven.
+
+CI op quizzly#7 afgewacht tot die zelf groen was, daarna pas gemerged (`8bbae69`,
+besluit 0004 — de checker's pass is het reviewmoment). Taak op `done`, branch
+`claude/dreamy-knuth-n4hya3`.
+
+**Stap 3 — inbox aangescherpt: geen van de zeven kon naar `ready`.** Alle
+resterende inbox-taken opnieuw gecontroleerd, niet aangenomen dat ze nog
+kloppen: `hangar-in-de-browser`, `quizzly-slide-designer-bouwen`,
+`quizzly-design-pass-toepassen`, `quizzly-legal-review-west` (nog steeds
+`quizzly#1` niet gemerged) en `versa-hosting-besluit` wachten alle vijf
+onveranderd op een smaak- of geldbesluit van Ollie zelf — geen onderzoeksvraag
+die een nachtrun voor hem kan beslissen. `quizzly-media-read-authz` is al
+gesplitst (zie boven, uit de herstelde 08-15-commit) en de resterende
+authz-vraag blijft om dezelfde reden `inbox`. Echt herverifieerd, niet alleen
+herlezen: `lege-repos-beslissen` — `crew-management-system` heeft nog steeds
+nul commits (`git log` bevestigt "does not have any commits yet" op de
+aangekoppelde kloon vanavond). Geen wijziging, blijft `inbox`.
+
+**Niet gedaan, met opzet:** geen tweede taak opgepakt ondanks resterend budget
+(regel 1/3); geen van de twee stuck PR's aangeraakt (conflict resp. pre-
+auto-merge, zie boven); geen enkele inbox-taak naar `ready` geforceerd zonder
+een echte Done means; geen behandeling van de vijf dagsessie-PR's die op
+Ollie's eigen merge wachten — dat is zijn keuze, niet de nachtrun s'.
+Status → `done`, branch → `claude/dreamy-knuth-n4hya3`.
+
 ## 2026-08-14
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen

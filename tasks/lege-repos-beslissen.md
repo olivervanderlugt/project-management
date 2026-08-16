@@ -34,3 +34,7 @@ staat nog steeds op nul commits (`git log` op de default branch geeft "does
 not have any commits yet"). Geen wijziging sinds 2026-08-06 — de blokkade
 geldt onveranderd, blijft `inbox`. Vraag voor Ollie is nog steeds dezelfde:
 wat moest deze repo worden, of mag hij weg?
+
+**Herchecked 2026-08-16 (nachtrun):** nog steeds nul commits (`git log`
+bevestigt "does not have any commits yet" op de aangekoppelde kloon). Geen
+wijziging. Blijft `inbox`, dezelfde vraag staat nog open.
