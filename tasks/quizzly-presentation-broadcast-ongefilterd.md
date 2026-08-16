@@ -1,7 +1,7 @@
 ---
 title: "Quizzly: presentation gaat om het spelerfilter heen — regel vastleggen vóór iemand er een privéveld bij zet"
 project: quizzly
-status: doing
+status: done
 added: 2026-08-14
 effort: S
 branch: claude/dreamy-knuth-n4hya3
@@ -68,3 +68,27 @@ enige spelerfilter heen gaat is precies waar zo'n belofte stukgaat — niet
 vandaag, maar op de dag dat iemand een hostnotitie, een hint of een
 antwoordtoelichting aan het presentatieschema toevoegt omdat het daar logisch
 lijkt te horen.
+
+## Gebouwd en gemerged (2026-08-16, nachtrun)
+
+**quizzly#7, gemerged** (`8bbae69`). Commentaar op beide voorgeschreven plekken
+(`server/realtime/engine.ts:345` en `toPublicPayload()` in
+`src/lib/question-schema.ts`), plus een derde — niet gevraagd, wel juist — bij
+`presentationSchema` zelf in `src/lib/theme.ts`, met de argumentatie dat wie een
+veld toevoegt naar het schema kijkt, niet naar de emit. Nieuwe test
+`src/lib/theme.test.ts`: parseert een leeg object en een volledig object met
+elk veld om de beurt verwijderd, allebei tegen `presentationSchema`. Twee zinnen
+in `docs/ARCHITECTURE.md` §2. Trio groen (typecheck/test/build), 106→108 tests.
+
+Eén afwijking van de taakbeschrijving, geen probleem gebleken: `docs/SLIDE-
+DESIGNER.md` (waar punt 2 hierboven naar §6 verwijst) bestaat niet op `main` —
+alleen op de nog niet gemergede `night/quizzly-slide-designer` (quizzly#6). De
+bouwer schreef de test op basis van de taak's eigen omschrijving in plaats van
+dat document, en de checker bevestigde dat de test's aanname (herparsen van
+`Game.quizSnapshot`-rijen bij room-load) wel degelijk echt in de code zit
+(`server/realtime/gameServer.ts:149`) — dus geen gok.
+
+`hangar-checker` deed een eigen negatieve controle: tijdelijk een verplicht
+veld (`slideSpecZZZ`) aan `presentationSchema` toegevoegd, beide nieuwe tests
+faalden echt (niet alleen typecheck), bestand teruggezet. Verdict: `ship: true`,
+niets onvermeld gebleven. CI op de PR groen, direct gemerged (besluit 0004).
