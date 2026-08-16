@@ -1,10 +1,10 @@
 ---
 title: "Quizzly: presentation gaat om het spelerfilter heen — regel vastleggen vóór iemand er een privéveld bij zet"
 project: quizzly
-status: ready
+status: doing
 added: 2026-08-14
 effort: S
-branch:
+branch: claude/dreamy-knuth-n4hya3
 ---
 
 ## Done means
