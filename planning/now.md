@@ -1,7 +1,31 @@
 ---
-updated: 2026-08-14
+updated: 2026-08-19
 focus: Acht PR's wachten op jouw merge — vier daarvan van vandaag, alle vier gecheckt
 ---
+
+- **Crew management is geen leeg repo meer (2026-08-19).** De hele MVP is vanaf de
+  desktop gepusht. De eerste-sessie-checklist liep groen van begin tot eind — install,
+  typecheck, 64/64 tests, build, en de Playwright-smoketest draaide voor het eerst
+  écht (3/3, geen fixes nodig). `gitleaks` over de volledige historie: schoon. Een
+  analyse in vier sporen leverde een `TODO.md` in het repo op, op doel gesorteerd,
+  elk item met een `file:line`.
+  - Drie bevindingen doen ertoe, en geen ervan crasht: **skill-matching heeft nog
+    nooit gedraaid** (de enige aanroeper geeft een lege lijst mee, en dan krijgt
+    iedereen de volle punten), **meerdaagse events kijken alleen naar dag één**, en
+    **marge en payroll rekenen met verschillende uren**. Ze geven stilletjes een
+    verkeerd antwoord — precies het soort fout dat een groene testsuite niet vangt.
+  - Bijvangst: de e2e-job in CI hing 40+ minuten zonder timeout op
+    `playwright install --with-deps`. Gevonden doordat de eerste PR hem live liet
+    zien, gefixt, draait nu in 1m31s met een plafond van 15 minuten.
+  - Er zat **geen enkel crewlid** in het repo: de seed leest CSV's die in
+    `.gitignore` staan. Er is nu `pnpm db:seed-demo` — 100 verzonnen crewleden in
+    een gereserveerde `CREW-9xxx`-reeks, die echte records niet kan raken.
+  - Landingspagina staat live op https://olivervanderlugt.github.io/crew-management-system/
+    (Pages stond al aan maar had nooit gebouwd — er stond niets op het ingestelde pad).
+    **Dat is een landingspagina, geen demo:** de app is server-rendered en draait niet
+    op Pages. Een echte klikbare preview is Vercel + Supabase, ~15 minuten, gratis.
+  - Wat het nog nooit heeft gedaan: tegen een echte database draaien. `.env.local`
+    staat vol placeholders. Dát is wat het blokkeert, geen enkel code-item.
 
 - **Tweede ronde af (2026-08-14).** Drie taken gebouwd, twee al gecheckt en
   goedgekeurd, alle drie wachten op jouw merge:
@@ -55,5 +79,5 @@ focus: Acht PR's wachten op jouw merge — vier daarvan van vandaag, alle vier g
   claude.ai. Zonder dat leest de nachtrun zijn regels nog steeds, maar via een
   verwijzing in `CLAUDE.md` in plaats van omdat het hem opgedragen is. Besluit
   `0005`.
-- Nog steeds open van eerder: zeg wat Crew management moest worden of gooi hem
-  weg; beslis waar Versa draait; de ideeën in je hoofd in `ideas/` zetten.
+- Nog steeds open van eerder: beslis waar Versa draait; de ideeën in je hoofd in
+  `ideas/` zetten. **Crew management is beantwoord** — zie de eerste bullet.
