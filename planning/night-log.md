@@ -11,6 +11,82 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-20
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar-checker`) beschikbaar — builder/checker-verdeling uit CLAUDE.md
+gebruikt.
+
+**Kloon-check.** `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`): lokale kloon was actueel, geen
+gemiste merges.
+
+**Stap 1 — open overnight-PR's: 2, dus bouwen.** Over alle zeven gekoppelde
+repo's: acht PR's open. Zes dagsessie-werk dat op Ollie's eigen merge wacht
+(project-management#11, quizzly#4/#5/#6, quizzly#1, percentile#3). Twee echte
+vastgelopen nachtrun-PR's, allebei opnieuw gecontroleerd, ongewijzigd:
+`percentile#1` (`night/percentile-f16-count-ladder`, `mergeable_state: dirty`,
+nog steeds een echt conflict) en `learning-website#3` (`night/learn-csharp-chain`,
+`mergeable_state: clean`, gebouwd vóór besluit 0004). Twee, niet drie — onder
+de grens van regel 5, dus doorgebouwd.
+
+**Taakkeuze.** Twee `ready`-taken: `hangar-stale-clone-guard` (`added:
+2026-08-14`) en `quizzly-media-orphan-cleanup` (`added: 2026-08-15`). Oudste
+eerst, dus `hangar-stale-clone-guard`.
+
+**Weesbranch gevonden bij het pushen, niet ervoor.** De kloon-check aan het
+begin zag niets bijzonders — pas de `git push` van de eigen taakbranch werd
+geweigerd (`fetch first`, geen netwerkfout). `origin/claude/night-hangar-stale-clone-guard`
+bleek al twee weespogingen te dragen (`Night 2026-08-17`, `Night 2026-08-18`),
+allebei alleen een statuswissel + logregel, geen code. Precies het patroon dat
+deze taak zelf moet gaan signaleren — nu nog handmatig ontdekt via een
+geweigerde push. Niet weggegooid en niet als tweede branch verdergegaan
+(precedent uit de 08-16- en 08-18-regels hierboven): eigen drie commits
+gemerged bovenop de weesbranch, het enige echte conflict (de `status`-regel in
+het taakbestand) opgelost naar de eigen, verder gevorderde versie, dashboard
+herbouwd, gepusht. Hun twee logregels (08-17, 08-18) zijn in die merge
+meegekomen en landen op de default zodra de PR merget — hier niet dubbel
+opgeschreven.
+
+**Stap 2 — gebouwd, NIET gemerged: `hangar-stale-clone-guard` (S) →
+project-management#13.** `scripts/staleness.py` (`SessionStart`-hook,
+`hookSpecificOutput.additionalContext`) + `scripts/test_staleness.py` (16
+tests) + de hookregel in `.claude/settings.json`. Twee `hangar-checker`-rondes:
+de eerste vond vier echte gaten (fetch-timeout-tak ongetest, geen
+proces-niveau bewijs voor de offline-case, een onbenoemde aanname over "geen
+upstream ingesteld" die precies de nachtrun-branches zou stilleggen, en de
+verplichte vooraf-verificatie stond nergens op schrift) — alle vier gefixt.
+De tweede ronde hield terecht vast op één punt: de taak eiste een levende
+wegwerp-hook-test van `additionalContext`, niet secundair onderzoek. Wat er
+wél is gedaan — de officiële hooks-referentie rechtstreeks gelezen plus een
+gesloten upstream-issue (`anthropics/claude-code#16538`) dat bevestigt dat
+alleen plugin-hooks last hebben van het bekende additionalContext-gat — is
+sterk documentair bewijs maar geen live proef. Een subagent hier doorloopt
+geen volledige `claude`-CLI-`SessionStart`-cyclus; een écht losse sessie
+zou een wegwerp-repository nodig hebben als `source_url`, wat onevenredig
+voelde voor deze verificatiestap. Niet gemerged: de checker zei `ship: false`
+en de regel is fixen-of-blocked, nooit forceren. Taak op `blocked`, exacte
+vraag voor Ollie staat in het taakbestand. Branch gepusht, PR #13 open, bewust
+niet gemerged.
+
+**Stap 3 — inbox aangescherpt: `lege-repos-beslissen` opgelost, niet alleen
+aangescherpt.** `olivervanderlugt/crew-management-system` bleek niet langer
+leeg: `git log` op GitHub bevestigt commits van 2026-08-19 15:44 tot 19:10 UTC
+vanaf Ollie's eigen machine — de hele MVP, plus drie tiers uit een
+`VERBETERPLAN.md` opgelost. `projects/crew-management-system.md` was diezelfde
+dag al herschreven met een echte `## What this is` en `next`, gecommit op de
+default vóór vanavond (`7d099ee`). De finish line van deze taak was dus al
+gehaald door een dagsessie, buiten de taak-flow om. Op `done` gezet.
+
+**Niet gedaan, met opzet:** geen tweede taak opgepakt (regel 1); geen van de
+twee stuck PR's aangeraakt (conflict resp. pre-auto-merge, ongewijzigd sinds
+vorige keer); de oudere, nog stalere weespoging `night/hangar-stale-clone-guard`
+(van 08-15) met rust gelaten — niet gebruikt, niet verwijderd; geen andere
+inbox-taken herverifieerd dan de ene die onderzocht is (regel 2: één taak);
+`hangar-stale-clone-guard`-PR niet gemerged ondanks groene tests — een
+checker-`ship: false` op een expliciet vereiste verificatiestap forceer je
+niet weg.
+
 ## 2026-08-16
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
