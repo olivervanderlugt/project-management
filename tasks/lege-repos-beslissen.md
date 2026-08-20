@@ -1,7 +1,7 @@
 ---
 title: Crew management: één alinea of weg
 project:
-status: inbox
+status: done
 added: 2026-08-06
 effort: S
 branch:
@@ -38,3 +38,15 @@ wat moest deze repo worden, of mag hij weg?
 **Herchecked 2026-08-16 (nachtrun):** nog steeds nul commits (`git log`
 bevestigt "does not have any commits yet" op de aangekoppelde kloon). Geen
 wijziging. Blijft `inbox`, dezelfde vraag staat nog open.
+
+**Opgelost, 2026-08-20 (nachtrun):** de repo is niet meer leeg. `git log` op de
+GitHub-default-branch bevestigt commits vanaf 2026-08-19 15:44 UTC t/m
+2026-08-19 19:10 UTC — Ollie's eigen dagsessie ("Olivers-MacBook-Air.local")
+zette er de hele MVP neer: features, drie tiers uit een `VERBETERPLAN.md`
+opgelost, tests van 64 naar 73. `projects/crew-management-system.md` is
+diezelfde dag herschreven met een echte `## What this is` en een concrete
+`next` ("Koppel het aan een echt Supabase-project en zet het op Vercel"),
+gecommit op de default branch (`7d099ee`, vóór deze nacht). De finish line uit
+deze taak was dus al gehaald zonder dat de taak zelf ooit `ready` is geweest —
+een dagsessie loste het zijkanaal op, niet de nachtrun. Op `done` gezet, geen
+verdere actie nodig.
