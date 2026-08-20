@@ -1,7 +1,21 @@
 ---
-updated: 2026-08-19
-focus: Acht PR's wachten op jouw merge — vier daarvan van vandaag, alle vier gecheckt
+updated: 2026-08-20
+focus: De nachtrun staat stil — vijf nachten op rij niets gebouwd, drie ervan op dezelfde taak
 ---
+
+- **De nachtrun is vastgelopen (gevonden 2026-08-20).** Vijf nachten op rij geen
+  gebouwde taak. 08-15, 08-17 en 08-18 kozen alle drie `hangar-stale-clone-guard`,
+  pushten hun startcommit en stopten vóór de eerste regel code; 08-19 en 08-20
+  lieten helemaal niets achter terwijl de Routine wél vuurde. Omdat regel 1
+  oudste-eerst is en falen de leeftijd niet verandert, kiest hij morgen weer
+  dezelfde taak. Vastgelegd als `tasks/nachtrun-loopt-vast-op-een-taak.md` — er
+  staan drie keuzes in die van jou zijn.
+  - Twee weesbranches blijven staan tot jij iets zegt:
+    `night/hangar-stale-clone-guard` (08-15) en
+    `claude/night-hangar-stale-clone-guard` (08-17 + 08-18).
+  - Nog steeds niet gedaan, en het staat hieronder al sinds 08-14: de startprompt
+    uit `reference/startprompt-nightrun.md` is **niet** in de Routine geplakt. De
+    Routine draait nog letterlijk de tekst van 08-08.
 
 - **Crew management is geen leeg repo meer (2026-08-19).** De hele MVP is vanaf de
   desktop gepusht. De eerste-sessie-checklist liep groen van begin tot eind — install,
