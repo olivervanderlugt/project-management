@@ -84,6 +84,12 @@ def check_staleness(cwd, network_timeout=NETWORK_TIMEOUT):
     if _git(["remote", "get-url", "origin"], cwd) is None:
         return None  # no origin remote configured
 
+    # Deliberately not a check on this *branch's* upstream tracking
+    # (`@{u}`) — a fresh `claude/night-*` branch never has one, and that is
+    # exactly the case this hook exists to cover. What has to exist is
+    # something to compare against: the `origin` remote itself, checked
+    # above. See scripts/test_staleness.py::UpstreamTrackingIsNotRequired.
+
     default_branch = _default_branch(cwd, network_timeout)
     if not default_branch:
         return None  # offline, timed out, or the remote gave nothing usable

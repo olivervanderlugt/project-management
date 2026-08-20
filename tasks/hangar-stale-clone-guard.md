@@ -64,6 +64,30 @@ default timeout is, vóórdat je het script eromheen bouwt. Klopt het niet, dan 
 optie 2 (een staleness-script dat via `build.py` zichtbaar wordt) het
 terugvalpad en verandert dat deze finish line.
 
+## Verificatie vooraf (gedaan, 2026-08-20, nachtrun)
+
+De taak eiste dit vóór het bouwen. Gecontroleerd, niet aangenomen:
+
+- `hookSpecificOutput.additionalContext` is het juiste veld voor `SessionStart` —
+  bevestigd via de officiële hooks-referentie (`code.claude.com/docs/en/hooks`,
+  het voorbeeld onder de `SessionStart`-sectie) én via een los GitHub-issue
+  (`anthropics/claude-code#16538`, closed as not planned) dat expliciet
+  onderscheid maakt tussen plugin-hooks (waar `additionalContext` niet
+  doorkomt — het bekende issue) en hooks direct in een project- of
+  user-`settings.json` (waar het wél doorkomt, met een citaat van de
+  issue-auteur die dat als workaround bevestigt). Deze hook staat in het
+  project-`.claude/settings.json`, niet in een plugin — dus optie 1 klopt.
+- Default timeout voor een `command`-hook: 600s, bevestigd in dezelfde
+  referentie ("Defaults: 600 for `command`, `http`, and `mcp_tool`"). Individuele
+  hooks kunnen dat overschrijven met hun eigen `timeout`-veld — precies wat
+  `.claude/settings.json` nu doet (`8`).
+- Eerste poging (via een subagent zonder herverificatie) beweerde ten onrechte
+  dat het veld `systemMessage` was, niet `additionalContext` — dat bleek fout
+  bij het rechtstreeks natrekken van de brondocumentatie. Reden om dit zelf te
+  hebben nagetrokken in plaats van één bron te vertrouwen.
+
+Conclusie: optie 1 staat, optie 2 was niet nodig.
+
 ## Notes
 
 Aanleiding, 2026-08-14: een sessie op Ollie's verzoek las de lokale kloon, zag

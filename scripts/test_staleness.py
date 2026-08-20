@@ -109,6 +109,81 @@ class DetachedHead(unittest.TestCase):
         self.assertIsNone(staleness.check_staleness(str(repo)))
 
 
+class UpstreamTrackingIsNotRequired(unittest.TestCase):
+    """A branch with no upstream still gets compared — this is deliberate.
+
+    Every `claude/night-*` branch starts with no upstream tracking configured
+    (see `git checkout -b`), and that is exactly the situation the 08-14
+    incident happened in. "geen upstream/remote is ingesteld" in the task's
+    Done means is read here as "no `origin` remote at all", not "this
+    particular branch lacks a tracking branch" — the latter reading would
+    silence the hook on precisely the branches it exists to protect.
+    """
+
+    def test_branch_without_upstream_still_reports_staleness(self):
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        root = Path(tmp.name)
+
+        origin = _init_repo(root / "origin", branch="main")
+        _commit(origin, "a.txt", "First")
+
+        clone = root / "clone"
+        _git(["clone", "--quiet", str(origin), str(clone)], root)
+        _git(["config", "user.email", "night@example.com"], clone)
+        _git(["config", "user.name", "Night Run"], clone)
+
+        # A fresh branch with no upstream configured, same as `claude/night-*`.
+        _git(["checkout", "--quiet", "-b", "claude/night-example"], clone)
+        with self.assertRaises(subprocess.CalledProcessError):
+            _git(["rev-parse", "--abbrev-ref", "--symbolic-full-name", "@{u}"], clone)
+
+        _commit(origin, "b.txt", "Second")
+
+        message = staleness.check_staleness(str(clone))
+        self.assertIsNotNone(message)
+        self.assertIn("1 commit", message)
+        self.assertIn("main", message)
+
+
+class FetchStepFailure(unittest.TestCase):
+    """The `git fetch` call itself (not just discovering the default branch)
+    failing or timing out must be silent too — exercised directly, since a
+    tiny network_timeout alone dies on the earlier ls-remote call first."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        root = Path(self.tmp.name)
+        self.origin = _init_repo(root / "origin")
+        _commit(self.origin, "a.txt", "First")
+        self.clone = root / "clone"
+        _git(["clone", "--quiet", str(self.origin), str(self.clone)], root)
+        _commit(self.origin, "b.txt", "Second")
+
+        self.real_run = staleness._run
+
+        def fetch_fails(argv, cwd, timeout=None):
+            if len(argv) >= 2 and argv[0] == "git" and argv[1] == "fetch":
+                return None
+            return self.real_run(argv, cwd, timeout=timeout)
+
+        staleness._run = fetch_fails
+        self.addCleanup(setattr, staleness, "_run", self.real_run)
+
+    def test_fetch_failure_is_silent_not_an_exception(self):
+        message = staleness.check_staleness(str(self.clone))
+        self.assertIsNone(message)
+
+    def test_fetch_timeout_path_is_silent(self):
+        # Same forced failure, exercised through the timeout-labelled branch
+        # (network_timeout is irrelevant here — _run is fully stubbed — the
+        # point is that check_staleness treats a failed fetch identically
+        # regardless of which of the two calls produced it).
+        message = staleness.check_staleness(str(self.clone), network_timeout=0.0001)
+        self.assertIsNone(message)
+
+
 class NotAGitRepo(unittest.TestCase):
     def test_a_plain_directory_is_silent(self):
         tmp = tempfile.TemporaryDirectory()
@@ -137,6 +212,21 @@ class UnreachableRemote(unittest.TestCase):
             staleness.check_staleness(str(self.repo))
         except Exception as exc:  # pragma: no cover - the assertion is the point
             self.fail(f"check_staleness raised {exc!r} instead of staying silent")
+
+    def test_the_script_itself_exits_zero_with_no_output(self):
+        started = time.monotonic()
+        result = subprocess.run(
+            ["python3", str(ROOT / "scripts" / "staleness.py")],
+            cwd=str(self.repo),
+            input=f'{{"cwd": "{self.repo}"}}',
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        elapsed = time.monotonic() - started
+        self.assertEqual(result.returncode, 0)
+        self.assertEqual(result.stdout.strip(), "")
+        self.assertLess(elapsed, 10, "an unreachable remote must fail fast, not hang")
 
 
 class TimeoutIsEnforced(unittest.TestCase):
