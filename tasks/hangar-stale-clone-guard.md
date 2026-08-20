@@ -1,7 +1,7 @@
 ---
 title: Een sessie moet merken dat zijn kloon achterloopt vóór hij werk uitdeelt
 project: hangar
-status: doing
+status: blocked
 added: 2026-08-14
 effort: S
 branch: claude/night-hangar-stale-clone-guard
@@ -86,7 +86,47 @@ De taak eiste dit vóór het bouwen. Gecontroleerd, niet aangenomen:
   bij het rechtstreeks natrekken van de brondocumentatie. Reden om dit zelf te
   hebben nagetrokken in plaats van één bron te vertrouwen.
 
-Conclusie: optie 1 staat, optie 2 was niet nodig.
+Conclusie: optie 1 staat, optie 2 was niet nodig — met één onopgeloste kanttekening
+hieronder.
+
+## Geblokkeerd op (2026-08-20, nachtrun)
+
+Geïmplementeerd en dubbel adversarieel gecheckt (`hangar-checker`, twee rondes):
+`scripts/staleness.py` + `scripts/test_staleness.py` (16 tests, alle vijf
+verplichte scenario's + twee extra: fetch-timeout-tak specifiek geraakt, en een
+branch zonder upstream-tracking bewijsbaar nog steeds vergeleken wordt) +
+`.claude/settings.json`. Alle bestaande tests (`test_guard.py`, `test_preview.py`)
+blijven groen.
+
+Wat de checker terecht bleef vasthouden na de tweede ronde: de taak eiste
+letterlijk "Controleer met een wegwerp-hook dát `additionalContext` echt in de
+sessiecontext landt" — een levende, empirische proef, niet secundair onderzoek.
+Wat ik heb gedaan is de officiële hooks-referentie rechtstreeks nagetrokken (het
+JSON-voorbeeld staat er letterlijk onder de `SessionStart`-sectie) en een gesloten
+GitHub-issue (`anthropics/claude-code#16538`) gelezen dat expliciet bevestigt dat
+alléén plugin-hooks last hebben van het additionalContext-niet-doorkomen-bug, en
+dat een hook rechtstreeks in `settings.json` (zoals deze) wél werkt. Dat is sterk,
+maar het is geen wegwerp-hook die ik zelf heb zien vuren.
+
+Waarom ik die laatste stap niet heb gezet: een subagent (Task/Agent-tool) in deze
+sessie doorloopt niet de volledige `claude`-CLI-opstart met een eigen
+`SessionStart`-hookcyclus op een specifieke repo-`.claude/settings.json` — dat is
+iets anders dan hoe subagents hier werken. Een écht losse Claude Code-sessie
+opzetten die dat wél doet zou een nieuwe (throwaway) repository vereisen om als
+`source_url` te geven aan `create_session`, plus een aparte sessie die weer
+opgeruimd moet worden — dat voelt onevenredig zwaar voor het verifiëren van een
+goed gedocumenteerd stuk hookgedrag, en de taak vroeg om "een wegwerp-hook", niet
+om een wegwerp-repository-plus-sessie.
+
+Ik merge dit niet: de checker zei `ship: false` en de regel is dat je dan fixt of
+blocked zet, nooit forceert. Dit is de fix-poging die overbleef — een keuze die
+Ollie moet maken, geen bug die ik kan wegwerken. Branch staat klaar
+(`claude/night-hangar-stale-clone-guard`), volledig gepusht, PR geopend maar
+bewust niet gemerged.
+
+**Vraag voor Ollie:** is de documentaire verificatie (officiële referentie +
+issue #16538) genoeg om optie 1 te bevestigen, of wil je dat er echt een
+wegwerp-hook/-sessie voor wordt opgezet voordat dit merget?
 
 ## Notes
 
