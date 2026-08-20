@@ -1,7 +1,7 @@
 ---
 title: Beslissen waar Versa draait, en hem daar neerzetten
 project: versa
-status: inbox
+status: blocked
 added: 2026-08-06
 effort: M
 branch:
@@ -33,3 +33,17 @@ zaaicontent en een DMCA-flow. Live gaan met de 1400+ stubs mag niet betekenen
 dat er beschermde teksten meelekken — dat controleren hoort bij deze taak.
 
 Niet 's nachts onbewaakt uitvoeren: dit raakt geld en deploys.
+
+**Besluit van Ollie, 2026-08-20: nu niet — geparkeerd.** Versa gaat voorlopig
+nergens draaien. `projects/versa.md` staat op `status: parked`, zodat het
+project niet elke keer als open blokkade op het bord verschijnt.
+
+Dat is een uitstel, geen afwijzing, en het kost iets: uit
+`reference/project-prioritering.md` scoort Versa het hoogst op CV/LinkedIn en op
+tijd-tot-echte-gebruikers, en één werkende URL levert daar het meeste per uur op.
+Die opbrengst blijft liggen zolang dit geparkeerd staat.
+
+Wat er nog steeds moet gebeuren zodra het weer aangaat: budget per maand,
+managed Postgres of zelf draaien, publiek of eerst achter een wachtwoord, en de
+auteursrechtcontrole over de 1400+ stubs vóór er iets live gaat. Die vier vragen
+staan hierboven ongewijzigd.

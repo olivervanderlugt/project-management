@@ -1,7 +1,7 @@
 ---
 title: Crew management: één alinea of weg
 project:
-status: inbox
+status: done
 added: 2026-08-06
 effort: S
 branch:
@@ -38,3 +38,15 @@ wat moest deze repo worden, of mag hij weg?
 **Herchecked 2026-08-16 (nachtrun):** nog steeds nul commits (`git log`
 bevestigt "does not have any commits yet" op de aangekoppelde kloon). Geen
 wijziging. Blijft `inbox`, dezelfde vraag staat nog open.
+
+**Af op 2026-08-20.** De eigen finish line hierboven — "een echte
+`## What this is` in het projectbestand én een `next`" — is gehaald, en niet door
+deze taak: op 2026-08-19 is de hele MVP van `crew-management-system` vanaf de
+desktop gepusht en is `projects/crew-management-system.md` vanuit het repo zelf
+herschreven (commit `7d099ee`). Het projectbestand heeft nu een echte
+beschrijving, `status: active`, en `next: Koppel het aan een echt
+Supabase-project en zet het op Vercel`.
+
+De repo is dus niet leeg en gaat niet weg. De vraag "wat moest dit worden, of mag
+het weg" is beantwoord door hem te bouwen. Geen actie meer nodig; de taak stond
+alleen nog open omdat niemand hem had afgevinkt.

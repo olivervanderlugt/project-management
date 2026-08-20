@@ -1,15 +1,42 @@
 ---
 updated: 2026-08-20
-focus: De nachtrun staat stil — vijf nachten op rij niets gebouwd, drie ervan op dezelfde taak
+focus: Queue weer gevuld — vier ready taken, vier besluiten genomen. Nachtrun kan vannacht door
 ---
+
+- **Vier besluiten genomen, queue weer gevuld (2026-08-20).** Van twee `ready`
+  taken naar vier, en de taak die drie nachten opat staat niet meer vooraan.
+  - **Quizzly-chrome: richting C, "Twee standen".** Donker blijft het
+    uitgangspunt, licht volgt het besturingssysteem. Het ontwerpdocument beveelt
+    B aan en noemt C "het juiste eindpunt, de verkeerde volgende stap" — daarom
+    in twee taken gezet in plaats van één: eerst `quizzly-semantische-tokens`
+    (pure refactor, geen zichtbare verandering, `ready`), dan
+    `quizzly-design-pass-toepassen` (`blocked` tot die er is). Zo weet je bij een
+    regressie welke van de twee hem deed.
+  - **Quizzly media: sessiegebonden lezen.** `quizzly-media-read-authz` staat op
+    `ready` en is nu de oudste — dat bouwt de nachtrun vannacht. Bijvangst uit
+    het uitzoeken: er *is* al een spelertoken (`engine.ts:174-220`), maar hij
+    staat alleen in het geheugen van het realtime-proces, niet in de database.
+    De Next-route kan er dus niet bij. Dát is het echte werk, en het staat nu in
+    de taak in plaats van dat een bouwer het halverwege ontdekt.
+  - **Versa: geparkeerd.** `projects/versa.md` staat op `parked`, de taak op
+    `blocked`. Eerlijk erbij: volgens `reference/project-prioritering.md` was dit
+    de hoogste opbrengst per uur die je hebt liggen. Die blijft nu liggen.
+  - **Crew management afgevinkt.** `lege-repos-beslissen` is `done` — zijn eigen
+    finish line was al gehaald door jouw push van 08-19, niemand had het
+    afgevinkt.
 
 - **De nachtrun is vastgelopen (gevonden 2026-08-20).** Vijf nachten op rij geen
   gebouwde taak. 08-15, 08-17 en 08-18 kozen alle drie `hangar-stale-clone-guard`,
   pushten hun startcommit en stopten vóór de eerste regel code; 08-19 en 08-20
   lieten helemaal niets achter terwijl de Routine wél vuurde. Omdat regel 1
   oudste-eerst is en falen de leeftijd niet verandert, kiest hij morgen weer
-  dezelfde taak. Vastgelegd als `tasks/nachtrun-loopt-vast-op-een-taak.md` — er
-  staan drie keuzes in die van jou zijn.
+  dezelfde taak. Vastgelegd als `tasks/nachtrun-loopt-vast-op-een-taak.md`. **Opgelost door
+  splitsen (jouw keuze, 08-20):** het onderzoek eruit als
+  `hangar-sessionstart-hook-gedrag` (`ready`), de bouwtaak op `blocked` tot dat
+  antwoord er is. De oudste `ready` is nu `quizzly-media-read-authz`, dus de
+  queue schuift vannacht door. De failure-counter is *niet* gebouwd — dezelfde
+  val kan dus later met een andere taak terugkomen; dat staat als open keuze in
+  die taak.
   - Twee weesbranches blijven staan tot jij iets zegt:
     `night/hangar-stale-clone-guard` (08-15) en
     `claude/night-hangar-stale-clone-guard` (08-17 + 08-18).
