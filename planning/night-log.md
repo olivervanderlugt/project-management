@@ -11,6 +11,43 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-18
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`) beschikbaar — builder/checker-verdeling uit
+CLAUDE.md gebruikt.
+
+**Kloon-check.** `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`): lokale kloon was actueel, geen
+gemiste merges.
+
+**Gevonden: een weesbranch van een afgebroken run.** `origin/claude/night-hangar-stale-clone-guard`
+bestond al, één commit boven op de huidige default-tip
+(`Night 2026-08-17: start hangar-stale-clone-guard`), die alleen
+`tasks/hangar-stale-clone-guard.md` op `status: doing` + `branch:` zette en
+verder niets bouwde. Geen PR ervoor, geen vervolgcommit, ouder dan een etmaal
+— de residu-situatie uit regel 10, alleen dan op een branch die nooit naar de
+default gemerged is, dus het bestand op de default zelf bleef eerlijk op
+`ready` staan. Niet weggegooid: deze run zet zijn eigen werk gewoon boven op
+die branch door in plaats van een tweede te openen. Er bestaat ook nog een
+oudere, inmiddels sterk verouderde weespoging (`night/hangar-stale-clone-guard`,
+van de nacht van 08-15, gebaseerd op een tip van vóór PR#11) — met rust
+gelaten, niet gebruikt, niet verwijderd (geen branch-verwijdering toegestaan).
+
+**Stap 1 — open overnight-PR's.** Over alle zeven gekoppelde repo's: acht
+PR's open, waarvan zes dagsessie-werk dat wacht op Ollie's eigen merge
+(project-management#11, quizzly#4/#5/#6, quizzly#1, percentile#3 —
+bevestigd per taakbestand/PR-body dat dit dagsessies waren, geen nachtrun).
+Twee zijn echte vastgelopen nachtrun-PR's, beide opnieuw gecontroleerd en
+ongewijzigd sinds de vorige keer: `percentile#1` (`mergeable_state: dirty`,
+echt conflict tegen `main`) en `learning-website#3` (`mergeable_state: clean`,
+maar gebouwd vóór het auto-merge-besluit 0004 van 2026-08-10). Twee, niet
+drie — onder de grens van regel 5, dus doorgebouwd.
+
+**Taakkeuze.** Oudste `ready` taak: `hangar-stale-clone-guard` (`added:
+2026-08-14`, de andere ready-taak `quizzly-media-orphan-cleanup` is
+`added: 2026-08-15`, dus jonger — regel 1 is oudste-eerst).
+
 ## 2026-08-16
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
