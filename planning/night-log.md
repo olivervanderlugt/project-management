@@ -11,6 +11,53 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-21
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+beschikbaar — bouwer/checker-verdeling was dit uur toch niet nodig, zie
+hieronder. `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`): lokale kloon was actueel.
+
+**Geen `doing`-taak aangetroffen** — regel 10 niet van toepassing.
+
+**Stap 1 — open overnight-PR's: 3, dus NIET gebouwd vanavond.** Geteld over
+alle zeven gekoppelde repo's, met hetzelfde onderscheid als eerdere nachten
+(dagsessie-werk dat op Ollie's eigen merge wacht telt niet mee):
+dagsessie-werk blijft ongewijzigd project-management#11, quizzly#4/#5/#6,
+quizzly#1, percentile#3. Echte vastgelopen nachtrun-PR's zijn er nu **drie**:
+`percentile#1` (`night/percentile-f16-count-ladder`, nog steeds conflict),
+`learning-website#3` (`night/learn-csharp-chain`, clean maar gebouwd vóór
+besluit 0004) — allebei ongewijzigd sinds 08-20 — plus **nieuw over de grens**:
+`project-management#13` (`claude/night-hangar-stale-clone-guard`), die de
+run van 08-20 zelf open liet met een checker-`ship: false` op de vereiste
+verificatiestap. Drie stuck PR's is de grens uit regel 5 — dus vanavond niet
+gebouwd, direct naar stap 3.
+
+**Stap 3 — inbox aangescherpt: `versa-hosting-besluit`.** Oudste twee
+inbox-taken delen `added: 2026-08-06` (`hangar-in-de-browser`,
+`versa-hosting-besluit`); `hangar-in-de-browser` is al grotendeels
+gedecomponeerd in eerdere nachten en had geen nieuwe informatie te
+onderzoeken, dus deze taak. Twee dingen uitgezocht, niets uitgevoerd (geld/deploy
+blijft aan Ollie): (1) de auteursrecht-zorg uit de taak is gecheckt tegen
+`PROGRESS.md` van Versa — de repo zelf bevat nooit songteksten, de 1400+ stubs
+zijn metadata-only en echte teksten komen pas runtime binnen via LRCLIB in een
+gitignored DB, dus geen repo-lek. Wel een scherpere versie van dezelfde vraag:
+productie zal, eenmaal live, runtime-geïmporteerde en mogelijk nog-beschermde
+teksten publiek tonen — dat is een publiceer-besluit, geen bug. (2) een echt
+costed menu van hostingopties opgezocht (Railway ~$10-15/mnd, Render ~$21-28/mnd
+mét gratis proeftier, Fly.io goedkoopst maar meer zelfbeheer, Vercel+Neon
+gratis tot een groeiplafond maar past minder goed bij Versa's losse
+worker-proces). De vier openstaande beslispunten voor Ollie staan nu met een
+echt menu in het taakbestand in plaats van alleen abstracte vragen. Blijft
+bewust `inbox` — geen van de vier antwoorden is een nachtrun-beslissing.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's); geen
+van de drie stuck PR's aangeraakt — alle drie ongewijzigd sinds hun laatste
+check en geen daarvan is "vergeten", dus niets om op te lossen vanavond;
+`hangar-in-de-browser` en de andere inbox-taken niet opnieuw onderzocht (regel
+2: één taak); geen budget/platform voor Versa gekozen — dat blijft expliciet
+Ollie's beslissing, ook al staat de vergelijking er nu.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
