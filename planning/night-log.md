@@ -11,6 +11,71 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-22
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+beschikbaar (builder/checker-verdeling uit CLAUDE.md), maar niet nodig
+vanavond — zie hieronder. `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`): lokale kloon was actueel, geen
+gemiste merges. Geen `doing`-taak aangetroffen — regel 10 niet van toepassing.
+
+**Stap 1 — open overnight-PR's: nog steeds drie, dus NIET gebouwd vanavond.**
+Geteld over alle zeven gekoppelde repo's, zelfde onderscheid als eerdere
+nachten (dagsessie-werk dat op Ollie's eigen merge wacht telt niet mee, en
+telt hier ongewijzigd door: project-management#11, quizzly#4/#5/#6, quizzly#1,
+percentile#3). Echte vastgelopen nachtrun-PR's zijn nog steeds drie, alle drie
+opnieuw gecontroleerd en ongewijzigd sinds 08-21: `percentile#1`
+(`night/percentile-f16-count-ladder`, `mergeable_state: dirty`, nog steeds
+conflict), `learning-website#3` (`night/learn-csharp-chain`, `mergeable_state:
+clean`, nog steeds gebouwd vóór besluit 0004) en `project-management#13`
+(`claude/night-hangar-stale-clone-guard`, nog steeds `ship: false` op de
+vereiste verificatiestap). Drie is de grens uit regel 5 — dus vanavond niet
+gebouwd, direct naar stap 3.
+
+(Losstaande observatie, geen actie: `project-management#15`, de wrap-up-PR van
+de nacht van 08-21 zelf, staat ook nog open — dat is normaal dagsessie-wachten
+op Ollie's review, geen vastgelopen taak-PR, dus niet meegeteld in de drie
+hierboven. Zolang die niet gemerged is, staan de taakbestanden op deze
+default branch nog op hun 08-20-stand; de 08-21-aanscherping van
+`versa-hosting-besluit` bestaat dus wel, alleen nog niet hier.)
+
+**Stap 3 — inbox aangescherpt, niet naar `ready`: `quizzly-legal-review-west`.**
+Oudste twee inbox-taken delen `added: 2026-08-06` (`hangar-in-de-browser`,
+`versa-hosting-besluit`) — geen van beide had nieuwe informatie: de eerste
+wacht nog steeds op Ollie's besluit over stap 1 en 4 (ongewijzigd sinds
+2026-08-08), de tweede is al gisteravond aangescherpt (zie hierboven, nog
+niet hier gemerged) en heeft sindsdien geen nieuwe informatie. Volgende
+oudste met echt iets te onderzoeken: `quizzly-legal-review-west`
+(`added: 2026-08-08`, voor het laatst aangescherpt 2026-08-13). De drie
+andere quizzly-inbox-taken (`quizzly-design-pass-toepassen`,
+`quizzly-slide-designer-bouwen`, `quizzly-media-read-authz`) zijn allemaal
+pure smaakbeslissingen van Ollie zonder onderzoeksvraag, laatst herbevestigd
+op respectievelijk 2026-08-11/12/15 — niets nieuws om te checken.
+
+Voor `quizzly-legal-review-west` was eerder alleen vastgesteld dát `quizzly#1`
+de blokkade is. Vanavond voor het eerst de diff van die PR echt gelezen
+(`origin/claude/quizzly-finalization`) in plaats van alleen de titel: GDPR
+Art. 15/20-export (`src/app/api/account/export/route.ts`, bewust zonder
+andermans spelersnicknames of nog-verborgen collab-vragen), een
+retentiesweep (`server/retention.ts`, `DATA_RETENTION_DAYS`), een
+zelfverklarende leeftijd-checkbox bij signup (16+, niets opgeslagen) en
+nickname-moderatie (`src/lib/nickname.ts`). Daarmee ook een gat blootgelegd
+dat los staat van de PR: `docs/LEGAL.md` behandelt GDPR/UK GDPR en het
+patentrisico grondig, maar noemt COPPA, CCPA/CPRA, PIPEDA en de Australische
+Privacy Act nergens met naam — precies de vier regimes die de oorspronkelijke
+taakomschrijving vraagt naast GDPR. Volledige per-regime aantekening staat nu
+in het taakbestand als startpunt voor zodra `quizzly#1` gemerged is. Blijft
+bewust `inbox`: het eindresultaat toetst "de échte dataflows in de code", en
+welke code dat is (met of zonder PR#1) is Ollie's merge-moment, geen
+onderzoeksvraag die vanavond te beslissen was.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's,
+ongewijzigd sinds gisteren); geen van de drie stuck PR's aangeraakt — alle
+drie opnieuw gecontroleerd en geen enkele "vergeten", dus niets om vanavond
+op te lossen; geen tweede inbox-taak onderzocht (regel 2: één taak); geen
+status naar `ready` gezet — de blokkade (Ollie's merge-besluit op
+`quizzly#1`) is niet veranderd, alleen scherper omschreven.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
