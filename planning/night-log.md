@@ -11,6 +11,73 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-23
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(builder/checker-verdeling uit CLAUDE.md) beschikbaar, maar niet nodig
+vanavond — zie hieronder. `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`): lokale kloon was actueel op
+`861f2c3`, geen gemiste merges. Geen `doing`-taak aangetroffen over alle
+tasks/*.md — regel 10 niet van toepassing.
+
+**Stap 1 — open overnight-PR's: nog steeds drie, dus NIET gebouwd vanavond.**
+Geteld over alle zeven gekoppelde repo's. Dagsessie-werk dat op Ollie's eigen
+merge wacht en niet meetelt: `project-management#11`, `quizzly#4/#5/#6`,
+`quizzly#1`, `percentile#3`. Echte vastgelopen nachtrun-PR's, alle drie
+opnieuw gecontroleerd via de GitHub API en ongewijzigd sinds 08-22:
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main`.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, nog steeds gebouwd vóór besluit 0004 (geen auto-merge toegepast).
+- `project-management#13` (`claude/night-hangar-stale-clone-guard`) — nog
+  steeds `ship: false` op de vereiste live-hook-verificatiestap; nu ook
+  `mergeable_state: dirty` (de default is sinds het openen verder gegaan).
+Drie is de grens uit regel 5 — dus vanavond niet gebouwd, direct naar stap 3.
+
+(Losstaande observatie, geen actie: `project-management#15` en `#16`, de
+wrap-up-PR's van de nachten van 08-21 en 08-22 zelf, staan allebei nog open —
+normaal dagsessie-wachten op Ollie's review van het night-log, geen
+vastgelopen taak-PR, dus niet meegeteld in de drie hierboven. Zolang die niet
+gemerged zijn, staan de taakbestanden op deze default branch nog op hun
+08-20-stand; het onderzoek dat 08-21 deed voor `versa-hosting-besluit`
+(hosting-opties, auteursrecht-check) en dat 08-22 deed voor
+`quizzly-legal-review-west` (per-regime COPPA/CCPA/PIPEDA-aantekening)
+bestaat dus wel, alleen nog niet hier — gelezen op hun branches om vanavond
+niet te dupliceren, niet overgenomen.)
+
+**Stap 3 — inbox gecontroleerd, één taak echt aangescherpt: `hangar-in-de-browser`.**
+Alle zes echte inbox-taken doorlopen. Vier hadden aantoonbaar geen nieuwe
+informatie sinds hun laatste recheck: `quizzly-design-pass-toepassen` en
+`quizzly-slide-designer-bouwen` wachten op een smaakbesluit van Ollie zonder
+onderzoeksvraag; `quizzly-media-read-authz` (herchecked 08-15) is dezelfde
+smaakkeuze; `quizzly-legal-review-west` is al tot in detail aangescherpt op
+de nog-niet-gemergede 08-22-branch en `quizzly#1` staat nog open en
+ongewijzigd. `versa-hosting-besluit` is al grondig onderzocht op de
+nog-niet-gemergede 08-21-branch, ook ongewijzigd.
+
+Dat liet `hangar-in-de-browser` over — sinds 2026-08-08 niet meer
+gecontroleerd, de langste stilte van de zes. Bij het teruglezen bleek de
+"Stand na de nachtrun van 2026-08-08"-sectie zelf stale: die noemt
+`hangar-prioriteit-score` nog als `status: ready`, terwijl die taak inmiddels
+`status: done` is. Geverifieerd in de code, niet aangenomen: `priority_score()`
+en `open_tasks_by_score()` in `dashboard/build.py` bestaan en `render_priority()`
+zet de score-tabel en de "dit nu"-regel live op het bord (sectie `#priority`).
+Dat is stap 2 van de vier volledig af. Gecorrigeerd in het taakbestand. De
+rest van de blokkade is ongewijzigd: besluit `0003` staat nog op `proposed`
+(stap 3's rest — verbruik loggen — wordt pas een taak als dat wordt
+aangenomen), en stap 1 en 4 wachten nog op dezelfde twee besluiten van Ollie
+als op 2026-08-08. Blijft dus `inbox`, met dezelfde open vraag.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's,
+ongewijzigd sinds gisteren); geen van de drie stuck PR's aangeraakt — alle
+drie opnieuw gecontroleerd, niets "vergeten" om vanavond op te lossen; de
+twee eigen wrap-up-PR's van 08-21/08-22 niet gemerged of overgeslagen — dat
+is Ollie's review, geen nachtrun-taak; geen tweede inbox-taak verder
+aangescherpt dan de recheck zelf (regel 2: één taak); geen status naar
+`ready` gezet voor `hangar-in-de-browser` — de echte blokkade (Ollie's
+besluiten op stap 1 en 4) is niet veranderd, alleen de stap-2-status is
+gecorrigeerd.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
