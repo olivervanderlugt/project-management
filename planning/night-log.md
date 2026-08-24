@@ -11,6 +11,61 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-24
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar-checker` e.a.) beschikbaar. `git fetch` + vergelijking tegen de
+default branch (`claude/hangar-project-setup-kvhcad`): lokale kloon actueel op
+`861f2c3`, geen gemiste merges. Geen `doing`-taak aangetroffen over alle
+`tasks/*.md` — regel 10 niet van toepassing.
+
+**Stap 1 — open overnight-PR's: nog steeds drie, dus niet gebouwd.** Geteld
+over alle zeven gekoppelde repo's. Dagsessie-werk dat op Ollie's eigen merge
+wacht en niet meetelt: `project-management#11`, `quizzly#4/#5/#6`, `quizzly#1`,
+`percentile#3`. De drie echte vastgelopen nachtrun-PR's opnieuw gecontroleerd
+via de GitHub API, alle drie ongewijzigd sinds 08-23 (zelfde sha,
+zelfde toestand):
+- `percentile#1` (`night/percentile-f16-count-ladder`,
+  `b73c4067...918d0`) — `mergeable_state: dirty`, nog steeds een echt
+  conflict tegen `main`.
+- `learning-website#3` (`night/learn-csharp-chain`, `5afe91d4...c33ac`) —
+  `mergeable_state: clean`, nog steeds gebouwd vóór besluit 0004.
+- `project-management#13` (`claude/night-hangar-stale-clone-guard`,
+  `4aecda6...578fd3c`) — nog steeds `ship: false` op de vereiste
+  live-hook-verificatiestap, nog steeds `mergeable_state: dirty`.
+
+Drie is de grens uit regel 5 — dus vanavond niet gebouwd, direct naar stap 3.
+`project-management#15/#16/#17` (de wrap-up-PR's van 08-21/08-22/08-23) staan
+zelf ook nog open; dat is geen vastgelopen taak-PR en telt niet mee in de drie
+hierboven, maar het betekent wel dat het onderzoek dat die drie nachten deden
+(`versa-hosting-besluit`, `quizzly-legal-review-west`,
+`hangar-in-de-browser`) nog niet op deze default branch staat.
+
+**Stap 3 — alle zes inbox-taken doorlopen, niets nieuws gevonden.** Elk apart
+gecheckt op de lokale (08-20-stand) versie:
+- `versa-hosting-besluit`, `quizzly-legal-review-west`, `hangar-in-de-browser`
+  zijn precies de drie die 08-21/08-22/08-23 al hebben aangescherpt — op hun
+  eigen branch gelezen om niet te dupliceren, niet overgenomen (zelfde
+  precedent als 08-23). Geen van drie is sindsdien veranderd.
+- `quizzly-design-pass-toepassen`, `quizzly-media-read-authz`,
+  `quizzly-slide-designer-bouwen` zijn en blijven pure smaakbeslissingen
+  zonder onderzoeksvraag — geen nieuwe informatie sinds hun laatste recheck
+  (08-11, 08-15, 08-12) die dat verandert.
+
+Met alle zes inbox-taken al recent doorgelicht en niets dat een nachtrun zelf
+verder kan brengen, is er vanavond eerlijk gezegd niets zinnigs te bouwen of
+aan te scherpen. **Signaal voor Ollie, geen actie:** dit is de vierde nacht op
+rij met exact dezelfde drie vastgelopen PR's, en er staan nu ook drie
+wrap-up-PR's (`#15`, `#16`, `#17`) open die elkaars werk niet zien omdat ze
+allemaal vanaf dezelfde 08-20-stand vertakken. Zolang niemand van de zes PR's
+mergt, blijft elke volgende nacht dit exacte punt herhalen. Het aanscherpwerk
+van de laatste drie nachten bestaat al, alleen nog niet hier.
+
+**Stap 4.** Geen code-, taak- of statuswijzigingen vanavond buiten dit
+logblok — alleen de dashboard-rebuild eronder.
+
+---
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
