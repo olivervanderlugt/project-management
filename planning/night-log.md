@@ -11,6 +11,66 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-25
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker` e.a.) beschikbaar — niet nodig
+vanavond, zie hieronder. `git fetch` + vergelijking tegen de default branch
+(`claude/hangar-project-setup-kvhcad`): lokale kloon actueel op `861f2c3`,
+geen gemiste merges. Geen `doing`-taak aangetroffen over alle `tasks/*.md` —
+regel 10 niet van toepassing.
+
+**Stap 1 — open overnight-PR's: nog steeds drie, dus niet gebouwd.** Geteld
+over alle zeven gekoppelde repo's. Dagsessie-werk dat op Ollie's eigen merge
+wacht en niet meetelt: `project-management#11`, `quizzly#4/#5/#6`,
+`quizzly#1`, `percentile#3`. De drie echte vastgelopen nachtrun-PR's opnieuw
+gecontroleerd via de GitHub API, alle drie ongewijzigd sinds 08-24 (zelfde
+sha, zelfde toestand):
+- `percentile#1` (`night/percentile-f16-count-ladder`, `b73c4067...918d0`) —
+  `mergeable_state: dirty`, nog steeds een echt conflict tegen `main`.
+- `learning-website#3` (`night/learn-csharp-chain`, `5afe91d4...c33ac`) —
+  `mergeable_state: clean`, nog steeds gebouwd vóór besluit 0004.
+- `project-management#13` (`claude/night-hangar-stale-clone-guard`,
+  `4aecda6...578fd3c`) — nog steeds `ship: false` op de vereiste
+  live-hook-verificatiestap, nog steeds `mergeable_state: dirty`.
+
+Drie is de grens uit regel 5 — dus vanavond niet gebouwd, direct naar stap 3.
+
+**Stap 3 — alle zes inbox-taken opnieuw gecheckt, niets nieuws; wél een
+nieuwe waarneming vastgelegd.** `versa-hosting-besluit`,
+`quizzly-legal-review-west` en `hangar-in-de-browser` gelezen op hun eigen
+aangescherpte branches (08-21/08-22/08-23, nog steeds niet gemerged naar
+default — zie hieronder); alle drie ongewijzigd sinds hun laatste onderzoek,
+nog steeds wachtend op een echt Ollie-besluit. Ook `decisions/0003` (nog
+`proposed`) en `decisions/0001` (nog `accepted`, blokkeert stap 4 van
+`hangar-in-de-browser`) gecheckt: geen verandering. `quizzly-design-pass-toepassen`,
+`quizzly-media-read-authz` en `quizzly-slide-designer-bouwen` blijven pure
+smaakbeslissingen zonder onderzoeksvraag (`quizzly#1`, waar de laatste twee
+indirect van afhangen, staat nog steeds open en ongemerged).
+
+In plaats van een vijfde nacht dezelfde "niets nieuws"-conclusie te herhalen:
+een nieuwe `tasks/hangar-wrapup-pr-pileup.md` (`inbox`) vastgelegd. Waarneming:
+vier nachten op rij (08-21 t/m 08-24) openden aan het eind hun eigen
+stap-4-PR zonder hem te mergen én zonder de vorige nacht(en) se PR te mergen —
+`project-management#15/#16/#17/#18` staan nu alle vier nog open, alleen
+night-log + dashboard-rebuild, inhoudelijk risicoloos. Praktisch gevolg (al
+genoemd in de 08-24-log, hier voor het eerst als taak vastgelegd): het
+onderzoek van 08-21/22/23 staat nog steeds niet op de default branch, en elke
+nacht moet het via `git show origin/claude/night-<datum>:...` opzoeken in
+plaats van het taakbestand zelf te lezen. Drie opties geschetst in de taak
+(auto-merge zoals regel 3, een expliciete opruim-stap, of een eigen lagere
+grens); welke Ollie kiest is een procesbeslissing, geen onderzoeksvraag — dus
+bewust niet zelf een van de drie uitgevoerd of een PR gemerged.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's); geen
+van de drie stuck PR's aangeraakt — alle drie ongewijzigd sinds hun laatste
+check; de vier openstaande stap-4-PR's (`#15`–`#18`) niet gemerged of
+aangeraakt — geen regel zegt expliciet dat de nachtrun dat mag, en "twijfel
+dan valt het erbuiten" gold hier letterlijk, dus opgeschreven in plaats van
+uitgevoerd (zie `hangar-wrapup-pr-pileup.md`); geen andere inbox-taak
+opnieuw diepgaand heronderzocht dan de zes die toch al gecheckt moesten
+worden voor de "niets nieuws"-conclusie.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
