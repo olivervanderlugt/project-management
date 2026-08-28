@@ -53,3 +53,13 @@ Rationale staat in de route-header en in `SECURITY.md` van de Quizzly-repo.
 **Herchecked 2026-08-15 (nachtrun, stap 3).** De authz-keuze (1 vs 2) blijft
 een smaakbesluit dat alleen Ollie kan maken — geen nieuwe informatie sinds
 2026-08-14 die dat verandert. Blijft `inbox` met de vraag hierboven open.
+
+**Herchecked 2026-08-28 (nachtrun, stap 3), tegen de actuele code, niet
+aangenomen.** `GET /api/media/[key]/route.ts` op `origin/main` (na PR #7,
+laatste relevante merge) is woord-voor-woord ongewijzigd sinds 2026-08-14: nog
+steeds geen authz, dezelfde onderbouwing in de route-header. Geen sessie- of
+spel-token-infrastructuur is er sindsdien bijgekomen die optie 2 (sessie-
+gebonden lezen) goedkoper zou maken dan toen. Dertien dagen de langste stilte
+van de zes inbox-taken op dit bord, dus expliciet zelf geverifieerd in plaats
+van op eerdere runs vertrouwd — geen nieuwe informatie gevonden. Blijft
+`inbox` met dezelfde vraag aan Ollie.
