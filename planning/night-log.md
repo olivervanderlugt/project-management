@@ -11,6 +11,85 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-28
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar. Niet gebruikt
+vanavond — stap 2 is overgeslagen (zie hieronder), dus er was niets om aan een
+builder/checker-paar te geven.
+
+**Kloon-check.** `git fetch` tegen de default branch: lokale kloon was actueel
+(`861f2c3`, dezelfde commit als de laatste merge, 2026-08-20). Geen gemiste
+merges op de default zelf — wel, zoals hieronder blijkt, een hele stapel werk
+op branches die nooit gemerged zijn.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, ongewijzigd, dus geen bouw.**
+Geteld over alle zeven gekoppelde repo's. Dagsessie-werk dat op Ollie's eigen
+merge wacht telt niet mee: `project-management#11`, `quizzly#1/#4/#5/#6`,
+`percentile#3`. De drie echte vastgelopen nachtrun-PR's, elk opnieuw
+gecontroleerd via de GitHub API — zelfde sha, zelfde `mergeable_state`,
+`updated_at` = `created_at` sinds de vorige nachten, dus écht ongewijzigd, niet
+aangenomen:
+
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main`.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, nog steeds gebouwd vóór besluit 0004.
+- `project-management#13` (`claude/night-hangar-stale-clone-guard`) — nog
+  steeds `ship: false` op de vereiste live-hook-verificatie, `mergeable_state:
+  dirty`.
+
+Drie is regel 5's plafond, dus geen bouw vanavond — rechtstreeks naar stap 3.
+
+**Zes weesbranches teruggehaald, niet opnieuw onderzocht.** De sessies van
+08-21 t/m 08-27 openden elke nacht hun eigen stap-4-PR
+(`project-management#15`-`#21`) zonder er één te mergen — precies het patroon
+dat `tasks/hangar-wrapup-pr-pileup.md` al signaleerde. Gevolg, dit keer
+concreet nagegaan in plaats van aangenomen: drie echte taakbestand-updates uit
+eerdere nachten stonden nergens op de default branch en zouden vanavond dus
+blind herhaald zijn:
+
+- `tasks/versa-hosting-besluit.md` — het kostenmenu (Railway/Render/Fly/
+  Vercel+Neon) en de auteursrecht-check die de nacht van 08-21 uitzocht.
+- `tasks/quizzly-legal-review-west.md` — de per-regime-kaart (GDPR/COPPA/CCPA/
+  PIPEDA/Australian Privacy Act) tegen de échte `quizzly#1`-diff, uitgezocht
+  op 08-22.
+- `tasks/hangar-in-de-browser.md` — de correctie dat stap 2 (prioriteitsscore)
+  inmiddels echt `done` is, niet meer `ready`, gevonden op 08-23.
+- `tasks/hangar-wrapup-pr-pileup.md` — de taak die dit euvel zelf beschrijft,
+  gevangen op 08-25, al eerder eenmaal teruggehaald door de nacht van 08-26
+  maar zelf weer gestrand op diens ongemergede branch.
+
+Alle vier teruggehaald via `git checkout <branch> -- <bestand>` (dezelfde
+precedent als 08-16/08-20/08-26: iemand anders' al voltooide, niet-
+controversiële analyse overnemen is geen beleidsbeslissing). De nacht van
+08-24 voegde geen nieuwe taakinhoud toe (alleen een night-log-regel, hier niet
+apart teruggehaald) en de nacht van 08-27 herbevestigde `versa-hosting-besluit`
+zonder het bestand te wijzigen (de inhoud stond al op de 08-21-branch). Geen
+van de vier bestanden gaf een reden om van `inbox` naar `ready` te gaan — de
+inhoud maakt de openstaande vraag aan Ollie scherper, beantwoordt hem niet.
+
+**Stap 3 — één taak echt herverifieerd tegen levende code, niet alleen
+bevestigd.** `quizzly-media-read-authz` was met 13 dagen (laatst gecheckt
+2026-08-15) de langste stilte van de zes inbox-taken, dus die gekozen in
+plaats van een taak die de afgelopen week al meerdere keren is nagelopen.
+`GET /api/media/[key]/route.ts` opnieuw gelezen op `origin/main` (na de merge
+van PR #7): woord-voor-woord ongewijzigd sinds 2026-08-14, geen sessie- of
+spel-token-infrastructuur bijgekomen die optie 2 goedkoper zou maken. Blijft
+`inbox`, geen nieuwe informatie.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie vastgelopen PR's,
+ongewijzigd voor de vijfde nacht op rij); geen van de drie vastgelopen PR's
+aangeraakt; de zeven openstaande stap-4-PR's (`#13`, `#15`-`#21`) niet
+gemerged, gesloten of samengevoegd — nog steeds geen regel die dat toestaat,
+en het blijft precies de procesvraag die `hangar-wrapup-pr-pileup` aan Ollie
+stelt; die taak zelf niet naar `ready` gezet — de drie geschetste opties zijn
+alledrie legitiem en de keuze is aan hem; geen tweede inbox-taak onderzocht
+buiten de teruggehaalde bestanden (regel 2: één taak); `versa-hosting-besluit`,
+`quizzly-legal-review-west` en `hangar-in-de-browser` niet opnieuw
+onderzocht — hun teruggehaalde inhoud is al actueel, dat overdoen was precies
+het dubbele werk dat dit blokje moest voorkomen.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
