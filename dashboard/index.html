@@ -755,15 +755,16 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
         <span class="mono dim">planning/night-log.md</span>
       </div>
       <ul class="plain-list"><li>Start. Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
-(`hangar-checker`) beschikbaar — builder/checker-verdeling uit CLAUDE.md
-gebruikt.</li><li>Kloon-check. `git fetch` + vergelijking tegen de default branch
-(`claude/hangar-project-setup-kvhcad`): lokale kloon was actueel, geen
-gemiste merges.</li><li>Stap 1 — open overnight-PR&#x27;s: 2, dus bouwen. Over alle zeven gekoppelde
-repo&#x27;s: acht PR&#x27;s open. Zes dagsessie-werk dat op Ollie&#x27;s eigen merge wacht
-(project-management#11, quizzly#4/#5/#6, quizzly#1, percentile#3). Twee echte
-vastgelopen nachtrun-PR&#x27;s,…</li><li>Taakkeuze. Twee `ready`-taken: `hangar-stale-clone-guard` (`added:
-2026-08-14`) en `quizzly-media-orphan-cleanup` (`added: 2026-08-15`). Oudste
-eerst, dus `hangar-stale-clone-guard`.</li></ul>
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar.</li><li>Kloon-check — schoon tegen de default, maar dat was niet het hele verhaal.
+`git fetch` tegen de echte default branch (`claude/hangar-project-setup-kvhcad`,
+niet `main` — deze repo heeft geen `main`) liet zien dat de lokale kloon
+actueel was: `861f2c3`,…</li><li>Stap 1 — drie vastgelopen nachtrun-PR&#x27;s, opnieuw geverifieerd, dus geen
+bouw. Over alle zeven gekoppelde repo&#x27;s, elk via de GitHub API opnieuw
+gecontroleerd (zelfde sha, zelfde `mergeablestate`, `updatedat` ==
+`createdat`, dus écht ongewijzigd sinds…</li><li>- `percentile#1` — `mergeablestate: dirty`, nog steeds een echt conflict.
+- `learning-website#3` — `mergeablestate: clean`, nog steeds gebouwd vóór
+  besluit 0004, nog steeds niet gemerged.
+- `project-management#13` (`hangar-stale-clone-guard`) — nog…</li></ul>
     </section>
   </div>
 
