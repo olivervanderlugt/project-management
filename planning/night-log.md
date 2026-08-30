@@ -11,6 +11,23 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-30
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd, dus geen
+bouw.** Alle drie herchecked via de GitHub API: `percentile#1`
+(`mergeable_state: dirty`, nog steeds een echt conflict), `learning-website#3`
+(`mergeable_state: clean`, nog steeds gebouwd vóór besluit 0004, nog steeds
+niet gemerged), `project-management#13` (`hangar-stale-clone-guard`, nog
+steeds `mergeable_state: dirty`, nog steeds `ship: false` op de
+live-hook-verificatie). Alle drie exact ongewijzigd (zelfde sha, `updated_at`
+== `created_at`) sinds de vorige herverificatie (nacht van 08-29). Drie is
+regel 5's plafond — geen bouw vanavond, rechtstreeks naar stap 3.
+
+(wordt aangevuld)
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
