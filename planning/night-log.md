@@ -11,6 +11,71 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-30
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd, dus geen
+bouw.** Alle drie herchecked via de GitHub API: `percentile#1`
+(`mergeable_state: dirty`, nog steeds een echt conflict), `learning-website#3`
+(`mergeable_state: clean`, nog steeds gebouwd vóór besluit 0004, nog steeds
+niet gemerged), `project-management#13` (`hangar-stale-clone-guard`, nog
+steeds `mergeable_state: dirty`, nog steeds `ship: false` op de
+live-hook-verificatie). Alle drie exact ongewijzigd (zelfde sha, `updated_at`
+== `created_at`) sinds de vorige herverificatie (nacht van 08-29). Drie is
+regel 5's plafond — geen bouw vanavond, rechtstreeks naar stap 3.
+
+**Stap 3 — vraag 3 van `hangar-daysession-branches-onzichtbaar` beantwoord,
+en twee echt verloren bestanden teruggehaald.** De vier oudere, nooit
+gemergede branches die de nacht van 08-29 signaleerde maar niet controleerde
+(`crewline-crew-management-todos-opcvpy` 08-11,
+`percentile-project-overview-6flt0j` 08-08, `pi-openclaw-hangar-plan-n706uo`
+08-07, `github-pages-troubleshooting-wp5rcc` 08-06) zijn vanavond stuk voor
+stuk gecontroleerd: commits gelezen, `git diff` tegen de echte default
+(`861f2c3`), en voor elke toegevoegde file gecheckt of de inhoud alsnog elders
+is geland.
+
+- `crewline-crew-management-todos-opcvpy`: veilig te negeren — de enige eigen
+  wijziging is dezelfde dag door de branch zelf teruggedraaid, diff tegen zijn
+  grootouder is leeg.
+- `percentile-project-overview-6flt0j`: inhoudelijk achterhaald — droeg een
+  voorstel om Percentile's co-op te schrappen, maar het percentile-repo zelf
+  (rechtstreeks gelezen: `docs/11-privacy-audit.md`, `CLAUDE.md`) laat zien dat
+  de co-op juist is doorontwikkeld en gehard (F-2/F-8/F-3/F-4/F-12, allemaal
+  8 augustus). Niet teruggehaald — zou een verworpen voorstel naast de
+  aangenomen werkelijkheid zetten. Wel een reëel document-gat gevonden en
+  gefixt: `projects/percentile.md` op de default noemde F-3/F-4/F-12 nog
+  helemaal niet als gefixt.
+- `pi-openclaw-hangar-plan-n706uo` + `github-pages-troubleshooting-wp5rcc`:
+  **wél echt verloren.** Droegen samen `tasks/pi-openclaw-gateway.md`
+  (`status: ready`, een compleet geprijsd en veiligheids-doordacht plan voor
+  een Pi 5 + OpenClaw + Telegram-vangpoort thuis bij Ollie) plus
+  `decisions/0004-altijd-aan-kastje-thuis.md` (`proposed`) — geschreven
+  2026-08-06/07, nooit een PR voor geopend, 24 dagen volledig onzichtbaar.
+  Teruggehaald met `git show <branch>:<pad>` (niet blind `checkout -- .`, om
+  niets van de sindsdien gebouwde structuur te overschrijven); besluit
+  hernummerd naar `0006` (0004/0005 waren inmiddels vergeven aan andere,
+  al-`accepted` besluiten). Prijzen en de Claude-abonnementsroute-status in het
+  plan zijn **niet** herverifieerd — dat document zelf documenteert dat die
+  route al vier keer is gekanteld in 2026, dus dat verdient een eigen check
+  vóór iemand het boodschappenlijstje volgt. Status ongewijzigd overgenomen:
+  dit is capture-herstel, geen inhoudelijke beoordeling of het plan nog
+  gewenst is — en het is sowieso fysiek werk bij Ollie thuis, niets dat een
+  nachtrun kan of mag bouwen.
+
+`hangar-daysession-branches-onzichtbaar.md` (nog `inbox` — vraag 1 en 2 blijven
+Ollie's beslissing) is bijgewerkt met alle vier bevindingen. Beide teruggehaalde
+bestanden en de percentile-correctie staan in aparte commits op deze branch.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; de
+negen openstaande stap-4/dagsessie-PR's (`#11`, `#13`, `#15`-`#23`) niet
+gemerged of gesloten — nog steeds `hangar-wrapup-pr-pileup`'s beslissing;
+`origin/night/hangar-stale-clone-guard` (08-15, wees zonder PR) niet
+verwijderd — de guard staat dat niet toe zonder Ollie's woord; vraag 1 en 2 in
+`hangar-daysession-branches-onzichtbaar` niet zelf beantwoord — allebei
+Ollie's procesbeslissing, niet iets een nachtrun kan onderzoeken.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
