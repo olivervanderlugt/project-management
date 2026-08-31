@@ -88,3 +88,55 @@ niet over besluiten die op een derde branch staan die niemand aanwijst.
 De vier taakbestanden en `projects/versa.md`/`planning/now.md` die `hsr0iy`
 droeg zijn vanavond teruggehaald in dezelfde push die deze taak toevoegt — zie
 `planning/night-log.md`, nacht van 08-29.
+
+## Aangescherpt 2026-08-30 (nachtrun, stap 3) — vraag 3 beantwoord
+
+De vier oudere branches zijn vanavond stuk voor stuk gecontroleerd: commits
+gelezen, `git diff` tegen de echte default (`861f2c3`), en voor elke ADDED
+file gecheckt of de inhoud elders (op de default, of in het bijbehorende
+project-repo) alsnog is geland.
+
+- **`claude/crewline-crew-management-todos-opcvpy`** (08-09/08-11) — veilig te
+  negeren. De enige eigen wijziging (`106b1f4` "Capture Crewline kickoff pack")
+  is dezelfde branch, dezelfde dag, volledig teruggedraaid (`610da77`); het
+  diff tussen de revert-commit en zijn grootouder is leeg. Er stond niets meer
+  open toen de branch stopte.
+- **`claude/percentile-project-overview-6flt0j`** (08-08) — inhoudelijk
+  achterhaald, niet aanbevolen om terug te halen. Droeg een voorstel
+  "besluit 0004: cut Percentile's co-op, ship analytics" plus een GTM-
+  herschrijving en drie taakbestanden (`percentile-b3-b4-sdk-blockers`,
+  `percentile-f11-ladder-decision`, `percentile-f3-f4-budget-ledger`). Dat
+  voorstel is niet aangenomen: het percentile-repo zelf (CLAUDE.md, rechtstreeks
+  gelezen) laat zien dat de co-op-plane juist is doorontwikkeld en gehard
+  (F-2/F-8 8 aug, F-3/F-4/F-12 8 aug, F-16 — de huidige `next` — is exact de
+  taak die nu als `percentile-f16-count-ladder` op dit bord staat). Het
+  onderliggende werk is dus wél gebeurd, alleen buiten dit Hangar-spoor om
+  (percentile werkt zonder PR-verplichting rechtstreeks op `main`). Enige
+  reststaartje: `projects/percentile.md` op de default noemt F-3/F-4/F-12 nog
+  niet als `done` — een kleine documentatie-achterstand, geen verloren werk.
+  Niet teruggehaald: het zou een afgewezen voorstel naast de aangenomen
+  werkelijkheid zetten.
+- **`claude/pi-openclaw-hangar-plan-n706uo`** + **`claude/github-pages-troubleshooting-wp5rcc`**
+  (08-06/08-07, de eerste bouwt op de tweede) — **wél echt verloren geweest,
+  vanavond teruggehaald.** Droegen samen `tasks/pi-openclaw-gateway.md`
+  (`status: ready`, een compleet geprijsd en veiligheids-doordacht plan voor
+  een Pi 5 + OpenClaw + Telegram-vangpoort thuis) en het bijbehorende
+  `decisions/0004-altijd-aan-kastje-thuis.md` (`proposed`). Geen van beide
+  bestaat op de default of op enige latere branch — 24 dagen volledig
+  onzichtbaar, exact het patroon van deze taak, alleen ouder dan `hsr0iy`.
+  Teruggehaald met `git show <branch>:<pad>` (niet `checkout -- .`, om niets
+  van de sindsdien gebouwde structuur te overschrijven); het besluitnummer is
+  hernummerd naar `0006` (0004/0005 waren inmiddels vergeven). Prijzen en de
+  Claude-abonnementsroute-status in het document zijn **niet** herverifieerd —
+  dat document zelf documenteert dat die route al vier keer is gekanteld in
+  2026, dus dat verdient een eigen check vóór iemand het boodschappenlijstje
+  volgt. Status ongewijzigd overgenomen: dit is capture-herstel, geen
+  inhoudelijke beoordeling of het plan nog gewenst is.
+
+**Antwoord op vraag 3: nee, niet veilig om te negeren.** Van de vier was er één
+schoon zelf-teruggedraaid, één achterhaald door aangenomen werk elders, en twee
+droegen een compleet, nooit eerder geziene taak + besluit van Ollie zelf. Twee
+uit vier is geen uitzondering — het is het patroon van deze taak, alleen langer
+onopgemerkt. Versterkt vraag 1 hieronder: zonder een mechanisme dat branches
+zonder PR signaleert, blijft dit gebeuren, en hoe ouder de branch, hoe groter de
+kans dat niemand ooit meer `git branch -r` leest om het te vinden.
