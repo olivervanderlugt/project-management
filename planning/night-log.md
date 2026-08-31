@@ -11,6 +11,103 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-29
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar.
+
+**Kloon-check — schoon tegen de default, maar dat was niet het hele verhaal.**
+`git fetch` tegen de echte default branch (`claude/hangar-project-setup-kvhcad`,
+niet `main` — deze repo heeft geen `main`) liet zien dat de lokale kloon
+actueel was: `861f2c3`, dezelfde commit als de laatste merge (08-20). Op dat
+punt leek er niets bijzonders aan de hand. Pas bij het kiezen van werk viel
+`git branch -r` op: een branch, `claude/hangar-nightrun-status-hsr0iy`, met een
+recentere wijziging aan `tasks/` dan wat waar dan ook gemerged stond. Zie
+hieronder — dit werd de avond.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd, dus geen
+bouw.** Over alle zeven gekoppelde repo's, elk via de GitHub API opnieuw
+gecontroleerd (zelfde sha, zelfde `mergeable_state`, `updated_at` ==
+`created_at`, dus écht ongewijzigd sinds de vorige nachten):
+
+- `percentile#1` — `mergeable_state: dirty`, nog steeds een echt conflict.
+- `learning-website#3` — `mergeable_state: clean`, nog steeds gebouwd vóór
+  besluit 0004, nog steeds niet gemerged.
+- `project-management#13` (`hangar-stale-clone-guard`) — nog steeds
+  `mergeable_state: dirty`, nog steeds `ship: false` op de vereiste
+  live-hook-verificatie.
+
+Drie is regel 5's plafond. Geen bouw vanavond, rechtstreeks naar stap 3 —
+maar niet voordat een veel grotere ontdekking eerst is opgelost.
+
+**Een verborgen dagsessie-branch, 8 nachten oud, teruggehaald.**
+`claude/hangar-nightrun-status-hsr0iy` bevatte één commit, 2026-08-20 15:49
+UTC: vier echte besluiten van Ollie ("Vier besluiten van Ollie verwerkt: queue
+van 2 naar 4 ready"). Er is **nooit een PR voor geopend** — onvindbaar via
+`list_pull_requests`, onzichtbaar voor `git status` op elke latere kloon.
+Geverifieerd, niet aangenomen: elke nachtrun van 08-21 tot en met 08-28 las
+`tasks/quizzly-media-read-authz.md` nog als `status: inbox` met de oude
+twee-opties-vraag — de nacht van 08-28 herverifieerde de route-code er zelfs
+netjes tegenaan, zonder te weten dat Ollie het besluit al 8 dagen eerder had
+genomen. De nacht van 08-21 zocht hosting-opties uit voor Versa, een project
+dat Ollie diezelfde dag, uren eerder, al had geparkeerd. En vijf nachten
+(08-15 t/m 08-20) kozen stuk voor stuk `hangar-stale-clone-guard` als oudste
+`ready` taak — de taak die dezelfde 08-20-sessie zelf al had gesplitst om
+precies dat te stoppen, in een besluit dat nooit de default bereikte.
+
+Teruggehaald met `git checkout <branch> -- <bestand>` — dezelfde precedent als
+eerdere nachten al gebruikten voor hun eigen weesbranches (08-16, 08-20,
+08-26, 08-28): iemand anders' al voltooide, niet-controversiële besluiten
+overnemen is geen beleidsbeslissing. Vier bestanden gerecovered zonder
+conflict (`hangar-sessionstart-hook-gedrag.md` nieuw, `ready`;
+`quizzly-semantische-tokens.md` nieuw, `ready`; `hangar-stale-clone-guard.md`
+naar `blocked`; `quizzly-design-pass-toepassen.md` naar `blocked` met een
+gekozen richting; `projects/versa.md` naar `parked`). Twee bestanden hadden
+een echt conflict met later, onwetend onderzoek en zijn met de hand
+samengevoegd: `quizzly-media-read-authz.md` (Ollie's `ready`-besluit blijft
+leidend, de latere hercheck van de routecode is toegevoegd als bevestiging
+dat de code sindsdien niet is gedreven) en `versa-hosting-besluit.md`
+(Ollie's parkeerbesluit blijft leidend, het 08-21-onderzoek naar hosting-opties
+is bewaard als naslag voor wanneer Versa weer aangaat, met een duidelijke
+noot dat het gedaan is vóórdat het parkeerbesluit bekend kon zijn). Ook
+meegenomen: de vier bestanden die de nacht van 08-28 al had teruggehaald uit
+de nachtrun-eigen weesbranches (`hangar-in-de-browser.md`,
+`hangar-wrapup-pr-pileup.md`, `quizzly-legal-review-west.md`) — die stonden
+zelf ook nog niet op de default.
+
+Nieuwe taak geschreven: `tasks/hangar-daysession-branches-onzichtbaar.md`
+(`inbox`). Dit is een ánder en groter probleem dan `hangar-wrapup-pr-pileup`:
+die PR's zijn tenminste vindbaar via de GitHub API; een branch zonder PR is
+dat niet. Vier oudere, nooit-gemergede branches (`crewline-crew-management-
+todos-opcvpy` 08-11, `percentile-project-overview-6flt0j` 08-08,
+`pi-openclaw-hangar-plan-n706uo` 08-07, `github-pages-troubleshooting-wp5rcc`
+08-06) zijn opgemerkt maar **niet** onderzocht vanavond — ze zijn ouder dan de
+huidige default en mogelijk al achterhaald, maar dat is aangenomen, niet
+geverifieerd. Staat als open vraag in de nieuwe taak.
+
+**Stap 3 — `nachtrun-loopt-vast-op-een-taak` aangescherpt, niet alleen
+herbevestigd.** Vraag 2 (moet `hangar-stale-clone-guard` opgesplitst worden?)
+bleek al beantwoord door de zojuist teruggehaalde `hsr0iy`-commit zelf — een
+mooie illustratie van precies het probleem: een besluit was genomen, maar
+onzichtbaar voor 8 nachten. Vraag 3 (weesbranches) is opnieuw gecontroleerd:
+van de twee is er nog maar één écht wees (`night/hangar-stale-clone-guard`,
+08-15, nog steeds zonder PR); de andere is inmiddels de head van PR #13.
+Vraag 1 (een faalteller) blijft volledig open, nu met een tweede, bredere
+aanleiding.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie vastgelopen
+PR's); geen van de drie aangeraakt; de negen openstaande stap-4/dagsessie-PR's
+op de Hangar (`#11`, `#13`, `#15`-`#22`) niet gemerged, gesloten of
+samengevoegd — nog steeds `hangar-wrapup-pr-pileup`'s beslissing, niet de
+mijne; de vier oudere onbekende branches niet onderzocht (zie boven); de
+vraag of `reference/startprompt-nightrun.md` letterlijk in de Routine is
+geplakt niet uitgezocht — de prompt die vanavond vuurde is duidelijk een
+Nederlandstalige, herstructureerde variant van die tekst, wat er wel of niet
+op wijst; niet verder getrokken dan de constatering in `planning/now.md`.
+`planning/now.md` herschreven (niet alleen aangevuld) om de stapel oude,
+inmiddels-`done` bullets niet nog een nacht mee te slepen — de informatie
+staat in de taakbestanden zelf.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
