@@ -11,6 +11,64 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-08-31
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd, dus geen
+bouw.** Alle drie herchecked via de GitHub API: `percentile#1`
+(`mergeable_state: dirty`, nog steeds een echt conflict), `learning-website#3`
+(`mergeable_state: clean`, nog steeds gebouwd vóór besluit 0004, nog steeds
+niet gemerged), `project-management#13` (`hangar-stale-clone-guard`, nog
+steeds `mergeable_state: dirty`, nog steeds `ship: false`). Alle drie exact
+ongewijzigd (zelfde sha, `updated_at` == `created_at`) sinds de vorige
+herverificatie (nacht van 08-30). Drie is regel 5's plafond — geen bouw
+vanavond.
+
+**Queue-herstel: twee nachten (08-29, 08-30) samengevoegd, niet nog een
+derde geïsoleerde PR ernaast.** De lokale kloon was schoon tegen de default
+(`861f2c3`, geen gemiste merges) — maar `git branch -r` liet zien dat
+`claude/night-2026-08-29` en `claude/night-2026-08-30` allebei nog los
+stonden, alle twee vertakt vanaf diezelfde default, dus geen van beide zag
+het werk van de ander. Uitgezocht met `git merge-tree`: de enige echte
+conflicten zaten in `dashboard/index.html` (gegenereerd, opnieuw gebouwd na
+de merge) en `planning/night-log.md` (allebei een eigen datum-sectie
+bovenaan — met de hand samengevoegd, 08-30 boven 08-29, geen tekst
+weggegooid) plus een add/add-conflict op
+`tasks/hangar-daysession-branches-onzichtbaar.md` (08-30's versie is een
+zuivere aanvulling op 08-29's — die versie gebruikt, niets verloren). Beide
+branches zijn met een echte `git merge` (geen `checkout -- .`) op deze
+branch (`claude/night-2026-08-31`) samengevoegd; niets van 08-29's herstelde
+dagsessie-content (`hangar-sessionstart-hook-gedrag.md`,
+`quizzly-semantische-tokens.md`, de `hangar-stale-clone-guard`/
+`quizzly-media-read-authz`/`quizzly-design-pass-toepassen`/
+`versa-hosting-besluit`-updates, de herschreven `planning/now.md`) of van
+08-30's (`pi-openclaw-gateway.md`, `decisions/0006`, de
+`projects/percentile.md`-correctie) ontbreekt nu nog op enige branch.
+
+**Stap 3 — `hangar-wrapup-pr-pileup` aangescherpt met het bewijs dat dit
+zichzelf herhaalt.** Nog steeds `inbox` — de drie opties blijven een
+procesbeslissing van Ollie, geen onderzoeksvraag. Wat vanavond toegevoegd
+is: de herstelactie hierboven is zelf het bewijs dat de stapel niet alleen
+groeit maar ook werk laat verdwijnen — 08-30 zag 08-29's herstelwerk niet
+omdat het vanaf dezelfde stale default vertakte, en herhaalde daarmee
+precies het patroon dat 08-29 zelf al signaleerde bij de `hsr0iy`-vondst, nu
+één niveau dieper. Genoteerd dat dit optie 3 (alleen een lager PR-plafond)
+verzwakt tegenover optie 1/2 (iets moet elke nacht op de default landen) —
+een plafond op het *aantal* PR's voorkomt niet dat de *inhoud* van de
+recentste onzichtbaar is voor de volgende nacht.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+de nu elf openstaande stap-4/dagsessie-PR's (`#11`, `#13`, `#15`-`#24`) niet
+gemerged of gesloten, ook niet de negen waarvan de inhoud nu volledig in
+deze branch zit — sluiten is nog steeds `hangar-wrapup-pr-pileup`'s
+beslissing, niet de mijne, en Ollie verliest liever niets van de PR-diffs
+zonder het zelf te kiezen; geen tweede inbox-taak aangescherpt (vragen 1 en
+2 in `hangar-daysession-branches-onzichtbaar` blijven expliciet Ollie's
+beslissing, niet iets een nachtrun kan onderzoeken); `origin/night/hangar-
+stale-clone-guard` (08-15, wees zonder PR) met rust gelaten.
+
 ## 2026-08-30
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
