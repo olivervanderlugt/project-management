@@ -66,3 +66,40 @@ is per definitie vastgelopen" en "de stap-4-PR telt niet mee" — spreken elkaar
 een beetje tegen zonder dat de regel het uitlegt. Vandaar dat dit taakje ook
 voorstelt om het gewoon met zoveel woorden op te schrijven, welke kant Ollie
 ook kiest.
+
+## Update 2026-08-31 — het probleem is erger dan hierboven staat
+
+Zes nachten later (08-25 → 08-31): de stapel is niet vier maar **tien**
+open stap-4-PR's (`project-management#15`-`#24`), en de kosten zijn niet
+langer alleen "PR's die zich opstapelen" — vanavond is bewezen dat het
+werk zelf verloren gaat, niet alleen onzichtbaar blijft:
+
+- De nacht van 08-29 deed een grote herstelactie (een 8 nachten oude
+  dagsessie-branch zonder PR teruggehaald, vier taakbestanden samengevoegd,
+  `hangar-daysession-branches-onzichtbaar` geschreven) en zette dat op zijn
+  eigen `claude/night-2026-08-29`-PR.
+- De nacht van 08-30 vertakte — zoals elke nacht — vanaf de **stale default**
+  (`861f2c3`), niet vanaf 08-29's branch. Die nacht zag dus niets van 08-29's
+  herstelwerk, deed zijn eigen (kleinere) herstelactie (`pi-openclaw-gateway`
+  teruggehaald), en zette dát weer op een eigen geïsoleerde PR.
+- Resultaat: twee nachten die allebei "vraag 3" van
+  `hangar-daysession-branches-onzichtbaar` beantwoordden, onafhankelijk van
+  elkaar, allebei zonder het te weten. Precies het patroon dat 08-29 zelf al
+  signaleerde bij `hsr0iy` (rule "elke nacht leest via `git show
+  origin/claude/night-<datum>:tasks/...`, dat werkt maar is fragieler dan het
+  hoeft") — nu bewezen dat het zichzelf herhaalt, één niveau dieper: niet
+  alleen dagsessie-branches zonder PR raken zo onzichtbaar, de nachtrun se
+  eigen wrapup-PR's doen het elkaar nu ook aan.
+
+Vanavond (08-31) zijn `claude/night-2026-08-29` en `claude/night-2026-08-30`
+met de hand samengevoegd op een nieuwe branch (`claude/night-2026-08-31`) om
+niets kwijt te raken — maar dat is een eenmalige reparatie, geen structurele
+oplossing. Zonder een keuze uit de drie opties hierboven gebeurt dit
+volgende week weer, alleen dan met elf branches om samen te voegen in plaats
+van twee.
+
+**Dit verzwakt optie 3 en versterkt optie 1/2**: een lager plafond op het
+*aantal* open wrapup-PR's voorkomt niet dat de *inhoud* van de meest recente
+ervan onzichtbaar is voor de volgende nacht — alleen "iets landt elke nacht
+op de default branch" (optie 1 of 2) doet dat. De keuze blijft aan Ollie;
+dit is alleen het bewijs dat wachten de kosten laat oplopen.
