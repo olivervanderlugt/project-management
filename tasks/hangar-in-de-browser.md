@@ -75,6 +75,21 @@ Aangescherpt, niet gebouwd:
 
 Deze paraplu-taak blijft `inbox` tot stap 1 en 4 beslist zijn of geschrapt.
 
+## Herchecked 2026-08-23 (nachtrun, stap 3)
+
+**Stap 2 is inmiddels echt af, niet meer alleen `ready`.**
+`tasks/hangar-prioriteit-score.md` staat op `status: done`: `dashboard/build.py`
+berekent de score (`priority_score()`, `open_tasks_by_score()`) en het bord
+toont de "dit nu"-regel en de score-tabel live (`render_priority()`, sectie
+`#priority`) — geverifieerd door de code te lezen, niet aangenomen uit de
+taakstatus. De bullet hierboven was dus stale (zei nog `ready`); nu gecorrigeerd.
+
+Stap 3's rest (verbruik per nacht loggen) is ongewijzigd: besluit 0003 staat
+nog op `proposed`, `planning/night-log.md` bevat nergens een verbruiksregel.
+Stap 1 en 4 zijn ongewijzigd — geen van beide blokkerende besluiten is door
+Ollie genomen sinds 2026-08-08. Geen nieuwe informatie die de paraplu-taak
+richting `ready` beweegt; blijft `inbox` met dezelfde open vraag aan Ollie.
+
 ## Notes
 
 Stap 1 tot en met 3 leveren het grootste deel van wat hij beschreef, zonder
