@@ -1,8 +1,8 @@
 ---
 title: Versa
 description: Song lyrics line-by-line beside a translation — AI drafts them, the community votes and improves, LRC timestamps sync them karaoke-style. No API keys needed.
-status: active
-next:
+status: parked
+next:    Niets. Geparkeerd op 2026-08-20 — hosting kost geld en dat besluit is uitgesteld
 due:
 started:
 repo: olivervanderlugt/versa
