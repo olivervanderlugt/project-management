@@ -11,6 +11,70 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-02
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`, plus de per-repo bouwagents)
+beschikbaar.
+
+**Kloon-check vóór alles.** `git fetch` tegen de officiële default
+(`claude/hangar-project-setup-kvhcad`): staat nog op `861f2c3` ("Night
+2026-08-20"), ongewijzigd sinds toen. `git branch -r` liet de bekende
+wrapup-keten zien tot en met `claude/night-2026-09-01` (PR #26, elf commits
+voor op de default) — gestart vanaf díe branch, niet vanaf de stale default,
+om niet dezelfde fout te maken als 08-30.
+
+**Weesbranch-ronde:** zes nieuwe/onbekende branchnamen gecontroleerd
+(`claude/timer-workout-preview-buttons-68swyr`,
+`claude/timer-workout-timezones-pya2xl`, `claude/hangar-nightrun-push-issue-njdjly`,
+`claude/hangar-project-descriptions-2o5c0z`, `claude/night-weekly-review-automatic`,
+`claude/charming-fermat-kb8te9`) via `git merge-base --is-ancestor` tegen de
+default — alle zes al ancestor, dus al verwerkt. Geen recovery nodig.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd via de API, dus
+geen bouw.** `percentile#1` (`mergeable_state: dirty`, sha/updated_at
+ongewijzigd sinds 2026-08-07), `learning-website#3` (`mergeable_state: clean`
+maar gebouwd vóór besluit 0004, ongewijzigd), `project-management#13`
+(`hangar-stale-clone-guard`, `mergeable_state: dirty`, `ship: false`,
+ongewijzigd sinds 2026-08-20). Drie is regel 5's plafond — geen bouw
+vanavond. De stap-4-wrapup-stapel (`hangar-wrapup-pr-pileup`) staat op
+**twaalf** open PR's (`project-management#15`–`#26`), dertien zodra deze PR
+opent. Niet zelf gemergd of geconsolideerd; dat blijft Ollie's keuze tussen de
+drie opties in de taak.
+
+**Stap 3 — `hangar-in-de-browser`: stap 1 blijkt al gebouwd, 27 dagen
+onopgemerkt.** Het bestand zei sinds 08-08/08-23 dat stap 1 ("vangen vanuit de
+browser zonder sessie") blijft liggen tot Ollie akkoord geeft op API-kosten en
+zelf een API-sleutel als repo-secret zet. Dat klopt niet meer — waarschijnlijk
+heeft het nooit geklopt: `.github/ISSUE_TEMPLATE/vangen.yml` +
+`.github/workflows/capture.yml` + `scripts/capture_issue.py` bestaan al sinds
+**2026-08-06** (commits `7b9e1d0`/`11e5e9a`, dezelfde dag als de taak zelf is
+gevangen) en zijn puur deterministisch: het issue-formulier levert
+gestructureerde velden, het script zet ze om in `tasks/<slug>.md` zonder enige
+model-aanroep. Geen API-kosten, geen secret nodig — de twee dingen waar stap 1
+op zou wachten bestaan niet voor déze implementatie. `python3
+scripts/test_capture_issue.py` — 20/20 groen, vanavond zelf gedraaid, niet
+aangenomen.
+
+Wél een echt gat: de workflow heeft **nooit in productie gedraaid**.
+`search_issues` op `label:capture` levert nul resultaten, en er staat geen
+Capture-run in de Actions-historie — alleen Dashboard-runs. Gebouwd, getest,
+nooit met een echt issue geprobeerd. Taakbestand bijgewerkt met deze vondst en
+een concrete vraag aan Ollie (probeer het Vangen-formulier zelf op de repo op
+GitHub, vanaf je telefoon) in plaats van de oude, niet meer kloppende
+kosten/secret-vraag. Zelf geen test-issue aangemaakt: dat zou een echte commit
+van de `github-actions[bot]` rechtstreeks op de default branch veroorzaken
+buiten deze nacht se eigen PR-stroom om, en bij twijfel valt dat erbuiten.
+Stap 4 (eigen UI, breekt besluit 0001) blijft ongewijzigd Ollie's besluit. De
+paraplu-taak blijft dus `inbox`, maar met nog maar één echte blokkerende vraag
+in plaats van twee.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; de
+wrapup-PR-stapel niet gemergd of gesloten (Ollie's keuze); geen test-issue
+aangemaakt op GitHub (zie boven); de overige vijf inbox-taken alleen geteld,
+niet opnieuw onderzocht (regel 2: één taak per nacht); `night/hangar-stale-clone-guard`
+(08-15, wees zonder PR) met rust gelaten.
+
 ## 2026-09-01
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
