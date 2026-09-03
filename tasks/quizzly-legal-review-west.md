@@ -81,3 +81,15 @@ is: nu (zonder PR#1) of straks (met). Die keuze is Ollie's merge-moment, niet
 een onderzoeksvraag. Vraag voor Ollie ongewijzigd: wanneer merge je
 `quizzly#1`? Zodra dat gebeurd is, kan deze taak in één stap naar `ready` — de
 per-regime kaart hierboven is dan het startpunt, geen nieuw onderzoek nodig.
+
+## Herchecked 2026-09-03 (nachtrun, stap 3)
+
+Twaalf dagen sinds de vorige check — de langste stilstand van alle inbox-taken,
+dus deze keer bewust geen aanname: `quizzly#1` rechtstreeks via de API
+opgevraagd (nog steeds `open`, `updated_at` ongewijzigd sinds 2026-08-07) én
+`git log --since="2026-08-22" origin/main` op de quizzly-repo gedraaid voor
+`docs/LEGAL.md`, `docs/COMPLIANCE-REVIEW.md` en de repo in het geheel — nul
+commits. `main` staat nog exact op de merge van PR #7 (2026-08-16); er is ook
+geen dagsessie geweest die compliance-content buiten PR#1 om rechtstreeks op
+`main` heeft gezet. De blokkade is dus niet alleen ongewijzigd maar ook niet op
+een andere weg alsnog opgelost. Blijft `inbox`, zelfde vraag aan Ollie.
