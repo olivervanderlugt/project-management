@@ -11,6 +11,54 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-03
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`, plus de per-repo bouwagents)
+beschikbaar.
+
+**Kloon-check vóór alles.** `git fetch` tegen de officiële default
+(`claude/hangar-project-setup-kvhcad`): staat nog op `861f2c3` ("Night
+2026-08-20"), ongewijzigd sinds toen — de default zelf loopt nu 14 dagen
+achter op de wrapup-keten. Gestart vanaf `claude/night-2026-09-02` (PR #27,
+niet vanaf de stale default), zelfde precedent als de vorige nachten.
+
+**Weesbranch-ronde:** alle bekende niet-ancestor branches opnieuw gecontroleerd
+via `git merge-base --is-ancestor` tegen de huidige branch-tip. Geen enkele
+recentere dan 2026-08-26 (`claude/charming-fermat-rwahqf`) — allemaal al eerder
+door een vorige nacht bekeken of geconsolideerd (zie de 08-29/08-30/08-31-
+regels hieronder in dit bestand). Geen nieuwe orphan-branches sinds de ronde
+van 09-02.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd via de API, dus
+geen bouw.** `percentile#1` (`mergeable_state: dirty`, sha/updated_at
+ongewijzigd sinds 2026-08-07), `learning-website#3` (`mergeable_state: clean`
+maar gebouwd vóór besluit 0004, ongewijzigd), `project-management#13`
+(`hangar-stale-clone-guard`, `ship: false`, ongewijzigd sinds 2026-08-20). Drie
+is regel 5's plafond — geen bouw vanavond. De stap-4-wrapup-stapel staat op
+**dertien** open PR's (`project-management#15`–`#27`), veertien zodra deze PR
+opent. Niet zelf gemergd of geconsolideerd — dat blijft Ollie's keuze tussen de
+drie opties in `hangar-wrapup-pr-pileup`.
+
+**Stap 3 — `quizzly-legal-review-west` herchecked, geen nieuwe informatie.**
+Oudste-niet-herverifieerde inbox-taak (laatste check 08-22, twaalf dagen
+geleden) — bewust niet aangenomen dat de blokkade nog klopt: `quizzly#1`
+rechtstreeks via de API opgevraagd (nog `open`, `updated_at` ongewijzigd sinds
+2026-08-07) én `git log --since="2026-08-22" origin/main` op de quizzly-repo
+gedraaid voor `docs/LEGAL.md`/`docs/COMPLIANCE-REVIEW.md`/de hele repo — nul
+commits sinds de merge van PR #7 (08-16). Geen dagsessie heeft compliance-
+content buiten PR#1 om op `main` gezet. Blijft `inbox`, zelfde vraag aan Ollie
+(wanneer merge je `quizzly#1`?). De andere vijf inbox-taken (`hangar-in-de-browser`,
+`quizzly-slide-designer-bouwen`, `nachtrun-loopt-vast-op-een-taak`,
+`hangar-wrapup-pr-pileup`, `hangar-daysession-branches-onzichtbaar`) zijn alle
+vijf al binnen de laatste vijf nachten herverifieerd zonder nieuwe informatie
+sindsdien — niet nogmaals aangeraakt vanavond (regel 2: één taak).
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; de
+wrapup-PR-stapel niet gemergd of geconsolideerd (Ollie's keuze); geen tweede
+inbox-taak onderzocht (regel 2); `night/hangar-stale-clone-guard` (08-15, wees
+zonder PR) met rust gelaten.
+
 ## 2026-09-02
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen

@@ -1,6 +1,6 @@
 ---
-updated: 2026-09-02
-focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 12; hangar-in-de-browser stap 1 blijkt al gebouwd
+updated: 2026-09-03
+focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 13; drie procesbeslissingen liggen klaar
 ---
 
 - **hangar-in-de-browser: stap 1 ("vangen vanuit de browser zonder sessie")
@@ -23,8 +23,8 @@ focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 12; ha
   - Zolang deze drie op 3 blijven staan, bouwt de nachtrun niets (regel 5) en
     scherpt hij alleen `inbox`-taken aan — dat is nu al twee weken de status.
 
-- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 12**
-  (`project-management#15`–`#26`, 13 zodra vanavond opent), plus `#11` van
+- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 13**
+  (`project-management#15`–`#27`, 14 zodra vanavond opent), plus `#11` van
   08-14. Niemand merget ze. Drie opties liggen klaar in de taak; geen ervan
   mag een nachtrun zelf kiezen — dat is expliciet jouw procesbeslissing.
 
