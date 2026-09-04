@@ -75,6 +75,63 @@ Aangescherpt, niet gebouwd:
 
 Deze paraplu-taak blijft `inbox` tot stap 1 en 4 beslist zijn of geschrapt.
 
+## Herchecked 2026-08-23 (nachtrun, stap 3)
+
+**Stap 2 is inmiddels echt af, niet meer alleen `ready`.**
+`tasks/hangar-prioriteit-score.md` staat op `status: done`: `dashboard/build.py`
+berekent de score (`priority_score()`, `open_tasks_by_score()`) en het bord
+toont de "dit nu"-regel en de score-tabel live (`render_priority()`, sectie
+`#priority`) — geverifieerd door de code te lezen, niet aangenomen uit de
+taakstatus. De bullet hierboven was dus stale (zei nog `ready`); nu gecorrigeerd.
+
+Stap 3's rest (verbruik per nacht loggen) is ongewijzigd: besluit 0003 staat
+nog op `proposed`, `planning/night-log.md` bevat nergens een verbruiksregel.
+Stap 1 en 4 zijn ongewijzigd — geen van beide blokkerende besluiten is door
+Ollie genomen sinds 2026-08-08. Geen nieuwe informatie die de paraplu-taak
+richting `ready` beweegt; blijft `inbox` met dezelfde open vraag aan Ollie.
+
+## Herchecked 2026-09-02 (nachtrun, stap 3) — stap 1 blijkt al gebouwd
+
+**De aanname achter stap 1's blokkade klopt niet (meer).** Dit bestand zei
+sinds 08-08/gecheckt 08-23 dat stap 1 blijft liggen tot Ollie (a) akkoord geeft
+dat elke issue een API-call kost, met welk maandplafond, en (b) zelf een
+API-sleutel als repo-secret zet. Beide voorwaarden bestaan niet voor de
+implementatie die er al ligt:
+
+- `.github/ISSUE_TEMPLATE/vangen.yml` (het "Vangen"-formulier: één zin, project,
+  geschatte inspanning), `.github/workflows/capture.yml` en
+  `scripts/capture_issue.py` bestaan al sinds **2026-08-06**, commits `7b9e1d0`
+  ("Capture from the browser: issue form to task file, no key, no model") en
+  `11e5e9a` — dezelfde dag als deze taak zelf gevangen is.
+- Het is bewust **volledig deterministisch**: het issue-formulier levert al
+  gestructureerde velden, dus `capture_issue.py` parseert alleen tekst en
+  schrijft `tasks/<slug>.md` met `status: inbox` — geen model-aanroep, geen
+  API-sleutel, geen kosten per issue.
+- `python3 scripts/test_capture_issue.py` — 20/20 groen, vanavond zelf
+  gedraaid, niet aangenomen uit de commit-boodschap.
+
+**Wat wél nog ontbreekt: het heeft nooit in productie gedraaid.** Geen enkel
+issue in deze repo draagt het `capture`-label (`search_issues` op
+`label:capture` → 0), en de Actions-historie toont geen enkele Capture-run —
+alleen Dashboard-runs. Gebouwd en unit-getest, maar 27 dagen nooit met een
+echt issue geprobeerd. Zelf geen test-issue aangemaakt vanavond: dat zou een
+echte commit van `github-actions[bot]` rechtstreeks op de default branch
+veroorzaken (zie `capture.yml` — hij pusht naar
+`claude/hangar-project-setup-kvhcad`), los van deze nacht se eigen
+PR-stroom, en dat voelt als het soort "twijfel dan valt het erbuiten"-geval
+uit de opdracht.
+
+**Nieuwe, kleinere open vraag voor Ollie (vervangt de oude kosten/secret-vraag
+voor stap 1):** probeer het Vangen-formulier zelf, vanaf je telefoon
+(github.com/olivervanderlugt/project-management/issues/new/choose) — werkt
+het zoals bedoeld (een nieuw taakbestand, een comment op het issue, het issue
+dicht)? Zo ja, is stap 1 gewoon `done` en kan dat uit deze paraplu-taak. Zo
+nee, is er alsnog iets te fixen vóór het als af telt.
+
+Stap 4 blijft ongewijzigd: een besluit dat 0001 vervangt, nog niet genomen.
+De paraplu-taak blijft dus `inbox`, met nu nog maar één echte blokkerende
+vraag in plaats van twee.
+
 ## Notes
 
 Stap 1 tot en met 3 leveren het grootste deel van wat hij beschreef, zonder
