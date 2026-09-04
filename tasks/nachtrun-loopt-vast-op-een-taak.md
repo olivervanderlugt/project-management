@@ -78,3 +78,39 @@ alleen een taak die blijft falen ontbreekt een signaal — een besluit dat wél
 genomen is, ontbreekt hetzelfde signaal zodra het op een branch zonder PR
 staat. Beide zijn vormen van "niemand merkt dat de toestand veranderd is
 tenzij hij er toevallig naar zoekt". N is nog steeds niet gekozen.
+
+## Herchecked 2026-09-04 (nachtrun, stap 3)
+
+**Vraag 3, opnieuw gecontroleerd via `git ls-remote`:** `origin/night/hangar-
+stale-clone-guard` (08-15, `ba1f382`) bestaat nog, ongewijzigd, nu 20 dagen
+zonder PR en zonder dat iemand hem heeft opgeruimd. `origin/claude/night-
+hangar-stale-clone-guard` is nog steeds gewoon de head van `project-
+management#13` (`blocked`, ongewijzigd sinds 08-20) — geen wees. Geen van
+beide aangeraakt.
+
+**Een tweede, nieuwe vorm van hetzelfde patroon, deze keer niet op een taak die
+faalt maar op een taak die nooit kán slagen.** `pi-openclaw-gateway` is de
+oudste `ready` taak op het bord (`added: 2026-08-07`) — ouder dan
+`hangar-sessionstart-hook-gedrag` (08-20), de taak die nodig is om
+`hangar-stale-clone-guard` te ontgrendelen. Regel 1 zegt "oudste `ready`
+eerst", maar `pi-openclaw-gateway` zegt letterlijk in zichzelf: "dit is fysiek
+werk bij Ollie thuis... de nachtrun kan hier niets bouwen en moet deze taak
+laten liggen." Zodra de drie-vastgelopen-PR's-grens ooit weer onder de drie
+zakt, kiest regel 1 mechanisch een taak die per definitie nooit `done` kan
+worden — en niets in de regels zegt of de nacht die dan moet overslaan naar de
+eerstvolgende `ready` taak, of dat hij telt als "vandaag is er niets
+gebouwd". Zonder een expliciete skip-regel kost dat elke keer opnieuw een hele
+stap-2-poging om te ontdekken wat dit bestand al zelf meldt. Dit is dezelfde
+onderliggende bug als vraag 1 (geen signaal dat "deze taak gaat het nooit
+worden op de manier die regel 1 aanneemt"), alleen ligt de oorzaak nu niet bij
+falen maar bij een taaksoort die de nachtrun structureel niet kan afronden.
+Niet zelf opgelost — dit voegt een derde deelvraag toe aan wat Ollie al moest
+beslissen:
+
+4. Slaat "oudste `ready` eerst" een taak over die zichzelf markeert als
+   niet-bouwbaar door de nachtrun (zoals `pi-openclaw-gateway`), of blijft hij
+   daar elke nacht opnieuw op stuklopen zodra de PR-grens het toelaat?
+
+(Vanavond zelf geen taak gebouwd — drie vastgelopen nachtrun-PR's, zie de
+night-log van 2026-09-04. Deze taak dus sowieso niet aan de beurt, ongeacht
+regel 1.)

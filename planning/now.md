@@ -1,6 +1,6 @@
 ---
-updated: 2026-09-03
-focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 13; drie procesbeslissingen liggen klaar
+updated: 2026-09-04
+focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 14; drie procesbeslissingen liggen klaar
 ---
 
 - **hangar-in-de-browser: stap 1 ("vangen vanuit de browser zonder sessie")
@@ -23,15 +23,20 @@ focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 13; dr
   - Zolang deze drie op 3 blijven staan, bouwt de nachtrun niets (regel 5) en
     scherpt hij alleen `inbox`-taken aan — dat is nu al twee weken de status.
 
-- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 13**
-  (`project-management#15`–`#27`, 14 zodra vanavond opent), plus `#11` van
-  08-14. Niemand merget ze. Drie opties liggen klaar in de taak; geen ervan
-  mag een nachtrun zelf kiezen — dat is expliciet jouw procesbeslissing.
+- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 14**
+  (`project-management#15`–`#28`), plus `#11` van 08-14. Niemand merget ze.
+  Drie opties liggen klaar in de taak; geen ervan mag een nachtrun zelf
+  kiezen — dat is expliciet jouw procesbeslissing.
 
 - **Vijf `ready` taken staan te wachten, geblokkeerd door bovenstaande**:
   `pi-openclaw-gateway` (08-07), `quizzly-media-read-authz` (08-14),
   `quizzly-media-orphan-cleanup` (08-15), `hangar-sessionstart-hook-gedrag`
-  (08-20), `quizzly-semantische-tokens` (08-20).
+  (08-20), `quizzly-semantische-tokens` (08-20). Nieuw ontdekt (09-04):
+  `pi-openclaw-gateway` is de oudste, maar meldt zelf dat de nachtrun hem
+  nooit kan bouwen (fysiek werk) — zodra de PR-grens opengaat, kiest
+  "oudste eerst" mechanisch een taak die nooit `done` wordt, tenzij jij
+  vastlegt dat zulke taken overgeslagen worden. Zie vraag 4 in
+  `tasks/nachtrun-loopt-vast-op-een-taak.md`.
 
 - **Dagsessie-PR's die al op jouw merge wachten** (tellen niet mee bij regel
   5): quizzly#1 (finalisatie), quizzly#4/#5/#6 (wachtwoord-toggle, contrast,

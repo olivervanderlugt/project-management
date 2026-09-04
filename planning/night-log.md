@@ -11,6 +11,54 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-04
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`, plus de per-repo bouwagents)
+beschikbaar.
+
+**Kloon-check vóór alles.** `git fetch` tegen de officiële default
+(`claude/hangar-project-setup-kvhcad`): staat nog op `861f2c3` ("Night
+2026-08-20"), ongewijzigd — de default loopt nu 15 dagen achter op de
+wrapup-keten. Gestart vanaf `claude/night-2026-09-03` (PR #28, niet vanaf de
+stale default), zelfde precedent als de vorige nachten.
+
+**Weesbranch-ronde:** geen nieuwe niet-ancestor branches gevonden sinds de
+ronde van 09-03.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd via de API,
+dus geen bouw.** Alle drie rechtstreeks opgevraagd, niet aangenomen:
+`percentile#1` (`mergeable_state: dirty`, `updated_at` ongewijzigd sinds
+2026-08-07), `learning-website#3` (`mergeable_state: clean` maar gebouwd vóór
+besluit 0004, `updated_at` ongewijzigd sinds 2026-08-07), `project-
+management#13` (`hangar-stale-clone-guard`, `ship: false`, ongewijzigd sinds
+2026-08-20). Drie is regel 5's plafond — geen bouw vanavond. De stap-4-
+wrapup-stapel staat op **veertien** open PR's (`project-management#15`–`#28`),
+vijftien zodra deze PR opent. Niet zelf gemergd of geconsolideerd — Ollie's
+keuze, zie `hangar-wrapup-pr-pileup`.
+
+**Stap 3 — `nachtrun-loopt-vast-op-een-taak` herchecked, één nieuwe bevinding.**
+Oudste-niet-herverifieerde inbox-taak (laatste aangescherpt 08-29, zes nachten
+geleden — de andere vijf zijn allemaal binnen de laatste vijf nachten al
+gecheckt). Vraag 3 opnieuw gecontroleerd via `git ls-remote`:
+`origin/night/hangar-stale-clone-guard` bestaat nog, ongewijzigd, nu 20 dagen
+zonder PR. Nieuwe bevinding: `pi-openclaw-gateway` is de oudste `ready` taak op
+het bord (`added: 2026-08-07`) maar meldt zelf expliciet dat de nachtrun hem
+niet kan bouwen (fysiek werk bij Ollie thuis) — een tweede, structurele vorm
+van hetzelfde patroon dat deze taak beschrijft: regel 1's "oudste eerst" kiest
+zodra de PR-grens ooit weer opengaat mechanisch een taak die nooit `done` kan
+worden, zonder dat iets zegt of dat overgeslagen moet worden. Toegevoegd als
+vraag 4 aan het taakbestand. `hangar-sessionstart-hook-gedrag` (de taak die
+`hangar-stale-clone-guard` zou ontgrendelen) staat hierdoor sowieso achter drie
+oudere `ready` taken in de wachtrij. Blijft `inbox`.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; de
+wrapup-PR-stapel niet gemergd of geconsolideerd (Ollie's keuze); geen tweede
+inbox-taak onderzocht (regel 2); `night/hangar-stale-clone-guard` (08-15, wees
+zonder PR) met rust gelaten zonder Ollie's woord; `pi-openclaw-gateway` zelf
+niet aangepast — alleen het kruisverband gelegd in `nachtrun-loopt-vast-
+op-een-taak.md`.
+
 ## 2026-09-03
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
