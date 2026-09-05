@@ -11,6 +11,70 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-05
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`, plus de per-repo bouwagents)
+beschikbaar.
+
+**Kloon-check vóór alles.** `git fetch` tegen de officiële default
+(`claude/hangar-project-setup-kvhcad`): staat nog op `861f2c3` ("Night
+2026-08-20"), ongewijzigd — de default loopt nu 16 dagen achter op de
+wrapup-keten. Gestart vanaf `claude/night-2026-09-04` (PR #28→#29's kop, niet
+vanaf de stale default), zelfde precedent als de vorige nachten.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw geverifieerd via de API,
+dus geen bouw.** Alle drie rechtstreeks opgevraagd, niet aangenomen:
+`percentile#1` (`mergeable_state: dirty`, ongewijzigd sinds 2026-08-07),
+`learning-website#3` (`mergeable_state: clean` maar gebouwd vóór besluit
+0004, ongewijzigd sinds 2026-08-07), `project-management#13`
+(`hangar-stale-clone-guard`, `ship: false`, ongewijzigd sinds 2026-08-20).
+Drie is regel 5's plafond — geen bouw vanavond. De stap-4-wrapup-stapel: nog
+steeds niet zelf gemergd of geconsolideerd (Ollie's keuze, zie
+`hangar-wrapup-pr-pileup`); staat op vijftien PR's, zestien zodra deze
+PR opent.
+
+**Stap 3 — `hangar-daysession-branches-onzichtbaar` herchecked, en de
+branchronde zelf bleek niet compleet.** Oudste niet-recent-herverifieerde
+inbox-taak (laatst aangescherpt 08-30, zes nachten geleden — de andere vijf
+zijn allemaal binnen de laatste vijf nachten gecheckt). In plaats van alleen
+de vier al bekende branches opnieuw te bekijken: de hele `git branch -r`-lijst
+(~39 branches) opnieuw gescand tegen `git merge-base --is-ancestor`, niet
+alleen de eerder opgevallen namen. Twee nieuwe, nooit onderzochte
+niet-ancestor-branches gevonden:
+
+- `claude/nightrun` (08-07) — één lege commit, veilig te negeren.
+- `claude/charming-fermat-kdilid` (08-11) — droeg een door Ollie zelf
+  geaccepteerd besluit (`decisions/0004-nachtrun-pr-plafond-verhoogd.md`,
+  08-11: regel 5 slimmer tellen — review-schuld i.p.v. platte PR-count) mét
+  volledig werkende, geteste code (`scripts/pr_limits.py` +
+  `scripts/test_pr_limits.py`), nooit gemerged en sindsdien volledig
+  onzichtbaar. Significant: het probleem dat dit besluit oploste (een nacht
+  die niets bouwt puur door een platte teller) is precies wat vanavond zelf
+  weer gebeurde, en al 25 nachten lang gebeurt. Bewust NIET zelf teruggehaald
+  of doorgevoerd — dit raakt een veiligheidsregel, geen taak-inhoud, dus
+  buiten wat een nachtrun unilateraal hoort te beslissen. Volledig
+  vastgelegd als nieuwe taak `hangar-pr-plafond-kwijt` (inbox, met de exacte
+  vraag aan Ollie) zodat de vondst niet alsnog kwijtraakt.
+
+Ook gevonden, kleiner: `claude/hangar-project-setup-w61m5q` (08-07) droeg een
+achterhaalde vroege `weekly_review.py`-poging (niet aanbevolen, later beter
+herbouwd) én drie `done`-gemarkeerde taken voor een nooit-elders-bestaande
+"lessons loop"-feature (agent-lessen automatisch geïnjecteerd in gegenereerde
+agents). Niet teruggehaald — de huidige `gen_agents.py` is sindsdien te veel
+doorontwikkeld om de oude code blind terug te zetten, en de taken verbatim
+overnemen zou `done` laten staan over iets dat niet bestaat. Alleen
+gedocumenteerd in `hangar-daysession-branches-onzichtbaar.md`, geen apart
+taakbestand.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+`decisions/0004-nachtrun-pr-plafond-verhoogd.md` en `scripts/pr_limits.py`
+niet doorgevoerd in `reference/nightrun-rules.md` (Ollie's beslissing, zie
+`hangar-pr-plafond-kwijt`); de lessons-loop-code niet teruggezet of
+herbouwd; geen tweede inbox-taak onderzocht (regel 2); de wrapup-PR-stapel
+niet gemergd of geconsolideerd (Ollie's keuze); `night/hangar-stale-
+clone-guard` (08-15, wees zonder PR) met rust gelaten.
+
 ## 2026-09-04
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen

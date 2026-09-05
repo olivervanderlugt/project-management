@@ -140,3 +140,69 @@ uit vier is geen uitzondering — het is het patroon van deze taak, alleen lange
 onopgemerkt. Versterkt vraag 1 hieronder: zonder een mechanisme dat branches
 zonder PR signaleert, blijft dit gebeuren, en hoe ouder de branch, hoe groter de
 kans dat niemand ooit meer `git branch -r` leest om het te vinden.
+
+## Aangescherpt 2026-09-05 (nachtrun, stap 3) — de branchronde was zelf niet compleet
+
+Vanavond gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 08-30, zes nachten geleden — de andere vijf inbox-taken zijn
+allemaal binnen de laatste vijf nachten gecheckt, zelfde patroon als 09-04 bij
+`nachtrun-loopt-vast-op-een-taak`).
+
+De vraag was niet "is er iets nieuws over de vier bekende branches" maar: was
+de ronde van 08-29/08-30 zelf compleet? Nee. Die ronde onderzocht vier
+branches die op dát moment al opgevallen waren; hij herhaalde de
+`git branch -r` + `git merge-base --is-ancestor <branch> <default>`-scan niet
+over de VOLLEDIGE branchlijst. Vanavond wel, over alle ~39 remote branches.
+Resultaat: twee extra, nooit eerder onderzochte niet-ancestor-branches,
+allebei van 2026-08-07/11 — ouder dan de meeste branches die intussen wél
+verantwoord zijn.
+
+- **`claude/nightrun`** (08-07) — veilig te negeren. Eén commit boven zijn
+  merge-base met de default, en die ene commit ("nachtrun: push check") is
+  leeg — geen bestandswijziging, kennelijk een schrijftoegang-test.
+- **`claude/charming-fermat-kdilid`** (08-11) — **groot, wél verloren
+  geweest, NIET vanavond teruggehaald.** Droeg `decisions/0004-nachtrun-pr-
+  plafond-verhoogd.md` (`status: accepted`, Ollie's eigen 08-11-verzoek om
+  regel 5 slimmer te tellen — review-schuld i.p.v. platte PR-count) plus een
+  volledig werkende, geteste implementatie (`scripts/pr_limits.py` +
+  `scripts/test_pr_limits.py`, 183 regels tests). Dit is een geaccepteerd
+  besluit van Ollie zelf dat sinds 08-11 domweg nooit is aangekomen — en het
+  probleem dat het oploste (een nacht die niets bouwt omdat de platte teller
+  geen onderscheid maakt tussen "nog te beoordelen" en "wacht alleen op een
+  merge-klik") speelt nog vanavond, 25 nachten later, elke keer als regel 5
+  het plafond raakt. **Bewust niet teruggehaald of doorgevoerd** — dit raakt
+  een veiligheidsregel (regel 5), geen taak-inhoud, en dat voelt als precies
+  het soort beslissing dat niet unilateraal door een nachtrun hoort. Volledig
+  uitgeschreven als eigen taak: `hangar-pr-plafond-kwijt.md` (inbox, met de
+  exacte vraag aan Ollie).
+- **`claude/hangar-project-setup-w61m5q`** (08-07) — gemengd. Droeg een eigen,
+  vroege implementatie van `weekly_review.py`/`test_weekly_review.py` — die is
+  achterhaald: de nacht van 08-09 bouwde dezelfde taak opnieuw (op een andere,
+  wél gemergede branch), met vijf door de checker gevonden bugs gefixt die de
+  08-07-versie niet had. Niet aanbevolen om terug te halen. Maar dezelfde
+  branch droeg óók drie taken, alle drie `status: done`, voor een
+  "zelflerende Hangar"-feature (`tasks/lessons-loop.md`,
+  `tasks/lessen-doelen.md`, `tasks/bord-lessen-per-doel.md`): een `lessons/`
+  map waarvan `scripts/gen_agents.py` elke `status: active`-les injecteert in
+  elk gegenereerd builder-agentbestand, expliciet door Ollie gevraagd
+  ("zelflerend, zoals dat incident, automatisch"). Op de branch compleet
+  gebouwd en als `done` gemarkeerd — maar bestaat nergens anders: geen
+  `lessons/` map, geen les-injectie in het huidige `scripts/gen_agents.py`,
+  geen vermelding in het huidige `CLAUDE.md`. Ook hier bewust NIET
+  teruggehaald: de taakbestanden zeggen `done` terwijl de huidige
+  `gen_agents.py` sindsdien is doorontwikkeld (routing.yml, per-project
+  agents) — de code klakkeloos terugzetten zou vermoedelijk conflicteren of
+  half werken, en de taakbestanden verbatim overnemen zou `status: done`
+  laten liggen over een feature die feitelijk niet bestaat, wat regelrecht
+  tegen "verzin geen voortgang" ingaat. Alleen hier vastgelegd zodat het niet
+  nog eens 25 dagen onvindbaar blijft; geen apart taakbestand — kleiner en
+  minder urgent dan de PR-plafond-vondst hierboven.
+
+**Vraag 3 blijkt dus nog niet klaar, ook na de 08-30-ronde: elke keer dat
+iemand de volledige branchlijst opnieuw scant in plaats van alleen de al
+bekende namen, komt er iets nieuws uit.** Dat is zelf het sterkste argument
+voor vraag 1 — zonder een geautomatiseerd signaal blijft dit afhangen van of
+een sessie toevallig besluit de hele lijst opnieuw te scannen in plaats van
+alleen de bekende verdachten. Geen vijfde/zesde branch meer over om te
+onderzoeken vanavond (alle overige niet-ancestor-branches zijn ofwel de
+bekende nachtrun-wrapup-keten, ofwel al eerder verantwoord in deze taak).
