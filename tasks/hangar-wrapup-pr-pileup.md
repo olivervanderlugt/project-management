@@ -103,3 +103,30 @@ van twee.
 ervan onzichtbaar is voor de volgende nacht — alleen "iets landt elke nacht
 op de default branch" (optie 1 of 2) doet dat. De keuze blijft aan Ollie;
 dit is alleen het bewijs dat wachten de kosten laat oplopen.
+
+## Herchecked 2026-09-06 (nachtrun, stap 3)
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 08-31, zes nachten geleden — de vijf andere inbox-taken zijn
+allemaal binnen de laatste vijf nachten gecheckt: zelfde selectieregel als
+09-04 en 09-05 gebruikten).
+
+Rechtstreeks bij GitHub opgevraagd, niet aangenomen: de stapel is nu **16**
+open stap-4-PR's (`project-management#15` t/m `#30`, Night 2026-08-21 t/m
+Night 2026-09-05), tegen 10 op 08-31 en 4 op 08-25. Groei is vrijwel exact
+één per nacht, zoals voorspeld — geen versnelling, maar ook geen enkele
+avond die er één heeft opgeruimd. Geen van de drie opties hierboven is
+gekozen; niets aan de kern van het probleem is veranderd. Dit is dus geen
+nieuwe vondst, maar bevestiging dat het ongewijzigd (en groter) doorloopt.
+
+Eén relevante toevoeging sinds 08-31: `hangar-pr-plafond-kwijt` (gevonden
+2026-09-05) is een **ander, wel verwant** governance-gat — dat gaat over hoe
+regel 5 taak-PR-schuld telt (plat vs. review-status), dit hier gaat over de
+nachtrun se eigen stap-4-PR die nooit landt. Los van elkaar oplosbaar, allebei
+nog `inbox`, allebei wachtend op een keuze van Ollie. Niet samengevoegd — ze
+raken verschillende regels en kunnen onafhankelijk beslist worden.
+
+Zoals eerdere nachten ook oordeelden: dit blijft `inbox`, niet `ready` — de
+drie opties bestaan al, maar welke Ollie kiest is een smaak-/procesbeslissing,
+geen onderzoeksvraag. Niet zelf een van de drie opties doorgevoerd (zou regel
+5 of `reference/nightrun-rules.md` raken, dat hoort niet unilateraal).

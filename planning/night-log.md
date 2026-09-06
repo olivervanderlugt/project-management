@@ -11,6 +11,57 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-06
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`, plus de per-repo bouwagents)
+beschikbaar.
+
+**Kloon-check.** `git fetch` tegen de officiële default
+(`claude/hangar-project-setup-kvhcad`): staat nog op `861f2c3` ("Night
+2026-08-20"), 17 dagen achter op de wrapup-keten. Zelfde precedent als alle
+nachten sinds 08-21: gestart vanaf de kop van die keten
+(`claude/night-2026-09-05`), niet vanaf de stale default.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw rechtstreeks bij GitHub
+geverifieerd, dus geen bouw.** `percentile#1` (`mergeable_state: dirty`,
+ongewijzigd sinds 2026-08-07), `learning-website#3` (`mergeable_state: clean`
+maar gebouwd vóór besluit 0004, ongewijzigd sinds 2026-08-07),
+`project-management#13` (`hangar-stale-clone-guard`, `ship: false`,
+ongewijzigd sinds 2026-08-20). Drie is regel 5's plafond — geen bouw
+vanavond, ondanks dat het bord zelf vijf `ready`-taken heeft
+(`hangar-sessionstart-hook-gedrag`, `pi-openclaw-gateway`,
+`quizzly-media-orphan-cleanup`, `quizzly-media-read-authz`,
+`quizzly-semantische-tokens`) — regel 5 zoals hij nu in
+`reference/nightrun-rules.md` staat maakt geen uitzondering daarvoor, en
+`hangar-pr-plafond-kwijt` (zie hieronder) is precies het nog onbesliste
+voorstel dat dat zou veranderen. `project-management#11` (dagsessie-PR,
+`hangar-priority-effort-escaping`) telt terecht niet mee — geen nachtrun-taak-
+PR, wacht op Ollie's eigen merge, zelfde behandeling als alle dagsessie-PR's.
+
+**Stap 3 — `hangar-wrapup-pr-pileup` herchecked: probleem onveranderd, wel
+groter.** Oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 08-31, zes nachten geleden; de andere vijf zijn allemaal binnen
+de laatste vijf nachten gecheckt). Rechtstreeks bij GitHub geteld, niet
+aangenomen: de stapel open stap-4-PR's in `project-management` is nu **16**
+(`#15`–`#30`, Night 2026-08-21 t/m Night 2026-09-05), tegen 10 op 08-31 en 4
+op 08-25 — groei blijft vrijwel exact één per nacht. Geen van de drie
+voorgestelde opties is gekozen; niets is zelf doorgevoerd (raakt regel 5 /
+de auto-merge-regel, dat hoort niet unilateraal). Volledige update in de
+taak zelf, incl. het onderscheid met het verwante maar losse
+`hangar-pr-plafond-kwijt` (dat gaat over hoe regel 5 taak-PR-schuld telt,
+dit hier over de nachtrun se eigen stap-4-PR die nooit landt — twee
+governance-gaten, allebei nog `inbox`, allebei wachtend op Ollie).
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+`hangar-pr-plafond-kwijt` niet zelf doorgevoerd of opnieuw onderzocht (te
+vers — gisteravond gevonden, nog niets veranderd om te herchecken); geen
+tweede inbox-taak onderzocht (regel 2); geen enkele van de vijf `ready`-taken
+gebouwd ondanks resterend budget (regel 1/5: het plafond geldt, niet de
+taakvoorraad); de wrapup-PR-stapel niet gemergd of geconsolideerd (Ollie's
+keuze, zie de taak); `night/hangar-stale-clone-guard` (08-15, wees zonder PR)
+met rust gelaten.
+
 ## 2026-09-05
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
