@@ -11,6 +11,63 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-07
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`, plus de per-repo bouwagents)
+beschikbaar.
+
+**Kloon-check.** `git fetch` tegen de officiële default
+(`claude/hangar-project-setup-kvhcad`): staat nog op `861f2c3`
+("Night 2026-08-20"), 18 dagen achter op de wrapup-keten. Zelfde precedent
+als alle nachten sinds 08-21: gestart vanaf de kop van die keten
+(`origin/claude/night-2026-09-06`), niet vanaf de stale default.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, opnieuw rechtstreeks bij GitHub
+geverifieerd, dus geen bouw.** Sha en `updated_at` vergeleken met gisteravond:
+`percentile#1` (`mergeable_state: dirty`, sha `b73c406`, `updated_at` nog
+steeds gelijk aan `created_at` — 2026-08-07, nooit aangeraakt),
+`learning-website#3` (`mergeable_state: clean` maar gebouwd vóór besluit
+0004, sha `5afe91d`, ongewijzigd), `project-management#13`
+(`hangar-stale-clone-guard`, `mergeable_state: dirty`, `ship: false`, sha
+`4aecda6`, ongewijzigd sinds 2026-08-20). Alle drie exact hetzelfde als bij
+elke eerdere herverificatie. Drie is regel 5's plafond — geen bouw vanavond,
+ondanks vijf `ready`-taken op het bord (`hangar-sessionstart-hook-gedrag`,
+`pi-openclaw-gateway`, `quizzly-media-orphan-cleanup`,
+`quizzly-media-read-authz`, `quizzly-semantische-tokens`). `project-management#11`
+(dagsessie-PR, `hangar-priority-effort-escaping`) telt terecht niet mee —
+wacht op Ollie's eigen merge, geen nachtrun-taak-PR.
+
+**Stap 3 — `quizzly-slide-designer-bouwen` herchecked: niets veranderd sinds
+2026-09-01.** Oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-01, zes nachten geleden; de overige inbox-taken zijn
+allemaal binnen de laatste vijf nachten gecheckt: `hangar-wrapup-pr-pileup`
+09-06, `hangar-daysession-branches-onzichtbaar` + `hangar-pr-plafond-kwijt`
+09-05, `nachtrun-loopt-vast-op-een-taak` 09-04, `quizzly-legal-review-west`
+09-03, `hangar-in-de-browser` 09-02). Rechtstreeks bij GitHub gecontroleerd:
+`quizzly#6` (`docs/SLIDE-DESIGNER.md`) staat nog open, sha en `updated_at`
+ongewijzigd sinds het aanmaken op 2026-08-14 — geen comment, geen merge, geen
+wijziging sinds de vorige check. Blijft dus exact waar de 09-01-versie het
+achterliet: Done means niet schrijfbaar zolang het document niet op `main`
+staat en Ollie geen fase kiest uit §6/§7 van dat document. Geen nieuwe
+inhoud toegevoegd aan het taakbestand — er was niets nieuws te vinden, alleen
+te bevestigen dat de eerdere aanscherping nog klopt. **Blijft `inbox`.**
+
+**De wrapup-PR-stapel is opnieuw gegroeid, met opzet niet aangeraakt.**
+Rechtstreeks geteld: 17 open stap-4-PR's (`#15`–`#31`, Night 2026-08-21 t/m
+Night 2026-09-06), tegen 16 gisteravond — nog steeds ongeveer één per nacht.
+Dit blijft `hangar-wrapup-pr-pileup`'s beslissing, niet de mijne: drie opties
+liggen al klaar voor Ollie, niets daarvan is vanavond zelf doorgevoerd.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen tweede inbox-taak onderzocht (regel 2); geen van de vijf `ready`-taken
+gebouwd ondanks resterend budget (regel 1/5: het plafond geldt, niet de
+taakvoorraad); de wrapup-PR-stapel niet gemerged of geconsolideerd (zie
+boven); `hangar-pr-plafond-kwijt` niet zelf doorgevoerd of opnieuw onderzocht
+(raakt regel 5, geen unilaterale nachtrun-beslissing, en nog te vers om iets
+nieuws over te melden); `night/hangar-stale-clone-guard` (08-15, wees zonder
+PR) met rust gelaten, zoals elke nacht sinds 08-16.
+
 ## 2026-09-06
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
