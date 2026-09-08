@@ -11,6 +11,73 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-08
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar — builder/checker-
+verdeling uit CLAUDE.md is dus van toepassing, al kwam het vanavond niet tot
+bouwen (zie Stap 1).
+
+**Kloon-check.** `git fetch` tegen de default (`claude/hangar-project-setup-kvhcad`):
+die staat al sinds 2026-08-20 stil op `861f2c3`, want geen enkele
+stap-4-wrapup-PR is ooit gemergd. De echte actuele staat leeft op de
+ongemergde nachtketen (`claude/night-2026-09-07`, met alle voorgaande nachten
+er al in verwerkt) — vanavond gewerkt vanaf die branch, niet vanaf de stale
+default, om niets van 08-21 t/m 09-07 dubbel te doen of kwijt te raken.
+
+**Stap 1 — drie vastgelopen PR's, opnieuw rechtstreeks bij GitHub opgevraagd,
+niet aangenomen. Nog steeds drie, dus niets gebouwd.**
+- `percentile#1` — `mergeable_state: dirty`, ongewijzigd sinds opening
+  (`created_at` = `updated_at`, 2026-08-07). Echt conflict tegen `main`.
+- `learning-website#3` — `mergeable_state: clean`, ongewijzigd sinds opening.
+  Staat klaar om te mergen, maar niemand heeft dat gedaan.
+- `project-management#13` (`hangar-stale-clone-guard`) — nog steeds
+  `mergeable_state: dirty` (de taakbestand-conflictregel tegen de sindsdien
+  doorgelopen default) en `status: blocked` — checker hield `ship: false` op
+  het live-hook-verificatiepunt.
+
+Drie op drie: rule 5's plafond, dus geen taak opgepakt vanavond.
+
+**Stap 3 — `hangar-in-de-browser` opnieuw gecontroleerd** (laatst 2026-09-02,
+de oudste van de zeven inbox-taken — zelfde selectieregel als de voorgaande
+nachten gebruikten). Twee dingen rechtstreeks bij GitHub geverifieerd, niet
+aangenomen uit de vorige recheck:
+- `search_issues label:capture` op deze repo → 0 resultaten. Nog steeds nooit
+  iemand die het Vangen-formulier heeft geprobeerd.
+- De `Capture`-workflow zelf staat nog `state: active` in de workflowlijst
+  (niet stilgevallen door inactiviteit) en `.github/ISSUE_TEMPLATE/vangen.yml`
+  is byte-voor-byte ongewijzigd sinds 2026-08-06. De infrastructuur leeft dus
+  nog; dit is geen kapotte build die zichzelf oplost, het wacht puur op Ollie
+  die het formulier zelf opent vanaf zijn telefoon.
+
+Geen nieuwe informatie die de taak vooruit beweegt. Blijft `inbox`, dezelfde
+vraag aan Ollie als op 09-02.
+
+**De wrapup-PR-stapel is gegroeid naar 18** (`project-management#15`–`#32`),
+tegen 16 op 2026-09-06 — de voorspelde groei van ~1 per nacht uit
+`hangar-wrapup-pr-pileup` houdt exact aan. Niet zelf gemergd of opgeruimd:
+welke van de drie opties in die taak Ollie kiest is zijn procesbeslissing.
+
+**`hangar-pr-plafond-kwijt` (gevonden 09-05) blijft onopgelost, en blijft
+vanavond zelf relevant**: het besluit dat daar beschreven staat (Ollie's eigen,
+al geaccepteerde verzoek van 2026-08-11 om regel 5 op review-schuld te laten
+tellen in plaats van een platte PR-count) had vanavond overigens geen andere
+uitkomst gegeven — alle drie de PR's hierboven missen een `APPROVED`-review,
+dus ze tellen ook onder de nieuwe telling als schuld. Het probleem dat het
+besluit oploste (een nacht die stilvalt puur omdat de teller geen onderscheid
+maakt) speelt dus vanavond niet in scherpe vorm, maar de kern — een door Ollie
+zelf al geaccepteerd en af gebouwd besluit dat al 28 dagen nooit is
+aangekomen — staat nog steeds gewoon open. Niet zelf doorgevoerd: raakt regel
+5, een veiligheidsregel, geen taak-inhoud.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5: drie vastgelopen
+PR's); geen van de drie aangeraakt (conflict, pre-auto-merge-klaar-om-te-
+mergen, resp. checker-`ship:false` — alle drie ongewijzigd sinds de vorige
+keer); geen wrapup-PR gemergd of gesloten (Ollie's procesbeslissing, nog
+open in `hangar-wrapup-pr-pileup`); geen tweede inbox-taak aangescherpt (regel
+2: één taak per nacht); `hangar-pr-plafond-kwijt` niet zelf ingevoerd (raakt
+regel 5). Status → geen taak-status gewijzigd, branch → `claude/night-2026-09-08`.
+
 ## 2026-09-07
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
