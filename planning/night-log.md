@@ -11,6 +11,84 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-10
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar — builder/checker-
+verdeling uit CLAUDE.md is van toepassing, al kwam het vanavond niet tot
+bouwen (zie Stap 1).
+
+**Kloon-check.** De default (`claude/hangar-project-setup-kvhcad`) staat nog
+steeds stil op `861f2c3` (sinds 2026-08-20) — geen stap-4-wrapup-PR is ooit
+gemergd. Vanavond gewerkt vanaf de ongemergde nachtketen
+(`claude/night-2026-09-08`, met alle voorgaande nachten er al in verwerkt),
+niet vanaf de stale default. Geen run gevonden voor 2026-09-09 — er bestaat
+geen `claude/night-2026-09-09`-branch en geen PR ervoor; niet onderzocht
+waarom (buiten de scope van wat deze run kan vaststellen), alleen
+geconstateerd.
+
+**Stap 1 — drie vastgelopen PR's, opnieuw rechtstreeks bij GitHub opgevraagd,
+niet aangenomen. Nog steeds drie, dus niets gebouwd.**
+- `percentile#1` — `mergeable_state: dirty`, ongewijzigd sinds opening
+  (`created_at` = `updated_at` = 2026-08-07). Echt conflict tegen `main`.
+- `learning-website#3` — `mergeable_state: clean`, ongewijzigd sinds opening.
+  Staat klaar om te mergen, maar niemand heeft dat gedaan.
+- `project-management#13` (`hangar-stale-clone-guard`) — nog steeds
+  `mergeable_state: dirty`, `status: blocked` — checker hield `ship: false`
+  op het live-hook-verificatiepunt.
+
+Drie op drie: rule 5's plafond, dus geen taak opgepakt vanavond, ondanks vijf
+`ready`-taken op het bord (`hangar-sessionstart-hook-gedrag`,
+`pi-openclaw-gateway`, `quizzly-media-orphan-cleanup`,
+`quizzly-media-read-authz`, `quizzly-semantische-tokens`). `project-management#11`
+(dagsessie-PR, `hangar-priority-effort-escaping`) telt terecht niet mee —
+wacht op Ollie's eigen merge, geen nachtrun-taak-PR.
+
+**Stap 3 — `quizzly-legal-review-west` herchecked: één echte nieuwe
+bevinding, blokkade zelf onveranderd.** Oudste nog niet recent
+herverifieerde inbox-taak (laatst 09-03, zeven nachten geleden — de overige
+zes inbox-taken zijn allemaal binnen de laatste vijf nachten gecheckt).
+Rechtstreeks bij GitHub gecontroleerd, niet aangenomen:
+- `quizzly#1` staat nog open, `created_at` = `updated_at` = 2026-08-07 —
+  door niemand aangeraakt.
+- **Nieuw: `mergeable_state` is nu `dirty`** (was bij eerdere checks nooit
+  expliciet opgevraagd). Uitgezocht wélk conflict dat is, niet aangenomen dat
+  het inhoudelijk is: `quizzly#3` (image-upload, gemerged 2026-08-14) voegde
+  `sharp` toe aan `package.json`/`package-lock.json` ná het aftakken van
+  `quizzly#1` — dat is de enige wijziging op `main` sinds de PR-basis
+  (`cff0040`) die een van `quizzly#1`'s 28 bestanden raakt. `docs/LEGAL.md`
+  zelf is sinds de PR-basis niet gewijzigd op `main`, dus dit is een
+  mechanisch dependency-conflict, geen inhoudelijk juridisch conflict. Wel
+  relevant voor Ollie's mergemoment: mergen van `quizzly#1` is nu niet meer
+  een schone fast-forward, er moet eerst een package.json/lock-conflict
+  worden opgelost.
+- `git log` op `docs/LEGAL.md` en `docs/COMPLIANCE-REVIEW.md` op `main` sinds
+  2026-09-03: nul commits. Geen dagsessie heeft compliance-content buiten
+  `quizzly#1` om alsnog op `main` gezet.
+
+De blokkade zelf is dus ongewijzigd: het eindresultaat is pas eerlijk te
+schrijven zodra vaststaat welke code de basis is (nu, of met `quizzly#1`
+gemergd). Dat blijft Ollie's beslissing, niet iets deze taak zelf kan
+oplossen. **Blijft `inbox`.** Vraag aan Ollie ongewijzigd, met de nieuwe
+kanttekening toegevoegd aan het taakbestand: wanneer merge je `quizzly#1` —
+en weet dat dat nu een (triviale, niet-inhoudelijke) conflictresolutie in
+`package.json`/`package-lock.json` vraagt.
+
+**De wrapup-PR-stapel is opnieuw gegroeid.** Rechtstreeks geteld:
+`project-management#15`–`#33`, 19 open stap-4-PR's, plus deze nacht's eigen
+PR wordt de 20e. Nog steeds ongeveer één per nacht, zoals
+`hangar-wrapup-pr-pileup` voorspelde. Niet zelf gemergd of opgeruimd — dat
+blijft Ollie's procesbeslissing (drie opties liggen al klaar in dat
+taakbestand).
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen taak gebouwd ondanks vijf `ready`-taken (regel 5: het plafond geldt, niet
+de taakvoorraad); geen tweede inbox-taak onderzocht (regel 2: één taak per
+nacht); de wrapup-PR-stapel niet gemerged of geconsolideerd; `quizzly#1` niet
+zelf geraakt (dat zou zowel een dagsessie-PR aanpassen als code-conflicten
+oplossen die niet bij deze taak horen); `hangar-pr-plafond-kwijt` niet zelf
+doorgevoerd (raakt regel 5, geen unilaterale nachtrun-beslissing).
+
 ## 2026-09-08
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen

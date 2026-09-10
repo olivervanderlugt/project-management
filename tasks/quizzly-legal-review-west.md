@@ -93,3 +93,27 @@ commits. `main` staat nog exact op de merge van PR #7 (2026-08-16); er is ook
 geen dagsessie geweest die compliance-content buiten PR#1 om rechtstreeks op
 `main` heeft gezet. De blokkade is dus niet alleen ongewijzigd maar ook niet op
 een andere weg alsnog opgelost. Blijft `inbox`, zelfde vraag aan Ollie.
+
+## Herchecked 2026-09-10 (nachtrun, stap 3)
+
+Zeven nachten sinds de vorige check. `quizzly#1` opnieuw rechtstreeks bij
+GitHub opgevraagd: nog steeds `open`, `created_at` = `updated_at` =
+2026-08-07, door niemand aangeraakt. `docs/LEGAL.md` en
+`docs/COMPLIANCE-REVIEW.md` op `main`: nul commits sinds 09-03.
+
+**Eén echte nieuwe bevinding, niet eerder opgevraagd:** `quizzly#1`'s
+`mergeable_state` staat nu op `dirty` — er is een echt mergeconflict tegen
+`main`. Uitgezocht wélk conflict, niet aangenomen dat het inhoudelijk is:
+van de 28 bestanden die `quizzly#1` raakt, is er sinds de PR-basis
+(`cff0040`) precies één ook op `main` gewijzigd — `package.json` /
+`package-lock.json`, door `quizzly#3` (image-upload, gemerged 2026-08-14,
+voegt de `sharp`-dependency toe). `docs/LEGAL.md` zelf is niet geraakt. Dit
+is dus een mechanisch dependency-conflict, geen inhoudelijk juridisch
+conflict — maar het betekent wel dat `quizzly#1` mergen geen schone
+fast-forward meer is.
+
+Verandert de aard van de blokkade niet: het eindresultaat is nog steeds pas
+eerlijk te schrijven zodra vaststaat welke code de basis is. **Blijft
+`inbox`.** Vraag aan Ollie ongewijzigd (wanneer merge je `quizzly#1`?), met
+één toevoeging: dat mergen vraagt nu eerst een (triviale)
+package.json/lock-conflictresolutie, geen inhoudelijke.
