@@ -11,6 +11,75 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-11
+
+**Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
+(`hangar`, `hangar-checker`, `hangar-manager`) beschikbaar — builder/checker-
+verdeling uit CLAUDE.md is dus van toepassing, al kwam het vanavond niet tot
+bouwen (zie Stap 1).
+
+**Kloon-check.** De default (`claude/hangar-project-setup-kvhcad`) staat nog
+steeds stil op `861f2c3` (sinds 2026-08-20) — geen enkele stap-4-wrapup-PR is
+ooit gemergd. Vanavond gewerkt vanaf de ongemergde nachtketen
+(`claude/night-2026-09-10`, met alle voorgaande nachten er al in verwerkt),
+niet vanaf de stale default.
+
+**Stap 1 — drie vastgelopen PR's, opnieuw rechtstreeks bij GitHub opgevraagd,
+niet aangenomen. Nog steeds drie, dus niets gebouwd.**
+- `percentile#1` — `mergeable_state: dirty`, ongewijzigd sinds opening
+  (`created_at` = `updated_at`, 2026-08-07). Echt conflict tegen `main`.
+- `learning-website#3` — `mergeable_state: clean`, ongewijzigd sinds opening.
+  Staat klaar om te mergen, maar niemand heeft dat gedaan.
+- `project-management#13` (`hangar-stale-clone-guard`) — nog steeds
+  `mergeable_state: dirty`, `status: blocked` — checker hield `ship: false`
+  op het live-hook-verificatiepunt.
+
+Drie op drie: rule 5's plafond, dus geen taak opgepakt vanavond, ondanks vijf
+`ready`-taken op het bord (`hangar-sessionstart-hook-gedrag`,
+`pi-openclaw-gateway`, `quizzly-media-orphan-cleanup`,
+`quizzly-media-read-authz`, `quizzly-semantische-tokens`). `project-management#11`
+(dagsessie-PR, `hangar-priority-effort-escaping`) telt terecht niet mee —
+wacht op Ollie's eigen merge, geen nachtrun-taak-PR.
+
+**Stap 3 — `quizzly-slide-designer-bouwen` opnieuw gecontroleerd, geen
+verandering gevonden.** Oudste nog niet recent herverifieerde inbox-taak
+(laatst inhoudelijk aangescherpt 2026-09-01, tien nachten geleden — de zes
+andere inbox-taken zijn allemaal binnen de laatste vijf nachten gecheckt).
+Rechtstreeks bij GitHub gecontroleerd, niet aangenomen uit de vorige recheck:
+- `quizzly#6` (draagt `docs/SLIDE-DESIGNER.md`) staat nog open,
+  `created_at` = `updated_at` = 2026-08-14, `mergeable_state: clean` —
+  door niemand aangeraakt.
+- `docs/SLIDE-DESIGNER.md` bestaat nog steeds niet op `main` (rechtstreeks
+  bij GitHub opgevraagd: pad bestaat niet op de default branch van quizzly).
+- Geen nieuw besluit van Ollie gevonden over welke fase-1-scope hij wil —
+  niets in `decisions/` of `planning/now.md` verwijst ernaar.
+
+Niets vooruitbewogen. **Blijft `inbox`**, exact dezelfde vraag aan Ollie als
+op 09-01: zodra hij `quizzly#6` merget en akkoord gaat met de in dat document
+aanbevolen fase-1-scope (§7, letterlijk over te nemen als `## Done means`),
+kan dit in één regel naar `ready`. Geen ander inbox-taak dit keer onderzocht
+(regel 2: één taak per nacht).
+
+**De wrapup-PR-stapel is opnieuw gegroeid.** Rechtstreeks geteld:
+`project-management#15`–`#34`, 20 open stap-4-PR's, plus deze nacht's eigen
+PR wordt de 21e. Nog steeds ongeveer één per nacht, zoals
+`hangar-wrapup-pr-pileup` voorspelde. Niet zelf gemergd of opgeruimd — dat
+blijft Ollie's procesbeslissing (drie opties liggen al klaar in dat
+taakbestand). `hangar-pr-plafond-kwijt` (Ollie's eigen, al geaccepteerde
+besluit `0004-nachtrun-pr-plafond-verhoogd`, sinds 2026-08-11 nooit
+doorgevoerd) blijft om dezelfde reden onopgelost en zelf ongewijzigd
+ongeraakt — het raakt regel 5, een veiligheidsregel, niet gewone taak-inhoud.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen taak gebouwd ondanks vijf `ready`-taken (regel 5: het plafond geldt, niet
+de taakvoorraad); geen tweede inbox-taak onderzocht (regel 2); de wrapup-PR-
+stapel niet gemerged of geconsolideerd; `hangar-pr-plafond-kwijt` en
+`hangar-wrapup-pr-pileup` niet zelf doorgevoerd (raken regel 5 resp. het
+nachtrun-proces zelf, geen unilaterale nachtrun-beslissing); geen volledige
+`git branch -r`-herscan gedaan naar nieuwe wees-branches (dat hoort bij
+`hangar-daysession-branches-onzichtbaar`, al 09-05 herverifieerd, niet de
+taak die vanavond aan de beurt was).
+
 ## 2026-09-10
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
