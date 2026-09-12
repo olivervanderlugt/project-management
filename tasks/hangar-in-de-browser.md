@@ -132,6 +132,28 @@ Stap 4 blijft ongewijzigd: een besluit dat 0001 vervangt, nog niet genomen.
 De paraplu-taak blijft dus `inbox`, met nu nog maar één echte blokkerende
 vraag in plaats van twee.
 
+## Herchecked 2026-09-12 (nachtrun, stap 3) — geen verandering
+
+Oudste inbox-taak die tien nachten niet herverifieerd was (laatst 09-02; de
+zes andere inbox-taken zijn allemaal binnen de laatste zes nachten gecheckt —
+`quizzly-slide-designer-bouwen` bijvoorbeeld gisteren, 09-11). Rechtstreeks
+bij GitHub nagegaan, niet aangenomen uit `planning/now.md`:
+
+- `search_issues` op `repo:olivervanderlugt/project-management label:capture`
+  → nog steeds 0 resultaten. Niemand heeft het Vangen-formulier geprobeerd.
+- De default branch (`claude/hangar-project-setup-kvhcad`) staat nog op
+  `861f2c3` (2026-08-20) als laatste commit — geen enkele
+  `github-actions[bot]`-commit erna, dus de Capture-workflow heeft niet
+  gedraaid.
+- `decisions/` bevat nog geen besluit dat 0001 vervangt (stap 4's blokkade).
+
+Geen nieuwe informatie. Zelf geen test-issue aangemaakt, zelfde reden als
+09-02: dat zou een echte `github-actions[bot]`-commit rechtstreeks op de
+default branch veroorzaken, los van deze nacht se eigen PR-stroom — twijfel
+dan valt het erbuiten. **Blijft `inbox`**, exact dezelfde open vraag als
+09-02: probeer het Vangen-formulier zelf vanaf je telefoon
+(github.com/olivervanderlugt/project-management/issues/new/choose).
+
 ## Notes
 
 Stap 1 tot en met 3 leveren het grootste deel van wat hij beschreef, zonder
