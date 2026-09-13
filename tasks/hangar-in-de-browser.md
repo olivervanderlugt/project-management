@@ -67,13 +67,54 @@ Aangescherpt, niet gebouwd:
   (zie besluit 0003, nog `proposed`). Wat van stap 3 overblijft: verbruik per
   nacht loggen in `planning/night-log.md`. Dat wordt pas een taak als 0003
   wordt aangenomen.
-- **Stap 1 blijft liggen tot Ollie twee dingen beslist**: (a) akkoord dat elke
-  issue een API-call kost, met welk maandplafond, en (b) hij moet zelf de
-  API-sleutel als repo-secret zetten — dat mag en kan een nachtrun niet.
+- ~~Stap 1 blijft liggen tot Ollie twee dingen beslist: (a) akkoord dat elke
+  issue een API-call kost... (b) hij moet zelf de API-sleutel als repo-secret
+  zetten~~ — **fout, zie de herchecking van 2026-09-13 hieronder: stap 1 was
+  op het moment dat dit geschreven werd al twee dagen gebouwd en gebruikt geen
+  van beide.**
 - **Stap 4 blijft liggen** tot er een besluit ligt dat 0001 vervangt, zoals het
   bestand zelf al zegt.
 
 Deze paraplu-taak blijft `inbox` tot stap 1 en 4 beslist zijn of geschrapt.
+
+## Herchecked 2026-09-13 (nachtrun) — stap 1 stond al die tijd al gebouwd
+
+Elke nacht sinds minstens 2026-08-23 herhaalde de log "nog geen
+capture-label-issue" en liet stap 1 als open punt staan. Dat bleek onjuist
+gelezen: het gaat om of er ooit een issue via het formulier is *binnengekomen*
+(nog steeds nee — zie hieronder), niet of het mechanisme *bestaat*. Het bestaat
+al sinds dag één:
+
+- `.github/ISSUE_TEMPLATE/vangen.yml` en `.github/workflows/capture.yml` zijn
+  gecommit op **2026-08-06**, dezelfde dag als deze taak zelf gevangen werd
+  (commits `7b9e1d0`, `11e5e9a`) — dus vóór de 08-08-notitie hierboven die stap
+  1 nog als "blijft liggen" beschreef.
+- `scripts/capture_issue.py` (+ `scripts/test_capture_issue.py`) parsen het
+  GitHub-issueformulier **deterministisch**, met een expliciete regel in het
+  bestand zelf: "No dependencies beyond the standard library. No model calls,
+  no network." Geen Claude-aanroep, dus geen API-sleutel, geen token-kosten
+  per issue. Blokkade (a) en (b) uit de 08-08-notitie golden dus al twee dagen
+  niet meer toen ze opgeschreven werden — het was gewoon niet herzien tegen de
+  code.
+- `git log --all --author="github-actions"` geeft nul resultaten: het
+  mechanisme heeft nog nooit echt gedraaid, want Ollie heeft het
+  vangformulier nog niet gebruikt. Er is dus niets kapot of onaf — het ligt
+  klaar en wacht op gebruik, niet op een besluit.
+
+**Wat dit betekent voor de taak als geheel:** van de vier stappen zijn 1, 2 en
+het grootste deel van 3 al gebouwd en kosten niets. Het enige dat echt nog
+openstaat is **stap 4** (eigen UI met invoerveld, server, auth, maandkosten) —
+en die wacht, zoals altijd al gezegd, op een besluit dat 0001 vervangt.
+Decision `0003` (het routeringsontwerp achter stap 3's restje) staat trouwens
+ook nog steeds op `proposed`, ongewijzigd sinds 2026-08-06.
+
+Blijft `inbox` — niet omdat er nog onderzoek nodig is, maar omdat stap 4 zonder
+dat besluit geen `## Done means` kan krijgen. **Concrete vraag aan Ollie:** de
+browser-kant van dit wens (lezen kan al, vangen zonder sessie kan al sinds
+dag één, prioriteit en routing zijn al automatisch) is al waar. Wil je nog
+steeds een eigen invoerveld-UI (stap 4, kost geld, vraagt een besluit dat 0001
+vervangt) — of dekt "vangen via het GitHub-formulier + lezen via het bord" wat
+je bedoelde, en mag deze taak dicht?
 
 ## Notes
 

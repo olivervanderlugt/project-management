@@ -11,6 +11,95 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-13
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`) beschikbaar.
+
+**Kloon-check — de kloon was zwaar verouderd.** `git fetch` liet zien dat de
+default branch (`claude/hangar-project-setup-kvhcad`) nog op `861f2c3`
+(2026-08-20) stond, terwijl er 23 nachten aan `claude/night-*`-branches en
+wrapup-PR's (`#15` t/m `#36`) op GitHub staan — **geen daarvan is ooit gemerged**.
+Dit logbestand loopt dus lokaal ook maar tot en met 2026-08-20; alles wat de
+nachten van 08-21 t/m 09-12 hebben gevonden staat alleen in die 22 open PR's,
+niet hier. Dat is zelf het grootste signaal van vanavond — zie onderaan.
+
+**Stap 1 — drie vastgelopen PR's, nog steeds drie, dus niets gebouwd.**
+Herverifieerd, niet aangenomen uit eerdere logs:
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main`. Ongewijzigd sinds
+  2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state: clean`,
+  gebouwd en gecheckt vóór besluit 0004 bestond. Blijft bewust ongemerged: geen
+  van de nachten sindsdien heeft besloten hem alsnog te mergen, en het is niet
+  aan mij om die twintig nachten se precedent vanavond eigenmachtig te
+  doorbreken zonder Ollie's akkoord.
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty` tegen de huidige default-tip, `status: blocked` (checker zei
+  `ship: false`). Ongewijzigd.
+
+Drie, dus over de grens van regel 5. Vijf `ready`-taken lagen klaar
+(`hangar-stale-clone-guard` zelf zit er ook als PR #13 al aan vast), maar er is
+niet gebouwd.
+
+**Stap 3 — `hangar-in-de-browser` herzocht, en dit keer wél iets gevonden.**
+De taaknotitie zei al sinds de nacht van 2026-08-08 dat stap 1 ("vangen zonder
+sessie") "blijft liggen tot Ollie twee dingen beslist" (akkoord voor API-kosten
+per issue, plus zelf een API-sleutel als secret zetten). Dat bleek al die tijd
+onjuist: `.github/ISSUE_TEMPLATE/vangen.yml` en `.github/workflows/capture.yml`
+staan al sinds **2026-08-06** — dezelfde dag als de taak zelf — op de default
+branch, en `scripts/capture_issue.py` parsed het formulier volledig
+deterministisch ("No dependencies beyond the standard library. No model calls,
+no network" staat letterlijk in het bestand). Geen API-sleutel, geen kosten per
+issue — de twee blokkades uit de 08-08-notitie golden dus al niet meer toen ze
+werden opgeschreven. Elke nacht sinds minstens 08-23 heeft "nog geen
+capture-label-issue" herhaald zonder de code te lezen; dat klopte alleen als
+"nog geen issue via het formulier binnengekomen" (bevestigd:
+`git log --all --author="github-actions"` geeft nul resultaten), niet als "het
+bestaat niet." Taakbestand gecorrigeerd met de vondst en een scherpere vraag:
+van de vier stappen zijn 1, 2 en het grootste deel van 3 al gebouwd en kosten
+niets; alleen stap 4 (eigen invoerveld-UI, server, maandkosten) staat nog open,
+en die wacht — zoals altijd al gezegd — op een besluit dat 0001 vervangt.
+Blijft `inbox`.
+
+Ter plekke ook de overige vijf `inbox`-taken herverifieerd (geen wijzigingen
+gevonden, dus niet elk apart opgeschreven): `quizzly-legal-review-west`
+(`quizzly#1` staat nog open, ongemerged), `quizzly-design-pass-toepassen`
+(`globals.css` op `main` gebruikt nog steeds `--color-ink-950`, geen richting
+uit `docs/DESIGN.md` is toegepast), `quizzly-slide-designer-bouwen` (wacht op
+`quizzly-slide-designer`, dat zelf nog `blocked` staat — `quizzly#6` is nog
+open), `quizzly-media-read-authz` (smaakbesluit, geen nieuwe informatie
+mogelijk) en `versa-hosting-besluit` (geld/deploy-besluit, hoort niet
+onbewaakt aangeraakt te worden — bewust niet onderzocht, alleen bevestigd dat
+de status ongewijzigd hoort te blijven).
+
+**Wat ik bewust niet heb gedaan.** Geen van de 22 openstaande wrapup-PR's
+(`#15`–`#36`, plus `#13`) zelf gemerged, gesloten of opgeruimd — dat is Ollie's
+procesbeslissing, niet de mijne, en eerdere nachten hebben dat consistent zo
+gelaten. Ook `learning-website#3` niet alsnog gemerged ondanks dat hij
+`mergeable_state: clean` is en al gecheckt was vóór besluit 0004 — zie boven.
+Geen van de zes `inbox`-taken naar `ready` gezet: op `hangar-in-de-browser` na
+(gecorrigeerd, niet gepromoot) hing elke blokkade op een echt besluit van
+Ollie, geen onderzoeksvraag. `versa-hosting-besluit` bewust niet dieper
+onderzocht (geld/deploy).
+
+**De wrapup-PR-stapel is het echte signaal vanavond.** 23 PR's tegen de
+default branch van de Hangar zelf staan open, van `#13` (2026-08-20) tot en
+met `#36` (2026-09-12), geen enkele gemerged. Sinds `#15` heeft elke nacht
+"3 stuck PR's, dus niet bouwen" gerapporteerd — dat getal is intern
+consistent gebleven (percentile#1, learning-website#3, project-management#13),
+maar de Hangar registreert daardoor al 24 dagen geen enkele voortgang op zijn
+eigen default branch, en dit logbestand mist dus 24 dagen aan geschiedenis die
+wél gebeurd is (in de PR's, niet hier). Dat is Ollie's proces-beslissing om op
+te lossen (mergen, of de aanpak wijzigen), niet iets wat een nachtrun zelf
+oplost — maar het is groot genoeg om hardop te noemen in plaats van gewoon
+PR #37 aan de stapel toe te voegen.
+
+Dashboard herbouwd. Branch `claude/night-2026-09-13`, PR naar
+`claude/hangar-project-setup-kvhcad` met dit logblok als beschrijving.
+
+---
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
