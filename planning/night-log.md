@@ -11,6 +11,82 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-14
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`) beschikbaar.
+
+**Kloon-check.** `git fetch` bevestigt: de default branch
+(`claude/hangar-project-setup-kvhcad`) staat nog steeds op `861f2c3`
+(2026-08-20) — geen enkele van de 24+ open `claude/night-*`-PR's is sinds
+gisteravond gemerged. Lokale kloon is actueel ten opzichte van die stilstaande
+default; geen gemiste merges, geen achtergebleven `doing`-taak.
+
+**Stap 1 — drie vastgelopen PR's, opnieuw geverifieerd, opnieuw ongewijzigd.**
+Niet aangenomen uit het logboek van 09-13 — elke PR fris opgehaald:
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main`. Ongewijzigd sinds
+  2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, gebouwd vóór besluit 0004 bestond. Blijft bewust ongemerged, zelfde
+  redenering als elke nacht sinds 08-20: het is niet aan één nacht om dat
+  precedent eigenmachtig te doorbreken.
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty` tegen de huidige default-tip, `status: blocked` (checker zei
+  `ship: false`). Ongewijzigd.
+
+Ook de overige zes gekoppelde repo's (crew-management-system, timer-workout,
+versa, quizzly, learning-website, percentile) nagelopen op open PR's — niets
+nieuws buiten de al bekende dagsessie-PR's (die wachten op Ollie's eigen merge,
+niet op de nachtrun) en de drie hierboven. Drie, dus over de grens van regel 5:
+niet gebouwd, ook al lagen er `ready`-taken klaar.
+
+**Stap 3 — alle zes `inbox`-taken opnieuw onderzocht, geen nieuwe informatie
+gevonden.** Voor elk gecontroleerd of de onderliggende blokkade sinds de
+laatste check nog klopt, niet alleen of de taaknotitie het zegt:
+- `hangar-in-de-browser` — de correctie van 09-13 (stap 1-3 van de vier grotendeels
+  al gebouwd, alleen stap 4 wacht nog op een besluit dat 0001 vervangt) staat
+  nog niet op de default branch (leeft alleen in de ongemergede PR #37), dus
+  het lokale taakbestand toont nog de oudere, inmiddels onjuiste blokkade.
+  Bewust niet opnieuw dezelfde correctie gecommit: dat zou een vierde
+  bijna-identieke diff tegen de default toevoegen aan een stapel die al 24
+  dagen niet vooruitkomt, zonder nieuwe informatie op te leveren. De echte fix
+  ligt al klaar in PR #37 en wacht op Ollie's merge-beslissing, niet op een
+  hercreatie.
+- `quizzly-design-pass-toepassen` — nog geen keuze uit `docs/DESIGN.md`
+  vastgelegd (geen nieuwe `decisions/`-entry, geen wijziging in het
+  taakbestand van `quizzly-design-pass`). Blijft `inbox`.
+- `quizzly-legal-review-west` — `quizzly#1` staat nog open, ongemerged. Blokkade
+  ongewijzigd.
+- `quizzly-media-read-authz` — smaakbesluit (sessie-gebonden lezen vs. de
+  capability-URL laten staan). Geen nieuwe informatie mogelijk zonder Ollie.
+- `quizzly-slide-designer-bouwen` — geverifieerd dat `docs/SLIDE-DESIGNER.md`
+  nog steeds niet op `main` staat (alleen op de ongemergede `quizzly#6`) — de
+  premisse van de taaknotitie klopt dus nog. Blijft `inbox`.
+- `versa-hosting-besluit` — geld/deploy-besluit, bewust niet onderzocht.
+
+Geen van de zes gepromoot; geen enkele taaknotitie gewijzigd, want geen enkele
+bevatte een onjuiste of verouderde bewering die het waard was te corrigeren
+(in tegenstelling tot `hangar-in-de-browser` op 09-13). Een eerlijk leeg
+resultaat: er was vanavond niets nieuws te vinden.
+
+**Wat ik bewust niet heb gedaan.** Geen van de wrapup-PR's of de drie
+vastgelopen PR's zelf gemerged, gesloten of opgeruimd. `learning-website#3`
+niet alsnog gemerged ondanks `mergeable_state: clean` — zie boven. De
+09-13-correctie op `hangar-in-de-browser` niet opnieuw gecommit — zie boven.
+
+**De PR-stapel groeit door.** Met vanavond erbij staan er 25 PR's tegen de
+default branch van de Hangar open (`#11`, `#13`, `#15`–`#37`, en straks deze),
+van `#11` (2026-08-14) tot en met vanavond — nog steeds geen enkele gemerged.
+Dit logbestand mist dus nog steeds alles wat de nachten van 08-21 t/m 09-13
+hebben gevonden; het staat alleen in die PR's. Dit is Ollie's proces-beslissing
+om op te lossen, niet iets wat een nachtrun zichzelf kan of mag oplossen —
+maar het is de 25e nacht op rij dat dit hardop gezegd wordt in plaats van
+alleen PR #38 aan de stapel toe te voegen.
+
+Dashboard herbouwd. Branch `claude/night-2026-09-14`, PR naar
+`claude/hangar-project-setup-kvhcad` met dit logblok als beschrijving.
+
 ## 2026-08-20
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
