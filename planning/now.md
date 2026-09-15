@@ -1,6 +1,6 @@
 ---
-updated: 2026-09-08
-focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 18; je EIGEN al geaccepteerde plafond-besluit ligt al 28 dagen ongebruikt
+updated: 2026-09-15
+focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 23+; en de stapel kost nu ook avonden onderzoek, niet meer alleen zichtbaarheid
 ---
 
 - **Je eigen besluit van 2026-08-11 om dit precieze probleem op te lossen is
@@ -36,12 +36,21 @@ focus: Drie vastgelopen PR's wachten al 4+ weken op jou; wrapup-stapel op 18; je
     `ship: false` op één punt (live hook-verificatie niet gedaan). Zie de
     taak zelf voor de exacte vraag.
   - Zolang deze drie op 3 blijven staan, bouwt de nachtrun niets (regel 5) en
-    scherpt hij alleen `inbox`-taken aan — dat is nu al drie weken de status.
+    scherpt hij alleen `inbox`-taken aan — dat is nu al vijf weken de status.
 
-- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 18**
-  (`project-management#15`–`#32`), plus `#11` van 08-14. Niemand merget ze,
-  groei blijft ~1 per nacht. Drie opties liggen klaar in de taak; geen ervan
-  mag een nachtrun zelf kiezen — dat is expliciet jouw procesbeslissing.
+- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 23+**
+  (`project-management#13`, `#15`–`#38`, plus `#11` van 08-14). Niemand
+  merget ze, groei blijft ~1 per nacht. Drie opties liggen klaar in de taak;
+  geen ervan mag een nachtrun zelf kiezen — dat is expliciet jouw
+  procesbeslissing. **Nieuw sinds 09-15: de stapel kost nu ook echt
+  onderzoek, niet meer alleen zichtbaarheid** — de nachten van 09-13 en 09-14
+  vertakten allebei per ongeluk vanaf de oude stale default in plaats van de
+  verste keten (`claude/night-2026-09-12`), en deden daardoor een avond
+  onderzoek over dat al twee weken eerder op een onbereikbare branch klaar
+  lag, terwijl vier intussen `ready`/`blocked`-gezette taken er voor hen weer
+  als onbeslist uitzagen. Zie de "Update 2026-09-15" in de taak zelf. Deze
+  nacht vertakte bewust van `claude/night-2026-09-12` om dat niet nog een
+  keer te doen.
 
 - **Vijf `ready` taken staan te wachten, geblokkeerd door bovenstaande**:
   `pi-openclaw-gateway` (08-07), `quizzly-media-read-authz` (08-14),

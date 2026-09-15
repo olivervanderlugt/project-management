@@ -130,3 +130,73 @@ Zoals eerdere nachten ook oordeelden: dit blijft `inbox`, niet `ready` — de
 drie opties bestaan al, maar welke Ollie kiest is een smaak-/procesbeslissing,
 geen onderzoeksvraag. Niet zelf een van de drie opties doorgevoerd (zou regel
 5 of `reference/nightrun-rules.md` raken, dat hoort niet unilateraal).
+
+## Update 2026-09-15 (nachtrun, stap 3) — de stapel kost nu ook onderzoek, niet meer alleen zichtbaarheid
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-06, negen nachten geleden — ouder dan elke andere inbox-taak
+op dit bord).
+
+**Kloon-check, vóór al het andere.** `git branch -r` + commit-telling tegen de
+stale default (`861f2c3`, nog steeds "Night 2026-08-20") laat een nieuw
+verschijnsel zien binnen deze taak se eigen patroon: de wrapup-keten liep
+09-01 t/m 09-12 netjes door (elke nacht bouwde op de vorige, 23 commits voor
+default), maar **09-13 en 09-14 vertakten allebei opnieuw vanaf de stale
+default** in plaats van vanaf `claude/night-2026-09-12`. Beide nachten waren
+zich bewust van de PR-stapel (ze noemen hem expliciet in hun eigen night-log,
+09-13 zelfs met het exacte PR-bereik `#13`, `#15`–`#36`) — maar geen van
+beide heeft de taakbestanden van de meest recente branch gelezen vóór hij
+opnieuw ging onderzoeken.
+
+**Concreet gevolg, niet hypothetisch:** 09-13's "vondst" dat
+`hangar-in-de-browser` stap 1 al sinds 2026-08-06 gratis werkt en de oude
+blokkade-tekst fout was, stond **al** in `claude/night-2026-09-12`'s versie
+van dat taakbestand — met een scherpere formulering ("nu nog maar één echte
+blokkerende vraag") die van vóór 09-02 dateert. 09-13 deed dus een avond
+onderzoek om een antwoord te herontdekken dat al twee weken op een
+onbereikbare branch stond. Erger: 09-13 en 09-14 lazen de taakstatussen van
+de **stale** boom, en behandelden daardoor vier taken die intussen al naar
+`ready` (`hangar-sessionstart-hook-gedrag`, `pi-openclaw-gateway`,
+`quizzly-media-read-authz`, `quizzly-semantische-tokens`) of `blocked` met een
+gekozen richting (`versa-hosting-besluit`, `quizzly-design-pass-toepassen`)
+waren gepromoveerd, alsof ze nog onbeslist `inbox` waren — 09-13 noemt
+`quizzly-media-read-authz` letterlijk nog als "inbox-taak" terwijl hij op de
+09-12-branch al `ready` stond. Niets is stuk gegaan (de echte antwoorden
+staan nog op hun eigen branches/PR's, `#37`/`#38` zijn zelf onschadelijk),
+maar dit is de derde keer dat exact dit patroon opduikt
+(`hangar-daysession-branches-onzichtbaar`: een dagsessie-besluit onzichtbaar;
+`hangar-pr-plafond-kwijt`: een geaccepteerd Ollie-besluit onzichtbaar; en nu
+dit: de nachtrun se eigen recentste onderzoek onzichtbaar voor de nachtrun
+zelf) — en deze keer raakt het niet een oude, losstaande branch maar de
+hoofdketen van deze taak zelf, twee nachten op rij.
+
+**Wat dit voor de drie opties hierboven betekent.** Optie 3 (status quo, lager
+plafond op het *aantal*) wordt hierdoor nog zwakker dan de 08-31-update al
+zei: het probleem is niet meer alleen "de inhoud van de laatste PR is
+onzichtbaar", het is nu aantoonbaar "sessies verspillen een avond onderzoek
+aan het opnieuw beantwoorden van een al beantwoorde vraag, en laten intussen
+vier `ready`-taken opnieuw als onbeslist ogen." Dat is precies de kostenpost
+die optie 1 (auto-merge de eigen stap-4-PR) of optie 2 (eerst opruimen vóór
+een nieuwe stap-4-PR) voorkomt, en optie 3 niet.
+
+**Wat ik vanavond wél zelf heb gedaan, binnen de grenzen:** deze nacht
+(`claude/night-2026-09-15`) vertakt van `claude/night-2026-09-12`, niet van
+de stale default en niet van `claude/night-2026-09-14` — om niet een derde
+keer hetzelfde te doen. `#37` en `#38` zelf zijn niet aangeraakt (niet
+gemerged, niet gesloten) — welke van de losse stap-4-branches uiteindelijk
+telt, blijft Ollie's keuze, niet iets wat een nachtrun zelf voor hem
+oplost. Ook een volledige herscan van alle 52 remote branches gedaan (niet
+alleen de al bekende verdachten) als bijvangst: geen enkele branch bleek nog
+onbekend of onbeantwoord — de laatste zeven kandidaten die nog niet
+individueel gecontroleerd waren (`claude/charming-fermat-kb8te9`,
+`claude/hangar-nightrun-push-issue-njdjly`,
+`claude/hangar-project-descriptions-2o5c0z`,
+`claude/night-hangar-prioriteit-score`, `claude/night-weekly-review-automatic`,
+`claude/timer-workout-preview-buttons-68swyr`,
+`claude/timer-workout-timezones-pya2xl`) bleken alle zeven al ancestor van de
+huidige default. Dat sluit vraag 3 van `hangar-daysession-branches-
+onzichtbaar` definitief af: er is geen achtste verloren branch meer te
+vinden op deze manier.
+
+Blijft `inbox` — nog steeds een procesbeslissing, geen onderzoeksvraag. Niet
+zelf optie 1/2/3 doorgevoerd.

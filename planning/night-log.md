@@ -11,6 +11,93 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-15
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — en dit keer niet zomaar akkoord met de stale default.**
+`git fetch` bevestigt: de officiële default (`claude/hangar-project-setup-
+kvhcad`) staat nog op `861f2c3` (Night 2026-08-20). Maar in plaats van daar
+vanaf te vertakken (zoals 09-13 en 09-14 deden) is eerst de volledige
+`claude/night-*`-keten nagelopen: `claude/night-2026-09-12` bleek 23 commits
+voor te liggen op de stale default — de nachten van 09-01 t/m 09-12 bouwden
+netjes op elkaar door, maar 09-13 en 09-14 vertakten allebei per ongeluk
+opnieuw vanaf de stale default en zagen daardoor niets van die 23 nachten.
+Vanavond vertakt van `claude/night-2026-09-12`, niet van de stale default en
+niet van 09-14, om dat een derde keer te doen. Volledige uitleg staat in
+`tasks/hangar-wrapup-pr-pileup.md` ("Update 2026-09-15").
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers geverifieerd bij GitHub,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main`. Ongewijzigd sinds
+  2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, gebouwd vóór besluit 0004 bestond. Blijft bewust ongemerged, zelfde
+  precedent als elke nacht sinds 08-20.
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty` tegen de huidige default-tip, `status: blocked` (checker zei
+  `ship: false`). Ongewijzigd.
+
+De overige zes repo's nagelopen (via een subagent-inventarisatie van alle
+open PR's): geen nieuwe nachtrun-PR's, alleen de al bekende dagsessie-PR's
+(quizzly#1, quizzly#4/#5/#6, percentile#3, project-management#20 — allemaal
+bevestigd dagsessie-werk, quizzly#4 letterlijk in zijn eigen taakbestand:
+"Gebouwd... in een sessie op Ollie's verzoek, niet door de nachtrun"). Drie
+blijft drie: over de grens van regel 5, dus vijf `ready`-taken (`pi-openclaw-
+gateway`, `hangar-sessionstart-hook-gedrag`, `quizzly-media-orphan-cleanup`,
+`quizzly-media-read-authz`, `quizzly-semantische-tokens`) bewust niet
+gebouwd.
+
+**Stap 3 — `hangar-wrapup-pr-pileup` aangescherpt: het probleem is nu
+aantoonbaar niet meer alleen zichtbaarheid, maar verspild onderzoek.** Oudste
+nog niet recent herverifieerde inbox-taak (laatst aangescherpt 09-06, negen
+nachten geleden). Concreet bewijs, niet aangenomen: 09-13's "vondst" dat
+`hangar-in-de-browser` stap 1 al sinds 08-06 gratis werkte, stond al —
+scherper geformuleerd — in `claude/night-2026-09-12`'s versie van hetzelfde
+bestand, van vóór 09-02. 09-13 en 09-14 behandelden bovendien vier taken die
+op de 09-12-keten al `ready`/`blocked` met een gekozen richting stonden
+(`hangar-sessionstart-hook-gedrag`, `pi-openclaw-gateway`, `quizzly-media-
+read-authz`, `quizzly-semantische-tokens`, `versa-hosting-besluit`,
+`quizzly-design-pass-toepassen`) alsof ze nog onbeslist waren. Niets is
+kapot — de echte antwoorden staan nog op hun eigen branches — maar dit is
+dezelfde onzichtbare-beslissing-bug als `hangar-daysession-branches-
+onzichtbaar` en `hangar-pr-plafond-kwijt`, nu voor het eerst binnen de
+nachtrun se eigen hoofdketen, twee nachten op rij. Volledige analyse en wat
+dit voor de drie bestaande opties betekent: in de taak zelf. Blijft `inbox`
+— procesbeslissing, geen onderzoeksvraag, niet zelf een optie doorgevoerd.
+
+**Bijvangst: de volledige branchronde uit `hangar-daysession-branches-
+onzichtbaar` afgemaakt.** Alle 52 remote branches gecontroleerd op
+`merge-base --is-ancestor` tegen de default, niet alleen de al bekende
+verdachten. De zeven nog nooit individueel gecontroleerde branches
+(`claude/charming-fermat-kb8te9`, `claude/hangar-nightrun-push-issue-njdjly`,
+`claude/hangar-project-descriptions-2o5c0z`, `claude/night-hangar-prioriteit-
+score`, `claude/night-weekly-review-automatic`, `claude/timer-workout-
+preview-buttons-68swyr`, `claude/timer-workout-timezones-pya2xl`) bleken
+alle zeven al ancestor van de huidige default — niets nieuws, niets
+verloren. Vraag 3 van `hangar-daysession-branches-onzichtbaar` is hiermee
+voor het eerst echt compleet beantwoord: geen achtste verloren branch meer
+te vinden langs deze weg. Geen apart taakbestand voor deze bevinding — te
+klein om op zichzelf te staan, vastgelegd in de wrapup-taak.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+`#37`/`#38` (09-13/09-14 se eigen wrapup-PR's) niet gemerged, gesloten of
+opgeruimd — welke van de losse stap-4-branches telt blijft Ollie's keuze;
+geen tweede inbox-taak onderzocht (regel 2); geen van de vijf `ready`-taken
+gebouwd ondanks resterend budget (regel 1/5: het plafond geldt, niet de
+taakvoorraad); `hangar-pr-plafond-kwijt` niet zelf doorgevoerd (raakt regel
+5, niet aan een nachtrun); `night/hangar-stale-clone-guard` (08-15, wees
+zonder PR) met rust gelaten, zoals elke nacht sinds hij gevonden is.
+
+Dashboard herbouwd. Branch `claude/night-2026-09-15` (vertakt van
+`claude/night-2026-09-12`, niet van de stale default), PR naar
+`claude/hangar-project-setup-kvhcad` met dit logblok als beschrijving.
+
+---
+
 ## 2026-09-12
 
 **Start.** Subagents-check: Task/Agent-tool en `.claude/agents/`-rollen
