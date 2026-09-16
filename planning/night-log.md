@@ -11,6 +11,66 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-16
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.**
+`git fetch` bevestigt: de officiële default (`claude/hangar-project-setup-kvhcad`)
+staat nog op `861f2c3` (Night 2026-08-20), ongewijzigd. Zoals `claude/night-2026-09-15`
+zelf al vaststelde is `claude/night-2026-09-15` de tip van de echte keten (24
+commits voor de stale default, aantoonbaar ancestor van 08-29 t/m 09-12; 09-13
+en 09-14 zijn dat niet — die vertakten per ongeluk opnieuw vanaf de stale
+default). Vanavond vertakt van `claude/night-2026-09-15`, om niet een vierde
+keer diezelfde fout te maken.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers geverifieerd bij GitHub,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, nog steeds een echt conflict tegen `main`. Ongewijzigd sinds
+  2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, maar gebouwd vóór besluit 0004 bestond. Blijft bewust ongemerged,
+  zelfde precedent als elke nacht sinds 08-20.
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty` tegen de huidige default-tip, `status: blocked` (checker zei
+  `ship: false`). Ongewijzigd.
+
+De overige zes repo's nagelopen: geen nieuwe nachtrun-PR's, alleen bekende
+dagsessie-PR's (quizzly#1/#4/#5/#6, percentile#3 — allemaal ongewijzigd sinds
+hun eigen laatste update, wachtend op Ollie's eigen merge- of launchbesluit).
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+
+**Stap 3 — `quizzly-slide-designer-bouwen` herverifieerd: geen verandering
+sinds 09-01.** Gekozen als oudste nog niet recent herverifieerde inbox-taak
+(vijftien nachten stil — ouder dan elke andere inbox-taak op dit bord).
+Rechtstreeks bij GitHub nagegaan: `quizzly#6` staat nog open en volledig
+ongewijzigd sinds 2026-08-14 (`created_at` = `updated_at`), `docs/SLIDE-DESIGNER.md`
+bestaat nog niet op `main` (404, niet aangenomen), en quizzly's `main` staat nog
+op de merge van PR #7 (2026-08-16). Geen van de twee blokkerende dingen (de
+merge van `quizzly#6`, Ollie's fasekeuze) is gebeurd. Blijft `inbox`, zelfde
+vraag als 09-01 — een eerlijke "niets veranderd", geen verzonnen voortgang.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen tweede inbox-taak onderzocht (regel 2); de vijf `ready`-taken
+(`pi-openclaw-gateway`, `hangar-sessionstart-hook-gedrag`,
+`quizzly-media-orphan-cleanup`, `quizzly-media-read-authz`,
+`quizzly-semantische-tokens`) niet gebouwd ondanks resterend budget (regel
+1/5: het plafond geldt, niet de taakvoorraad); de bekende governance-taken
+(`hangar-wrapup-pr-pileup`, `hangar-pr-plafond-kwijt`,
+`hangar-daysession-branches-onzichtbaar`, `nachtrun-loopt-vast-op-een-taak`)
+met rust gelaten — alle vier wachten op een procesbeslissing van Ollie, geen
+van alle vier gisteren of eerder deze week al opnieuw onderzocht; `#37`/`#38`/`#39`
+(09-13/09-14/09-15 se eigen wrapup-PR's) niet gemerged of opgeruimd — welke
+van de losse stap-4-branches telt blijft Ollie's keuze; `night/hangar-stale-clone-guard`
+(08-15, wees zonder PR) met rust gelaten, zoals elke nacht sinds hij gevonden is.
+
+Dashboard herbouwd. Branch `claude/night-2026-09-16` (vertakt van
+`claude/night-2026-09-15`, niet van de stale default), PR naar
+`claude/hangar-project-setup-kvhcad` met dit logblok als beschrijving.
+
 ## 2026-09-15
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
