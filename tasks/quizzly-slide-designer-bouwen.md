@@ -54,3 +54,30 @@ zodat de stap naar `ready` bij Ollie's akkoord één regel Done-means kost, geen
 nieuw onderzoek: neem §6 "Fase 1" letterlijk over als scope zodra hij
 `quizzly#6` merget en ja zegt tegen deze fase (of een andere kiest — de
 andere opties staan in §2/§3 van het document).
+
+## Herchecked 2026-09-16 (nachtrun, stap 3)
+
+Vijftien nachten sinds de vorige check — de langste stilstand van alle
+inbox-taken op dit bord (ouder dan `nachtrun-loopt-vast-op-een-taak` 09-04,
+`hangar-pr-plafond-kwijt`/`hangar-daysession-branches-onzichtbaar` 09-05,
+`quizzly-legal-review-west` 09-10 en `hangar-in-de-browser` 09-12), dus
+gekozen volgens dezelfde regel die eerdere nachten al gebruikten.
+
+Rechtstreeks bij GitHub nagegaan, niet aangenomen uit deze taak se eigen
+laatste stand:
+
+- `quizzly#6` (`night/quizzly-slide-designer`) staat nog open,
+  `mergeable_state: clean`, `created_at` = `updated_at` = 2026-08-14 — geen
+  enkele interactie sinds die dag.
+- De quizzly-`main`-branch se laatste commit is nog steeds de merge van PR #7
+  (2026-08-16, `8bbae69`); `docs/SLIDE-DESIGNER.md` bestaat nog niet op
+  `main` (`get_file_contents` → 404, niet aangenomen uit de PR-status).
+- `tasks/quizzly-slide-designer.md` (de onderzoekstaak) staat ongewijzigd op
+  `blocked`, wachtend op dezelfde merge.
+
+Geen nieuwe informatie: geen van de twee blokkerende dingen (de merge van
+`quizzly#6`, Ollie's fasekeuze) is sinds 09-01 gebeurd. **Blijft `inbox`**,
+exact dezelfde open vraag als 09-01. Niet zelf een test-issue of merge
+geprobeerd — regel 6/"nooit iets deployen of aanzetten dat geld kost" is hier
+niet aan de orde, maar het mergen van andermans PR-keuze wél Ollie's beslissing
+maken, niet de nachtrun se eigen.
