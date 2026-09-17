@@ -1,39 +1,43 @@
 ---
 title: Skill die een groot onderzoeksresultaat omzet in een podcast met instelbare lengte
 project: hangar
-status: inbox
+status: done
 added: 2026-09-17
 effort: M
-branch:
+branch: claude/nifty-bohr-472w7g
 ---
 
 ## Done means
 
-Nog niet scherp genoeg om `ready` te zijn. De finish line hangt aan twee
-keuzes die Ollie nog moet maken (zie Notes): welke stem/TTS-route, en of de
-skill audio oplevert of alleen een script.
+`.claude/skills/onderzoek-naar-podcast/SKILL.md` bestaat en levert, gegeven een
+afgerond onderzoek: een bronbestand voor NotebookLM, een plak-klare
+`Customize`-instructie, en vier regels handwerk. Lengte via drie presets
+(kort ~10 / normaal ~25 / lang ~45 min), taal gekozen op onderwerp.
+
+Gehaald op 2026-09-17.
 
 ## Notes
 
-Ollie's vraag (2026-09-17): als Cowork 's nachts een groot onderzoek heeft
-gedraaid, wil hij dat de volgende ochtend als podcast in de auto kunnen
-luisteren. Zelf de lengte kunnen kiezen.
+Keuzes die Ollie maakte (2026-09-17):
 
-Wat er al bestaat, gratis:
+- **Output**: script voor NotebookLM, geen eigen TTS. NotebookLM is gratis,
+  heeft de beste stemmen en geen publieke API — de laatste 30 seconden doet
+  hij zelf.
+- **Lengte**: vaste presets, niet vrije minuten.
+- **Taal**: hangt van het onderwerp af. SBI/studiestof Nederlands, tech en
+  internationaal onderzoek Engels.
 
-- **NotebookLM Audio Overview** — gratis, twee AI-hosts, lengte Shorter /
-  Default / Longer (alleen Engels), formats Deep Dive / Brief / Critique /
-  Debate, max ~30 min, 3 generaties per dag op de gratis tier. Handmatig:
-  bestand uploaden, knop drukken, downloaden. Geen publieke API op de
-  consumer-tier; de Gemini Notebook Enterprise API kan het wel programmatisch
-  maar is niet self-serve.
-- Lokale TTS (Kokoro, Piper) of macOS `say`: gratis, wel zelf een
-  twee-stemmen-script en audio-pipeline bouwen.
+Wat er al bestond, gratis: NotebookLM Audio Overview — twee AI-hosts, lengte
+Shorter / Default / Longer (alleen Engels), formats Deep Dive / Brief /
+Critique / Debate, max ~30 min, 3 generaties per dag op de gratis tier. Geen
+publieke API op de consumer-tier; de Gemini Notebook Enterprise API kan het
+programmatisch maar is niet self-serve.
 
-De skill zou dus of (a) een dunne laag zijn: onderzoek → podcastscript in
-NotebookLM-vorm → handmatig door NotebookLM halen, of (b) end-to-end:
-script + TTS + mp3 in een map die zijn telefoon synct.
+Het echte mechaniek in de skill: **het aantal secties in de bron stuurt de
+duur**, niet het woordenaantal — de hosts doen ~2-3 min per onderwerp. Dat is
+ook de enige lengteknop die in het Nederlands bestaat, want NotebookLM's
+Shorter/Default/Longer werkt alleen bij Engels.
 
-Aandachtspunten: de guard blokkeert credentials, dus een betaalde TTS-key
-hoort niet in deze repo. Lengte sturen doe je via woordenaantal in het
-script (~150 woorden per minuut gesproken).
+Openstaand: de skill staat in deze repo. Voor Cowork moet hij naar
+`~/.claude/skills/` (kopie of symlink) — dat kan alleen op Ollie's eigen
+machine.
