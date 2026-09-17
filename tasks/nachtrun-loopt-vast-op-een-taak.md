@@ -114,3 +114,38 @@ beslissen:
 (Vanavond zelf geen taak gebouwd — drie vastgelopen nachtrun-PR's, zie de
 night-log van 2026-09-04. Deze taak dus sowieso niet aan de beurt, ongeacht
 regel 1.)
+
+## Herchecked 2026-09-17 (nachtrun, stap 3)
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-04, 13 nachten geleden — elke andere inbox-taak is binnen de
+laatste acht nachten gecheckt).
+
+Alle drie openstaande vragen opnieuw gecontroleerd, geen van drieën
+veranderd:
+
+- **Vraag 3 (weesbranch):** `origin/night/hangar-stale-clone-guard` bestaat
+  nog, ongewijzigd (`ba1f382`, via `git ls-remote`), nu 33 dagen zonder PR.
+  Niet aangeraakt.
+- **Vraag 2 (opsplitsen):** nog steeds mechanisch gedaan (de 08-20-split
+  staat op de default sinds de 08-29-recovery), maar `reference/sessionstart-
+  hooks.md` — het document waarvan `hangar-stale-clone-guard`'s finish line
+  zegt dat het moet bestaan vóór die taak weer `ready` wordt — bestaat nog
+  steeds niet. `hangar-sessionstart-hook-gedrag` staat nog gewoon `ready`,
+  ongebouwd.
+- **Vraag 4 (pi-openclaw-gateway als nooit-bouwbare oudste taak):**
+  `pi-openclaw-gateway` is nog steeds de oudste `ready` taak op het bord
+  (`added: 2026-08-07`, ouder dan elke andere `ready` taak). De vraag blijft
+  theoretisch zolang de drie-PR-grens dit blijft overslaan, maar is dat
+  vanavond niet — zie de night-log-entry van vandaag.
+
+**Groter dan deze taak, dit zelf niet oplossend:** dezelfde branchronde
+vanavond (zie `hangar-pr-plafond-kwijt.md`, hieronder herverifieerd) bevestigt
+dat de reden waarom regel 1 al 27 nachten op rij nooit bij `pi-openclaw-
+gateway` uitkomt dezelfde is als de reden waarom deze taak zelf bestaat: een
+al door Ollie geaccepteerd besluit dat het platte drie-PR-plafond had moeten
+vervangen, ligt sinds 2026-08-11 onaangeraakt op een branch zonder PR. Vraag 1
+hierboven ("een faalteller per taak") en dat besluit lossen een verschillend
+deel van hetzelfde onderliggende gebrek op (geen signaal dat een regel niet
+doet wat hij zou moeten). Geen van beide vanavond zelf doorgevoerd — allebei
+raken regel 5/1, expliciet Ollie's beslissing.

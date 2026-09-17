@@ -11,6 +11,87 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-17
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.**
+`git fetch` bevestigt: de officiële default (`claude/hangar-project-setup-
+kvhcad`) staat nog op `861f2c3` (Night 2026-08-20), 26 commits achter de echte
+keten. Vertakt van `claude/night-2026-09-16` (de tip, zelf ancestor-geverifieerd
+door de vorige nacht), niet van de stale default.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers geverifieerd bij GitHub,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`, ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Ook de overige zes repo's nagelopen: geen nieuwe nachtrun-PR's, alleen bekende
+dagsessie-PR's wachtend op Ollie's eigen merge- of launchbesluit. Drie blijft
+drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+
+**Wat dit tellen deze keer blootlegde, groter dan de gebruikelijke drie-regel-
+constatering: dit is de 27e nacht op rij (2026-08-21 t/m vanavond) zonder
+bouw, op dezelfde drie PR's.** `tasks/hangar-pr-plafond-kwijt.md` (gevonden
+09-05, vanavond opnieuw geverifieerd — de dragende branch
+`claude/charming-fermat-kdilid` bestaat nog steeds ongewijzigd, nog steeds
+zonder PR) documenteert waarom: Ollie accepteerde op 2026-08-11 al een besluit
+om regel 5 slimmer te maken (een PR met een `APPROVED`-review telt niet meer
+als schuld; plafond per repo + totaal in plaats van één platte teller),
+volledig gebouwd en getest (`scripts/pr_limits.py` + 183 regels tests) — maar
+dat besluit heeft de default nooit bereikt, omdat de branch die het droeg
+nooit een PR kreeg. Elke nacht sinds 08-21 heeft dus de platte regel toegepast
+die Ollie zelf al 25+ dagen geleden liet vervangen. Dit is een bestaande
+bevinding (niet vanavond ontdekt), maar wel voor het eerst vanavond expliciet
+aan Ollie gemeld buiten het night-log om — zie de notificatie na deze run.
+Niet zelf doorgevoerd: raakt regel 5, expliciet Ollie's beslissing (zie de
+taak zelf).
+
+**Los daarvan, en ook groter dan gebruikelijk: de officiële default branch
+zelf draagt 27+ open, nooit gemergede nachtrun-wrapup-PR's** (`#15` t/m `#40`,
+plus de eerder bekende `#11` en `#13`) — elke nacht sinds 08-21 heeft een
+eigen PR geopend naar `claude/hangar-project-setup-kvhcad` die daar nog
+steeds open staat. Dit is `hangar-wrapup-pr-pileup` (al bekend, laatst
+09-15 aangescherpt), niet vanavond opnieuw onderzocht als aparte stap-3-taak
+(regel 2: één taak) — hier alleen genoemd omdat het dezelfde avond opviel bij
+het tellen van PR's per repo en het de reden is waarom de "echte keten"
+(`claude/night-2026-09-16`) 26 commits voor de officiële default ligt.
+
+**Stap 3 — `nachtrun-loopt-vast-op-een-taak` herverifieerd: geen van de drie
+openstaande vragen veranderd.** Gekozen als oudste nog niet recent
+herverifieerde inbox-taak (laatst 09-04, 13 nachten geleden). Weesbranch
+`origin/night/hangar-stale-clone-guard` bestaat nog ongewijzigd (33 dagen
+zonder PR); `reference/sessionstart-hooks.md` bestaat nog niet;
+`pi-openclaw-gateway` is nog steeds de oudste `ready` taak op het bord. Volledig
+uitgeschreven in de taak zelf, inclusief de link naar `hangar-pr-plafond-
+kwijt` als onderliggende oorzaak van hetzelfde patroon (regel 1 komt al 27
+nachten niet bij `pi-openclaw-gateway`, om een andere reden dan wat deze taak
+oorspronkelijk beschreef).
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; geen
+tweede inbox-taak onderzocht (regel 2); de vijf `ready`-taken niet gebouwd
+ondanks resterend budget (regel 1/5: het plafond geldt); `hangar-pr-plafond-
+kwijt` niet zelf doorgevoerd — regel 5 wijzigen is Ollie's beslissing, niet
+iets wat vanavond stilzwijgend gebeurt; de 27 open wrapup-PR's niet gemerged,
+gesloten of geconsolideerd; geen van de weesbranches verwijderd.
+
+**Buiten het night-log om:** dit is de eerste sessie in deze keten met een
+directe notificatie-mogelijkheid naar Ollie (in plaats van alleen een
+night-log-regel die pas gelezen wordt als iemand een PR opent). Gebruikt om
+de 27-nachten-vondst hierboven te melden — een reeds `accepted` besluit van
+Ollie zelf dat al 25+ dagen op een PR-loze branch staat te wachten, terwijl
+precies het probleem dat het oploste zich elke nacht sindsdien herhaalt.
+
+Dashboard herbouwd. Branch `claude/night-2026-09-17` (vertakt van
+`claude/night-2026-09-16`, niet van de stale default), PR naar
+`claude/hangar-project-setup-kvhcad` met dit logblok als beschrijving.
+
 ## 2026-09-16
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
