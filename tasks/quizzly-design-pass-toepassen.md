@@ -1,7 +1,7 @@
 ---
-title: "Quizzly app-chrome, fase 2: gekozen ontwerp doorvoeren"
+title: "Quizzly app-chrome, fase 2: richting C doorvoeren — licht als stand naast donker"
 project: quizzly
-status: inbox
+status: blocked
 added: 2026-08-11
 effort: M
 branch:
@@ -9,22 +9,36 @@ branch:
 
 ## Done means
 
-Nog niet schrijfbaar. Wacht op Ollie: hij moet uit `docs/DESIGN.md` (taak
-`quizzly-design-pass`, fase 1) een richting kiezen — desnoods met eigen
-aanpassingen erop. Zonder die keuze is er geen finish line die iemand anders
-kan afvinken; alleen "consistent doorvoeren" is geen concrete Done means.
+Wacht op `quizzly-semantische-tokens`. Zonder die laag is dit een refactor én
+een smaakwijziging in één diff, en dat is precies wat `docs/DESIGN.md` §6
+afraadt: bij een regressie weet je dan niet welke van de twee hem deed.
 
-Zodra hij gekozen heeft, is de Done means naar verwachting: de gekozen
-`--color-ink-*`/`--color-brand-*`-ramp (of vervanger) staat in het
-`@theme`-blok van `src/app/globals.css`, elke app-chrome plek in `src/app` en
-`src/components` (buiten `.quiz-surface`/`--q-*`) gebruikt hem consistent,
-`.quiz-surface`/`--q-*` en de tien quiz-themes zijn ongewijzigd, 44px touch
-targets en de `:focus-visible`-ring blijven staan, WCAG AA contrast blijft
-gelden (opnieuw gecheckt, niet aangenomen uit fase 1), en `npm run typecheck
-&& npm test && npm run build` zijn groen.
+Zodra die er ligt:
+
+1. Eén ramp, twee standen. Donker blijft het uitgangspunt. De semantische
+   tokens uit stap 1 krijgen een lichte set waarden die aanslaat op
+   `prefers-color-scheme: light`.
+2. De rolverdeling die `docs/DESIGN.md` §4 onder richting C uitschrijft, is
+   leidend voor welk token in welke stand welke tree krijgt.
+3. WCAG AA contrast geldt in **beide** standen, opnieuw gemeten en niet
+   aangenomen uit fase 1 — het rekenscript staat in bijlage A van dat document.
+   Elke ratio twee keer onafhankelijk uitgerekend, zoals bij
+   `quizzly-chrome-contrast-bugs`.
+4. `.quiz-surface`, `--q-*` en de tien quiz-themes blijven ongewijzigd. Een
+   quiz ziet er in beide standen hetzelfde uit; alleen de chrome klapt om.
+5. 44px touch targets en de `:focus-visible`-ring blijven staan, in beide
+   standen.
+6. `npm run typecheck && npm test && npm run build` groen.
 
 ## Notes
 
-Losgetrokken van de oorspronkelijke `quizzly-design-pass` op 2026-08-11 —
-zie de Notes daar. Blijft `inbox` tot Ollie's keuze er is; dat is geen
-onderzoeksvraag die een nachtrun voor hem kan beslissen.
+Losgetrokken van `quizzly-design-pass` op 2026-08-11.
+
+**Richting gekozen op 2026-08-20: C, "Twee standen".** Daarmee is de blokkade
+"Ollie moet kiezen" weg. Wat er nu vóór ligt is niet zijn keuze maar de volgorde
+die het document zelf voorschrijft — eerst de tokenlaag, dan de stand. Daarom
+`blocked` in plaats van `ready`, met precies één ding waar het op wacht.
+
+Het argument voor C, uit het document: Ollie kiest niet tussen licht en donker,
+het apparaat kiest. Voor een tool die op een beamer in een lokaal én op een
+laptop 's avonds gebruikt wordt, is dat inhoudelijk het sterkste antwoord.
