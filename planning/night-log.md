@@ -11,6 +11,79 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-19
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.**
+`git fetch` bevestigt: de officiële default (`claude/hangar-project-setup-
+kvhcad`) staat nog op `861f2c3` (Night 2026-08-20), 27 nachten achter de echte
+keten. Vertakt van `claude/night-2026-09-17` (de tip). Geen
+`claude/night-2026-09-18` branch bestaat — die nacht heeft niets
+achtergelaten, geen commit gevonden op enige branch. Niet verder onderzocht
+waarom (regel 2: één taak vanavond, en dit is geen taak op het bord).
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` — `mergeable_state: dirty`, ongewijzigd sinds 2026-08-07.
+- `learning-website#3` — `mergeable_state: clean`, blijft bewust ongemerged
+  (gebouwd vóór besluit 0004).
+- `project-management#13` — `mergeable_state: dirty`, `status: blocked`.
+  Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+Dit is nu de 29e nacht op rij (2026-08-21 t/m vanavond) op dezelfde drie
+PR's — niets nieuws hierover; `hangar-pr-plafond-kwijt` en
+`nachtrun-loopt-vast-op-een-taak` documenteren dit al uitgebreid en zijn
+vanavond niet opnieuw aangeraakt (regel 2, één taak per nacht — dat is
+vanavond `hangar-daysession-branches-onzichtbaar`, zie hieronder). Ollie is
+hierover al genotificeerd op 09-17; niets is sindsdien veranderd, dus geen
+nieuwe notificatie over dit specifieke punt.
+
+**Stap 3 — `hangar-daysession-branches-onzichtbaar`: een zesde verloren
+dagsessie-branch gevonden en teruggehaald, "definitief af" weerlegd.**
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-05, 14 nachten geleden). `hangar-wrapup-pr-pileup`'s
+09-15-conclusie ("volledige rescan, niets nieuws meer, vraag 3 definitief af")
+niet als waar aangenomen — zelf een verse `git ls-remote` gedraaid (55
+branches, tegen ~52 op 09-15) en elke niet eerder verantwoorde branch
+individueel gecontroleerd. Twee bleken veilig te negeren (`charming-fermat-
+rwahqf` = harness-tweeling van de al gemergede `night-2026-08-25`,
+byte-identiek; `night-2026-08-11` = achterhaald door de 08-20-beslissing over
+`quizzly-design-pass-toepassen`). Eén niet: `claude/nifty-bohr-472w7g`
+(laatste commit 2026-09-17, dus ná de 09-15-scan) droeg een complete, door
+Ollie zelf op 09-17 gespecificeerde en als `done` gemarkeerde Claude-skill —
+`.claude/skills/onderzoek-naar-podcast/` (onderzoek → podcast-bronbestand +
+NotebookLM-instructie, lengtepresets) plus `tasks/research-naar-podcast-
+skill.md` — die nooit een PR kreeg en dus nergens anders bestond. Puur
+additief (geen `.claude/skills/`-map bestond al), dus teruggehaald met
+`git show <branch>:<pad>`, zelfde precedent als `pi-openclaw-hangar-plan`.
+Niet zelf gedaan: de skill niet naar `~/.claude/skills/` gekopieerd (kan
+alleen op Ollie's eigen machine, staat zo in het taakbestand); geen van de
+taak se hoofdvragen beantwoord — blijft `inbox`. Volledige analyse in
+`tasks/hangar-daysession-branches-onzichtbaar.md`'s nieuwe sectie.
+
+**Wat dit betekent, los van deze ene taak:** de 09-15-sluiting was juist op
+het moment zelf, maar hield geen 48 uur stand — een nieuwe dagsessie
+produceerde binnen twee dagen dezelfde soort verlies. Een handmatige rescan
+"sluit" dit dus nooit blijvend af zolang dagsessies zonder PR-plicht blijven
+werken. Versterkt vraag 1 van de taak (een geautomatiseerd signaal in plaats
+van toevallige herontdekking) — niet zelf doorgevoerd, raakt geen code die een
+nachtrun unilateraal zou moeten schrijven zonder Ollie's keuze uit de
+voorgestelde opties.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen tweede inbox-taak onderzocht (`hangar-pr-plafond-kwijt`,
+`nachtrun-loopt-vast-op-een-taak`, `quizzly-legal-review-west` alle drie met
+rust gelaten, laatst gecheckt binnen de laatste negen nachten); de
+teruggehaalde podcast-skill niet geïnstalleerd of getest — alleen de bestanden
+gered; geen van de vijf `ready`-taken gebouwd (regel 5 staat dat niet toe
+zolang drie PR's vastzitten); geen wees-PR's of -branches verwijderd.
+
+Dashboard herbouwd.
+
 ## 2026-09-17
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen

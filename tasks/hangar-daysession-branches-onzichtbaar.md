@@ -206,3 +206,62 @@ een sessie toevallig besluit de hele lijst opnieuw te scannen in plaats van
 alleen de bekende verdachten. Geen vijfde/zesde branch meer over om te
 onderzoeken vanavond (alle overige niet-ancestor-branches zijn ofwel de
 bekende nachtrun-wrapup-keten, ofwel al eerder verantwoord in deze taak).
+
+## Aangescherpt 2026-09-19 (nachtrun, stap 3) — "definitief af" hield geen twee dagen stand, zesde verloren branch gevonden
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-05, 14 nachten geleden — elke andere inbox-taak is binnen de
+laatste negen nachten gecheckt).
+
+`hangar-wrapup-pr-pileup.md`'s update van 2026-09-15 meldt dat de volledige
+branchronde (~52 branches) niets nieuws meer opleverde en "vraag 3 definitief
+afsluit". Dat is dit keer **niet klakkeloos overgenomen** — precies dat soort
+aanname (een conclusie uit een ander taakbestand voor waar aannemen zonder zelf
+te verifiëren) is exact wat deze taak zelf als patroon beschrijft. Zelf
+opnieuw `git ls-remote --heads origin` gedraaid (55 branches nu, tegen ~52 op
+09-15) en elke niet-ancestor-branch die niet al bekend stond, individueel
+gecontroleerd:
+
+- **`claude/charming-fermat-rwahqf`** (08-25/08-26) — veilig te negeren, geen
+  nieuwe vondst. Byte-voor-byte identieke `tasks/hangar-wrapup-pr-pileup.md`
+  vergeleken met de echte ketenbranch `claude/night-2026-08-25` — dit is
+  dezelfde nacht se sessie onder zijn harness-toegewezen branchnaam (zoals
+  deze sessie zelf ook `claude/charming-fermat-tklkd9` naast `claude/night-
+  2026-09-19` heeft), niet een tweede, onafhankelijke poging.
+- **`claude/night-2026-08-11`** — veilig te negeren. Droeg de oorspronkelijke
+  splitsing van `quizzly-design-pass` (ready-voorstel/inbox-toepassen), maar
+  die is op 2026-08-20 vervangen door een échte beslissing (`quizzly-design-
+  pass-toepassen` naar `blocked` met gekozen richting) — hetzelfde
+  "achterhaald door aangenomen werk elders"-patroon als
+  `percentile-project-overview-6flt0j` hierboven.
+- **`claude/nifty-bohr-472w7g`** (2026-09-17) — **wél echt verloren, vanavond
+  teruggehaald.** Droeg `tasks/research-naar-podcast-skill.md` (`status: done`,
+  `added: 2026-09-17`) plus de volledige skill `.claude/skills/onderzoek-naar-
+  podcast/SKILL.md`: een door Ollie zelf op 09-17 in detail gespecificeerde
+  ("Keuzes die Ollie maakte") Claude-skill die een afgerond onderzoek omzet in
+  een podcast-bronbestand + NotebookLM-instructie, met lengtepresets. Compleet
+  en werkend volgens het taakbestand, nul dagen oud toen het verdween — geen
+  `.claude/skills/`-map bestond nog ergens op de keten, dus dit is puur
+  additief, geen conflictrisico. Teruggehaald met `git show <branch>:<pad>`,
+  zelfde precedent als `pi-openclaw-hangar-plan-n706uo`.
+
+**Dit weerlegt de 09-15-sluiting, niet omdat die sloppy was, maar omdat het
+probleem structureel doorloopt.** `nifty-bohr-472w7g`'s laatste commit is van
+09-17 — ná de 09-15-scan bestond de branch nog niet. "Definitief af" was dus
+op het moment zelf waar, en is binnen 48 uur alweer ingehaald door een nieuwe
+dagsessie die precies hetzelfde deed: iets compleet bouwen, nooit een PR
+openen. Dat is het sterkste bewijs tot nu toe voor vraag 1 hieronder: een
+volledige handmatige rescan "sluit" dit probleem nooit blijvend af, want de
+oorzaak (dagsessies zonder PR-plicht) blijft losstaand van elke nacht se scan
+produceren. Een periodieke, geautomatiseerde branch-scan (vraag 1, optie 2) zou
+dit hebben gesignaleerd binnen een nacht in plaats van twee dagen later bij
+toeval.
+
+Vraag 2 (wat te doen met gevonden, niet-gesuperseded inhoud) opnieuw met "ja,
+terughalen" beantwoord, vijfde keer op rij met diezelfde uitkomst — er is nu
+genoeg precedent om dit als staand beleid te beschouwen, ook al is de formele
+Ollie-beslissing nog niet genomen.
+
+Niet zelf gedaan: de skill niet naar `~/.claude/skills/` gekopieerd (staat al
+in het teruggehaalde taakbestand als "kan alleen op Ollie's eigen machine") en
+geen van de drie hoofdvragen hieronder zelf beantwoord — blijft `inbox`.
