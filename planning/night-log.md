@@ -11,6 +11,66 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-20
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.**
+`git fetch` bevestigt: de officiële default (`claude/hangar-project-setup-
+kvhcad`) staat nog op `861f2c3` (Night 2026-08-20), 28 nachten achter de echte
+keten. Vertakt van `claude/night-2026-09-19` (de tip, zelf ancestor van de
+volledige keten sinds 09-15's correctie).
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+Dit is nu de 30e nacht op rij (2026-08-21 t/m vanavond) op dezelfde drie
+PR's — niets nieuws hierover. `hangar-pr-plafond-kwijt` en
+`nachtrun-loopt-vast-op-een-taak` (de twee taken die dit al uitgebreid
+documenteren) niet opnieuw aangeraakt vanavond (regel 2: één taak, en dat was
+vanavond `quizzly-legal-review-west`, zie hieronder). Ollie is hierover al
+genotificeerd op 09-17 en het staat doorlopend in `planning/now.md`; geen
+nieuwe notificatie vanavond — er is niets veranderd om te melden.
+
+**Stap 3 — `quizzly-legal-review-west` herverifieerd: geen verandering, tien
+nachten stil, nu de langst niet-herverifieerde inbox-taak op het bord.**
+Gekozen omdat hij sinds 09-10 niet meer is aangeraakt — ouder dan
+`hangar-in-de-browser` (09-12), `hangar-wrapup-pr-pileup` (09-15),
+`hangar-pr-plafond-kwijt` (09-17), `nachtrun-loopt-vast-op-een-taak` (09-17)
+en `hangar-daysession-branches-onzichtbaar` (09-19). Alle drie relevante
+bronnen vers opgevraagd in plaats van aangenomen: `quizzly#1` nog steeds
+`open`/`dirty`, `created_at` = `updated_at` (geen activiteit sinds opening op
+2026-08-07); de PR-branch `claude/quizzly-finalization` zelf ongewijzigd
+(head-sha gelijk); `main` nog op de merge van PR #7, `docs/COMPLIANCE-
+REVIEW.md` bestaat nog niet. Geen nieuwe bevinding dit keer (in tegenstelling
+tot de 09-10-check, die het package-lock-conflict blootlegde). Blijft
+`inbox`, zelfde vraag aan Ollie. Volledig uitgeschreven in de taak zelf.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; geen
+tweede inbox-taak onderzocht (regel 2); de vijf `ready`-taken
+(`pi-openclaw-gateway`, `hangar-sessionstart-hook-gedrag`,
+`quizzly-media-orphan-cleanup`, `quizzly-media-read-authz`,
+`quizzly-semantische-tokens`) niet gebouwd ondanks resterend budget (regel
+1/5: het plafond geldt); de governance-taken (`hangar-wrapup-pr-pileup`,
+`hangar-pr-plafond-kwijt`, `nachtrun-loopt-vast-op-een-taak`,
+`hangar-daysession-branches-onzichtbaar`) met rust gelaten — alle vier wachten
+op een procesbeslissing van Ollie, geen enkele deze week al opnieuw
+onderzocht; geen nieuwe notificatie gestuurd (niets veranderd sinds 09-17);
+geen wees-PR's of -branches aangeraakt.
+
+Dashboard herbouwd. Branch `claude/night-2026-09-20` (vertakt van
+`claude/night-2026-09-19`, niet van de stale default), PR naar
+`claude/hangar-project-setup-kvhcad` met dit logblok als beschrijving.
+
 ## 2026-09-19
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen

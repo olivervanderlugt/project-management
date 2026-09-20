@@ -117,3 +117,27 @@ eerlijk te schrijven zodra vaststaat welke code de basis is. **Blijft
 `inbox`.** Vraag aan Ollie ongewijzigd (wanneer merge je `quizzly#1`?), met
 één toevoeging: dat mergen vraagt nu eerst een (triviale)
 package.json/lock-conflictresolutie, geen inhoudelijke.
+
+## Herchecked 2026-09-20 (nachtrun, stap 3)
+
+Tien nachten sinds de vorige check — inmiddels de langst niet-herverifieerde
+inbox-taak op het bord (ouder dan `hangar-in-de-browser`, laatst 09-12). Alle
+drie bronnen vers opgevraagd, niets aangenomen:
+
+- `quizzly#1` rechtstreeks bij GitHub: nog steeds `open`,
+  `mergeable_state: dirty`, `created_at` = `updated_at` = 2026-08-07T20:20:27Z
+  — exact hetzelfde tijdstip als op 09-10, dus geen enkele activiteit sinds
+  toen (of sinds de opening).
+- `claude/quizzly-finalization` (de PR-branch zelf): head-sha nog steeds
+  `26e193f8`, drie commits, ongewijzigd — niemand heeft er sinds 08-07 iets
+  aan toegevoegd buiten de PR om.
+- `main`: nog steeds op de merge van PR #7 (2026-08-16, `8bbae69`).
+  `docs/LEGAL.md` bestaat, `docs/COMPLIANCE-REVIEW.md` bestaat nog niet — geen
+  van beide is sinds 09-03 geraakt.
+
+Geen nieuwe bevinding dit keer, in tegenstelling tot 09-10. De blokkade is nu
+44 dagen oud (sinds `quizzly#1` op 2026-08-07 geopend werd) zonder enige
+beweging. Blijft `inbox`, zelfde vraag aan Ollie als steeds: wanneer merge je
+`quizzly#1`? Niet opnieuw los gemeld aan Ollie vanavond — de 09-17-notificatie
+en de doorlopende regel in `planning/now.md` dekken dit al; een tiende
+"nog steeds niets veranderd" voegt niets toe dat hij nog niet weet.
