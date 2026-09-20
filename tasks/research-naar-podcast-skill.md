@@ -29,9 +29,16 @@ Keuzes die Ollie maakte (2026-09-17):
 
 Wat er al bestond, gratis: NotebookLM Audio Overview — twee AI-hosts, lengte
 Shorter / Default / Longer (alleen Engels), formats Deep Dive / Brief /
-Critique / Debate, max ~30 min, 3 generaties per dag op de gratis tier. Geen
+Critique / Debate / Lecture, 3 generaties per dag op de gratis tier. Geen
 publieke API op de consumer-tier; de Gemini Notebook Enterprise API kan het
 programmatisch maar is niet self-serve.
+
+Feitencheck 2026-09-20 corrigeerde de eerste presettabel: Google garandeert
+geen duur, een doorsnee aflevering landt rond de 10 min (spreiding 7-15), en
+alleen het Lecture-format haalt met Longer betrouwbaar de ~30 min die het
+plafond is. De eerste versie beloofde 45 min bij Lang — onhaalbaar. Presets nu
+~8-10 / ~15-20 / ~25-30 min, met splitsen in twee afleveringen voor langere
+ritten.
 
 Het echte mechaniek in de skill: **het aantal secties in de bron stuurt de
 duur**, niet het woordenaantal — de hosts doen ~2-3 min per onderwerp. Dat is

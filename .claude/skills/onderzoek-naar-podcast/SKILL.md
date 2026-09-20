@@ -30,19 +30,29 @@ je telefoon. Niet meer.
 Drie presets. Vraag alleen als hij niets zei; kies anders zelf op basis van wat
 hij noemde ("even naar college" = kort).
 
-| Preset      | Doelduur | Secties in de bron | Woorden in de bron |
-| ----------- | -------- | ------------------ | ------------------ |
-| **Kort**    | ~10 min  | 3–4                | 1.200–1.800        |
-| **Normaal** | ~25 min  | 7–9                | 3.000–4.500        |
-| **Lang**    | ~45 min  | 12–15              | 6.000–9.000        |
+| Preset      | Doelduur  | Secties in de bron | Woorden in de bron | NotebookLM-stand          |
+| ----------- | --------- | ------------------ | ------------------ | ------------------------- |
+| **Kort**    | ~8–10 min | 3–4                | 1.200–1.800        | Deep Dive + Shorter       |
+| **Normaal** | ~15–20 min| 6–8                | 2.500–4.000        | Deep Dive + Default       |
+| **Lang**    | ~25–30 min| 10–12              | 5.000–7.500        | Lecture + Longer          |
 
 **Het aantal secties is de echte knop, niet het woordenaantal.** De twee hosts
 besteden ongeveer 2 tot 3 minuten per onderscheiden onderwerp, vrijwel los van
 hoeveel tekst eronder ligt. Wil je korter: gooi secties weg, niet zinnen.
 
-NotebookLM's plafond ligt rond de 30 minuten per aflevering. Vraagt Ollie om
-**Lang**, zeg dan één keer dat het waarschijnlijk op ~30 min afkapt, en bied aan
-de bron in twee delen te splitsen — deel 1 heenrit, deel 2 terugrit.
+Drie dingen die je eerlijk moet houden:
+
+- **Google garandeert geen enkele duur.** Shorter / Default / Longer zijn
+  relatieve voorkeuren, geen minuten. Een doorsnee Audio Overview landt rond de
+  10 minuten; 7 tot 15 is de normale spreiding. Beloof Ollie nooit een exacte
+  lengte — zeg "mikt op ~20 min".
+- **Rond 30 minuten ligt het plafond**, en alleen het **Lecture**-format haalt
+  dat betrouwbaar met Longer. Deep Dive op Longer blijft in de praktijk vaak
+  onder de 25. Daarom staat Lecture in de rij hierboven bij **Lang**.
+- **Langer dan 30 minuten bestaat niet in één aflevering.** Is de rit langer, of
+  is het onderzoek te groot voor 12 secties: splits de bron in twee bestanden en
+  maak twee afleveringen — deel 1 heenrit, deel 2 terugrit. Bied dat uit jezelf
+  aan, wacht niet tot hij het vraagt.
 
 ## Stap 2 — taal kiezen
 
@@ -99,7 +109,7 @@ erin staat kan voorgelezen worden.
 Dit is het `Customize`-veld in NotebookLM. Het is één alinea, Engels (het veld
 werkt daar het best, ook bij een Nederlandse aflevering), en het benoemt:
 
-- de doelduur in minuten;
+- de doelduur in minuten (uit de presettabel, als richtpunt);
 - de taal van de aflevering;
 - waar de focus ligt en wat overgeslagen mag worden;
 - de luisteraar: eerstejaarsstudent, in de auto, geen voorkennis van dit
@@ -129,13 +139,14 @@ Sluit af met precies dit, ingevuld:
 ```
 1. notebooklm.google.com → nieuw notebook → upload <slug>-bron.md
 2. Audio Overview → Customize → plak <slug>-instructie.txt
-3. Format: Deep Dive. <Bij Engels: Length: Shorter / Default / Longer.>
+3. Format: <Deep Dive of Lecture>. <Bij Engels: Length: <Shorter/Default/Longer>.>
 4. Genereren duurt een paar minuten. Download als .m4a → je telefoon.
 ```
 
-Bij Engels vul je de lengteknop in volgens de preset: Kort → Shorter,
-Normaal → Default, Lang → Longer. Bij Nederlands laat je regel 3 de knop weg
-en noem je hem niet — hij bestaat daar niet.
+Bij Engels vul je format en lengteknop in volgens de laatste kolom van de
+presettabel. Bij Nederlands laat je de lengteknop uit regel 3 weg en noem je hem
+niet — hij bestaat daar niet. Het format kies je daar wél: Deep Dive, of Lecture
+als het lang moet worden.
 
 ## Grenzen
 
