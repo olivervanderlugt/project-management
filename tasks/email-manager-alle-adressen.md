@@ -104,3 +104,10 @@ Prijs: het draait alleen als zijn Mac aan is. Cloud-Routines kunnen niet bij
 Mail.app; briefings en uurruns worden dan Cowork-taken op de Mac zelf.
 Voorstel volgt in de chat; 0006 en email-0 t/m 4 worden herschreven ná zijn
 akkoord, niet ervoor.
+
+**mail.com (2026-09-21):** oliverlugt@mail.com is een gratis mail.com-account.
+Gratis mail.com heeft géén IMAP en géén POP3 — dat is betaald. Dus niet in
+Mail.app te krijgen. Overblijvende paden: doorsturen als de webinstellingen dat
+op gratis toestaan (onzeker), anders browser-automatisering op de Mac voor
+alleen dit adres, of `source: none` en Ollie leest het zelf. Zijn keuze, hangt
+af van hoe belangrijk het adres is.
