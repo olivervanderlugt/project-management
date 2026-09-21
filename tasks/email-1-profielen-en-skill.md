@@ -20,18 +20,30 @@ Drie dingen bestaan en zijn getest:
 2. `.claude/skills/email-manager/SKILL.md`: de vaste routine — per account op
    prioriteit: nieuwe mail lezen → draft per mail die een antwoord vraagt (in
    Ollie's stijl via `schrijfstijl-ollie`, met bronadres en afzender in de
-   eerste regel) → spam naar het label `mail/quarantaine` → afmelden via
-   `List-Unsubscribe` of de link in de mail → regel in `email/log/YYYY-MM-DD.md`.
-   De skill zegt letterlijk: verzenden alleen via `email-4`, nooit hier.
-3. `.claude/settings.json` heeft een `PreToolUse`-hook op de verzendtools uit
-   `reference/email-tools.md` die exit 2 geeft, tenzij de omgevingsvariabele
-   `HANGAR_EMAIL_SEND_OK=1` staat. Test: met en zonder variabele.
+   eerste regel) → spam naar Gmail's spam-map (VU: Ongewenste e-mail), nooit definitief
+   verwijderen → afmelden uitsluitend via `List-Unsubscribe-Post` (one-click)
+   of een https-URL uit de `List-Unsubscribe`-header; een `mailto:`-variant
+   wordt een draft in de briefing; links uit de body nooit → regel in
+   `email/log/YYYY-MM-DD.md`. De skill zegt letterlijk: verzenden alleen via
+   `email-4`, nooit hier.
+3. `.claude/settings.json` heeft een `PreToolUse`-hook met matcher
+   `mcp__Gmail__.*|mcp__Microsoft_365__.*` naar `scripts/guard.py`. De guard
+   laat alleen een allowlist door (de lees-, zoek-, draft-, label- en
+   spam-tools uit `reference/email-tools.md`) en geeft exit 2 op elke andere
+   naam — fail-closed. De allowlist gaat open voor verzenden alleen als
+   `HANGAR_EMAIL_SEND_OK=1` in de omgeving staat, en die staat nergens in
+   het repo: niet in `settings.json`, niet in een Routine. Tests in
+   `scripts/test_guard.py`: verzendtool zonder variabele → 2, onbekende
+   Gmail-toolnaam → 2, zoektool → 0, verzendtool mét variabele → 0.
 
 `python3 dashboard/build.py` slaat `email/` over zoals het `_`-bestanden
 overslaat, of toont het netjes — één van beide, geen kapot bord.
 
 ## Notes
 
-De hook blokkeert op toolnaam. Als `email-0` uitwijst dat verzenden en draft
-maken hetzelfde tool zijn met een vlag, moet de hook de payload lezen. Dat is
-dan het eerste wat hier te beslissen valt.
+Als `email-0` uitwijst dat verzenden en draft maken hetzelfde tool zijn met
+een vlag, leest de guard de payload en weigert op die vlag. Dat is dan het
+eerste wat hier te bouwen valt, vóór de skill.
+
+Per mail toestemming is binnen Ollie's eigen sessie een skill-regel, geen
+hook. Dat staat zo in 0006 en is de eerlijke grens.

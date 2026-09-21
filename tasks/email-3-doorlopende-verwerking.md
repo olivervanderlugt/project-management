@@ -20,6 +20,8 @@ zelf waar dat kan (hub met send-as, VU via M365), anders als tekst in
 of afmelden de reden. Een run zonder nieuwe mail kost aantoonbaar weinig: hij
 stopt na de state-check en logt één regel. Een mail van een afzender in
 `email/accounts/<slug>.md` onder `never_spam:` gaat nooit in quarantaine.
+De run opent geen enkele URL uit een mailbody; alleen de one-click-URL uit de
+`List-Unsubscribe`-header, en alleen bij een afzender die die header voert.
 
 ## Notes
 

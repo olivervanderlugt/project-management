@@ -15,7 +15,8 @@ onderwerp noemt plus "verstuur" of "send". Claude leest de draft eerst terug
 (aan wie, van welk adres, eerste regel), verstuurt dan, en schrijft één regel in
 `email/log/`. Twee drafts in één bericht: twee losse bevestigingen. Een
 Routine-sessie kan dit pad niet nemen: de hook uit `email-1` blokkeert zonder
-`HANGAR_EMAIL_SEND_OK=1`, en die variabele zet alleen Ollie's eigen sessie.
+`HANGAR_EMAIL_SEND_OK=1`, en die variabele staat alleen in Ollie's eigen shell op zijn eigen machine
+(`export HANGAR_EMAIL_SEND_OK=1` vóór hij Claude Code start), nooit in het repo.
 Test in `scripts/test_guard.py`: verzendtool zonder variabele → exit 2.
 
 ## Notes

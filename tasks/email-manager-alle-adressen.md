@@ -30,9 +30,15 @@ goedkeuring, dan pas bouwen.
 4. **Ritme:** briefing 's ochtends en 's avonds; daartussen doorlopend drafts
    zodra iets binnenkomt, al vóór de briefing.
 
+## Wat nog ontbreekt
+
+De lijst met alle ~10 adressen. De tabel hieronder is per provider; het
+profiel is per adres. Zonder de lijst is "elk adres heeft een bron" niet te
+controleren. Ollie levert hem bij zijn akkoord.
+
 ## Het ontwerp
 
-Besluit `0006` (proposed). Kort:
+Besluit `0006` (proposed). Kort, per provider:
 
 | Account  | Bron voor Claude          | Spam opruimen | Draft met juiste afzender |
 | -------- | ------------------------- | ------------- | ------------------------- |
@@ -54,8 +60,8 @@ een hook die verzenden structureel blokkeert.
 - Elke draft noemt het bronadres en de afzender waarmee hij verstuurd wordt.
 - Alles wat Claude deed (quarantaine, afmelding, draft) staat in
   `email/log/YYYY-MM-DD.md`, terug te draaien.
-- Er is geen pad waarlangs iets verstuurd wordt zonder dat Ollie "verstuur
-  <id>" heeft getypt.
+- Geen Routine kan verzenden, ook niet via een `mailto:`-afmelding — dat is
+  een hook, geen belofte. In Ollie's eigen sessie is "verstuur <id>" de regel.
 - Ollie hoeft alleen nog op verzenden te drukken.
 
 ## De deeltaken
@@ -67,6 +73,15 @@ een hook die verzenden structureel blokkeert.
 - `email-3-doorlopende-verwerking` — elk uur overdag: drafts, quarantaine,
   afmelden, log.
 - `email-4-verzenden-met-toestemming` — het enige pad naar "verstuur".
+
+## Check door de hangar-checker (2026-09-21)
+
+Vijf gaten gevonden, verwerkt in 0006 en de deeltaken: afmelden via `mailto:`
+is zelf verzenden (nu: alleen one-click/https, mailto wordt een draft); de
+hook moet fail-closed zijn op een allowlist, niet op een lijst verzendtools;
+een quarantaine-label wordt nooit opgeruimd (nu: Gmail's eigen spam-map);
+tien adressen maar zes rijen (nu: lijst is voorwaarde); doorgestuurde mail
+belandt in de hub-spam (nu: "nooit naar spam" op elk filter).
 
 ## Notes
 
