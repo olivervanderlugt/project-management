@@ -89,3 +89,18 @@ Stand in deze Code-sessie: de Gmail-connector laat hier alleen `delete_draft`
 zien. Zoeken, lezen, drafts maken en verzenden bestaan in claude.ai-chat en in
 Routines met de connector erbij, maar de exacte toolnamen zijn hier niet te
 zien. Daarom is `email-0` de eerste stap en niet de bouw.
+
+## Nieuw feit (2026-09-21, later): alles zit al in Apple Mail
+
+Ollie heeft alle accounts gekoppeld in Mail.app op zijn Mac, behalve
+oliverlugt@mail.com. Dat verandert het ontwerp: Mail.app is een lokaal, al
+ingelogd postvak voor élk account, ook Outlook, VU en UvA — precies de drie die
+de hub niet goed kon. Via `osascript` (Mail.app is scriptbaar) kan een script
+op zijn Mac per account ongelezen mail lezen, een draft in de eigen Drafts-map
+zetten, naar Ongewenst verplaatsen en de `List-Unsubscribe`-header lezen. Geen
+doorsturen, geen hub, geen send-as, accounts écht gescheiden.
+
+Prijs: het draait alleen als zijn Mac aan is. Cloud-Routines kunnen niet bij
+Mail.app; briefings en uurruns worden dan Cowork-taken op de Mac zelf.
+Voorstel volgt in de chat; 0006 en email-0 t/m 4 worden herschreven ná zijn
+akkoord, niet ervoor.
