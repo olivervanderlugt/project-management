@@ -111,3 +111,8 @@ Mail.app te krijgen. Overblijvende paden: doorsturen als de webinstellingen dat
 op gratis toestaan (onzeker), anders browser-automatisering op de Mac voor
 alleen dit adres, of `source: none` en Ollie leest het zelf. Zijn keuze, hangt
 af van hoe belangrijk het adres is.
+Gecheckt op 2026-09-21: doorsturen, POP3 én IMAP zijn alle drie Premium bij
+mail.com (mail.com/premiummail/premium_features). Premium kost $29,99 per 12
+maanden of $9,99 per 3 maanden. Met Premium gaat mail.com gewoon via IMAP in
+Mail.app, zelfde pad als de rest. Zonder Premium: browser-automatisering of
+`source: none`.
