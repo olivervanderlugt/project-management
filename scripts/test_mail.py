@@ -179,8 +179,8 @@ class Junking(WithFakeOsascript):
         self.assertFalse(self.log.exists())
 
     def test_junk_mailbox_comes_from_the_profile(self):
-        self.assertEqual(mail.junk_mailbox_from_profile("VU"), "Junk")
-        self.assertEqual(mail.junk_mailbox_from_profile("Wandarbear "), "Junk")
+        self.assertEqual(mail.junk_mailbox_from_profile("VU"), "Junk Email")
+        self.assertEqual(mail.junk_mailbox_from_profile("Wandarbear "), "Junk")  # trailing space ok
         self.assertIsNone(mail.junk_mailbox_from_profile("No Such Account"))
 
     def test_unread_sorts_newest_first_before_the_limit(self):
