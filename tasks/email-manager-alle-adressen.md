@@ -87,3 +87,8 @@ te controleren.
 
 In deze Code-sessie (Linux, cloud) is `mail.py` niet echt te draaien. Tests
 mocken `osascript`; de eerste echte run is Ollie's, in `email-0`.
+
+**mail.com (2026-09-21, later):** Premium is aangezet, maar het account synct
+nog niet in Mail. Ollie regelt dit zelf; niet aan komen. Tot het synct staat
+oliverlugt@mail.com als `tested:` leeg en valt het buiten elke run — het
+verschijnt in de briefing onder "kon niet", niet stilzwijgend weg.
