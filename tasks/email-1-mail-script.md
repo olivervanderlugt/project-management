@@ -1,7 +1,7 @@
 ---
 title: E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando
 project: hangar
-status: doing
+status: done
 added: 2026-09-21
 effort: M
 branch: claude/multi-email-manager-system-ozr70l
@@ -54,3 +54,9 @@ Vier suites groen: guard 20, mail 18, mail_profiles 5, preview.
 
 Profielen gevuld uit Ollie's tabel; `junk_mailbox` per account staat erin.
 Wat rest is de eerste echte run op de Mac (`email-0`). Tot dan `doing`.
+
+## Klaar (2026-09-21)
+
+Op de Mac bewezen: `accounts`, `unread`, `draft` (saved: true). `read`, `junk`
+en `unsubscribe` bestaan en zijn getest tegen de nep-osascript; hun eerste
+echte run is een regel in het log van de eerste ronde, geen aparte taak.

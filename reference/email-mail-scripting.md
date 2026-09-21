@@ -49,3 +49,18 @@ exact zoals Mail ze kent — het JXA-idioom voor accounts klopt dus. Twee
 adressen uit Ollie's tabel bleken anders: iCloud is `oliverlugt@icloud.com`
 (niet zijn Apple ID) en Subliem eindigt op `.nl`. Profielen aangepast en
 alle negen `tested: 2026-09-21`. Nog onbewezen: `unread`, `draft`, `junk`.
+
+## Tweede echte run (2026-09-21, later)
+
+- `unread --account "Personal Gmail" --limit 3` → één ongelezen mail, id
+  1007, met account, afzender en ISO-datum. De unified-inbox-filter en de
+  sortering werken.
+- `draft --account "Personal Gmail" --to … --subject "Hangar test"` →
+  `saved: true`, afzender door Mail zelf opgelost als
+  `Oliver van der Lugt (wandarbear) <oliverlugt@gmail.com>`. Het compose-
+  idioom (`OutgoingMessage` + `ToRecipient` + `save` + `close saving`)
+  geeft geen fout. Twee keer gedraaid, dus twee drafts "Hangar test".
+- Nog te bevestigen door Ollie: staat de draft in Mail onder Drafts van
+  Personal Gmail? En `read 1007 --account "Personal Gmail"` (per-account
+  lookup en header-parsing).
+- Nog nooit gedraaid: `junk`, `unsubscribe`.

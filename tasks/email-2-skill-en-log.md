@@ -1,7 +1,7 @@
 ---
 title: E-mail stap 2 — de e-mailmanager-skill, log en state
 project: hangar
-status: doing
+status: done
 added: 2026-09-21
 effort: S
 branch: claude/multi-email-manager-system-ozr70l
@@ -45,3 +45,8 @@ cookies, 15 s); het logformaat had geen kolom voor id of URL (nu wel).
 Bijvangst: alle profielen droegen `tested: 2026-09-21` zonder dat iets had
 gedraaid — leeg gemaakt; `mail_profiles.py` stempelt hem pas als Mail het
 account echt opsomde.
+
+## Klaar (2026-09-21)
+
+Skill, state, log- en briefingmappen, guard-regel. Checker-ronde verwerkt.
+De eerste echte ronde draait onder `email-3`.

@@ -1,7 +1,7 @@
 ---
 title: E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac
 project: hangar
-status: doing
+status: done
 added: 2026-09-21
 effort: S
 branch: claude/multi-email-manager-system-ozr70l
@@ -42,3 +42,9 @@ Open: adres, provider, prioriteit, taal en toon per account — Ollie vult in.
 
 Eerste echte `mail.py accounts` op de Mac: negen accounts, adressen bevestigd,
 twee gecorrigeerd. Rest van email-0: `unread` en één draft.
+
+## Klaar (2026-09-21)
+
+Negen profielen met `tested:`, adressen door Mail bevestigd, twee osascript-
+regels én `mail.py accounts`/`unread`/`draft` echt gedraaid op de Mac.
+Uitvoer in `reference/email-mail-scripting.md`.
