@@ -1,14 +1,14 @@
 ---
-address:  oliverlugt@wandarbear.com
-provider: other
-mail_account: Wandarbear
-junk_mailbox: Junk
-priority: 1
-language: both
-tone:     werk formeel
+address:          oliverlugt@wandarbear.com
+provider:         other
+mail_account:     Wandarbear
+junk_mailbox:     Junk
+priority:         1
+language:         both
+tone:             werk formeel
 auto_unsubscribe: no
 never_spam:
-tested:   2026-09-21
+tested:           2026-09-21
 ---
 
 ## Wat hier binnenkomt

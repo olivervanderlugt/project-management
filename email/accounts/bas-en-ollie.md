@@ -1,14 +1,14 @@
 ---
-address:  bastiaanollie@outlook.com
-provider: outlook
-mail_account: Bas en Ollie
-junk_mailbox: Junk Email
-priority: 3
-language: nl
-tone:     werk formeel
+address:          bastiaanollie@outlook.com
+provider:         outlook
+mail_account:     Bas en Ollie
+junk_mailbox:     Junk Email
+priority:         3
+language:         nl
+tone:             werk formeel
 auto_unsubscribe: yes
 never_spam:
-tested:   2026-09-21
+tested:           2026-09-21
 ---
 
 ## Wat hier binnenkomt

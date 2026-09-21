@@ -1,14 +1,14 @@
 ---
-address:  oliver.lugt@subliem-vu.nl
-provider: other
-mail_account: Subliem
-junk_mailbox: Junk
-priority: 2
-language: both
-tone:     universitair formeel
+address:          oliver.lugt@subliem-vu.nl
+provider:         other
+mail_account:     Subliem
+junk_mailbox:     Junk
+priority:         2
+language:         both
+tone:             universitair formeel
 auto_unsubscribe: no
 never_spam:
-tested:   2026-09-21
+tested:           2026-09-21
 ---
 
 ## Wat hier binnenkomt
