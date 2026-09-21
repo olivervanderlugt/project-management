@@ -11,6 +11,63 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-21
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.** De
+sessie startte op een door de omgeving toegewezen branch die zelf al stale
+bleek (een oude commit van 2026-08-20). `git fetch` bevestigt: de officiële
+default (`claude/hangar-project-setup-kvhcad`) staat nog steeds op `861f2c3`
+(Night 2026-08-20), 30 nachten achter de echte keten. Vertakt van
+`claude/night-2026-09-20` (de tip, zelf ancestor van de volledige keten sinds
+09-15's correctie), niet van de toegewezen branch en niet van de stale
+default.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+Dit is nu de 31e nacht op rij (2026-08-21 t/m vanavond) op dezelfde drie PR's.
+`hangar-pr-plafond-kwijt` en `nachtrun-loopt-vast-op-een-taak` (die dit al
+uitgebreid documenteren) niet opnieuw aangeraakt vanavond (regel 2: één taak).
+`planning/now.md` staat er al op; geen nieuwe notificatie — niets veranderd
+sinds 09-17 om te melden.
+
+**Stap 3 — `hangar-in-de-browser` herverifieerd: geen verandering, 9 nachten
+stil, oudste nog niet recent herverifieerde inbox-taak.** Alle drie
+vaststaande punten vers bij de bron nagegaan: `search_issues` op
+`label:capture` nog steeds 0 resultaten (het Vangen-formulier is nog nooit
+geprobeerd), de default branch staat nog op `861f2c3` — geen
+`github-actions[bot]`-commit erna, en `decisions/` bevat nog geen besluit dat
+0001 vervangt (nu tot en met `0006-altijd-aan-kastje-thuis.md`, dat over iets
+anders gaat). Geen nieuwe bevinding. Blijft `inbox`, zelfde vraag aan Ollie:
+probeer het Vangen-formulier zelf vanaf je telefoon. Volledig uitgeschreven in
+de taak zelf. `planning/now.md` bijgewerkt met de verse telling (wrapup-stapel
+23+ → 30 open PR's, vers geteld via de API) en de nieuwe recheck-datum.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt; geen
+tweede inbox-taak onderzocht (regel 2); de vijf `ready`-taken
+(`pi-openclaw-gateway`, `hangar-sessionstart-hook-gedrag`,
+`quizzly-media-orphan-cleanup`, `quizzly-media-read-authz`,
+`quizzly-semantische-tokens`) niet gebouwd ondanks resterend budget (regel
+1/5: het plafond geldt); de governance-taken (`hangar-wrapup-pr-pileup`,
+`hangar-pr-plafond-kwijt`, `nachtrun-loopt-vast-op-een-taak`,
+`hangar-daysession-branches-onzichtbaar`) met rust gelaten — allemaal wachten
+op een procesbeslissing van Ollie, geen enkele deze nacht opnieuw onderzocht;
+geen nieuwe notificatie gestuurd (niets veranderd sinds 09-17); geen wees-PR's
+of -branches aangeraakt.
+
+Dashboard herbouwd.
+
 ## 2026-09-20
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen

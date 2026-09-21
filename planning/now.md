@@ -1,6 +1,6 @@
 ---
-updated: 2026-09-15
-focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 23+; en de stapel kost nu ook avonden onderzoek, niet meer alleen zichtbaarheid
+updated: 2026-09-21
+focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 30 open PR's; hangar-in-de-browser stap 1 nog steeds nooit geprobeerd
 ---
 
 - **Je eigen besluit van 2026-08-11 om dit precieze probleem op te lossen is
@@ -21,10 +21,9 @@ focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 23+; e
   staat er al sinds 2026-08-06, nog steeds nooit geprobeerd** —
   `.github/ISSUE_TEMPLATE/vangen.yml` + `.github/workflows/capture.yml` +
   `scripts/capture_issue.py`, volledig gratis (geen model-aanroep, geen
-  API-sleutel). Opnieuw geverifieerd 09-08: de `Capture`-workflow staat nog
-  `active`, nog nooit een issue met het label `capture`. Probeer het
-  Vangen-formulier zelf op GitHub (kan vanaf je telefoon) — zie
-  `tasks/hangar-in-de-browser.md`.
+  API-sleutel). Opnieuw geverifieerd 09-21: nog steeds 0 issues met het label
+  `capture`. Probeer het Vangen-formulier zelf op GitHub (kan vanaf je
+  telefoon) — zie `tasks/hangar-in-de-browser.md`.
 
 - **Drie echte vastgelopen nachtrun-PR's wachten al 4+ weken op jou**,
   ongewijzigd sinds ze geopend zijn (elke nacht opnieuw gecontroleerd via de
@@ -38,9 +37,10 @@ focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 23+; e
   - Zolang deze drie op 3 blijven staan, bouwt de nachtrun niets (regel 5) en
     scherpt hij alleen `inbox`-taken aan — dat is nu al vijf weken de status.
 
-- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 23+**
-  (`project-management#13`, `#15`–`#38`, plus `#11` van 08-14). Niemand
-  merget ze, groei blijft ~1 per nacht. Drie opties liggen klaar in de taak;
+- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 30 open PR's**
+  (`project-management#13`, `#15`–`#43`), vers geteld op 09-21 via de API, niet
+  aangenomen. Niemand merget ze, groei blijft ~1 per nacht. Drie opties liggen
+  klaar in de taak;
   geen ervan mag een nachtrun zelf kiezen — dat is expliciet jouw
   procesbeslissing. **Nieuw sinds 09-15: de stapel kost nu ook echt
   onderzoek, niet meer alleen zichtbaarheid** — de nachten van 09-13 en 09-14

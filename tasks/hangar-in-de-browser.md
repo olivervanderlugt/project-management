@@ -154,6 +154,35 @@ dan valt het erbuiten. **Blijft `inbox`**, exact dezelfde open vraag als
 09-02: probeer het Vangen-formulier zelf vanaf je telefoon
 (github.com/olivervanderlugt/project-management/issues/new/choose).
 
+## Herchecked 2026-09-21 (nachtrun, stap 3) — geen verandering
+
+Oudste inbox-taak die nog niet recent herverifieerd was (laatst 09-12, 9
+nachten geleden — elke andere inbox-taak is deze maand al gecheckt, zie
+`nachtrun-loopt-vast-op-een-taak.md`'s en `hangar-pr-plafond-kwijt.md`'s
+eigen data). Alle drie de vaststaande punten vers bij de bron nagegaan, niet
+aangenomen uit dit bestand:
+
+- `search_issues` op `repo:olivervanderlugt/project-management label:capture`
+  → nog steeds 0 resultaten. Het Vangen-formulier is nog steeds nooit
+  geprobeerd.
+- De officiële default branch (`claude/hangar-project-setup-kvhcad`) staat
+  nog steeds op `861f2c3` (Night 2026-08-20) als laatste commit — geverifieerd
+  via `list_commits`, geen `github-actions[bot]`-commit erna. De Capture-
+  workflow heeft dus niet gedraaid. (Dit is dezelfde stale-default die
+  `hangar-wrapup-pr-pileup` beschrijft — de nachtrun-keten zelf loopt inmiddels
+  ver voor de default uit, maar dat raakt stap 1 hier niet: de Capture-Action
+  triggert op issues, niet op de nachtrun-PR's.)
+- `decisions/` bevat nog steeds geen besluit dat 0001 vervangt (nu tot en met
+  `0006-altijd-aan-kastje-thuis.md`, dat over iets anders gaat — geen van de
+  zes bestaande besluiten raakt stap 4's blokkade).
+
+Geen nieuwe informatie. Zelf geen test-issue aangemaakt, zelfde reden als
+09-02 en 09-12: dat zou een echte `github-actions[bot]`-commit rechtstreeks op
+de default branch veroorzaken, los van deze nacht se eigen PR-stroom — twijfel
+dan valt het erbuiten. **Blijft `inbox`**, exact dezelfde open vraag als
+09-02/09-12: probeer het Vangen-formulier zelf vanaf je telefoon
+(github.com/olivervanderlugt/project-management/issues/new/choose).
+
 ## Notes
 
 Stap 1 tot en met 3 leveren het grootste deel van wat hij beschreef, zonder
