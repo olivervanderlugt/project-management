@@ -1,14 +1,14 @@
 ---
-address:  ollie2005@outlook.com
-provider: icloud
-mail_account: iCloud
-junk_mailbox: Junk
-priority: 2
-language: both
-tone:     kort en direct
+address:          oliverlugt@icloud.com
+provider:         icloud
+mail_account:     iCloud
+junk_mailbox:     Junk
+priority:         2
+language:         both
+tone:             kort en direct
 auto_unsubscribe: yes
 never_spam:
-tested:
+tested:           2026-09-21
 ---
 
 ## Wat hier binnenkomt
