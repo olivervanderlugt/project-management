@@ -1,8 +1,13 @@
 ---
 title:  Claude leest alle mail via één hub-Gmail; verzenden alleen op direct verzoek van Ollie
-status: proposed
+status: superseded
 date:   2026-09-21
 ---
+
+## Vervangen door 0007
+
+Nog dezelfde dag achterhaald: Ollie koppelde alle accounts aan Mail op zijn
+Mac (mail.com via Premium). Zie `0007`.
 
 ## Context
 

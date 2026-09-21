@@ -2,9 +2,8 @@
 address:  naam@domein.nl
 provider: gmail | outlook | vu | uva | mailcom | icloud
 priority: 1 | 2 | 3            # 1 = prominent
-label:    mail/slug            # Gmail-label in de hub
-source:   hub | forward | pop | m365 | none
-send_as:  yes | no | paste     # paste = draft als tekst om te plakken
+mail_account: naam zoals Mail het account toont
+junk_mailbox: Junk                # of Ongewenste e-mail, per account
 language: nl | en | both
 tone:     één regel
 auto_unsubscribe: yes | no

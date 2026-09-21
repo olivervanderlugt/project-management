@@ -1,5 +1,5 @@
 ---
-title: E-mail stap 0 — per account testen of de bron werkt, en welke tools een Routine echt heeft
+title: E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac
 project: hangar
 status: inbox
 added: 2026-09-21
@@ -9,41 +9,27 @@ branch:
 
 ## Done means
 
-`email/accounts/` bevat één bestand per adres (uit `email/accounts/_template.md`)
-waarin `source:` een geteste waarde heeft: `hub`, `forward`, `pop`, `m365` of
-`none`, plus een `tested:` datum. Voor elke `forward`/`pop` is één testmail
-aantoonbaar in de hub aangekomen met het juiste label. Voor VU is de M365-
-connector verbonden en heeft Claude één VU-mail teruggelezen. Daarnaast staat
-in `reference/email-tools.md` de volledige lijst Gmail- en M365-toolnamen die
-een Routine met die connectors werkelijk ziet, verzameld door één eenmalige
-test-Routine (`run_once_at`, connectors erbij) die niets anders doet dan zijn
-tools opsommen en het bestand committen. Niet uit een chat — die ziet een
-andere set. Per tool staat erbij: allowlist of niet, en of draft-maken en
-verzenden hetzelfde tool zijn.
+`email/accounts/` bevat één bestand per adres (uit `_template.md`) met
+`mail_account:` exact zoals Mail het account noemt, `priority:` en een
+`tested:` datum. Die datum mag er pas staan als op Ollie's Mac deze regel het
+account én één onderwerp heeft teruggegeven:
 
-## Wat Ollie doet (± 30 min)
+```
+osascript -e 'tell application "Mail" to get name of every account'
+osascript -e 'tell application "Mail" to get subject of first message of inbox'
+```
 
-- Eerst: de lijst met álle adressen, één regel per adres. Elk adres hieronder
-  is een eigen profiel; "Outlook" kan er drie zijn.
+macOS vraagt daarbij één keer om toestemming (Terminal mag Mail besturen);
+die is gegeven. `reference/email-mail-scripting.md` bevat wat de twee regels
+teruggaven, letterlijk, plus de accountnamen — dat is de invoer voor `email-1`.
 
-- iCloud: icloud.com → Mail → instellingen → doorsturen naar de hub.
-- mail.com: doorsturen of POP; op een gratis account is dit mogelijk niet
-  beschikbaar — dan `source: none` en eerlijk zo laten staan.
-- Outlook: instellingen → doorsturen naar de hub.
-- UvA: probeer doorsturen; als de tenant het blokkeert, `source: none`.
-- VU: verbind de Microsoft 365-connector met het VU-account.
-- Hub-Gmail: per bron een filter "to:/from: … → label `mail/<slug>`" mét
-  "nooit naar spam", anders belandt doorgestuurde mail in de hub-spam.
-- Send-as voor iCloud en mail.com: app-wachtwoord bij de provider, invoeren in
-  Gmail → Accounts → "Mail verzenden als". Nooit in het repo.
+## Wat Ollie doet (± 10 min)
 
-## Wat Claude doet
-
-De test-Routine aanmaken en afvuren voor de toollijst. Daarna in een chat met
-Gmail en M365 aan: één draft aanmaken en weer verwijderen, één testmail per
-label terugzoeken.
+- De adreslijst: één regel per adres, met provider en prioriteit 1–3.
+- De twee `osascript`-regels draaien en de uitvoer plakken.
+- De Automation-vraag van macOS met "Sta toe" beantwoorden.
 
 ## Notes
 
-Geen code in deze stap. Alles wat hier `none` wordt, valt terug op "tekst om te
-plakken" in de briefing. Dat is de eerlijke uitkomst, geen mislukking.
+Geen code. Als de tweede regel een foutmelding geeft in plaats van een
+onderwerp, staat dát in het referentiebestand en begint `email-1` daar.

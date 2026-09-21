@@ -9,7 +9,7 @@ branch: claude/multi-email-manager-system-ozr70l
 
 ## Done means
 
-Paraplu. Klaar als `email-0` tot en met `email-4` `done` zijn en besluit 0006
+Paraplu. Klaar als `email-0` tot en met `email-4` `done` zijn en besluit 0007
 `accepted` is. Bouw begint pas na Ollie's akkoord op het plan hieronder.
 
 ## Wat er gevraagd is
@@ -30,89 +30,60 @@ goedkeuring, dan pas bouwen.
 4. **Ritme:** briefing 's ochtends en 's avonds; daartussen doorlopend drafts
    zodra iets binnenkomt, al vóór de briefing.
 
+## Het ontwerp (2026-09-21, herschreven)
+
+Besluit `0007` (proposed), vervangt `0006`. Alle accounts zitten in Mail op
+Ollie's Mac, mail.com via Premium. Eén script praat met Mail; alles wat het
+kan is per account hetzelfde:
+
+| Wat            | Waar                                   | Zonder vragen |
+| -------------- | -------------------------------------- | ------------- |
+| Lezen          | Mail, per account, sinds laatste run   | ja            |
+| Draft          | Drafts-map van het account zelf        | ja            |
+| Spam           | map Ongewenst van het account zelf     | ja            |
+| Afmelden       | one-click / https uit de header        | ja            |
+| `mailto:`-afmelding | wordt een draft                   | ja            |
+| Verzenden      | alleen `email-4`, alleen Ollie's sessie | NOOIT        |
+
+Geplande runs draaien op de Mac zelf (`launchd` + `claude -p`). Briefing
+07:30 en 21:30, verwerking elk uur 08:00–22:00. Geen cloud-fallback (default:
+uit; Ollie kan het aanzetten).
+
 ## Wat nog ontbreekt
 
-De lijst met alle ~10 adressen. De tabel hieronder is per provider; het
-profiel is per adres. Zonder de lijst is "elk adres heeft een bron" niet te
-controleren. Ollie levert hem bij zijn akkoord.
-
-## Het ontwerp
-
-Besluit `0006` (proposed). Kort, per provider:
-
-| Account  | Bron voor Claude          | Spam opruimen | Draft met juiste afzender |
-| -------- | ------------------------- | ------------- | ------------------------- |
-| Gmail    | is de hub                 | ja, in bron   | ja                        |
-| VU       | M365-connector, direct    | ja, in bron   | ja, in VU Drafts          |
-| iCloud   | doorsturen → hub          | alleen in hub | ja (send-as, app-ww)      |
-| mail.com | doorsturen/POP → hub      | alleen in hub | ja (send-as, app-ww)      |
-| Outlook  | doorsturen → hub          | alleen in hub | nee: tekst om te plakken  |
-| UvA      | doorsturen → hub (test)   | alleen in hub | nee: tekst om te plakken  |
-
-Bovenop: één profiel per adres in `email/accounts/`, één skill die de vaste
-routine kent (overzicht → drafts → spam → afmelden → log), twee Routines, en
-een hook die verzenden structureel blokkeert.
+De lijst met alle adressen, één per regel met provider en de accountnaam
+zoals Mail hem toont. Zonder die lijst is "elk adres heeft een profiel" niet
+te controleren.
 
 ## Wat "goed" is
 
-- Elk adres heeft een werkende bron, of staat expliciet als "kan niet" in zijn
-  profiel — nooit stil overgeslagen.
-- Elke draft noemt het bronadres en de afzender waarmee hij verstuurd wordt.
-- Alles wat Claude deed (quarantaine, afmelding, draft) staat in
-  `email/log/YYYY-MM-DD.md`, terug te draaien.
-- Geen Routine kan verzenden, ook niet via een `mailto:`-afmelding — dat is
-  een hook, geen belofte. In Ollie's eigen sessie is "verstuur <id>" de regel.
+- Elk adres heeft een profiel in `email/accounts/` en is één keer echt
+  gelezen via `mail.py` op de Mac.
+- Elke draft staat in de Drafts-map van het juiste account en noemt bovenaan
+  bronadres en afzender.
+- Alles wat Claude deed staat in `email/log/YYYY-MM-DD.md`, terug te draaien.
+- Een geplande run kan niet verzenden: geen commando zonder de variabele,
+  en de guard weigert `osascript` met een verzendopdracht. Test bewijst het.
 - Ollie hoeft alleen nog op verzenden te drukken.
 
 ## De deeltaken
 
-- `email-0-toegang-testen` — welke accounts kunnen doorsturen, welke Gmail-
-  en M365-tools een Routine echt heeft. Bepaalt de rest. Deels Ollie's werk.
-- `email-1-profielen-en-skill` — profielen, skill, verzend-blokkade, tests.
-- `email-2-briefing-routine` — 07:30 en 21:30, met push naar zijn telefoon.
-- `email-3-doorlopende-verwerking` — elk uur overdag: drafts, quarantaine,
-  afmelden, log.
-- `email-4-verzenden-met-toestemming` — het enige pad naar "verstuur".
+- `email-0-toegang-testen` — adreslijst → profielen; één `osascript`-regel
+  op de Mac die accounts en één bericht laat zien; Automation-toestemming.
+- `email-1-mail-script` — `scripts/mail.py` met tests tegen nep-`osascript`,
+  guard-regel tegen verzenden.
+- `email-2-skill-en-log` — de e-mailmanager-skill, log, state.
+- `email-3-geplande-runs` — `launchd`-jobs, briefingbestand, bordtegel.
+- `email-4-verzenden-met-toestemming` — het enige pad naar verzenden.
 
-## Check door de hangar-checker (2026-09-21)
+## Geschiedenis
 
-Vijf gaten gevonden, verwerkt in 0006 en de deeltaken: afmelden via `mailto:`
-is zelf verzenden (nu: alleen one-click/https, mailto wordt een draft); de
-hook moet fail-closed zijn op een allowlist, niet op een lijst verzendtools;
-een quarantaine-label wordt nooit opgeruimd (nu: Gmail's eigen spam-map);
-tien adressen maar zes rijen (nu: lijst is voorwaarde); doorgestuurde mail
-belandt in de hub-spam (nu: "nooit naar spam" op elk filter).
+- 2026-09-20: gevangen. 2026-09-21 ochtend: hub-Gmail-ontwerp (`0006`), door
+  de checker op vijf punten aangescherpt. Later die dag: alle accounts in
+  Mail, mail.com via Premium (doorsturen, POP en IMAP zijn daar alle drie
+  betaald) — hub vervalt, `0006` superseded, `0007` proposed.
 
 ## Notes
 
-Stand in deze Code-sessie: de Gmail-connector laat hier alleen `delete_draft`
-zien. Zoeken, lezen, drafts maken en verzenden bestaan in claude.ai-chat en in
-Routines met de connector erbij, maar de exacte toolnamen zijn hier niet te
-zien. Daarom is `email-0` de eerste stap en niet de bouw.
-
-## Nieuw feit (2026-09-21, later): alles zit al in Apple Mail
-
-Ollie heeft alle accounts gekoppeld in Mail.app op zijn Mac, behalve
-oliverlugt@mail.com. Dat verandert het ontwerp: Mail.app is een lokaal, al
-ingelogd postvak voor élk account, ook Outlook, VU en UvA — precies de drie die
-de hub niet goed kon. Via `osascript` (Mail.app is scriptbaar) kan een script
-op zijn Mac per account ongelezen mail lezen, een draft in de eigen Drafts-map
-zetten, naar Ongewenst verplaatsen en de `List-Unsubscribe`-header lezen. Geen
-doorsturen, geen hub, geen send-as, accounts écht gescheiden.
-
-Prijs: het draait alleen als zijn Mac aan is. Cloud-Routines kunnen niet bij
-Mail.app; briefings en uurruns worden dan Cowork-taken op de Mac zelf.
-Voorstel volgt in de chat; 0006 en email-0 t/m 4 worden herschreven ná zijn
-akkoord, niet ervoor.
-
-**mail.com (2026-09-21):** oliverlugt@mail.com is een gratis mail.com-account.
-Gratis mail.com heeft géén IMAP en géén POP3 — dat is betaald. Dus niet in
-Mail.app te krijgen. Overblijvende paden: doorsturen als de webinstellingen dat
-op gratis toestaan (onzeker), anders browser-automatisering op de Mac voor
-alleen dit adres, of `source: none` en Ollie leest het zelf. Zijn keuze, hangt
-af van hoe belangrijk het adres is.
-Gecheckt op 2026-09-21: doorsturen, POP3 én IMAP zijn alle drie Premium bij
-mail.com (mail.com/premiummail/premium_features). Premium kost $29,99 per 12
-maanden of $9,99 per 3 maanden. Met Premium gaat mail.com gewoon via IMAP in
-Mail.app, zelfde pad als de rest. Zonder Premium: browser-automatisering of
-`source: none`.
+In deze Code-sessie (Linux, cloud) is `mail.py` niet echt te draaien. Tests
+mocken `osascript`; de eerste echte run is Ollie's, in `email-0`.
