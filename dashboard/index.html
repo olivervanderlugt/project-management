@@ -238,7 +238,7 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     </div>
   </header>
 
-  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">7</span><span class="mono dim">of 7 projects</span></div><div class="vital" data-tone="calm"><span class="vital-label">agents running</span><span class="vital-value">0</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">19</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">18</span><span class="mono dim">needs a call</span></a></div>
+  <div class="vitals"><div class="vital" data-tone="calm"><span class="vital-label">in flight</span><span class="vital-value">7</span><span class="mono dim">of 7 projects</span></div><div class="vital" data-tone="live"><span class="vital-label">agents running</span><span class="vital-value">2</span><span class="mono dim">tasks doing</span></div><div class="vital" data-tone="calm"><span class="vital-label">open to-dos</span><span class="vital-value">17</span><span class="mono dim">in the queue</span></div><a class="vital" data-tone="warn" href="#waiting"><span class="vital-label">waiting on you</span><span class="vital-value">16</span><span class="mono dim">needs a call</span></a></div>
 
   <section id="priority">
     <div class="sec-head">
@@ -322,15 +322,6 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
           <tr data-status="inbox">
             <td class="mono score">380</td>
             <td><span class="state mono">inbox</span></td>
-            <td class="q-title">E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac</td>
-            <td class="mono dim">hangar</td>
-            <td class="mono dim" title="weights.yml">2</td>
-            <td class="mono dim">S</td>
-            <td class="mono dim">0d</td>
-          </tr>
-          <tr data-status="inbox">
-            <td class="mono score">380</td>
-            <td><span class="state mono">inbox</span></td>
             <td class="q-title">E-mail stap 2 — de e-mailmanager-skill, log en state</td>
             <td class="mono dim">hangar</td>
             <td class="mono dim" title="weights.yml">2</td>
@@ -344,15 +335,6 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <td class="mono dim">hangar</td>
             <td class="mono dim" title="weights.yml">2</td>
             <td class="mono dim">S</td>
-            <td class="mono dim">0d</td>
-          </tr>
-          <tr data-status="inbox">
-            <td class="mono score">370</td>
-            <td><span class="state mono">inbox</span></td>
-            <td class="q-title">E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando</td>
-            <td class="mono dim">hangar</td>
-            <td class="mono dim" title="weights.yml">2</td>
-            <td class="mono dim">M</td>
             <td class="mono dim">0d</td>
           </tr>
           <tr data-status="inbox">
@@ -439,6 +421,30 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
     <div class="fleet">
         <article class="card" data-status="active">
           <div class="card-head">
+            <h3>The Hangar</h3>
+            <span class="chips"><span class="pill" data-tone="active">active</span><span class="pill" data-tone="live">2 running</span></span>
+          </div>
+          <p class="card-desc">The board you&#x27;re looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.</p>
+          <div class="next"><span class="lane-label">next</span><p class="next-text">Build weekly-review-automatic — the script that writes the weekly file from real commits</p></div>
+          <div class="progress"><div class="bar" role="img" aria-label="5 of 15 tasks done"><span style="width:33%"></span></div><span class="mono dim">5/15 done</span></div>
+          
+          <div class="lane" data-tone="live">
+            <span class="lane-label">running now</span>
+            <ul class="lane-list"><li><span class="dot live" aria-hidden="true"></span><span class="lane-text">E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac</span><span class="agent">hangar <span class="model">sonnet</span></span><span class="mono dim branch">claude/multi-email-manager-system-ozr70l</span></li><li><span class="dot live" aria-hidden="true"></span><span class="lane-text">E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando</span><span class="agent">hangar <span class="model">opus</span></span><span class="mono dim branch">claude/multi-email-manager-system-ozr70l</span></li></ul>
+          </div>
+          
+          <div class="lane" data-tone="calm">
+            <span class="lane-label">to do</span>
+            <ul class="lane-list"><li><span class="dot" data-status="blocked" aria-hidden="true"></span><span class="state mono">blocked</span><span class="lane-text">Night run vs usage limits — three account-level decisions</span><span class="mono dim">Blocked on: Ollie. Background and the reasoning for each option:…</span></li><li><span class="dot" data-status="blocked" aria-hidden="true"></span><span class="state mono">blocked</span><span class="lane-text">Priority board double-escapes the empty-effort placeholder</span><span class="mono dim">Found by the `hangar-checker` while reviewing…</span></li><li><span class="dot" data-status="ready" aria-hidden="true"></span><span class="state mono">ready</span><span class="lane-text">Een sessie moet merken dat zijn kloon achterloopt vóór hij werk uitdeelt</span><span class="agent">hangar <span class="model">sonnet</span></span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">Claude als e-mailmanager voor alle (~10) adressen — lezen, drafts, spam, afmelden</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 2 — de e-mailmanager-skill, log en state</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 3 — briefing 07:30 en 21:30 plus uurronde 08–22 via launchd op de Mac</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 4 — het enige pad naar verzenden: Ollie zegt &quot;verstuur &lt;id&gt;&quot; in de chat</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">Vanuit de browser tegen de Hangar praten, met automatische routing</span><span class="mono dim">needs a verdict</span></li></ul>
+          </div>
+          <div class="card-foot">
+            <div class="acts"><a class="act primary live" href="https://olivervanderlugt.github.io/project-management/" target="_blank" rel="noopener" title="https://olivervanderlugt.github.io/project-management/"><span class="dot live" aria-hidden="true"></span>Preview &#8599;</a><a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener" title="olivervanderlugt/project-management">repo</a><button class="act small run-local" type="button" data-slug="hangar">run local</button><a class="act small local-link" data-slug="hangar" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on The Hangar (olivervanderlugt/project-management). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Build weekly-review-automatic — the script that writes the weekly file from real commits When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
+            <div class="card-meta mono dim">Markdown, Python 3, GitHub Pages</div>
+            <div class="tags"><span class="tag">tooling</span><span class="tag">personal</span></div>
+          </div>
+        </article>
+        <article class="card" data-status="active">
+          <div class="card-head">
             <h3>Crew management system</h3>
             <span class="chips"><span class="pill" data-tone="active">active</span></span>
           </div>
@@ -503,26 +509,6 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
             <div class="acts"><a class="act primary guess" href="https://olivervanderlugt.github.io/quizzly/" target="_blank" rel="noopener" title="Derived GitHub Pages URL, never opened by anyone here: https://olivervanderlugt.github.io/quizzly/">Preview &#8599;<span class="guess-flag">unverified</span></a><a class="act small" href="https://github.com/olivervanderlugt/quizzly" target="_blank" rel="noopener" title="olivervanderlugt/quizzly">repo</a><button class="act small run-local" type="button" data-slug="quizzly">run local</button><a class="act small local-link" data-slug="quizzly" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on Quizzly (olivervanderlugt/quizzly). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Merge PR #1, then follow docs/LAUNCH-CHECKLIST.md in the repo When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
             <div class="card-meta mono dim">Next.js 15, Socket.IO, Prisma, PostgreSQL, Docker</div>
             <div class="tags"><span class="tag">product</span><span class="tag">realtime</span></div>
-          </div>
-        </article>
-        <article class="card" data-status="active">
-          <div class="card-head">
-            <h3>The Hangar</h3>
-            <span class="chips"><span class="pill" data-tone="active">active</span></span>
-          </div>
-          <p class="card-desc">The board you&#x27;re looking at — a personal project HQ in markdown, with a generated dashboard and agents that work the task queue.</p>
-          <div class="next"><span class="lane-label">next</span><p class="next-text">Build weekly-review-automatic — the script that writes the weekly file from real commits</p></div>
-          <div class="progress"><div class="bar" role="img" aria-label="5 of 15 tasks done"><span style="width:33%"></span></div><span class="mono dim">5/15 done</span></div>
-          
-          
-          <div class="lane" data-tone="calm">
-            <span class="lane-label">to do</span>
-            <ul class="lane-list"><li><span class="dot" data-status="blocked" aria-hidden="true"></span><span class="state mono">blocked</span><span class="lane-text">Night run vs usage limits — three account-level decisions</span><span class="mono dim">Blocked on: Ollie. Background and the reasoning for each option:…</span></li><li><span class="dot" data-status="blocked" aria-hidden="true"></span><span class="state mono">blocked</span><span class="lane-text">Priority board double-escapes the empty-effort placeholder</span><span class="mono dim">Found by the `hangar-checker` while reviewing…</span></li><li><span class="dot" data-status="ready" aria-hidden="true"></span><span class="state mono">ready</span><span class="lane-text">Een sessie moet merken dat zijn kloon achterloopt vóór hij werk uitdeelt</span><span class="agent">hangar <span class="model">sonnet</span></span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">Claude als e-mailmanager voor alle (~10) adressen — lezen, drafts, spam, afmelden</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 2 — de e-mailmanager-skill, log en state</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 3 — briefing 07:30 en 21:30 plus uurronde 08–22 via launchd op de Mac</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">E-mail stap 4 — het enige pad naar verzenden: Ollie zegt &quot;verstuur &lt;id&gt;&quot; in de chat</span><span class="mono dim">needs a verdict</span></li><li><span class="dot" data-status="inbox" aria-hidden="true"></span><span class="state mono">inbox</span><span class="lane-text">Vanuit de browser tegen de Hangar praten, met automatische routing</span><span class="mono dim">needs a verdict</span></li></ul>
-          </div>
-          <div class="card-foot">
-            <div class="acts"><a class="act primary live" href="https://olivervanderlugt.github.io/project-management/" target="_blank" rel="noopener" title="https://olivervanderlugt.github.io/project-management/"><span class="dot live" aria-hidden="true"></span>Preview &#8599;</a><a class="act small" href="https://github.com/olivervanderlugt/project-management" target="_blank" rel="noopener" title="olivervanderlugt/project-management">repo</a><button class="act small run-local" type="button" data-slug="hangar">run local</button><a class="act small local-link" data-slug="hangar" target="_blank" rel="noopener" hidden>local &#8599;</a><button class="act small" type="button" data-prompt="Work on The Hangar (olivervanderlugt/project-management). Read CLAUDE.md, README.md and any PROGRESS.md first. Do not read the whole repo — open files only when a step needs them. Next action: Build weekly-review-automatic — the script that writes the weekly file from real commits When you finish, update this project&#x27;s file in olivervanderlugt/project-management and rebuild the dashboard.">copy start prompt</button></div>
-            <div class="card-meta mono dim">Markdown, Python 3, GitHub Pages</div>
-            <div class="tags"><span class="tag">tooling</span><span class="tag">personal</span></div>
           </div>
         </article>
         <article class="card" data-status="active">
@@ -668,22 +654,6 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
           <li data-tone="warn">
             <span class="kind mono">verdict</span>
             <div>
-              <p class="what">E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac</p>
-              <p class="why"><code>email/accounts/</code> bevat één bestand per adres (uit <code>_template.md</code>) met <code>mail_account:</code> exact zoals Mail het account noemt, <code>priority:</code> en een…</p>
-            </div>
-            <span class="where mono dim">The Hangar</span>
-          </li>
-          <li data-tone="warn">
-            <span class="kind mono">verdict</span>
-            <div>
-              <p class="what">E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando</p>
-              <p class="why"><code>scripts/mail.py</code> heeft precies deze subcommando&#x27;s, elk met JSON op stdout: <code>accounts</code>, <code>unread --account &lt;naam&gt; --since &lt;ISO&gt;</code>, <code>read &lt;id&gt;</code>…</p>
-            </div>
-            <span class="where mono dim">The Hangar</span>
-          </li>
-          <li data-tone="warn">
-            <span class="kind mono">verdict</span>
-            <div>
               <p class="what">E-mail stap 2 — de e-mailmanager-skill, log en state</p>
               <p class="why"><code>.claude/skills/email-manager/SKILL.md</code> beschrijft één vaste ronde en gebruikt alleen <code>scripts/mail.py</code>: per account op prioriteit → <code>unread</code> sinds…</p>
             </div>
@@ -749,12 +719,12 @@ footer{display:flex; flex-wrap:wrap; justify-content:space-between; gap:10px;
         <span class="mono dim">7</span>
       </div>
       <ul class="rows">
-        <li class="decision" data-status="proposed">
+        <li class="decision" data-status="accepted">
           <span class="adr mono">0007</span>
           <div>
             <h4>Claude leest en beheert alle mail via Mail op Ollie&#x27;s Mac; verzenden alleen op direct verzoek</h4>
             <p>1. **Mail op de Mac is de enige bron.** <code>scripts/mail.py</code> praat via <code>osascript</code> met Mail: accounts opsommen, ongelezen mail per account sinds een tijdstip, één bericht lezen inclusief headers, een draft in de Drafts-map van dat account zetten, een bericht naar Ongewenst verplaatsen. Geen IMAP-code, geen wachtwoorden: Mail is al ingelogd. 2. **<code>mail.py</code> heeft geen verzendcommando** tenzij <code>HANGAR_EMAIL_SEND_OK=1</code> in de omgeving staat, en die staat alleen in Ollie&#x27;s eigen shell, nooit in het repo of een geplande taak. <code>scripts/guard.py</code> weigert daarnaast elke <code>osascript</code>-aanroep die Mail iets laat verzenden. Twee muren, één doel: een geplande run kán niet verzenden. Per mail toestemming (&quot;verstuur &lt;id&gt;&quot;) binnen Ollie&#x27;s eigen sessie is een skill-regel — dat is de eerlijke grens van wat een hook kan. 3. **Spam is quarantaine, niet weg:** naar de map Ongewenst van het account zelf, nooit definitief verwijderen. Elke verplaatsing staat in het log. 4. **Afmelden zonder vragen, maar zonder te verzenden:** alleen RFC 8058 one-click of een https-URL uit de <code>List-Unsubscribe</code>-header. Een <code>mailto:</code>-afmelding wordt een draft. Links uit de body worden nooit gevolgd. 5. **Drafts zonder vragen**, in Ollie&#x27;s stijl, altijd in de Drafts-map van het account waar de mail binnenkwam, met bronadres en afzender bovenaan. 6. **Het draait op de Mac.** Briefing 07:30 en 21:30, verwerking elk uur van 08:00 tot 22:00, via <code>launchd</code> met <code>claude -p</code> in dit repo. Cloud-Routines kunnen niet bij Mail. Slaapt de Mac, dan is een run laat, niet verloren: de volgende haalt in via <code>email/state.md</code>. 7. **Geen credentials in de Hangar.** Profielen, log, briefings en state wel; wachtwoorden nooit — de guard weigert ze.</p>
-            <span class="mono dim">21 Sep 2026 &middot; proposed</span>
+            <span class="mono dim">21 Sep 2026 &middot; accepted</span>
           </div>
         </li>
         <li class="decision" data-status="superseded">
@@ -830,6 +800,20 @@ eerst, dus `hangar-stale-clone-guard`.</li></ul>
       <table class="queue">
         <thead><tr><th>status</th><th>task</th><th>project</th><th>effort</th><th>goes to</th></tr></thead>
         <tbody>
+          <tr data-status="doing">
+            <td><span class="state mono">doing</span></td>
+            <td class="q-title">E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac</td>
+            <td class="mono dim">hangar</td>
+            <td class="mono dim">S</td>
+            <td><span class="agent">hangar <span class="model">sonnet</span></span></td>
+          </tr>
+          <tr data-status="doing">
+            <td><span class="state mono">doing</span></td>
+            <td class="q-title">E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando</td>
+            <td class="mono dim">hangar</td>
+            <td class="mono dim">M</td>
+            <td><span class="agent">hangar <span class="model">opus</span></span></td>
+          </tr>
           <tr data-status="blocked">
             <td><span class="state mono">blocked</span></td>
             <td class="q-title">Night run vs usage limits — three account-level decisions</td>
@@ -884,20 +868,6 @@ eerst, dus `hangar-stale-clone-guard`.</li></ul>
             <td class="q-title">Claude als e-mailmanager voor alle (~10) adressen — lezen, drafts, spam, afmelden</td>
             <td class="mono dim">hangar</td>
             <td class="mono dim">L</td>
-            <td><span class="agent">hangar <span class="model">sonnet</span></span></td>
-          </tr>
-          <tr data-status="inbox">
-            <td><span class="state mono">inbox</span></td>
-            <td class="q-title">E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac</td>
-            <td class="mono dim">hangar</td>
-            <td class="mono dim">S</td>
-            <td><span class="agent">hangar <span class="model">sonnet</span></span></td>
-          </tr>
-          <tr data-status="inbox">
-            <td><span class="state mono">inbox</span></td>
-            <td class="q-title">E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando</td>
-            <td class="mono dim">hangar</td>
-            <td class="mono dim">M</td>
             <td><span class="agent">hangar <span class="model">sonnet</span></span></td>
           </tr>
           <tr data-status="inbox">

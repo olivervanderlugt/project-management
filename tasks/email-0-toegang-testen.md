@@ -1,10 +1,10 @@
 ---
 title: E-mail stap 0 — adreslijst, profielen, en één echte Mail-leesactie op de Mac
 project: hangar
-status: inbox
+status: doing
 added: 2026-09-21
 effort: S
-branch:
+branch: claude/multi-email-manager-system-ozr70l
 ---
 
 ## Done means
@@ -33,3 +33,9 @@ teruggaven, letterlijk, plus de accountnamen — dat is de invoer voor `email-1`
 
 Geen code. Als de tweede regel een foutmelding geeft in plaats van een
 onderwerp, staat dát in het referentiebestand en begint `email-1` daar.
+
+## Stand 2026-09-21
+
+osascript werkt, negen accountnamen bekend, uitvoer in
+`reference/email-mail-scripting.md`, negen profielstubs in `email/accounts/`.
+Open: adres, provider, prioriteit, taal en toon per account — Ollie vult in.

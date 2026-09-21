@@ -1,6 +1,6 @@
 ---
 title:  Claude leest en beheert alle mail via Mail op Ollie's Mac; verzenden alleen op direct verzoek
-status: proposed
+status: accepted
 date:   2026-09-21
 ---
 

@@ -9,6 +9,7 @@ on `git status` gets switched off within a day.
 """
 
 import importlib.util
+import os
 import unittest
 from pathlib import Path
 
@@ -75,6 +76,20 @@ class Blocks(unittest.TestCase):
         self.assertIsNotNone(bash("gh api -X DELETE repos/o/r"))
 
 
+    def test_scripts_that_send_mail(self):
+        self.assertIsNotNone(bash("osascript -e 'tell application \"Mail\" to send newMessage'"))
+        self.assertIsNotNone(bash("osascript -l JavaScript -e 'msg.send()'"))
+
+    def test_mail_py_send_without_the_variable(self):
+        os.environ.pop("HANGAR_EMAIL_SEND_OK", None)
+        self.assertIsNotNone(bash("python3 scripts/mail.py send --account VU --to a@b.nl"))
+        self.assertIsNotNone(bash("cd /x && python3 scripts/mail.py send --account VU"))
+        self.assertIsNotNone(bash("scripts/mail.py send --account VU"))
+        os.environ["HANGAR_EMAIL_SEND_OK"] = "0"
+        self.assertIsNotNone(bash("python3 scripts/mail.py send --account VU --to a@b.nl"))
+        os.environ.pop("HANGAR_EMAIL_SEND_OK", None)
+
+
 class Allows(unittest.TestCase):
     def test_ordinary_git(self):
         for command in (
@@ -102,6 +117,30 @@ class Allows(unittest.TestCase):
     def test_example_env_is_not_a_secret(self):
         self.assertIsNone(bash("cp .env.example .env.sample"))
         self.assertIsNone(read("/repo/.env.example"))
+
+    def test_reading_and_drafting_mail(self):
+        for command in (
+            "osascript -e 'tell application \"Mail\" to get name of every account'",
+            "osascript -e 'tell application \"Mail\" to get subject of first message of inbox'",
+            "osascript -l JavaScript -e 'm.sender()'",  # 'sender' is not 'send'
+            "python3 scripts/mail.py accounts",
+            "python3 scripts/mail.py unread --account VU",
+            "python3 scripts/mail.py draft --account VU --to a@b.nl --subject S --body x",
+            "python3 scripts/mail.py junk 12",
+            "python3 scripts/test_mail.py",
+        ):
+            self.assertIsNone(bash(command), command)
+
+    def test_mentioning_send_in_a_commit_message_is_not_sending(self):
+        self.assertIsNone(bash("git commit -m 'Guard blocks osascript scripts that send and mail.py send'"))
+        self.assertIsNone(bash("grep -n 'mail.py send' tasks/email-4-verzenden-met-toestemming.md"))
+
+    def test_mail_py_send_with_the_variable_in_ollies_shell(self):
+        os.environ["HANGAR_EMAIL_SEND_OK"] = "1"
+        try:
+            self.assertIsNone(bash("python3 scripts/mail.py send --account VU --to a@b.nl"))
+        finally:
+            os.environ.pop("HANGAR_EMAIL_SEND_OK", None)
 
     def test_a_branch_called_maintenance_is_not_main(self):
         self.assertIsNone(bash("git push origin maintenance-branch"))

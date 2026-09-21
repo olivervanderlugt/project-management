@@ -1,10 +1,10 @@
 ---
 title: E-mail stap 1 — scripts/mail.py praat met Mail via osascript, zonder verzendcommando
 project: hangar
-status: inbox
+status: doing
 added: 2026-09-21
 effort: M
-branch:
+branch: claude/multi-email-manager-system-ozr70l
 ---
 
 ## Done means

@@ -16,6 +16,7 @@ What it refuses, and why each one is here:
     pushes to main/master              the branch nobody agreed to touch
     secrets                            reading one is enough to leak it
     deploys and paid CLIs              spends money with no human awake
+    mail that a script sends           a mail nobody approved (decision 0007)
     repo deletion and visibility flips public is a one-way door
 
 Deliberately NOT here: ordinary git, tests, builds, file edits. A guard that
@@ -23,6 +24,7 @@ fires on safe work gets switched off, and a guard that is off protects nothing.
 """
 
 import json
+import os
 import re
 import sys
 
@@ -52,7 +54,18 @@ BASH_RULES = [
      "recursive delete outside the project"),
     (r"\brm\b[^|;&]*\s\.git(\s|/|$)",
      "deleting the .git directory"),
+    # Mail on the Mac (decisions/0007): scripts may read, draft and junk, but
+    # a script that tells Mail to send is a mail nobody approved.
+    (r"(?:^|[;&|]\s*)osascript\b[^|;&]*\bsend\b",
+     "sending mail from a script: only Ollie sends, per mail, via email-4"),
 ]
+
+# scripts/mail.py send: allowed only when the variable is in the guard's own
+# environment — which is Ollie's shell, never a launchd job or a Routine.
+# Both mail rules match only at command position, so a commit message or a
+# grep that merely mentions them still goes through.
+MAIL_SEND = re.compile(r"(?:^|[;&|]\s*)(?:python3?\s+)?(?:\S*/)?mail\.py\s+send\b")
+
 
 # Secrets: matched against both commands and file paths.
 SECRET = re.compile(
@@ -72,6 +85,8 @@ def check(tool, payload):
         command = " ".join((payload.get("command") or "").split())
         if SECRET.search(command):
             return "secrets: not read, not written, not printed"
+        if MAIL_SEND.search(command) and os.environ.get("HANGAR_EMAIL_SEND_OK") != "1":
+            return "mail.py send without HANGAR_EMAIL_SEND_OK=1: sending is Ollie's, by hand or via email-4"
         for pattern, reason in BASH_RULES:
             if re.search(pattern, command, re.IGNORECASE):
                 return reason
