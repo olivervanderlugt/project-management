@@ -1,7 +1,20 @@
 ---
-updated: 2026-08-19
-focus: Acht PR's wachten op jouw merge — vier daarvan van vandaag, alle vier gecheckt
+updated: 2026-09-21
+focus: E-mailmanager via Mail op de Mac — script en skill staan, eerste echte run is aan Ollie
 ---
+
+- **E-mailmanager (2026-09-21).** Besluit `0007` aangenomen: alle negen
+  accounts via Mail op de Mac, geen hub, geen credentials. Gebouwd op branch
+  `claude/multi-email-manager-system-ozr70l`: `scripts/mail.py` (lezen,
+  draft, junk — geen `send` zonder Ollie's variabele), `scripts/mail_profiles.py`,
+  de skill `email-manager`, negen profielen, guard-regels tegen verzenden en
+  tegen wachtwoorden in profielen. Checker-ronde 1 vond vijf gaten, alle
+  gedicht. **Wat nu:** Ollie kloont `~/Hangar` en draait `mail_profiles.py`
+  plus de eerste echte `mail.py unread`. Dat bewijst het compose-idioom en de
+  junk-mapnamen, die tests op Linux niet kunnen zien. Daarna `email-3`
+  (launchd) en `email-4` (verzenden met toestemming). mail.com synct nog
+  niet in Mail; dat regelt Ollie zelf.
+
 
 - **Crew management is geen leeg repo meer (2026-08-19).** De hele MVP is vanaf de
   desktop gepusht. De eerste-sessie-checklist liep groen van begin tot eind — install,

@@ -92,6 +92,20 @@ SECRET = re.compile(
 
 FILE_TOOLS = {"Read", "Edit", "MultiEdit", "Write", "NotebookEdit"}
 
+# email/accounts/*.md are profiles, not credentials (decisions/0007 rule 7).
+# A frontmatter line that names one is refused whatever its value.
+PROFILE_PATH = re.compile(r"(^|/)email/accounts/[^/]+\.md$")
+CREDENTIAL_LINE = re.compile(
+    r"^\s*(password|passwd|wachtwoord|token|api[_-]?key|secret|app[_-]?password)\s*:",
+    re.IGNORECASE | re.MULTILINE,
+)
+# In a shell command the line start is lost inside quotes, so any such key
+# with a colon counts when the command also names a profile.
+CREDENTIAL_WORD = re.compile(
+    r"\b(password|passwd|wachtwoord|token|api[_-]?key|secret|app[_-]?password)\s*:",
+    re.IGNORECASE,
+)
+
 
 def check(tool, payload):
     """The reason to block, or None to allow."""
@@ -101,6 +115,8 @@ def check(tool, payload):
             return "secrets: not read, not written, not printed"
         if invokes_mail_send(command) and os.environ.get("HANGAR_EMAIL_SEND_OK") != "1":
             return "mail.py send without HANGAR_EMAIL_SEND_OK=1: sending is Ollie's, by hand or via email-4"
+        if "email/accounts/" in command and CREDENTIAL_WORD.search(command):
+            return "an email profile never holds a password or token: Mail is already logged in"
         for pattern, reason in BASH_RULES:
             if re.search(pattern, command, re.IGNORECASE):
                 return reason
@@ -110,6 +126,9 @@ def check(tool, payload):
         path = payload.get("file_path") or payload.get("notebook_path") or ""
         if SECRET.search(path):
             return "secrets: not read, not written, not printed"
+        content = payload.get("content") or payload.get("new_string") or ""
+        if PROFILE_PATH.search(path) and CREDENTIAL_LINE.search(content):
+            return "an email profile never holds a password or token: Mail is already logged in"
     return None
 
 

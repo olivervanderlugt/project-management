@@ -86,6 +86,15 @@ class Blocks(unittest.TestCase):
         ))
         self.assertIsNotNone(bash("cd /x && osascript -e 'tell application \"Mail\"' -e 'send theMessage'"))
 
+    def test_credentials_in_an_email_profile(self):
+        profile = "email/accounts/vu.md"
+        self.assertIsNotNone(guard.check("Write", {"file_path": profile, "content": "---\npassword: hunter2\n---\n"}))
+        self.assertIsNotNone(guard.check("Write", {"file_path": "/Users/o/Hangar/" + profile, "content": "token: abc"}))
+        self.assertIsNotNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "App-Password: y"}))
+        self.assertIsNotNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "wachtwoord: y"}))
+        self.assertIsNotNone(bash("cat > email/accounts/vu.md <<'EOF'\n---\npassword: x\n---\nEOF"))
+        self.assertIsNotNone(bash("printf 'token: x\\n' >> email/accounts/vu.md"))
+
     def test_setting_the_send_key_inside_a_command(self):
         for command in (
             "HANGAR_EMAIL_SEND_OK=1 python3 scripts/mail.py send --account VU --to a@b.nl",
@@ -134,6 +143,14 @@ class Allows(unittest.TestCase):
     def test_example_env_is_not_a_secret(self):
         self.assertIsNone(bash("cp .env.example .env.sample"))
         self.assertIsNone(read("/repo/.env.example"))
+
+    def test_ordinary_email_profiles_and_prose_about_passwords(self):
+        profile = "email/accounts/vu.md"
+        self.assertIsNone(guard.check("Write", {"file_path": profile, "content": "---\naddress: o@vu.nl\npriority: 1\n---\nNooit een wachtwoord hier.\n"}))
+        self.assertIsNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "tone: kort"}))
+        self.assertIsNone(guard.check("Write", {"file_path": "decisions/0007-x.md", "content": "password: is a word in a decision"}))
+        self.assertIsNone(bash("cat email/accounts/vu.md"))
+        self.assertIsNone(bash("grep -l 'password' scripts/guard.py"))
 
     def test_reading_and_drafting_mail(self):
         for command in (

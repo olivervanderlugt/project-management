@@ -49,3 +49,8 @@ naam met spatie erachter wordt getrimd gezocht.
 Onbewezen tot de eerste run op de Mac: het compose-idioom (`OutgoingMessage`
 + `save` + `close saving`) en de echte naam van de junk-map per account.
 Vier suites groen: guard 20, mail 18, mail_profiles 5, preview.
+
+## Stand 2026-09-21, later
+
+Profielen gevuld uit Ollie's tabel; `junk_mailbox` per account staat erin.
+Wat rest is de eerste echte run op de Mac (`email-0`). Tot dan `doing`.
