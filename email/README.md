@@ -1,7 +1,9 @@
 # email/
 
-Wat de e-mailmanager (`.claude/skills/email-manager/SKILL.md`) achterlaat.
-Geen mail zelf — die blijft in Mail op Ollie's Mac. Besluit `0007`.
+Alleen de template. Alles wat de e-mailmanager achterlaat — profielen met
+adressen, state, log, briefings, context — staat op Ollie's Mac in
+`~/.hangar-mail/` (of `HANGAR_MAIL_DIR`), want dit repo is publiek. Besluit
+`0008`. De lay-out daar:
 
 | Pad            | Houdt                                                          |
 | -------------- | -------------------------------------------------------------- |
@@ -9,6 +11,6 @@ Geen mail zelf — die blijft in Mail op Ollie's Mac. Besluit `0007`.
 | `state.md`     | Laatst verwerkte tijd per account.                             |
 | `log/`         | Eén bestand per dag, één regel per actie. Alles terug te draaien. |
 | `briefings/`   | `YYYY-MM-DD-am.md` en `-pm.md`. Alleen wat in het log staat.  |
+| `context/`     | De mailcontext per account die elke chat leest (email-5/6).    |
 
-Nooit hier: een wachtwoord, een token, een kopie van een mail. De guard
-weigert de eerste twee; de derde is een regel.
+`scripts/mail_profiles.py` maakt de map aan en kopieert de template erheen.

@@ -178,10 +178,24 @@ class Junking(WithFakeOsascript):
         self.assertNotEqual(result.returncode, 0)
         self.assertFalse(self.log.exists())
 
-    def test_junk_mailbox_comes_from_the_profile(self):
-        self.assertEqual(mail.junk_mailbox_from_profile("VU"), "Junk Email")
-        self.assertEqual(mail.junk_mailbox_from_profile("Wandarbear "), "Junk")  # trailing space ok
-        self.assertIsNone(mail.junk_mailbox_from_profile("No Such Account"))
+    def test_junk_mailbox_comes_from_the_profile_outside_the_repo(self):
+        accounts = Path(self.tmp.name) / "accounts"
+        accounts.mkdir()
+        (accounts / "vu.md").write_text("---\nmail_account: VU\njunk_mailbox: Junk Email\n---\n")
+        (accounts / "wandarbear.md").write_text("---\nmail_account: Wandarbear\njunk_mailbox: Junk\n---\n")
+        os.environ["HANGAR_MAIL_DIR"] = self.tmp.name
+        try:
+            self.assertEqual(mail.junk_mailbox_from_profile("VU"), "Junk Email")
+            self.assertEqual(mail.junk_mailbox_from_profile("Wandarbear "), "Junk")  # trailing space ok
+            self.assertIsNone(mail.junk_mailbox_from_profile("No Such Account"))
+        finally:
+            os.environ.pop("HANGAR_MAIL_DIR", None)
+
+    def test_profiles_are_not_read_from_the_repo(self):
+        # The repo is public; the only profile in it is the template.
+        repo_accounts = ROOT / "email" / "accounts"
+        self.assertEqual([p.name for p in repo_accounts.glob("*.md")], ["_template.md"])
+        self.assertNotIn("email", mail.data_dir().split(os.sep)[-2:])
 
     def test_unread_sorts_newest_first_before_the_limit(self):
         self.run_mail("unread", "--limit", "3", out="[]")

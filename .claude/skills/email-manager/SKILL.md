@@ -11,17 +11,20 @@ bestand is de enige plek waar de beslisregels staan; `mail.py` beslist
 niets, het praat met Mail en doet één begrensd afmeldverzoek. Besluit `0007`
 is de grond onder alles hieronder.
 
-Draait alleen op Ollie's Mac, met Mail open of te openen. Op Linux (deze
+Draait alleen op Ollie's Mac, met Mail open of te openen. Alles wat de ronde
+achterlaat staat in `~/.hangar-mail/`, nooit in dit repo: de Hangar is
+publiek (besluit 0008). Op Linux (deze
 cloud-omgeving) bestaat `osascript` niet: dan stopt de ronde met één regel
 in het log en verzint niets.
 
 ## Voor de ronde
 
 1. `git fetch` en vergelijk met de remote; werk op de huidige branch.
-2. Lees `email/accounts/*.md` (niet `_template.md`). Sorteer op `priority`
+2. Lees `~/.hangar-mail/accounts/*.md` (niet `_template.md`; `HANGAR_MAIL_DIR`
+   overschrijft de map). Sorteer op `priority`
    (1 eerst), dan alfabetisch. Sla profielen zonder `tested:` over en noem
    ze onder "kon niet".
-3. Lees `email/state.md`: per account de laatst verwerkte tijd (ISO). Geen
+3. Lees `~/.hangar-mail/state.md`: per account de laatst verwerkte tijd (ISO). Geen
    regel voor een account → 24 uur terug.
 4. Lees `scripts/mail_profiles.py` niet en run hem niet — profielen zijn
    Ollie's werk.
@@ -70,11 +73,11 @@ Per mail, in deze volgorde, één uitkomst:
    prioriteit 1 is.
 
 Na elk account: schrijf de tijd van de nieuwste verwerkte mail (of "nu" als
-er niets was) in `email/state.md` onder de accountslug.
+er niets was) in `~/.hangar-mail/state.md` onder de accountslug.
 
 ## Het log
 
-`email/log/YYYY-MM-DD.md`, één regel per actie, aanmaken als hij ontbreekt:
+`~/.hangar-mail/log/YYYY-MM-DD.md`, één regel per actie, aanmaken als hij ontbreekt:
 
 ```
 - HH:MM · <accountslug> · <afzender> · draft | junk | unsubscribe | unsubscribe-draft · <id of URL> · <reden in ≤ 10 woorden>
@@ -102,7 +105,7 @@ Drie gevallen, precies zo:
 ## De briefing
 
 Alleen als de ronde als briefing is gestart (07:30, 21:30, of Ollie vraagt
-erom): `email/briefings/YYYY-MM-DD-am.md` of `-pm.md`. Per account op
+erom): `~/.hangar-mail/briefings/YYYY-MM-DD-am.md` of `-pm.md`. Per account op
 prioriteit, alleen accounts met iets te melden:
 
 ```
@@ -138,7 +141,7 @@ Het enige pad, alleen in een sessie met Ollie erbij:
    bouwt een nieuwe mail met dezelfde inhoud en verstuurt die; de draft
    blijft in Drafts staan en Ollie gooit hem zelf weg. Een antwoord dat zo
    verstuurd wordt, hangt niet aan de oorspronkelijke thread.
-4. Eén logregel: `- HH:MM · <accountslug> · <ontvanger> · send · <draft-id> · op verzoek van Ollie`.
+4. Eén logregel in `~/.hangar-mail/log/`: `- HH:MM · <accountslug> · <ontvanger> · send · <draft-id> · op verzoek van Ollie`.
 
 Twee drafts in één bericht van Ollie: twee keer stap 2 en 3, los van
 elkaar. Er is geen ander pad dan `mail.py send --draft`; nooit `osascript`

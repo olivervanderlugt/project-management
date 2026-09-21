@@ -45,7 +45,8 @@ kan is per account hetzelfde:
 | `mailto:`-afmelding | wordt een draft                   | ja            |
 | Verzenden      | alleen `email-4`, alleen Ollie's sessie | NOOIT        |
 
-Geplande runs draaien op de Mac zelf (`launchd` + `claude -p`). Briefing
+Alle maildata staat buiten het repo in `~/.hangar-mail/` (besluit `0008`;
+de Hangar is publiek). Geplande runs draaien op de Mac zelf (`launchd` + `claude -p`). Briefing
 07:30 en 21:30, verwerking elk uur 08:00–22:00. Geen cloud-fallback (default:
 uit; Ollie kan het aanzetten).
 
@@ -75,6 +76,9 @@ te controleren.
 - `email-2-skill-en-log` — de e-mailmanager-skill, log, state.
 - `email-3-geplande-runs` — `launchd`-jobs, briefingbestand, bordtegel.
 - `email-4-verzenden-met-toestemming` — het enige pad naar verzenden.
+- `email-5-index-alles` — mechanische index van alle mail, gratis.
+- `email-6-context-overal` — samenvattingen in Drive plus de skill die
+  elke chat ze laat lezen. Dit is het doel dat Ollie op 2026-09-21 uitsprak.
 
 ## Geschiedenis
 
@@ -92,3 +96,8 @@ mocken `osascript`; de eerste echte run is Ollie's, in `email-0`.
 nog niet in Mail. Ollie regelt dit zelf; niet aan komen. Tot het synct staat
 oliverlugt@mail.com als `tested:` leeg en valt het buiten elke run — het
 verschijnt in de briefing onder "kon niet", niet stilzwijgend weg.
+
+**2026-09-21, avond:** doel aangescherpt door Ollie — in elke chat of
+Cowork-sessie meteen alles over zijn mail weten. Besluit `0008`: maildata
+buiten het repo (B), historie volledig, context in Drive. `email-0` t/m
+`email-4` done; `email-3`, `-5`, `-6` open.

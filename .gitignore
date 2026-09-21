@@ -2,3 +2,9 @@
 __pycache__/
 *.pyc
 .cache/
+email/accounts/*.md
+!email/accounts/_template.md
+email/log/
+email/briefings/
+email/context/
+email/state.md

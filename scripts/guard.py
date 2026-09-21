@@ -92,9 +92,10 @@ SECRET = re.compile(
 
 FILE_TOOLS = {"Read", "Edit", "MultiEdit", "Write", "NotebookEdit"}
 
-# email/accounts/*.md are profiles, not credentials (decisions/0007 rule 7).
+# Profiles (email/accounts/ in the repo for the template, ~/.hangar-mail/accounts/
+# for the real ones) are never credentials (decisions/0007 rule 7).
 # A frontmatter line that names one is refused whatever its value.
-PROFILE_PATH = re.compile(r"(^|/)email/accounts/[^/]+\.md$")
+PROFILE_PATH = re.compile(r"(^|/)(email|\.hangar-mail)/accounts/[^/]+\.md$")
 CREDENTIAL_LINE = re.compile(
     r"^\s*(password|passwd|wachtwoord|token|api[_-]?key|secret|app[_-]?password)\s*:",
     re.IGNORECASE | re.MULTILINE,

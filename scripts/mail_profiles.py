@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fill email/accounts/*.md from Mail on the Mac, then ask Ollie the rest.
+"""Fill ~/.hangar-mail/accounts/*.md from Mail on the Mac, then ask Ollie the rest.
 
     python3 scripts/mail_profiles.py            # addresses from Mail, then questions
     python3 scripts/mail_profiles.py --yes      # addresses from Mail, all defaults, no questions
@@ -24,7 +24,9 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-ACCOUNTS = ROOT / "email" / "accounts"
+import os
+ACCOUNTS = Path(os.environ.get("HANGAR_MAIL_DIR") or os.path.expanduser("~/.hangar-mail")) / "accounts"
+TEMPLATE = ROOT / "email" / "accounts" / "_template.md"
 MAIL = ROOT / "scripts" / "mail.py"
 
 FIELDS = [
@@ -112,6 +114,8 @@ def ask(prompt, default, reader=input):
 def fill(accounts, directory, yes=False, reader=input, out=print, from_json=False):
     """Write one profile per Mail account. Returns the list of paths written."""
     directory.mkdir(parents=True, exist_ok=True)
+    if TEMPLATE.exists() and not (directory / "_template.md").exists():
+        (directory / "_template.md").write_text(TEMPLATE.read_text(encoding="utf-8"), encoding="utf-8")
     existing = load_profiles(directory)
     written = []
     today = date.today().isoformat()
@@ -175,8 +179,8 @@ def main(argv=None):
 
     print(f"{len(accounts)} accounts in Mail. Enter = default; wat al ingevuld is wordt niet gevraagd.")
     written = fill(accounts, Path(args.dir), yes=args.yes, from_json=bool(args.from_json))
-    print(f"\n{len(written)} profielen geschreven in {Path(args.dir).relative_to(ROOT) if Path(args.dir).is_relative_to(ROOT) else args.dir}.")
-    print("Dan: git add email/accounts && git commit -m 'Vul e-mailprofielen' && git push")
+    print(f"\n{len(written)} profielen geschreven in {args.dir}.")
+    print("Profielen staan buiten het repo (besluit 0008); niets te committen.")
     return 0
 
 

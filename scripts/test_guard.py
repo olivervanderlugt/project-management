@@ -90,6 +90,8 @@ class Blocks(unittest.TestCase):
         profile = "email/accounts/vu.md"
         self.assertIsNotNone(guard.check("Write", {"file_path": profile, "content": "---\npassword: hunter2\n---\n"}))
         self.assertIsNotNone(guard.check("Write", {"file_path": "/Users/o/Hangar/" + profile, "content": "token: abc"}))
+        self.assertIsNotNone(guard.check("Write", {"file_path": "/Users/o/.hangar-mail/accounts/vu.md", "content": "token: abc"}))
+        self.assertIsNotNone(bash("printf 'token: x\\n' >> ~/.hangar-mail/accounts/vu.md"))
         self.assertIsNotNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "App-Password: y"}))
         self.assertIsNotNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "wachtwoord: y"}))
         self.assertIsNotNone(guard.check("MultiEdit", {"file_path": profile, "edits": [

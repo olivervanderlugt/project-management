@@ -28,6 +28,9 @@ Without `--account`, `read` falls back to the unified inbox and takes the
 first match. `unread` prints the account with every id for exactly this
 reason.
 
+Data — profiles, state, log, briefings, context — lives in ~/.hangar-mail
+(or HANGAR_MAIL_DIR), never in this public repo. See decision 0008.
+
 Unverified until the first run on the Mac (tasks/email-0): whether Mail
 accepts the compose idiom used here (`OutgoingMessage` + `save` + `close`
 saving), and the junk mailbox names. Both are the kind of thing the tests
@@ -260,10 +263,18 @@ def cmd_unread(args):
     emit(run_jxa(script))
 
 
+def data_dir():
+    """Where mail data lives: profiles, state, log, briefings, context.
+
+    Outside the repo on purpose — the Hangar is public (decision 0008).
+    HANGAR_MAIL_DIR overrides; default ~/.hangar-mail.
+    """
+    return os.environ.get("HANGAR_MAIL_DIR") or os.path.expanduser("~/.hangar-mail")
+
+
 def junk_mailbox_from_profile(account):
-    """The `junk_mailbox:` line of email/accounts/<slug>.md for this account, or None."""
-    directory = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                             "email", "accounts")
+    """The `junk_mailbox:` line of <data_dir>/accounts/<slug>.md for this account, or None."""
+    directory = os.path.join(data_dir(), "accounts")
     if not os.path.isdir(directory):
         return None
     for name in sorted(os.listdir(directory)):
