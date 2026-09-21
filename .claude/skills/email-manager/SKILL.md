@@ -5,9 +5,11 @@ description: One round over Ollie's mail through Mail on his Mac — read what i
 
 # E-mailmanager
 
-Eén vaste ronde, altijd dezelfde, alleen via `scripts/mail.py`. Dit bestand
-is de enige plek waar de beslisregels staan; `mail.py` beslist niets, het
-praat alleen met Mail. Besluit `0007` is de grond onder alles hieronder.
+Eén vaste ronde, altijd dezelfde, alleen via `scripts/mail.py` — ook de
+afmeld-request loopt daardoor, zodat er geen los HTTP-verkeer bestaat. Dit
+bestand is de enige plek waar de beslisregels staan; `mail.py` beslist
+niets, het praat met Mail en doet één begrensd afmeldverzoek. Besluit `0007`
+is de grond onder alles hieronder.
 
 Draait alleen op Ollie's Mac, met Mail open of te openen. Op Linux (deze
 cloud-omgeving) bestaat `osascript` niet: dan stopt de ronde met één regel
@@ -52,13 +54,18 @@ Per mail, in deze volgorde, één uitkomst:
    in de uitvoer van `read`). Alleen als het profiel `auto_unsubscribe: yes`
    heeft én de mail niet iets is wat Ollie duidelijk wil (een dienst die hij
    gebruikt, een vereniging waar hij lid van is):
-   - `one_click: true` → één HTTPS POST naar de URL met body
-     `List-Unsubscribe=One-Click`. Dat is de RFC 8058-vorm.
-   - alleen een `https` URL, geen one-click → open de URL met één GET.
+   - `one_click: true` →
+     `python3 scripts/mail.py unsubscribe --url <http[0]> --one-click`
+     (één POST, RFC 8058).
+   - alleen een `https` URL, geen one-click →
+     `python3 scripts/mail.py unsubscribe --url <http[0]>` (één GET).
    - alleen `mailto:` → geen mail sturen. Maak een draft aan dat adres met
-     onderwerp `unsubscribe` en regel 1 `[<address> · afmelding voor <afzender>]`;
-     Ollie verstuurt hem zelf of niet.
-   - Links uit de body worden nooit gevolgd. Alleen de header.
+     `python3 scripts/mail.py draft --account "<mail_account>" --to <adres> --subject unsubscribe --body-file <tmp>`,
+     regel 1 `[<address> · afmelding voor <afzender>]`; Ollie verstuurt hem
+     zelf of niet.
+   - Links uit de body worden nooit gevolgd, en er is geen ander HTTP-pad
+     dan `mail.py unsubscribe`: https alleen, één verzoek, geen cookies,
+     15 seconden. `ok: false` in de uitvoer is een `kon niet`-regel.
 5. **Niets.** Informatief, geen actie. Noem het wel in de briefing als het
    prioriteit 1 is.
 
@@ -70,16 +77,27 @@ er niets was) in `email/state.md` onder de accountslug.
 `email/log/YYYY-MM-DD.md`, één regel per actie, aanmaken als hij ontbreekt:
 
 ```
-- HH:MM · <accountslug> · <afzender> · draft | junk | unsubscribe | unsubscribe-draft · <reden in ≤ 10 woorden>
+- HH:MM · <accountslug> · <afzender> · draft | junk | unsubscribe | unsubscribe-draft · <id of URL> · <reden in ≤ 10 woorden>
+- HH:MM · <accountslug> · <n> nieuw, geen actie
+- HH:MM · <accountslug> · kon niet · <wat en waarom>
+- HH:MM · ronde · niets nieuws sinds <oudste state>
 ```
 
-Een ronde zonder één actie schrijft precies één regel:
-`- HH:MM · ronde · niets nieuws sinds <oudste state>`. Nooit een lege dag,
-nooit een verzonnen actie. Wat niet kon (profiel zonder `tested:`, `junk`
-dat alleen kon vlaggen, `osascript` afwezig) is ook een regel, met `kon niet`.
+De vijfde kolom is wat Ollie nodig heeft om het terug te draaien: het
+message-id bij draft en junk, de URL bij unsubscribe, het adres bij
+unsubscribe-draft.
 
-Elke regel moet Ollie terug kunnen draaien: een junk-regel noemt het id, een
-afmelding de URL of het adres.
+Drie gevallen, precies zo:
+
+- **Geen enkel account had nieuwe mail** → exact één `ronde`-regel, plus een
+  `kon niet`-regel per ding dat niet kon, en verder niets. Geen briefing-
+  bestand, tenzij de ronde als briefing gestart is — dan de driereglige
+  briefing hieronder.
+- **Nieuwe mail, maar bij een account geen actie** → één `geen actie`-regel
+  voor dat account. Nooit een `ronde · niets nieuws`-regel als er wél mail
+  was; dat zou een onwaarheid zijn.
+- **Acties** → één regel per actie. Nooit een lege dag, nooit een verzonnen
+  actie, nooit een actie die niet gelogd is.
 
 ## De briefing
 

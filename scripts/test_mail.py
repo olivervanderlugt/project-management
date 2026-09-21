@@ -196,6 +196,56 @@ class Junking(WithFakeOsascript):
             self.assertNotIn("trash", template, name)
 
 
+class Unsubscribing(unittest.TestCase):
+    class FakeResponse:
+        status = 200
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            return False
+
+    class FakeOpener:
+        def __init__(self):
+            self.requests = []
+
+        def open(self, request, timeout=None):
+            self.requests.append((request, timeout))
+            return Unsubscribing.FakeResponse()
+
+    def test_one_click_is_a_post_with_the_fixed_body(self):
+        opener = self.FakeOpener()
+        result = mail.unsubscribe("https://b.nl/u/1", True, opener=opener)
+        request, timeout = opener.requests[0]
+        self.assertEqual(request.method, "POST")
+        self.assertEqual(request.data, b"List-Unsubscribe=One-Click")
+        self.assertEqual(timeout, 15)
+        self.assertTrue(result["ok"])
+
+    def test_plain_link_is_one_get(self):
+        opener = self.FakeOpener()
+        mail.unsubscribe("https://b.nl/u/1", False, opener=opener)
+        self.assertEqual(len(opener.requests), 1)
+        self.assertEqual(opener.requests[0][0].method, "GET")
+
+    def test_http_and_mailto_are_refused_without_a_request(self):
+        opener = self.FakeOpener()
+        for url in ("http://b.nl/u", "mailto:stop@b.nl", "ftp://x"):
+            result = mail.unsubscribe(url, True, opener=opener)
+            self.assertFalse(result["ok"], url)
+        self.assertEqual(opener.requests, [])
+
+    def test_network_error_is_a_result_not_a_crash(self):
+        class Broken:
+            def open(self, *_a, **_k):
+                raise OSError("no route")
+
+        result = mail.unsubscribe("https://b.nl/u", False, opener=Broken())
+        self.assertFalse(result["ok"])
+        self.assertIn("no route", result["error"])
+
+
 class Sending(WithFakeOsascript):
     def test_send_does_not_exist_without_the_variable(self):
         result = self.run_mail(

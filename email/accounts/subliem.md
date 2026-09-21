@@ -8,7 +8,7 @@ language: both
 tone:     universitair formeel
 auto_unsubscribe: no
 never_spam:
-tested:   2026-09-21
+tested:
 ---
 
 ## Wat hier binnenkomt

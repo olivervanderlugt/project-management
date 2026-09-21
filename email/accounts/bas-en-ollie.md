@@ -8,7 +8,7 @@ language: nl
 tone:     werk formeel
 auto_unsubscribe: yes
 never_spam:
-tested:   2026-09-21
+tested:
 ---
 
 ## Wat hier binnenkomt

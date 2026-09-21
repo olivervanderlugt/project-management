@@ -6,7 +6,8 @@
     python3 scripts/mail.py read 12345
     python3 scripts/mail.py draft --account "VU" --to x@y.nl --subject "Re: …" --body-file draft.txt
     python3 scripts/mail.py draft --account "VU" --reply-to 12345 --body-file draft.txt
-    python3 scripts/mail.py junk 12345 [--mailbox "Junk"]
+    python3 scripts/mail.py junk 12345 --account "VU" [--mailbox "Junk"]
+    python3 scripts/mail.py unsubscribe --url https://… [--one-click]
 
 Every subcommand prints one JSON value on stdout. Mail is driven through JXA
 (`osascript -l JavaScript`), which returns dates as ISO strings and lets the
@@ -278,6 +279,36 @@ def cmd_send(args):
     _compose(args, "msg.send();", "sent")
 
 
+def unsubscribe(url, one_click, opener=None):
+    """One bounded request to a List-Unsubscribe URL. Returns a dict, never raises.
+
+    Only https, only the URL from the header (the skill enforces that part),
+    one request, no cookies, no body links, 15 seconds. One-click is the
+    RFC 8058 POST with the fixed body; otherwise a plain GET.
+    """
+    import urllib.request
+    if not url.lower().startswith("https://"):
+        return {"ok": False, "url": url, "error": "only https URLs from the List-Unsubscribe header"}
+    data = b"List-Unsubscribe=One-Click" if one_click else None
+    request = urllib.request.Request(
+        url, data=data, method="POST" if one_click else "GET",
+        headers={"User-Agent": "Hangar email-manager", "Content-Type": "application/x-www-form-urlencoded"},
+    )
+    opener = opener or urllib.request.build_opener()  # fresh: no cookies, no auth
+    try:
+        with opener.open(request, timeout=15) as response:
+            return {"ok": 200 <= response.status < 400, "url": url,
+                    "status": response.status, "method": request.method}
+    except Exception as error:  # noqa: BLE001 — one line in the log, not a crash
+        return {"ok": False, "url": url, "method": request.method, "error": str(error)[:200]}
+
+
+def cmd_unsubscribe(args):
+    result = unsubscribe(args.url, args.one_click)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0 if result["ok"] else 1
+
+
 def cmd_junk(args):
     candidates = []
     for name in (args.mailbox, junk_mailbox_from_profile(args.account), *JUNK_FALLBACKS):
@@ -321,6 +352,10 @@ def build_parser():
     junk.add_argument("--account", required=True, help="exact account name as Mail shows it")
     junk.add_argument("--mailbox", help="junk mailbox name; default from the profile, then the usual names")
 
+    unsub = sub.add_parser("unsubscribe", help="one https request to a List-Unsubscribe URL; never a mail")
+    unsub.add_argument("--url", required=True, help="the https URL from the List-Unsubscribe header")
+    unsub.add_argument("--one-click", action="store_true", help="RFC 8058 POST instead of GET")
+
     if SEND_OK:
         send = sub.add_parser("send", help="send — only with HANGAR_EMAIL_SEND_OK=1 and Ollie's explicit go")
         compose_args(send)
@@ -337,15 +372,16 @@ def main(argv=None):
         )
         return 2
     args = build_parser().parse_args(argv)
-    {
+    result = {
         "accounts": cmd_accounts,
         "unread": cmd_unread,
         "read": cmd_read,
         "draft": cmd_draft,
         "junk": cmd_junk,
+        "unsubscribe": cmd_unsubscribe,
         "send": cmd_send,
     }[args.command](args)
-    return 0
+    return result or 0
 
 
 if __name__ == "__main__":

@@ -92,8 +92,14 @@ class Blocks(unittest.TestCase):
         self.assertIsNotNone(guard.check("Write", {"file_path": "/Users/o/Hangar/" + profile, "content": "token: abc"}))
         self.assertIsNotNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "App-Password: y"}))
         self.assertIsNotNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "wachtwoord: y"}))
+        self.assertIsNotNone(guard.check("MultiEdit", {"file_path": profile, "edits": [
+            {"old_string": "tone: kort", "new_string": "tone: kort\npassword: hunter2"}]}))
         self.assertIsNotNone(bash("cat > email/accounts/vu.md <<'EOF'\n---\npassword: x\n---\nEOF"))
         self.assertIsNotNone(bash("printf 'token: x\\n' >> email/accounts/vu.md"))
+        self.assertIsNotNone(bash("cd email/accounts && cat > vu.md <<'X'\npassword: hunter2\nX"))
+        self.assertIsNotNone(bash("cd email && printf 'token: abc\\n' >> accounts/vu.md"))
+        self.assertIsNotNone(bash("sed -i 's/^tone:.*/password: x/' email/accounts/vu.md"))
+        self.assertIsNotNone(bash("cd email/accounts; python3 -c \"open('vu.md','a').write('token: x')\""))
 
     def test_setting_the_send_key_inside_a_command(self):
         for command in (
@@ -149,8 +155,16 @@ class Allows(unittest.TestCase):
         self.assertIsNone(guard.check("Write", {"file_path": profile, "content": "---\naddress: o@vu.nl\npriority: 1\n---\nNooit een wachtwoord hier.\n"}))
         self.assertIsNone(guard.check("Edit", {"file_path": profile, "old_string": "x", "new_string": "tone: kort"}))
         self.assertIsNone(guard.check("Write", {"file_path": "decisions/0007-x.md", "content": "password: is a word in a decision"}))
+        self.assertIsNone(guard.check("MultiEdit", {"file_path": profile, "edits": [
+            {"old_string": "tone: kort", "new_string": "tone: kort en direct"}]}))
         self.assertIsNone(bash("cat email/accounts/vu.md"))
         self.assertIsNone(bash("grep -l 'password' scripts/guard.py"))
+        # read-only audits and talk about the rule are not writes
+        self.assertIsNone(bash("grep -n 'token:' email/accounts/*.md"))
+        self.assertIsNone(bash("grep -rn 'password:' email/accounts/"))
+        self.assertIsNone(bash("git commit -m 'Guard: refuse password: lines in email/accounts/'"))
+        self.assertIsNone(bash("python3 scripts/mail_profiles.py --yes"))
+        self.assertIsNone(bash("printf 'tone: kort\\n' >> email/accounts/vu.md"))
 
     def test_reading_and_drafting_mail(self):
         for command in (

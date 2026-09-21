@@ -109,7 +109,7 @@ def ask(prompt, default, reader=input):
     return answer or default
 
 
-def fill(accounts, directory, yes=False, reader=input, out=print):
+def fill(accounts, directory, yes=False, reader=input, out=print, from_json=False):
     """Write one profile per Mail account. Returns the list of paths written."""
     directory.mkdir(parents=True, exist_ok=True)
     existing = load_profiles(directory)
@@ -136,7 +136,10 @@ def fill(accounts, directory, yes=False, reader=input, out=print):
             fields["provider"] = guess_provider(address)
         if not fields.get("junk_mailbox"):
             fields["junk_mailbox"] = JUNK_BY_PROVIDER.get(fields["provider"], "Junk")
-        fields["tested"] = fields.get("tested") or today
+        # Mail listed this account in `accounts`, so it answered for it: that
+        # is the test. A profile filled from --from-json proves nothing.
+        if not from_json:
+            fields["tested"] = fields.get("tested") or today
 
         out(f"\n{name.strip()}  <{address or 'geen adres in Mail'}>  provider: {fields['provider']}")
         if len(addresses) > 1:
@@ -171,7 +174,7 @@ def main(argv=None):
         accounts = accounts_from_mail()
 
     print(f"{len(accounts)} accounts in Mail. Enter = default; wat al ingevuld is wordt niet gevraagd.")
-    written = fill(accounts, Path(args.dir), yes=args.yes)
+    written = fill(accounts, Path(args.dir), yes=args.yes, from_json=bool(args.from_json))
     print(f"\n{len(written)} profielen geschreven in {Path(args.dir).relative_to(ROOT) if Path(args.dir).is_relative_to(ROOT) else args.dir}.")
     print("Dan: git add email/accounts && git commit -m 'Vul e-mailprofielen' && git push")
     return 0
