@@ -1,16 +1,16 @@
 ---
-address:
-provider: 
+address:  wandarbearmedia@outlook.com
+provider: outlook
 mail_account: Wandarbear Media
-junk_mailbox: Junk
-priority:
-language:
-tone:
-auto_unsubscribe:
+junk_mailbox: Junk Email
+priority: 3
+language: both
+tone:     kort en direct
+auto_unsubscribe: yes
 never_spam:
-tested: 2026-09-21
+tested:   2026-09-21
 ---
 
 ## Wat hier binnenkomt
 
-Nog niet ingevuld — Ollie vertelt het per account.
+Oude zakelijke e-mail (Wandarbear Media). Toon niet opgegeven (x).

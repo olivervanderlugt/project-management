@@ -1,16 +1,16 @@
 ---
-address:
-provider: 
+address:  oliver.lugt@subliem-vu.nk
+provider: other
 mail_account: Subliem
 junk_mailbox: Junk
-priority:
-language:
-tone:
-auto_unsubscribe:
+priority: 2
+language: both
+tone:     universitair formeel
+auto_unsubscribe: no
 never_spam:
-tested: 2026-09-21
+tested:   2026-09-21
 ---
 
 ## Wat hier binnenkomt
 
-Nog niet ingevuld — Ollie vertelt het per account.
+Studievereniging Subliem (VU). Adres zoals Ollie het opgaf, eindigt op .nk — waarschijnlijk .nl; Mail weet het echte adres. Niet automatisch afmelden.

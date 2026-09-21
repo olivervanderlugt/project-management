@@ -1,16 +1,16 @@
 ---
-address:
+address:  oliverlugt@gmail.com
 provider: gmail
 mail_account: Personal Gmail
 junk_mailbox: Junk
-priority:
-language:
-tone:
-auto_unsubscribe:
+priority: 1
+language: both
+tone:     persoonlijk
+auto_unsubscribe: yes
 never_spam:
-tested: 2026-09-21
+tested:   2026-09-21
 ---
 
 ## Wat hier binnenkomt
 
-Nog niet ingevuld — Ollie vertelt het per account.
+Persoonlijke Gmail. Prominent.
