@@ -1,5 +1,5 @@
 ---
-address:  ollie2005@outlook.com
+address:  oliverlugt@icloud.com
 provider: icloud
 mail_account: iCloud
 junk_mailbox: Junk
@@ -8,9 +8,9 @@ language: both
 tone:     kort en direct
 auto_unsubscribe: yes
 never_spam:
-tested:
+tested:   2026-09-21
 ---
 
 ## Wat hier binnenkomt
 
-iCloud-account. Ollie gaf hetzelfde adres op als bij Ollie2005 — waarschijnlijk zijn Apple ID; het echte iCloud-mailadres komt uit Mail via mail_profiles.py. Toon niet opgegeven (x).
+iCloud-account. Adres bevestigd door Mail op 2026-09-21. Toon niet opgegeven (x).

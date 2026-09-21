@@ -8,7 +8,7 @@ language: both
 tone:     persoonlijk
 auto_unsubscribe: yes
 never_spam:
-tested:
+tested:   2026-09-21
 ---
 
 ## Wat hier binnenkomt

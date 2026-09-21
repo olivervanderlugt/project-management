@@ -39,3 +39,6 @@ onderwerp, staat dát in het referentiebestand en begint `email-1` daar.
 osascript werkt, negen accountnamen bekend, uitvoer in
 `reference/email-mail-scripting.md`, negen profielstubs in `email/accounts/`.
 Open: adres, provider, prioriteit, taal en toon per account — Ollie vult in.
+
+Eerste echte `mail.py accounts` op de Mac: negen accounts, adressen bevestigd,
+twee gecorrigeerd. Rest van email-0: `unread` en één draft.

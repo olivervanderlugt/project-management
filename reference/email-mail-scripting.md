@@ -41,3 +41,11 @@ Leest de adressen uit Mail, schrijft ze in `email/accounts/`, raadt de
 provider uit het domein en vraagt per account alleen wat nog leeg is, met
 Enter-als-default. `--yes` slaat alle vragen over. Daarna:
 `git add email/accounts && git commit -m 'Vul e-mailprofielen' && git push`.
+
+## Eerste echte run van `mail.py` (2026-09-21)
+
+`python3 scripts/mail.py accounts` op de Mac gaf negen accounts met adres,
+exact zoals Mail ze kent — het JXA-idioom voor accounts klopt dus. Twee
+adressen uit Ollie's tabel bleken anders: iCloud is `oliverlugt@icloud.com`
+(niet zijn Apple ID) en Subliem eindigt op `.nl`. Profielen aangepast en
+alle negen `tested: 2026-09-21`. Nog onbewezen: `unread`, `draft`, `junk`.
