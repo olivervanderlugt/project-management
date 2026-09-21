@@ -96,7 +96,13 @@ class Reading(WithFakeOsascript):
         self.assertEqual(got["mailto"], ["mailto:stop@b.nl"])
         self.assertTrue(got["one_click"])
         self.assertIn('"id": 5', self.script())
-        self.assertIn("byId(P.id)", self.script())
+        self.assertIn("findMessage(M, P)", self.script())
+
+    def test_read_with_account_searches_that_inbox(self):
+        result = self.run_mail("read", "5", "--account", "Wandarbear ", out=json.dumps({"id": 5}))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn('"account": "Wandarbear "', self.script())
+        self.assertIn("whose({id: P.id})", self.script())
 
     def test_unsubscribe_parser_ignores_http_and_missing_header(self):
         got = mail.unsubscribe_from_headers("List-Unsubscribe: <http://plain.example/u>\n")
@@ -113,8 +119,10 @@ class Drafting(WithFakeOsascript):
         self.assertEqual(result.returncode, 0, result.stderr)
         script = self.script()
         self.assertIn("msg.save();", script)
+        self.assertIn("close({saving: 'yes'})", script)
         self.assertNotIn(".send(", script)
-        self.assertIn('byName(P.account)', script)
+        self.assertIn("M.ToRecipient({address: t})", script)  # not the abstract Recipient
+        self.assertIn("findAccount(M, P.account)", script)
         self.assertIn('"account": "VU"', script)
 
     def test_reply_draft_uses_reply_and_keeps_the_original(self):
@@ -124,9 +132,14 @@ class Drafting(WithFakeOsascript):
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         script = self.script()
+        self.assertIn("findAccount(M, P.account)", script)
         self.assertIn("M.reply(orig", script)
         self.assertIn('"replyTo": 77', script)
+        self.assertIn('"id": 77', script)  # findMessage looks in UvA's inbox, not the unified one
         self.assertIn("msg.save();", script)
+        # a reply keeps the account Mail bound it to; only a new message sets sender
+        self.assertEqual(script.count("msg.sender = from;"), 1)
+        self.assertLess(script.index("M.OutgoingMessage"), script.index("msg.sender = from;"))
 
     def test_new_draft_needs_to_and_subject(self):
         result = self.run_mail("draft", "--account", "VU", "--body", "x")
@@ -147,16 +160,34 @@ class Drafting(WithFakeOsascript):
 class Junking(WithFakeOsascript):
     def test_junk_moves_and_never_deletes(self):
         result = self.run_mail(
-            "junk", "9", "--mailbox", "Ongewenste e-mail",
+            "junk", "9", "--account", "VU", "--mailbox", "Ongewenste e-mail",
             out=json.dumps({"id": 9, "moved": True}),
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         script = self.script()
         self.assertIn("M.move(m, {to: target})", script)
-        self.assertIn("junkMailStatus = true", script)  # the fallback
-        self.assertIn("Ongewenste e-mail", script)
+        self.assertIn("junkMailStatus = true", script)  # the fallback, reported as flagged
+        candidates = json.loads(script.split("const P = ", 1)[1].split(";", 1)[0])["candidates"]
+        self.assertEqual(candidates[0], "Ongewenste e-mail")  # explicit flag wins
+        self.assertIn("Junk Email", candidates)  # the usual names follow
         for forbidden in ("delete", "trash", "Trash"):
             self.assertNotIn(forbidden, script)
+
+    def test_junk_needs_an_account(self):
+        result = self.run_mail("junk", "9")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse(self.log.exists())
+
+    def test_junk_mailbox_comes_from_the_profile(self):
+        self.assertEqual(mail.junk_mailbox_from_profile("VU"), "Junk")
+        self.assertEqual(mail.junk_mailbox_from_profile("Wandarbear "), "Junk")
+        self.assertIsNone(mail.junk_mailbox_from_profile("No Such Account"))
+
+    def test_unread_sorts_newest_first_before_the_limit(self):
+        self.run_mail("unread", "--limit", "3", out="[]")
+        script = self.script()
+        self.assertIn("out.sort(", script)
+        self.assertLess(script.index("out.sort("), script.index("slice(0, P.limit)"))
 
     def test_no_template_ever_deletes(self):
         for name in ("JXA_ACCOUNTS", "JXA_UNREAD", "JXA_READ", "JXA_COMPOSE", "JXA_JUNK"):

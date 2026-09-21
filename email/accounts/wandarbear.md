@@ -1,7 +1,7 @@
 ---
 address:
 provider: 
-mail_account: Wandarbear 
+mail_account: Wandarbear
 junk_mailbox: Junk
 priority:
 language:

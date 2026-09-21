@@ -55,16 +55,30 @@ BASH_RULES = [
     (r"\brm\b[^|;&]*\s\.git(\s|/|$)",
      "deleting the .git directory"),
     # Mail on the Mac (decisions/0007): scripts may read, draft and junk, but
-    # a script that tells Mail to send is a mail nobody approved.
-    (r"(?:^|[;&|]\s*)osascript\b[^|;&]*\bsend\b",
+    # a script that tells Mail to send is a mail nobody approved. The script
+    # text is quoted and may hold many statements, so this looks across the
+    # whole osascript command for a send *call*: JXA `.send(` or AppleScript
+    # `send <thing>`. `sender`, `send.js` and prose do not match.
+    (r"(?:^|[;&|]\s*)osascript\b.*?(\.send\s*\(|\bsend\s+\w)",
      "sending mail from a script: only Ollie sends, per mail, via email-4"),
+    # The send key is set in Ollie's own shell before Claude starts. Setting
+    # it inside a command — inline, export, env — is a session granting itself
+    # permission, which is the one thing the wall exists to stop.
+    (r"\bHANGAR_EMAIL_SEND_OK\s*=",
+     "HANGAR_EMAIL_SEND_OK is set in Ollie's shell, never inside a command"),
 ]
 
 # scripts/mail.py send: allowed only when the variable is in the guard's own
 # environment — which is Ollie's shell, never a launchd job or a Routine.
-# Both mail rules match only at command position, so a commit message or a
-# grep that merely mentions them still goes through.
-MAIL_SEND = re.compile(r"(?:^|[;&|]\s*)(?:python3?\s+)?(?:\S*/)?mail\.py\s+send\b")
+# Matched per command segment with quoted strings removed first, so a commit
+# message or a grep that merely mentions it still goes through, while
+# `env python3 scripts/mail.py send` and `python3 -u …` do not.
+MAIL_SEND = re.compile(r"\bmail\.py\s+send\b")
+QUOTED = re.compile(r"'[^']*'|\"[^\"]*\"")
+
+
+def invokes_mail_send(command):
+    return bool(MAIL_SEND.search(QUOTED.sub("''", command)))
 
 
 # Secrets: matched against both commands and file paths.
@@ -85,7 +99,7 @@ def check(tool, payload):
         command = " ".join((payload.get("command") or "").split())
         if SECRET.search(command):
             return "secrets: not read, not written, not printed"
-        if MAIL_SEND.search(command) and os.environ.get("HANGAR_EMAIL_SEND_OK") != "1":
+        if invokes_mail_send(command) and os.environ.get("HANGAR_EMAIL_SEND_OK") != "1":
             return "mail.py send without HANGAR_EMAIL_SEND_OK=1: sending is Ollie's, by hand or via email-4"
         for pattern, reason in BASH_RULES:
             if re.search(pattern, command, re.IGNORECASE):

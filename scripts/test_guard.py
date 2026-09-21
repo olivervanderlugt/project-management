@@ -79,12 +79,29 @@ class Blocks(unittest.TestCase):
     def test_scripts_that_send_mail(self):
         self.assertIsNotNone(bash("osascript -e 'tell application \"Mail\" to send newMessage'"))
         self.assertIsNotNone(bash("osascript -l JavaScript -e 'msg.send()'"))
+        # multi-statement JXA, the shape mail.py itself builds
+        self.assertIsNotNone(bash(
+            "osascript -l JavaScript -e \"const M = Application('Mail'); const P = {}; "
+            "msg.sender = from; msg.send(); JSON.stringify({sent: true});\""
+        ))
+        self.assertIsNotNone(bash("cd /x && osascript -e 'tell application \"Mail\"' -e 'send theMessage'"))
+
+    def test_setting_the_send_key_inside_a_command(self):
+        for command in (
+            "HANGAR_EMAIL_SEND_OK=1 python3 scripts/mail.py send --account VU --to a@b.nl",
+            "export HANGAR_EMAIL_SEND_OK=1",
+            "env HANGAR_EMAIL_SEND_OK=1 python3 scripts/mail.py accounts",
+            "sh -c 'HANGAR_EMAIL_SEND_OK=1 python3 scripts/mail.py send'",
+        ):
+            self.assertIsNotNone(bash(command), command)
 
     def test_mail_py_send_without_the_variable(self):
         os.environ.pop("HANGAR_EMAIL_SEND_OK", None)
         self.assertIsNotNone(bash("python3 scripts/mail.py send --account VU --to a@b.nl"))
         self.assertIsNotNone(bash("cd /x && python3 scripts/mail.py send --account VU"))
         self.assertIsNotNone(bash("scripts/mail.py send --account VU"))
+        self.assertIsNotNone(bash("env python3 scripts/mail.py send --account VU"))
+        self.assertIsNotNone(bash("python3 -u scripts/mail.py send --account VU"))
         os.environ["HANGAR_EMAIL_SEND_OK"] = "0"
         self.assertIsNotNone(bash("python3 scripts/mail.py send --account VU --to a@b.nl"))
         os.environ.pop("HANGAR_EMAIL_SEND_OK", None)
@@ -134,6 +151,9 @@ class Allows(unittest.TestCase):
     def test_mentioning_send_in_a_commit_message_is_not_sending(self):
         self.assertIsNone(bash("git commit -m 'Guard blocks osascript scripts that send and mail.py send'"))
         self.assertIsNone(bash("grep -n 'mail.py send' tasks/email-4-verzenden-met-toestemming.md"))
+        self.assertIsNone(bash("git commit -m 'Guard: block osascript send; mail.py send too' && git push"))
+        self.assertIsNone(bash("osascript -l JavaScript /tmp/send.js"))
+        self.assertIsNone(bash("osascript -l JavaScript -e 'const s = m.sender(); JSON.stringify(s)'"))
 
     def test_mail_py_send_with_the_variable_in_ollies_shell(self):
         os.environ["HANGAR_EMAIL_SEND_OK"] = "1"

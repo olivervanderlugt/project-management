@@ -32,3 +32,20 @@ Accountnamen komen uit `reference/email-mail-scripting.md` (`email-0`). Als
 Mail voor een Exchange-account (VU, UvA) de map Ongewenst anders noemt, is
 `junk` per account configureerbaar via het profiel — niet hardcoded.
 Nooit `delete`, nooit `empty trash`: die woorden komen in het script niet voor.
+
+## Stand 2026-09-21
+
+Gebouwd en door de checker afgekeurd in ronde 1 op vijf punten, alle vijf
+verwerkt: de osascript-regel in de guard kon geen `;` oversteken (nu: zoekt
+over het hele commando naar een send-aanroep); `VAR=1 python3 mail.py send`
+zette beide muren tegelijk opzij (nu: de variabele in een commando zetten is
+zelf geblokkeerd); `M.Recipient` moest `M.ToRecipient` zijn; `junk` had een
+vaste map "Junk" (nu: profiel eerst, dan de gangbare namen, dan vlaggen en
+dat melden); reply zette de afzender na `M.reply` (nu: alleen bij nieuw).
+Bijvangst: ids zijn per mailbox uniek, dus `read`/`junk`/`--reply-to` zoeken
+nu in het account; `unread` sorteert nu echt nieuwste eerst; een account-
+naam met spatie erachter wordt getrimd gezocht.
+
+Onbewezen tot de eerste run op de Mac: het compose-idioom (`OutgoingMessage`
++ `save` + `close saving`) en de echte naam van de junk-map per account.
+Vier suites groen: guard 20, mail 18, mail_profiles 5, preview.
