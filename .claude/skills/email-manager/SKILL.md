@@ -118,13 +118,31 @@ was, staat er niet in.
 
 ## Verzenden
 
-Deze ronde verzendt niets. `mail.py` heeft geen `send` zonder
-`HANGAR_EMAIL_SEND_OK=1`, die variabele staat alleen in Ollie's eigen shell,
-en `scripts/guard.py` weigert elke andere weg. Het enige pad naar verzenden
-staat in `tasks/email-4-verzenden-met-toestemming.md` en bestaat pas als die
-taak `done` is: Ollie noemt in zijn eigen sessie een draft en zegt
-"verstuur", Claude leest de draft terug, en dan pas. "Stuur alles maar" is
-geen toestemming per mail.
+De ronde hierboven verzendt niets. `mail.py` heeft geen `send` zonder
+`HANGAR_EMAIL_SEND_OK=1`, die variabele staat alleen in Ollie's eigen shell
+(`export HANGAR_EMAIL_SEND_OK=1` vóór hij Claude start), en
+`scripts/guard.py` weigert elke andere weg — ook de variabele in een
+commando zetten. Een geplande run kan hier dus niet komen.
+
+Het enige pad, alleen in een sessie met Ollie erbij:
+
+1. Ollie noemt in zijn eigen woorden één draft — id of onderwerp — plus
+   "verstuur" of "send". "Stuur alles maar" is geen toestemming; dan vraag
+   je per draft.
+2. `python3 scripts/mail.py drafts --account "<mail_account>"` en lees de
+   draft terug in de chat: aan wie, van welk adres, onderwerp, eerste regel.
+   Klopt het id niet met wat hij noemde, stop.
+3. Pas na zijn bevestiging op dát bericht:
+   `python3 scripts/mail.py send --draft <id> --account "<mail_account>"`.
+   Mail kan een opgeslagen draft niet als zodanig verzenden, dus het script
+   bouwt een nieuwe mail met dezelfde inhoud en verstuurt die; de draft
+   blijft in Drafts staan en Ollie gooit hem zelf weg. Een antwoord dat zo
+   verstuurd wordt, hangt niet aan de oorspronkelijke thread.
+4. Eén logregel: `- HH:MM · <accountslug> · <ontvanger> · send · <draft-id> · op verzoek van Ollie`.
+
+Twee drafts in één bericht van Ollie: twee keer stap 2 en 3, los van
+elkaar. Er is geen ander pad dan `mail.py send --draft`; nooit `osascript`
+rechtstreeks, nooit een ander tool.
 
 ## Wat je nooit doet
 

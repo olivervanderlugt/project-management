@@ -8,6 +8,7 @@
     python3 scripts/mail.py draft --account "VU" --reply-to 12345 --body-file draft.txt
     python3 scripts/mail.py junk 12345 --account "VU" [--mailbox "Junk"]
     python3 scripts/mail.py unsubscribe --url https://… [--one-click]
+    python3 scripts/mail.py drafts --account "VU"
 
 Every subcommand prints one JSON value on stdout. Mail is driven through JXA
 (`osascript -l JavaScript`), which returns dates as ISO strings and lets the
@@ -145,6 +146,51 @@ JSON.stringify({id: P.id, account: acc.name(), moved: !!target,
   flagged: !target, mailbox: target ? target.name() : null, tried: P.candidates});
 """
 
+# Drafts of one account: id, recipients, subject and the first line of the
+# body — what Ollie needs read back to him before he says "verstuur".
+JXA_DRAFTS = JXA_FIND + """
+const M = Application('Mail'); const P = %(params)s;
+const acc = findAccount(M, P.account); const out = [];
+for (const mb of acc.mailboxes()) {
+  const n = mb.name().toLowerCase();
+  if (!(n.includes('draft') || n.includes('concept'))) continue;
+  for (const m of mb.messages()) {
+    const body = (m.content() || '').split('\\n')[0];
+    out.push({id: m.id(), mailbox: mb.name(), subject: m.subject(),
+              to: m.toRecipients().map(r => r.address()),
+              date: m.dateSent() ? m.dateSent().toISOString() : null, first_line: body});
+    if (out.length >= P.limit) break;
+  }
+}
+JSON.stringify(out);
+"""
+
+# Send one existing draft. Mail cannot send a saved draft as such, so this
+# rebuilds an outgoing message from it and sends that. The draft itself is
+# left where it is — nothing here deletes — and the result says so.
+JXA_SEND_DRAFT = JXA_FIND + """
+const M = Application('Mail'); const P = %(params)s;
+const acc = findAccount(M, P.account);
+let draft = null;
+for (const mb of acc.mailboxes()) {
+  const n = mb.name().toLowerCase();
+  if (!(n.includes('draft') || n.includes('concept'))) continue;
+  const hits = mb.messages.whose({id: P.id})();
+  if (hits.length) { draft = hits[0]; break; }
+}
+if (!draft) throw new Error('no draft ' + P.id + ' in the drafts of ' + P.account);
+const from = acc.fullName() + ' <' + acc.emailAddresses()[0] + '>';
+const msg = M.OutgoingMessage({subject: draft.subject(), content: draft.content(), visible: false});
+M.outgoingMessages.push(msg);
+for (const r of draft.toRecipients()) msg.toRecipients.push(M.ToRecipient({address: r.address()}));
+for (const r of draft.ccRecipients()) msg.ccRecipients.push(M.CcRecipient({address: r.address()}));
+msg.sender = from;
+msg.send();
+JSON.stringify({sent: true, draft_id: P.id, account: acc.name(), sender: from,
+  subject: draft.subject(), to: draft.toRecipients().map(r => r.address()),
+  draft_left_in_drafts: true});
+"""
+
 JUNK_FALLBACKS = ["Junk", "Junk Email", "Junk E-mail", "Ongewenste e-mail", "Ongewenst", "Spam"]
 
 
@@ -255,6 +301,8 @@ def _body(args):
 
 
 def _compose(args, action, result):
+    if getattr(args, "draft", None) is not None:
+        sys.exit("mail.py: --draft belongs to send, not draft")
     if not args.reply_to and not (args.to and args.subject):
         sys.exit("mail.py: a new message needs --to and --subject; a reply needs --reply-to")
     script = JXA_COMPOSE % {
@@ -272,10 +320,19 @@ def cmd_draft(args):
     _compose(args, "msg.save(); try { msg.close({saving: 'yes'}); } catch (e) {}", "saved")
 
 
+def cmd_drafts(args):
+    script = JXA_DRAFTS % {"params": params(account=args.account, limit=args.limit)}
+    emit(run_jxa(script))
+
+
 def cmd_send(args):
     # Only reachable when HANGAR_EMAIL_SEND_OK=1: the subparser is not even
     # registered otherwise. The skill's own rule on top of this: one mail,
     # one explicit "verstuur <id>" from Ollie, read back first. See email-4.
+    if args.draft is not None:
+        script = JXA_SEND_DRAFT % {"params": params(account=args.account, id=args.draft)}
+        emit(run_jxa(script))
+        return
     _compose(args, "msg.send();", "sent")
 
 
@@ -352,6 +409,10 @@ def build_parser():
     junk.add_argument("--account", required=True, help="exact account name as Mail shows it")
     junk.add_argument("--mailbox", help="junk mailbox name; default from the profile, then the usual names")
 
+    drafts = sub.add_parser("drafts", help="drafts of one account, with first line — to read back before a send")
+    drafts.add_argument("--account", required=True, help="exact account name as Mail shows it")
+    drafts.add_argument("--limit", type=int, default=20)
+
     unsub = sub.add_parser("unsubscribe", help="one https request to a List-Unsubscribe URL; never a mail")
     unsub.add_argument("--url", required=True, help="the https URL from the List-Unsubscribe header")
     unsub.add_argument("--one-click", action="store_true", help="RFC 8058 POST instead of GET")
@@ -359,6 +420,7 @@ def build_parser():
     if SEND_OK:
         send = sub.add_parser("send", help="send — only with HANGAR_EMAIL_SEND_OK=1 and Ollie's explicit go")
         compose_args(send)
+        send.add_argument("--draft", type=int, help="send this existing draft (the email-4 path); other flags then ignored")
 
     return parser
 
@@ -378,6 +440,7 @@ def main(argv=None):
         "read": cmd_read,
         "draft": cmd_draft,
         "junk": cmd_junk,
+        "drafts": cmd_drafts,
         "unsubscribe": cmd_unsubscribe,
         "send": cmd_send,
     }[args.command](args)

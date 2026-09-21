@@ -246,6 +246,17 @@ class Unsubscribing(unittest.TestCase):
         self.assertIn("no route", result["error"])
 
 
+class SkillSendSection(unittest.TestCase):
+    def test_the_send_section_names_no_other_path(self):
+        skill = (ROOT / ".claude" / "skills" / "email-manager" / "SKILL.md").read_text(encoding="utf-8")
+        section = skill.split("## Verzenden", 1)[1].split("\n## ", 1)[0]
+        self.assertIn("mail.py send --draft", section)
+        self.assertIn("mail.py drafts", section)
+        self.assertNotIn("osascript -", section)
+        self.assertNotIn(".send(", section)
+        self.assertIn("HANGAR_EMAIL_SEND_OK", section)
+
+
 class Sending(WithFakeOsascript):
     def test_send_does_not_exist_without_the_variable(self):
         result = self.run_mail(
@@ -259,6 +270,34 @@ class Sending(WithFakeOsascript):
         result = self.run_mail("--help")
         self.assertEqual(result.returncode, 0)
         self.assertNotIn("send ", result.stdout.split("Never sends")[-1])
+
+    def test_drafts_lists_one_accounts_drafts_with_first_line(self):
+        result = self.run_mail("drafts", "--account", "Personal Gmail", out="[]")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        script = self.script()
+        self.assertIn("includes('draft')", script)
+        self.assertIn("includes('concept')", script)  # Dutch Mail
+        self.assertIn("first_line", script)
+        self.assertNotIn(".send(", script)
+
+    def test_send_draft_rebuilds_and_sends_but_never_deletes(self):
+        result = self.run_mail(
+            "send", "--draft", "1007", "--account", "Personal Gmail",
+            out=json.dumps({"sent": True}), send_ok=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        script = self.script()
+        self.assertIn('"id": 1007', script)
+        self.assertIn("msg.send();", script)
+        self.assertIn("draft_left_in_drafts: true", script)
+        self.assertIn("M.ToRecipient", script)
+        for forbidden in ("delete", "trash", "Trash"):
+            self.assertNotIn(forbidden, script)
+
+    def test_send_draft_needs_the_variable_too(self):
+        result = self.run_mail("send", "--draft", "1007", "--account", "Personal Gmail")
+        self.assertEqual(result.returncode, 2)
+        self.assertFalse(self.log.exists())
 
     def test_send_exists_with_the_variable(self):
         result = self.run_mail(

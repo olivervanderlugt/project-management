@@ -1,10 +1,10 @@
 ---
 title: E-mail stap 4 — het enige pad naar verzenden: Ollie zegt "verstuur <id>" in de chat
 project: hangar
-status: inbox
+status: done
 added: 2026-09-21
 effort: S
-branch:
+branch: claude/multi-email-manager-system-ozr70l
 ---
 
 ## Done means
@@ -24,3 +24,9 @@ ander pad dan `mail.py send`.
 
 "Stuur alles maar" telt niet als toestemming per mail. Dat is een bewuste
 keuze van Ollie (2026-09-21), geen voorzichtigheid van Claude.
+
+## Klaar (2026-09-21)
+
+`mail.py drafts` en `mail.py send --draft <id>` (alleen met de variabele),
+skill-sectie "Verzenden" met de vier stappen, test dat de sectie geen ander
+pad noemt. Nog nooit echt verzonden — dat gebeurt pas als Ollie het vraagt.
