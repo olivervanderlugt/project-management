@@ -29,10 +29,13 @@ datums komen dan als ISO-strings en de uitvoer is JSON zonder gepriegel met
 ## Profielen vullen — één commando op de Mac
 
 ```
-cd ~/pad/naar/project-management
-git fetch origin && git checkout claude/multi-email-manager-system-ozr70l && git pull
-python3 scripts/mail_profiles.py
+cd ~ && git clone -b claude/multi-email-manager-system-ozr70l https://github.com/olivervanderlugt/project-management.git Hangar
+cd ~/Hangar && python3 scripts/mail_profiles.py
 ```
+
+De Hangar staat op de Mac in `~/Hangar` (aangemaakt 2026-09-21; het repo is
+publiek, dus klonen vraagt geen login — pushen wel). Staat hij er al:
+`cd ~/Hangar && git fetch origin && git checkout <branch> && git pull`.
 
 Leest de adressen uit Mail, schrijft ze in `email/accounts/`, raadt de
 provider uit het domein en vraagt per account alleen wat nog leeg is, met
