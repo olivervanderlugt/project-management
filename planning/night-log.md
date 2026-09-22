@@ -11,6 +11,63 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-22
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.** De
+sessie startte weer op een door de omgeving toegewezen branch die zelf al
+stale bleek (dezelfde oude 2026-08-20-commit als vorige nachten). `git fetch`
+bevestigt: de officiële default (`claude/hangar-project-setup-kvhcad`) staat
+nog steeds op `861f2c3` (Night 2026-08-20), nu 32 nachten achter de echte
+keten. Vertakt van `claude/night-2026-09-21` (de tip), niet van de
+toegewezen branch en niet van de stale default.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+Dit is de 32e nacht op rij (2026-08-21 t/m vanavond) op dezelfde drie PR's.
+
+**Stap 3 — `hangar-pr-plafond-kwijt` herverifieerd: geen verandering, 17
+nachten stil, oudste nog niet recent herverifieerde inbox-taak.** Alle drie
+vaststaande punten vers bij de bron nagegaan: `claude/charming-fermat-kdilid`
+bestaat nog steeds zonder PR, `decisions/` bevat nog geen `0007` of ander
+besluit dat dit oplost (het `0004`-slot is inmiddels bezet door een ander,
+wél gemergd besluit), en de drie PR's die regel 5 vanavond weer laten
+gelden zijn dezelfde drie zonder `APPROVED`-review — het besluit had vanavond
+zelf dus nog steeds geen ander resultaat gegeven, precies zoals op 09-05 al
+vastgesteld. Wel vers geteld: de wrapup-stapel in `project-management` staat
+nu op 32 open PR's (was 22 op 09-06, 30 op 09-21). Geen nieuwe bevinding, dus
+geen andere uitkomst dan `inbox`, wachtend op Ollie. Volledig uitgeschreven in
+de taak zelf (sectie "Herverifieerd 2026-09-22"). `planning/now.md`
+bijgewerkt met de verse tellingen.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen tweede inbox-taak onderzocht (regel 2); de vijf `ready`-taken
+(`pi-openclaw-gateway`, `hangar-sessionstart-hook-gedrag`,
+`quizzly-media-orphan-cleanup`, `quizzly-media-read-authz`,
+`quizzly-semantische-tokens`) niet gebouwd ondanks resterend budget (regel
+1/5: het plafond geldt); de overige governance-taken
+(`hangar-wrapup-pr-pileup`, `nachtrun-loopt-vast-op-een-taak`,
+`hangar-daysession-branches-onzichtbaar`, `hangar-in-de-browser`) met rust
+gelaten — allemaal wachten op een procesbeslissing van Ollie, geen enkele
+deze nacht opnieuw onderzocht; geen wees-PR's of -branches aangeraakt. Wel:
+gezien dit nu de 32e opeenvolgende nacht zonder bouw is en Ollie's eigen
+plafond-fix al 6 weken ongebruikt klaarligt, is dit buiten de git-trail om
+ook als notificatie naar Ollie gestuurd — een maand stilstand die alleen in
+een 32e PR blijft staan, bereikt hem anders mogelijk niet.
+
+Dashboard herbouwd.
+
 ## 2026-09-21
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen

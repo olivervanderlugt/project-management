@@ -1,21 +1,21 @@
 ---
-updated: 2026-09-21
-focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 30 open PR's; hangar-in-de-browser stap 1 nog steeds nooit geprobeerd
+updated: 2026-09-22
+focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 32 open PR's; je eigen PR-plafond-besluit ligt al 6 weken klaar om in te haken
 ---
 
-- **Je eigen besluit van 2026-08-11 om dit precieze probleem op te lossen is
-  28 dagen kwijt geweest — dit is waarschijnlijk de belangrijkste regel
-  hieronder.** Zie `tasks/hangar-pr-plafond-kwijt.md`. Op een branch die nooit
-  een PR kreeg (`claude/charming-fermat-kdilid`) staat `decisions/0004-nachtrun-
-  pr-plafond-verhoogd.md` (`status: accepted`) plus een volledig werkende,
-  geteste implementatie (`scripts/pr_limits.py` + tests): een PR met een
-  `APPROVED`-review telt niet meer als schuld, plafond per repo (2) én totaal
-  (8) in plaats van een platte teller van 3. Jij vroeg daar zelf om, het is
-  gebouwd, en het heeft de default branch nooit bereikt. Drie dingen om te
-  beslissen: alsnog invoeren zoals het daar staat (of eerst herzien — de vloot
-  groeide sindsdien van 1 naar 7 repo's)? Welk besluitnummer (0004 is
-  inmiddels viervoudig vergeven, dit zou 0007 worden)? En wie voert het door —
-  een dagsessie, of mag een nachtrun het bouwen ná jouw akkoord hier?
+- **Je eigen besluit van 2026-08-11 om dit precieze probleem op te lossen ligt
+  nu 6 weken klaar, ongebruikt — herverifieerd 2026-09-22, nog steeds
+  ongewijzigd.** Zie `tasks/hangar-pr-plafond-kwijt.md`. Op een branch die
+  nooit een PR kreeg (`claude/charming-fermat-kdilid`) staat een volledig
+  werkende, geteste implementatie (`scripts/pr_limits.py` + tests): een PR met
+  een `APPROVED`-review telt niet meer als schuld, plafond per repo (2) én
+  totaal (8) in plaats van een platte teller van 3. Jij vroeg daar zelf om,
+  het is gebouwd, en het heeft de default branch nooit bereikt. Drie dingen om
+  te beslissen: alsnog invoeren zoals het daar staat (of eerst herzien — de
+  vloot groeide sindsdien van 1 naar 7 repo's)? Welk besluitnummer (0004 is
+  inmiddels bezet door een ander, wél gemergd besluit, dit zou 0007 worden)?
+  En wie voert het door — een dagsessie, of mag een nachtrun het bouwen ná
+  jouw akkoord hier?
 
 - **hangar-in-de-browser: stap 1 ("vangen vanuit de browser zonder sessie")
   staat er al sinds 2026-08-06, nog steeds nooit geprobeerd** —
@@ -37,20 +37,17 @@ focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 30 ope
   - Zolang deze drie op 3 blijven staan, bouwt de nachtrun niets (regel 5) en
     scherpt hij alleen `inbox`-taken aan — dat is nu al vijf weken de status.
 
-- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 30 open PR's**
-  (`project-management#13`, `#15`–`#43`), vers geteld op 09-21 via de API, niet
-  aangenomen. Niemand merget ze, groei blijft ~1 per nacht. Drie opties liggen
-  klaar in de taak;
-  geen ervan mag een nachtrun zelf kiezen — dat is expliciet jouw
-  procesbeslissing. **Nieuw sinds 09-15: de stapel kost nu ook echt
-  onderzoek, niet meer alleen zichtbaarheid** — de nachten van 09-13 en 09-14
-  vertakten allebei per ongeluk vanaf de oude stale default in plaats van de
-  verste keten (`claude/night-2026-09-12`), en deden daardoor een avond
-  onderzoek over dat al twee weken eerder op een onbereikbare branch klaar
-  lag, terwijl vier intussen `ready`/`blocked`-gezette taken er voor hen weer
-  als onbeslist uitzagen. Zie de "Update 2026-09-15" in de taak zelf. Deze
-  nacht vertakte bewust van `claude/night-2026-09-12` om dat niet nog een
-  keer te doen.
+- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 32 open PR's**
+  (`project-management#11`, `#13`, `#15`–`#44`), vers geteld op 09-22 via de
+  API, niet aangenomen. Niemand merget ze, groei blijft ~1 per nacht. Drie
+  opties liggen klaar in de taak; geen ervan mag een nachtrun zelf kiezen —
+  dat is expliciet jouw procesbeslissing. **Sinds 09-15: de stapel kost ook
+  echt onderzoek, niet meer alleen zichtbaarheid** — de nachten van 09-13 en
+  09-14 vertakten allebei per ongeluk vanaf de oude stale default in plaats
+  van de verste keten, en deden daardoor een avond onderzoek over dat al twee
+  weken eerder op een onbereikbare branch klaar lag. Zie de "Update
+  2026-09-15" in de taak zelf. Deze nacht vertakte bewust van
+  `claude/night-2026-09-21` om dat niet nog een keer te doen.
 
 - **Vijf `ready` taken staan te wachten, geblokkeerd door bovenstaande**:
   `pi-openclaw-gateway` (08-07), `quizzly-media-read-authz` (08-14),

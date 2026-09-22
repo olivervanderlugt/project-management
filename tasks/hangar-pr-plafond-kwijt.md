@@ -100,3 +100,35 @@ Zie ook `hangar-daysession-branches-onzichtbaar.md`'s "Aangescherpt
 2026-09-05" — dezelfde branchronde vond nog een tweede, kleiner voorbeeld
 (een complete, "done"-gemarkeerde "lessons loop"-feature op
 `claude/hangar-project-setup-w61m5q`, ook nooit gemerged).
+
+## Herverifieerd 2026-09-22
+
+Zeventien nachten sinds de vorige recheck (09-05) — de oudste inbox-taak die
+nog niet opnieuw was bekeken, dus vanavond aan de beurt (regel 2: één taak).
+Alle drie vaststaande punten vers nagegaan, geen van drie veranderd:
+
+- `origin/claude/charming-fermat-kdilid` bestaat nog steeds, nog steeds geen
+  PR geopend (`60a1d2e` — "Raise overnight PR ceiling, counted by review debt
+  not raw count" — nog steeds de laatste commit erop).
+- `decisions/` bevat nog steeds geen `0007` of enig ander besluit dat dit
+  oplost. Het bestaande `0004`-nummer is inmiddels bezet door
+  `0004-nachtrun-auto-merge.md` (een écht ander, wél gemergd besluit) — het
+  kdilid-besluit zou dus sowieso `0007` moeten worden, niet `0004`, precies
+  zoals hierboven al genoteerd.
+- De drie PR's die de plafondregel vanavond weer op "geen bouw" zetten
+  (`percentile#1`, `learning-website#3`, `project-management#13`) zijn
+  vers bij de API opgevraagd voor stap 1 van vanavond — dezelfde drie, elk nog
+  zonder `APPROVED`-review, dus dit besluit had vanavond zelf nog steeds geen
+  ander resultaat gegeven. Dat blijft het geval sinds 08-11: het besluit
+  verandert niets aan wélke nachten bouwen, alleen aan de vraag of een nacht
+  met een wél goedgekeurde PR ten onrechte wordt overgeslagen — en dat is nu
+  32 opeenvolgende nachten (08-21 t/m vanavond) nooit apart teruggezocht.
+- De wrapup-stapel waar dit besluit óók een uitlaatklep voor zou zijn
+  (`hangar-wrapup-pr-pileup`) staat vanavond op 32 open PR's in
+  `project-management` alleen — vers geteld, tien meer dan de 22 waarmee
+  09-06 het voor het eerst meldde.
+
+Geen nieuwe feiten, dus geen andere uitkomst dan 09-05: dit blijft `inbox`,
+wachtend op Ollie's antwoord op de drie vragen hierboven. Niet zelf
+doorgevoerd — dit raakt regel 5, een veiligheidsregel, nooit een nachtrun's
+eigen beslissing.
