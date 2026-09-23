@@ -1,7 +1,14 @@
 ---
-updated: 2026-09-22
-focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 32 open PR's; je eigen PR-plafond-besluit ligt al 6 weken klaar om in te haken
+updated: 2026-09-23
+focus: 33 nachten op rij niets gebouwd — vanavond voor het eerst ook een directe melding, niet alleen een git-trail
 ---
+
+- **Vanavond (09-23) voor het eerst een echte melding gestuurd**, niet alleen
+  weer een taakbestand/PR. 33 nachten stilstand plus een 6 weken oud,
+  door jou zelf al geaccepteerd besluit dat dit precieze probleem oplost is
+  genoeg om je aandacht buiten git om te vragen. De inhoud staat hieronder,
+  ongewijzigd t.o.v. wat al eerder is opgeschreven — alleen de manier waarop
+  het je bereikt is nieuw.
 
 - **Je eigen besluit van 2026-08-11 om dit precieze probleem op te lossen ligt
   nu 6 weken klaar, ongebruikt — herverifieerd 2026-09-22, nog steeds
@@ -37,9 +44,10 @@ focus: Drie vastgelopen PR's wachten al 5+ weken op jou; wrapup-stapel op 32 ope
   - Zolang deze drie op 3 blijven staan, bouwt de nachtrun niets (regel 5) en
     scherpt hij alleen `inbox`-taken aan — dat is nu al vijf weken de status.
 
-- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 32 open PR's**
-  (`project-management#11`, `#13`, `#15`–`#44`), vers geteld op 09-22 via de
-  API, niet aangenomen. Niemand merget ze, groei blijft ~1 per nacht. Drie
+- **De wrapup-PR-stapel (`hangar-wrapup-pr-pileup`) staat op 31 open PR's**
+  (`project-management#15`–`#45`, aaneengesloten), vers geteld op 09-23 via de
+  API, niet aangenomen — plus de twee losstaande dagsessie-PR's (`#11`, `#13`)
+  die er los van staan. Niemand merget ze, groei blijft ~1 per nacht. Drie
   opties liggen klaar in de taak; geen ervan mag een nachtrun zelf kiezen —
   dat is expliciet jouw procesbeslissing. **Sinds 09-15: de stapel kost ook
   echt onderzoek, niet meer alleen zichtbaarheid** — de nachten van 09-13 en

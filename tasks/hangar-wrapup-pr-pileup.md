@@ -200,3 +200,47 @@ vinden op deze manier.
 
 Blijft `inbox` — nog steeds een procesbeslissing, geen onderzoeksvraag. Niet
 zelf optie 1/2/3 doorgevoerd.
+
+## Update 2026-09-23 (nachtrun, stap 3) — 33 nachten, en voor het eerst een directe melding aan Ollie
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-15, acht nachten geleden — elke andere inbox-taak is binnen de
+laatste zeven nachten gecheckt: `quizzly-slide-designer-bouwen` 09-16,
+`nachtrun-loopt-vast-op-een-taak` 09-17, `hangar-daysession-branches-
+onzichtbaar` 09-19, `quizzly-legal-review-west` 09-20, `hangar-in-de-browser`
+09-21, `hangar-pr-plafond-kwijt` 09-22).
+
+**Kloon-check.** Deze sessie startte op een omgeving-toegewezen branch die
+zelf stale bleek (nog op `861f2c3`, Night 2026-08-20 — hetzelfde patroon als
+elke nacht sinds 09-13). Vertakt van `origin/claude/night-2026-09-22` (de
+echte kop van de keten), niet van de toegewezen branch en niet van de stale
+default.
+
+**Vers geteld bij GitHub, niet aangenomen:** de wrapup-keten in
+`project-management` staat op **31 open PR's** (`#15`–`#45`, aaneengesloten,
+geen gaten), plus de twee losstaande, oudere taak-PR's die er niet bij horen
+(`#13` hangar-stale-clone-guard, `#11` hangar-priority-effort-escaping — allebei
+dagsessie-werk dat op Ollie's merge wacht, geen wrapup-PR's). Groei sinds de
+laatste telling: 16 (09-06) → 32 (09-22, inclusief de PR die die nacht zelf
+opende) → 31 nu zichtbaar vóór vanavonds eigen PR (die dit er straks 32 van
+maakt). Dezelfde drie taak-PR's (`percentile#1`, `learning-website#3`,
+`project-management#13`) hielden regel 5 vanavond weer op "geen bouw" — 33e
+nacht op rij (2026-08-21 t/m vanavond), vers bevestigd bij de bron, niet
+aangenomen.
+
+**Wat vanavond wél anders is: een echte melding, niet nog een git-commit.**
+Elke voorgaande nacht — inclusief 09-17's "surfaced ... to Ollie" — schreef de
+bevinding alleen weg naar een taakbestand, `planning/now.md` of een PR-titel:
+dingen die Ollie zelf moet opzoeken. Niets daarvan is een melding die hem
+bereikt zonder dat hij de Hangar opent. Deze sessie heeft wél een kanaal dat
+buiten git om naar hem toe komt (een proactieve notificatie), en 33
+opeenvolgende stilstaande nachten plus een 25+ dagen oud, door Ollie zelf al
+geaccepteerd besluit dat dit exacte probleem oplost (`hangar-pr-plafond-kwijt`,
+`claude/charming-fermat-kdilid`) is precies het soort bevinding waar zo'n
+kanaal voor bedoeld is. Melding vanavond verstuurd; inhoud staat in
+`planning/now.md` en hierboven. Dit lost niets op — de drie opties blijven
+Ollie's keuze — het zorgt er alleen voor dat hij het deze keer ook echt onder
+ogen krijgt.
+
+Niet zelf gedaan: geen van de drie opties doorgevoerd, geen van de twee
+losstaande taak-PR's aangeraakt, geen tweede inbox-taak onderzocht (regel 2).
