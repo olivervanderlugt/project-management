@@ -1,9 +1,9 @@
 ---
 title: Een sessie moet merken dat zijn kloon achterloopt vóór hij werk uitdeelt
 project: hangar
-status: ready
+status: blocked
 added: 2026-08-14
-effort: S
+effort: M
 branch:
 ---
 
@@ -56,13 +56,14 @@ zelf, werken op een tijdelijke git-repo):
 `python3 scripts/staleness.py` blijft ook los draaibaar, zoals `guard.py` en
 `preview.py`, zodat hij zonder echte sessiestart te testen is.
 
-**Eén ding zelf verifiëren vóór je bouwt:** het gedrag van `SessionStart`-hooks
-hierboven komt uit een websearch, niet uit de primaire documentatie — de
-aanscherper heeft dat zelf als voorbehoud gemarkeerd. Controleer met een
-wegwerp-hook dát `additionalContext` echt in de sessiecontext landt en wat de
-default timeout is, vóórdat je het script eromheen bouwt. Klopt het niet, dan is
-optie 2 (een staleness-script dat via `build.py` zichtbaar wordt) het
-terugvalpad en verandert dat deze finish line.
+**Voorwaarde, en dit is waarom de taak `blocked` staat:** het gedrag van
+`SessionStart`-hooks hierboven komt uit een websearch, niet uit primaire
+documentatie. Dat uitzoeken is losgetrokken naar
+`tasks/hangar-sessionstart-hook-gedrag.md`. Zodra `reference/sessionstart-hooks.md`
+bestaat en zijn verdictregel "haalbaar" zegt, gaat deze taak naar `ready` en is
+de finish line hierboven compleet. Zegt het verdict "niet haalbaar", dan
+verandert deze finish line naar optie 2 (een staleness-script dat via
+`build.py` zichtbaar wordt) en moet hij opnieuw geschreven worden.
 
 ## Notes
 
@@ -94,3 +95,12 @@ Aangescherpt op 2026-08-14 door een sharpener-agent die `.claude/settings.json`,
 `scripts/autosave.sh`, `scripts/guard.py` en beide bestaande testsuites gelezen
 heeft; het fail-safe patroon hierboven komt letterlijk uit `autosave.sh`
 ("anything unexpected exits 0").
+
+**Op `blocked` gezet 2026-08-20, met de reden erbij.** Drie nachten (08-15,
+08-17, 08-18) hebben deze taak gekozen, hun startcommit gepusht en zijn gestopt
+vóór de eerste regel code — de weesbranches `night/hangar-stale-clone-guard` en
+`claude/night-hangar-stale-clone-guard` staan er nog. De oorzaak zat in de taak,
+niet in de nachten: een `S` die met onderzoek begon. Onderzoek eruit, effort naar
+`M`, en `blocked` tot dat onderzoek er ligt — zodat de queue vannacht doorschuift
+naar `quizzly-media-orphan-cleanup` in plaats van hier voor de vierde keer op
+stuk te lopen. Zie `tasks/nachtrun-loopt-vast-op-een-taak.md`.
