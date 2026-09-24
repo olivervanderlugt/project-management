@@ -81,3 +81,27 @@ exact dezelfde open vraag als 09-01. Niet zelf een test-issue of merge
 geprobeerd — regel 6/"nooit iets deployen of aanzetten dat geld kost" is hier
 niet aan de orde, maar het mergen van andermans PR-keuze wél Ollie's beslissing
 maken, niet de nachtrun se eigen.
+
+## Herchecked 2026-09-24 (nachtrun, stap 3)
+
+Acht nachten sinds de vorige check (09-16) — nu de oudste nog niet recent
+herverifieerde inbox-taak op het bord (de andere zes zijn allemaal binnen de
+laatste zeven nachten gecheckt: `nachtrun-loopt-vast-op-een-taak` 09-17,
+`hangar-daysession-branches-onzichtbaar` 09-19, `quizzly-legal-review-west`
+09-20, `hangar-in-de-browser` 09-21, `hangar-pr-plafond-kwijt` 09-22,
+`hangar-wrapup-pr-pileup` 09-23).
+
+Rechtstreeks bij GitHub nagegaan, niet aangenomen uit deze taak se eigen
+laatste stand:
+
+- `quizzly#6` (`night/quizzly-slide-designer`) staat nog open,
+  `mergeable_state: clean`, `created_at` = `updated_at` = 2026-08-14 — nog
+  steeds geen enkele interactie sinds die dag (nu 41 dagen stil).
+- `docs/SLIDE-DESIGNER.md` bestaat nog steeds niet op `main`
+  (`get_file_contents` → "does not exist", vers opgevraagd, niet aangenomen
+  uit de PR-status).
+
+Geen nieuwe informatie sinds 09-16: geen van de twee blokkerende dingen (de
+merge van `quizzly#6`, Ollie's fasekeuze) is gebeurd. **Blijft `inbox`**,
+exact dezelfde open vraag als 09-01/09-16. Niet zelf een merge geprobeerd —
+zelfde reden als 09-16: dat is Ollie's PR-keuze, niet de nachtrun se eigen.

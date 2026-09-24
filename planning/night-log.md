@@ -11,6 +11,64 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-24
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check — vertakt van de echte keten, niet van de stale default.** De
+sessie startte op een omgeving-toegewezen branch (`claude/charming-fermat-
+vcrybx`) die zelf stale bleek: exact op `861f2c3` (Night 2026-08-20), dezelfde
+commit als de officiële default (`claude/hangar-project-setup-kvhcad`).
+Vertakt van `origin/claude/night-2026-09-23` (de kop van de echte keten),
+niet van de toegewezen branch en niet van de stale default — zelfde precedent
+als elke nacht sinds 09-13. Geen `doing`-taak zonder sessie aangetroffen bij
+start (regel 10 niet van toepassing).
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd, niet
+aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond.
+Dit is de 34e nacht op rij (2026-08-21 t/m vanavond) op dezelfde drie PR's.
+
+**Stap 3 — `quizzly-slide-designer-bouwen` herverifieerd: geen verandering.**
+Oudste nog niet recent herverifieerde inbox-taak (laatst gecheckt 09-16, acht
+nachten geleden — elke andere inbox-taak is binnen de laatste zeven nachten
+gecheckt, zie de taak zelf voor de volledige lijst). Vers bij GitHub
+nagegaan, niet aangenomen: `quizzly#6` (`night/quizzly-slide-designer`) staat
+nog open, `mergeable_state: clean`, `created_at` = `updated_at` = 2026-08-14
+— 41 dagen zonder enige interactie. `docs/SLIDE-DESIGNER.md` bestaat nog
+steeds niet op `main`. Geen van de twee blokkerende dingen (de merge van
+`quizzly#6`, Ollie's fasekeuze) is veranderd sinds 09-16. Blijft `inbox`,
+volledig uitgeschreven in de taak zelf (sectie "Herchecked 2026-09-24"). Geen
+merge geprobeerd — Ollie's PR-keuze, niet de nachtrun se eigen.
+
+**Geen nieuwe melding vanavond.** `hangar-wrapup-pr-pileup` en
+`hangar-pr-plafond-kwijt` zijn allebei al recent (09-22/09-23) herverifieerd
+en 09-23 stuurde er al een directe melding over — niets is sindsdien
+veranderd dat een tweede melding zou rechtvaardigen. De wrapup-stapel groeit
+vanavond opnieuw met één (deze nacht se eigen stap-4-PR), zoals elke nacht
+sinds 08-21; dat blijft Ollie's drie-opties-keuze, niet iets om elke avond
+opnieuw te melden zonder nieuw feit.
+
+**Niet gedaan, met opzet:** geen van de drie vastgelopen PR's aangeraakt;
+geen van de twee losstaande dagsessie-PR's (`#11`, `#13`) aangeraakt; geen
+van de opties in `hangar-wrapup-pr-pileup` of `hangar-pr-plafond-kwijt` zelf
+doorgevoerd (raakt regel 5, expliciet Ollie's beslissing); geen tweede
+inbox-taak onderzocht (regel 2); geen van de vijf `ready`-taken gebouwd
+ondanks resterend budget (regel 1/5: het plafond geldt); geen deploy, geen
+secrets aangeraakt, geen andere branch dan de eigen `claude/night-2026-09-24`
+gebruikt.
+
+---
+
 ## 2026-09-23
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
