@@ -11,6 +11,74 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-25
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check.** De sessie startte op een omgeving-toegewezen branch die zelf
+stale bleek: exact op `861f2c3` (Night 2026-08-20), dezelfde commit als de
+officiële default (`claude/hangar-project-setup-kvhcad`). Vertakt van
+`origin/claude/night-2026-09-24` (de echte kop van de keten), niet van de
+toegewezen branch en niet van de stale default — zelfde precedent als elke
+nacht sinds 09-13. Geen `doing`-taak zonder sessie aangetroffen bij start
+(regel 10 niet van toepassing) — alle 40 taakbestanden gecontroleerd, geen
+enkele op `doing`.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond,
+ondanks vijf wachtende `ready`-taken (`pi-openclaw-gateway`,
+`quizzly-media-read-authz`, `quizzly-media-orphan-cleanup`,
+`hangar-sessionstart-hook-gedrag`, `quizzly-semantische-tokens`). Vorige
+nacht (09-24) noemde zichzelf de 34e op rij; vanavond is er dus minstens de
+35e, mogelijk de 36e — het exacte volgnummer hangt af van hoe eerdere nachten
+consolidatie-nachten (08-29/08-30, 09-13/09-14) hebben meegeteld, wat dit
+taakbestand niet opnieuw naspeurt. Wat wél vaststaat, vers geverifieerd: elke
+nacht van 2026-08-21 tot en met vanavond trof dezelfde drie PR's aan.
+
+Ook de wrapup-stapel (`hangar-wrapup-pr-pileup`) vers geteld, niet
+overgenomen uit de taak: **33 open PR's** in `project-management`
+(`#15`–`#47`, aaneengesloten), plus de twee losstaande dagsessie-/taak-PR's
+(`#11`, `#13`) die er los van staan. Exact één meer dan de 32 van 09-24,
+zoals elke nacht sinds 08-21 — geen versnelling, geen opruiming.
+
+**Stap 3 — `nachtrun-loopt-vast-op-een-taak` herverifieerd: geen verandering
+op alle vier vragen.** Oudste nog niet recent herverifieerde inbox-taak
+(laatst gecheckt 09-17, acht nachten geleden — elke andere inbox-taak is
+binnen de laatste zeven nachten gecheckt, zie de taak zelf voor de volledige
+lijst). Vers nagegaan: `reference/sessionstart-hooks.md` bestaat nog steeds
+niet, de weesbranch `origin/night/hangar-stale-clone-guard` bestaat nog
+steeds (nu 41 dagen zonder PR), en `pi-openclaw-gateway` blijft de oudste
+`ready`-taak op het bord. Niets van dit alles is sinds 09-17 veranderd. Blijft
+`inbox`, volledig uitgeschreven in de taak zelf (sectie "Herchecked
+2026-09-25").
+
+**Geen nieuwe melding vanavond.** `hangar-wrapup-pr-pileup` en
+`hangar-pr-plafond-kwijt` zijn beide recent (09-22/09-23) herverifieerd en
+09-23 stuurde al een directe melding over precies deze impasse (33
+opeenvolgende stilstaande nachten plus een 6 weken oud, door Ollie zelf al
+geaccepteerd plafond-besluit dat nooit is doorgevoerd). Niets is sindsdien
+veranderd dat een tweede melding zou rechtvaardigen — de wrapup-stapel groeit
+vanavond opnieuw met exact één (deze nacht se eigen stap-4-PR), zoals elke
+nacht sinds 08-21; dat blijft Ollie's drie-opties-keuze, niet iets om elke
+avond opnieuw te melden zonder nieuw feit.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's,
+vers bevestigd); geen van de drie stuck PR's aangeraakt; geen van de 33
+wrapup-PR's gemerged of gesloten — dat blijft Ollie's procesbeslissing, niet
+de nachtrun se eigen (zie `hangar-wrapup-pr-pileup.md`); geen tweede
+inbox-taak onderzocht (regel 2: één taak); `now.md` niet gewijzigd — geen
+enkel feit erin is vanavond veranderd, zelfde keuze als 09-24.
+
 ## 2026-09-24
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen

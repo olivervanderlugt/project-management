@@ -149,3 +149,33 @@ hierboven ("een faalteller per taak") en dat besluit lossen een verschillend
 deel van hetzelfde onderliggende gebrek op (geen signaal dat een regel niet
 doet wat hij zou moeten). Geen van beide vanavond zelf doorgevoerd — allebei
 raken regel 5/1, expliciet Ollie's beslissing.
+
+## Herchecked 2026-09-25 (nachtrun, stap 3)
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-17, acht nachten geleden — elke andere inbox-taak is binnen de
+laatste zeven nachten gecheckt: `hangar-daysession-branches-onzichtbaar`
+09-19, `quizzly-legal-review-west` 09-20, `hangar-in-de-browser` 09-21,
+`hangar-pr-plafond-kwijt` 09-22, `hangar-wrapup-pr-pileup` 09-23,
+`quizzly-slide-designer-bouwen` 09-24).
+
+Alle vier openstaande vragen opnieuw gecontroleerd, geen van vieren
+veranderd:
+
+- **Vraag 1 (faalteller per taak):** nog steeds geen antwoord van Ollie.
+- **Vraag 2 (opsplitsen):** de 08-20-split staat nog op de default. Maar
+  `reference/sessionstart-hooks.md` — het document dat van de finish line van
+  `hangar-stale-clone-guard` moet bestaan vóór die taak weer `ready` wordt —
+  bestaat nog steeds niet (`ls` op de verste keten: geen bestand).
+  `hangar-sessionstart-hook-gedrag` staat nog gewoon `ready`, ongebouwd.
+- **Vraag 3 (weesbranch):** `origin/night/hangar-stale-clone-guard` bestaat
+  nog, ongewijzigd (`ba1f382`, via `git ls-remote`), nu 41 dagen zonder PR.
+  Niet aangeraakt.
+- **Vraag 4 (`pi-openclaw-gateway` als nooit-bouwbare oudste taak):** nog
+  steeds de oudste `ready` taak op het bord (`added: 2026-08-07`), nog steeds
+  theoretisch zolang de drie-PR-grens dit blijft overslaan — en dat is
+  vanavond weer het geval, zie de night-log van vandaag.
+
+Geen nieuwe feiten sinds 09-17: dit blijft `inbox`, wachtend op Ollie's
+antwoord op de vier vragen. Niet zelf doorgevoerd — allebei raken regel 1/5,
+expliciet Ollie's beslissing.
