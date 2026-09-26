@@ -265,3 +265,56 @@ Ollie-beslissing nog niet genomen.
 Niet zelf gedaan: de skill niet naar `~/.claude/skills/` gekopieerd (staat al
 in het teruggehaalde taakbestand als "kan alleen op Ollie's eigen machine") en
 geen van de drie hoofdvragen hieronder zelf beantwoord — blijft `inbox`.
+
+## Aangescherpt 2026-09-26 (nachtrun, stap 3) — een grote vondst, en voor het eerst een harde weigering in plaats van een eigen keuze
+
+Gekozen als oudste nog niet recent herverifieerde inbox-taak (laatst
+aangescherpt 09-19, zeven nachten geleden — elke andere inbox-taak is binnen
+de laatste zes nachten gecheckt: `quizzly-legal-review-west` 09-20,
+`hangar-in-de-browser` 09-21, `hangar-pr-plafond-kwijt` 09-22,
+`hangar-wrapup-pr-pileup` 09-23, `quizzly-slide-designer-bouwen` 09-24,
+`nachtrun-loopt-vast-op-een-taak` 09-25).
+
+Volledige `git ls-remote --heads origin` + `merge-base --is-ancestor`-ronde
+herhaald over alle 63 branches (tegen ~55 op 09-19), niet alleen de al
+bekende verdachten. Twee bevindingen, geen van beide eerder gezien:
+
+- **`claude/multi-email-manager-system-ozr70l`** (2026-09-21) — een complete,
+  door Ollie aangenomen e-mailmanager-feature (drie `accepted`-besluiten,
+  vier van de zeven deeltaken echt `done`, verscherpingen aan
+  `scripts/guard.py`). Groot genoeg voor een eigen taakbestand:
+  `hangar-email-manager-branch-onzichtbaar.md`. **Niet teruggehaald** — een
+  `git merge --no-commit --no-ff` van de branch (schoon, merge-base is exact
+  de default se tip) werd vanavond geweigerd door de omgeving se eigen
+  auto-mode-classifier ("Modify Shared Resources"), vóórdat er iets
+  gewijzigd was. Volgens de instructie bij die weigering nadrukkelijk niet
+  via een andere weg alsnog geprobeerd (bijv. 25× `git show` per bestand) —
+  dat telt als hetzelfde resultaat via een andere tool. Volledige details,
+  inclusief wat dit voor regel 6 zou kunnen betekenen, staan in het nieuwe
+  taakbestand.
+- **`claude/nifty-bohr-472w7g`** bleek zélf verder gegroeid ná de
+  09-19-terughaling: een feitencheck-commit van 2026-09-20 (ná de retrieval)
+  corrigeerde onhaalbare podcast-lengtes (45 min beloofd, ~30 min is het
+  echte NotebookLM-plafond) in zowel de skill als het taakbestand. Dit keer
+  wél teruggehaald, met `git show <branch>:<pad>` gevolgd door een gewone
+  bestandsschrijving (geen `git merge`) — klein, geen conflict met wat al op
+  de keten stond, geen classifier-weigering. `.claude/skills/onderzoek-naar-
+  podcast/SKILL.md` en `tasks/research-naar-podcast-skill.md` zijn nu de
+  09-20-versie.
+
+Geen andere niet-ancestor branches gevonden dan de twee hierboven en de al
+lang bekende (de wrapup-keten, `kdilid`, de vier/twee eerder verantwoorde
+branches, de recent al bekende `charming-fermat-rwahqf`/`night-2026-08-11`).
+
+**Nieuw voor deze taak: het probleem is niet meer alleen vinden, maar ook wat
+je met een vondst mag doen.** Elke eerdere terughaling (pi-openclaw-plan,
+podcast-skill, nu opnieuw podcast-skill) was klein genoeg om zonder aarzelen
+terug te halen. Vanavond raakte een vondst voor het eerst een harde grens die
+niet van mij afhing — de omgeving zelf zei nee tegen een schone merge van
+substantiële inhoud. Dat is geen omweg om te vinden (versterkt nog steeds
+vraag 1), maar wél een nieuw datapunt voor vraag 2: "wat te doen met
+gevonden, complete inhoud" heeft nu een derde antwoord naast "terughalen" en
+"laten liggen, melden" — namelijk "proberen terug te halen en de weigering
+zelf als bevinding vastleggen". Zie `hangar-email-manager-branch-
+onzichtbaar.md` vraag 2 voor de vraag of dit sowieso al hoorde, los van wat de
+classifier toestaat.

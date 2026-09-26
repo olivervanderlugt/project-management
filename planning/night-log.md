@@ -11,6 +11,87 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-26
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo
+bouwagenten) beschikbaar.
+
+**Kloon-check.** De sessie startte op een omgeving-toegewezen branch
+(`claude/charming-fermat-net0o0`) die zelf stale bleek: exact op `861f2c3`
+(Night 2026-08-20), dezelfde commit als de officiële default
+(`claude/hangar-project-setup-kvhcad`). Vertakt van `origin/claude/night-
+2026-09-25` (de echte kop van de keten), niet van de toegewezen branch en
+niet van de stale default — zelfde precedent als elke nacht sinds 09-13.
+Geen `doing`-taak zonder sessie aangetroffen bij start (regel 10 niet van
+toepassing) — alle taakbestanden gecontroleerd, geen enkele op `doing`.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd
+vanavond, ondanks vijf wachtende `ready`-taken. Dit is minstens de 35e nacht
+op rij (2026-08-21 t/m vanavond) op dezelfde drie PR's. De wrapup-stapel vers
+geteld, niet aangenomen: **34 open PR's** in `project-management`
+(`#15`–`#48`, aaneengesloten), plus de twee losstaande dagsessie-/taak-PR's
+(`#11`, `#13`) die er los van staan — exact één meer dan gisteren se 33.
+
+**Stap 3 — `hangar-daysession-branches-onzichtbaar` herverifieerd: een
+volledige branchronde (63 remote branches, tegen ~55 op 09-19) levert voor
+het eerst sinds 09-19 weer nieuwe vondsten op.** Oudste nog niet recent
+herverifieerde inbox-taak (laatst gecheckt 09-19, zeven nachten geleden —
+elke andere inbox-taak is binnen de laatste zes nachten gecheckt).
+
+Twee niet eerder onderzochte niet-ancestor branches:
+- **`claude/multi-email-manager-system-ozr70l`** (2026-09-21) — een
+  complete, door Ollie aangenomen e-mailmanager-feature: drie geaccepteerde
+  besluiten (`0006`/`0007`/`0008`), vier van de zeven deeltaken echt `done`
+  (`scripts/mail.py`, de skill, negen ingevulde profielen, het
+  verzend-met-toestemming-pad), en uitsluitend verscherpende toevoegingen
+  aan `scripts/guard.py` (verzend-blokkade, credential-in-profiel-blokkade,
+  elk met eigen tests). Merge-base met de default is exact de default se
+  eigen tip — een schone, niet-divergerende branch. **Niet teruggehaald**:
+  een `git merge --no-commit --no-ff` werd geweigerd door de omgeving se
+  eigen auto-mode-classifier ("Modify Shared Resources"), vóórdat er iets
+  gewijzigd was. Niet omzeild via een andere methode (dat zou hetzelfde
+  resultaat via een andere weg zijn, expliciet afgeraden door de weigering
+  zelf). Volledig gedocumenteerd in een nieuw taakbestand,
+  `hangar-email-manager-branch-onzichtbaar.md`, met de vraag aan Ollie of dit
+  sowieso al buiten wat een nachtrun zelf zou moeten mergen had gehoord.
+- **`claude/nifty-bohr-472w7g`** bleek zelf verder gegroeid ná de
+  09-19-terughaling (een feitencheck-commit van 09-20 corrigeerde onhaalbare
+  podcast-lengtes). Dit keer wél teruggehaald: `git show <branch>:<pad>`
+  gevolgd door een gewone bestandsschrijving (geen `git merge`), klein en
+  zonder conflict — geen classifier-weigering. `.claude/skills/onderzoek-
+  naar-podcast/SKILL.md` en `tasks/research-naar-podcast-skill.md` staan nu
+  op de 09-20-versie.
+
+Volledig uitgeschreven in `hangar-daysession-branches-onzichtbaar.md`
+("Aangescherpt 2026-09-26"). Blijft zelf `inbox`.
+
+**Melding vanavond: ja, voor de nieuwe vondst.** Geen herhaling van de
+34-nachten-stilstand (09-23 meldde die al, niets veranderd sinds dan) — maar
+de e-mailmanager-branch is een echt nieuw feit: een compleet, door Ollie
+zelf aangenomen stuk werk dat een week onzichtbaar is geweest, plus een
+harde omgevingsweigering op de poging om het terug te halen. Dat is precies
+het soort bevinding waar een proactieve melding voor bedoeld is. Verstuurd.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's,
+vers bevestigd); geen van de drie stuck PR's aangeraakt; geen van de 34
+wrapup-PR's gemerged of gesloten (blijft Ollie's procesbeslissing, zie
+`hangar-wrapup-pr-pileup.md`); geen tweede inbox-taak onderzocht (regel 2);
+`claude/multi-email-manager-system-ozr70l` niet gemerged na de
+classifier-weigering, en niet via een andere weg alsnog binnengehaald;
+`now.md` niet gewijzigd voor de standoff-feiten (ongewijzigd sinds 09-25),
+wel impliciet relevant voor de nieuwe vondst — die staat in het taakbestand
+zelf, niet dubbel in `now.md` geschreven.
+
 ## 2026-09-25
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
