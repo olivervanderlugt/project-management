@@ -11,6 +11,63 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-27
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check.** De omgeving-toegewezen branch (`claude/charming-fermat-m3d144`)
+bleek zelf stale: exact op `861f2c3` (Night 2026-08-20), dezelfde commit als de
+officiële default. Vertakt van `origin/claude/night-2026-09-26` (de echte kop
+van de keten), niet van de toegewezen branch en niet van de stale default —
+zelfde precedent als elke nacht sinds 09-13. Geen `doing`-taak zonder sessie
+aangetroffen bij start (regel 10 niet van toepassing) — alle taakbestanden op
+de echte kop gecontroleerd, geen enkele op `doing`.
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond,
+ondanks de wachtende `ready`-taken. Dit is minstens de 36e nacht op rij
+(2026-08-21 t/m vanavond) op dezelfde drie PR's — het exacte volgnummer hangt
+af van hoe consolidatienachten meetellen, ongewijzigd onderzocht t.o.v. eerder.
+De wrapup-stapel vers geteld (los van deze nacht se eigen, nog te openen
+stap-4-PR): 35 open PR's in `project-management` (`#15`–`#49`, aaneengesloten),
+naast de twee losstaande PR's (`#11`, `#13`) die er los van staan — exact één
+meer dan gisteren se 34, zoals elke nacht sinds 08-21. Geen nieuw feit hierin,
+dus niet opnieuw los gemeld — de 09-23-melding en de doorlopende regel in
+`planning/now.md` dekken dit al.
+
+**Stap 3 — `quizzly-legal-review-west` herverifieerd: geen verandering.**
+Oudste nog niet recent herverifieerde inbox-taak (laatst gecheckt 09-20, zeven
+nachten geleden — elke andere inbox-taak op het bord is binnen de laatste zes
+nachten gecheckt). Alle drie bronnen vers bij GitHub/git opgevraagd, niets
+aangenomen: `quizzly#1` staat nog `open`, `mergeable_state: dirty`,
+`created_at` = `updated_at` = 2026-08-07T20:20:27Z (identiek aan 09-10 en
+09-20 — geen enkele activiteit sinds de opening); `claude/quizzly-finalization`
+ongewijzigd op `26e193f8`; `main` nog op de merge van PR #7 (`8bbae69`,
+2026-08-16), `docs/COMPLIANCE-REVIEW.md` bestaat nog niet. De blokkade is nu
+51 dagen oud zonder enige beweging. Blijft `inbox`, zelfde vraag aan Ollie als
+steeds: wanneer merge je `quizzly#1`?
+
+**Geen nieuwe melding vanavond.** Niets van het bovenstaande is een nieuw
+feit t.o.v. wat Ollie al weet uit eerdere meldingen en `planning/now.md` — een
+zoveelste "nog steeds niets veranderd" voegt niets toe.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's, vers
+bevestigd); geen van de drie stuck PR's aangeraakt; geen van de 35 wrapup-PR's
+gemerged of gesloten (blijft Ollie's procesbeslissing, zie
+`hangar-wrapup-pr-pileup.md`); geen tweede inbox-taak onderzocht (regel 2);
+`now.md` niet gewijzigd — geen enkel feit erin is vanavond veranderd, zelfde
+keuze als de vorige nachten zonder nieuwe bevinding.
+
 ## 2026-09-26
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen

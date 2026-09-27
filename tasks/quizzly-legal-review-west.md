@@ -141,3 +141,24 @@ beweging. Blijft `inbox`, zelfde vraag aan Ollie als steeds: wanneer merge je
 `quizzly#1`? Niet opnieuw los gemeld aan Ollie vanavond — de 09-17-notificatie
 en de doorlopende regel in `planning/now.md` dekken dit al; een tiende
 "nog steeds niets veranderd" voegt niets toe dat hij nog niet weet.
+
+## Herchecked 2026-09-27 (nachtrun, stap 3)
+
+Zeven nachten sinds de vorige check — weer de langst niet-herverifieerde
+inbox-taak op het bord (de andere zeven zijn allemaal binnen de laatste zes
+nachten gecheckt, zie `planning/night-log.md`). Alle drie bronnen vers
+opgevraagd bij GitHub, niets aangenomen uit deze taak se eigen geschiedenis:
+
+- `quizzly#1` rechtstreeks bij GitHub: nog steeds `open`, `mergeable_state:
+  dirty`, `created_at` = `updated_at` = 2026-08-07T20:20:27Z — letterlijk
+  hetzelfde tijdstip als op 09-10 en 09-20, dus nog steeds geen enkele
+  activiteit sinds de opening.
+- `claude/quizzly-finalization` (de PR-branch): head-sha nog steeds
+  `26e193f8c2af5438a45a4cae34a87f919f9f8205`, ongewijzigd.
+- `main`: nog steeds op de merge van PR #7 (2026-08-16, `8bbae69`).
+  `docs/LEGAL.md` bestaat, `docs/COMPLIANCE-REVIEW.md` bestaat nog niet.
+
+Geen nieuwe bevinding. De blokkade is nu 51 dagen oud zonder enige beweging.
+Blijft `inbox`, zelfde vraag aan Ollie als steeds: wanneer merge je
+`quizzly#1`? Niet opnieuw los gemeld — geen nieuw feit sinds de 09-17-melding
+en de doorlopende regel in `planning/now.md`.
