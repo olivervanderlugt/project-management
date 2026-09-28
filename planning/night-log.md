@@ -11,6 +11,74 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-28
+
+**Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
+(`hangar`, `hangar-manager`, `hangar-checker`, plus de per-repo bouwagenten)
+beschikbaar.
+
+**Kloon-check.** De omgeving-toegewezen branch bleek zelf stale: exact op
+`861f2c3` (Night 2026-08-20), dezelfde commit als de officiële default
+(`claude/hangar-project-setup-kvhcad`, bevestigd via `git ls-remote
+--symref`). Vertakt van `origin/claude/night-2026-09-27` (de echte kop van de
+keten), niet van de toegewezen branch en niet van de stale default — zelfde
+precedent als elke nacht sinds 09-13. Geen `doing`-taak zonder sessie
+aangetroffen (alle taakbestanden gecontroleerd: vijf `ready`, geen enkele
+`doing`).
+
+**Stap 1 — drie vastgelopen nachtrun-PR's, elk vers bij GitHub opgevraagd,
+niet aangenomen: nog steeds drie, dus geen bouw.**
+- `percentile#1` (`night/percentile-f16-count-ladder`) — `mergeable_state:
+  dirty`. Ongewijzigd sinds 2026-08-07.
+- `learning-website#3` (`night/learn-csharp-chain`) — `mergeable_state:
+  clean`, blijft bewust ongemerged (gebouwd vóór besluit 0004).
+- `project-management#13` (`hangar-stale-clone-guard`) — `mergeable_state:
+  dirty`, `status: blocked`. Ongewijzigd.
+
+Drie blijft drie: over de grens van regel 5, dus geen taak gebouwd vanavond,
+ondanks de vijf wachtende `ready`-taken. De wrapup-stapel vers geteld via de
+API: 36 open PR's in `project-management` (`#15`–`#50`, aaneengesloten,
+inclusief de vorige nacht se eigen stap-4-PR), plus de twee losstaande PR's
+(`#11`, `#13`) — exact één meer dan de 35 van gisteren, dezelfde ~1-per-nacht
+groei als steeds. Geen nieuw feit, dus niet opnieuw los gemeld — de
+09-23-melding en de doorlopende regel in `planning/now.md` dekken dit al.
+
+**Stap 3 — `hangar-in-de-browser` herverifieerd: geen verandering.** Oudste
+nog niet recent herverifieerde inbox-taak (laatst gecheckt 09-21, zeven
+nachten geleden — elke andere inbox-taak is binnen de laatste zes nachten
+gecheckt: `quizzly-legal-review-west` gisteren, `hangar-daysession-branches-
+onzichtbaar` 09-26, `nachtrun-loopt-vast-op-een-taak` 09-25, `quizzly-slide-
+designer-bouwen` 09-24, `hangar-wrapup-pr-pileup` 09-23, `hangar-pr-plafond-
+kwijt` 09-22, `hangar-email-manager-branch-onzichtbaar` pas 09-26 aangemaakt).
+Alle drie vaststaande punten vers bij de bron nagegaan, niets aangenomen:
+
+- `search_issues` op `repo:olivervanderlugt/project-management label:capture`
+  → nog steeds 0 resultaten. Het Vangen-formulier is nog steeds nooit
+  geprobeerd.
+- De officiële default branch staat nog steeds op `861f2c3` (Night 2026-08-20)
+  als laatste commit — geverifieerd via `list_commits`, geen
+  `github-actions[bot]`-commit erna.
+- `decisions/` bevat nog steeds geen besluit dat 0001 vervangt (nog steeds tot
+  en met `0006-altijd-aan-kastje-thuis.md`, dat over iets anders gaat).
+
+Geen nieuwe informatie. Zelf geen test-issue aangemaakt, zelfde reden als de
+eerdere rechecks: dat zou een echte `github-actions[bot]`-commit rechtstreeks
+op de default branch veroorzaken, los van deze nacht se eigen PR-stroom —
+twijfel dan valt het erbuiten. **Blijft `inbox`**, exact dezelfde open vraag:
+probeer het Vangen-formulier zelf vanaf je telefoon
+(github.com/olivervanderlugt/project-management/issues/new/choose).
+
+**Geen nieuwe melding vanavond.** Niets van het bovenstaande is een nieuw feit
+t.o.v. wat Ollie al weet uit eerdere meldingen en `planning/now.md` — een
+zoveelste "nog steeds niets veranderd" voegt niets toe.
+
+**Niet gedaan, met opzet:** geen taak gebouwd (regel 5, drie stuck PR's, vers
+bevestigd); geen van de drie stuck PR's aangeraakt; geen van de 36 wrapup-
+PR's gemerged of gesloten (blijft Ollie's procesbeslissing, zie
+`hangar-wrapup-pr-pileup.md`); geen tweede inbox-taak onderzocht (regel 2);
+`now.md` niet gewijzigd — geen enkel feit erin is vanavond veranderd, zelfde
+keuze als de vorige nachten zonder nieuwe bevinding.
+
 ## 2026-09-27
 
 **Start.** Subagents-check: Task/Agent-tool en de `.claude/agents/`-rollen
