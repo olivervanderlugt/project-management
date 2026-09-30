@@ -11,6 +11,24 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-09-30
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
+toegewezen branch is nog steeds stale (`861f2c3`); vertakt van
+`origin/claude/night-2026-09-29`, de kop van de keten. Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (08-07), `learning-website#3` (08-07),
+`project-management#13` (`blocked`). Drie: regel 5, geen taak gebouwd, ondanks
+de wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de rechecks van 09-21 t/m
+09-29; nog een recheck levert geen informatie op. Alle inbox-taken blijven `inbox`.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
 ## 2026-09-29
 
 **Start.** Subagents beschikbaar (Agent-tool met de `.claude/agents/`-rollen);
