@@ -11,6 +11,42 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-06
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Vertakt van `origin/claude/night-2026-10-05`. Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (08-07), `percentile#3` (08-09),
+`learning-website#3` (08-07) en `project-management#13` (blocked). Minstens
+drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** Acht `inbox`-taken, geen nieuwe input sinds de
+eerdere rechecks; elke open vraag wacht op een antwoord van Ollie.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Wat de keten ontstopt: Ollie sluit of merget de vastgelopen PR's hierboven.
+
+---
+
+## 2026-10-05
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Vertakt van `origin/claude/night-2026-10-04`. Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (laatst bijgewerkt 08-07), `percentile#3`
+(`mvp/launchable`, 08-09), `learning-website#3` (08-07) en
+`project-management#13` (blocked). Minstens drie: regel 5, geen taak gebouwd,
+ondanks vijf wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Wat de keten ontstopt: Ollie sluit of merget de vastgelopen PR's hierboven.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
