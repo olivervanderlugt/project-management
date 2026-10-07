@@ -11,6 +11,63 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-07
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Branch vertakt van `origin/claude/night-2026-10-06` (keten).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers opgevraagd, ongewijzigd:
+`percentile#1` (laatst bijgewerkt 08-07), `learning-website#3` (08-07),
+`project-management#13` (08-20), plus #11 (08-14). Drie of meer: regel 5, geen
+taak gebouwd. Wrapup-PR's in `project-management` lopen tot #60.
+
+**Stap 3 — overgeslagen.** De inbox-taken die ik inzag
+(`hangar-pr-plafond-kwijt` e.a.) wachten op een beslissing van Ollie, geen
+nieuw onderzoek mogelijk. Geen nieuwe inbox-taak sinds 10-04.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Open vraag aan Ollie, al weken: sluit of merge de vier vastgelopen PR's
+(`percentile#1`, `learning-website#3`, `project-management#11`, `#13`), anders
+bouwt de nachtrun niet meer.
+
+---
+
+## 2026-10-06
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Vertakt van `origin/claude/night-2026-10-05`. Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (08-07), `percentile#3` (08-09),
+`learning-website#3` (08-07) en `project-management#13` (blocked). Minstens
+drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** Acht `inbox`-taken, geen nieuwe input sinds de
+eerdere rechecks; elke open vraag wacht op een antwoord van Ollie.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Wat de keten ontstopt: Ollie sluit of merget de vastgelopen PR's hierboven.
+
+---
+
+## 2026-10-05
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Vertakt van `origin/claude/night-2026-10-04`. Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (laatst bijgewerkt 08-07), `percentile#3`
+(`mvp/launchable`, 08-09), `learning-website#3` (08-07) en
+`project-management#13` (blocked). Minstens drie: regel 5, geen taak gebouwd,
+ondanks vijf wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Wat de keten ontstopt: Ollie sluit of merget de vastgelopen PR's hierboven.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
