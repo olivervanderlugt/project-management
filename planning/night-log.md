@@ -11,6 +11,24 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-12
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-11` (kop van de keten).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`, `dirty`), `learning-website#3`
+(`5afe91d`, `clean` maar nooit gemerged), `project-management#13` en `#11`
+(beide nog open). Vier, dus regel 5: geen taak gebouwd. Wrapup-PR's: #58-#65 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Ollie: de vier vastgelopen PR's blokkeren elke nachtbouw; `learning-website#3` is
+`clean` en wacht alleen op een merge.
+
+---
+
 ## 2026-10-09
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
