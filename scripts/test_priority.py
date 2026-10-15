@@ -215,6 +215,11 @@ class TheBoard(unittest.TestCase):
         self.assertNotIn("Dit nu", html)
         self.assertIn("Nothing open", html)
 
+    def test_a_missing_effort_renders_a_plain_dash_not_the_escaped_entity(self):
+        html = build.render_priority([(task(slug="leeg", effort=""), "")], {}, WEIGHTS)
+        self.assertIn("&mdash;", html)
+        self.assertNotIn("&amp;mdash;", html)
+
     def test_the_real_board_carries_the_line_and_the_table(self):
         build.build()
         html = build.OUT.read_text(encoding="utf-8")
