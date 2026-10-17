@@ -11,6 +11,160 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-17
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-16`, de kop van de keten.
+
+**Stap 1 — geen bouw.** Open nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`), `percentile#3` (MVP, geen nachtrun),
+`learning-website#3` (`5afe91d`), `project-management#13` en `#11`. Drie of meer:
+regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken. Wrapup-PR's:
+#58-#70 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken sinds de eerdere
+rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-16
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-15`, de kop van de keten.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`, 08-07, `dirty`), `learning-website#3`
+(`5afe91d`, 08-07, `clean`), `project-management#13` (`4aecda6`) en `#11`
+(`cb55382`) staan ook nog open. Drie of meer: regel 5, geen taak gebouwd, ondanks
+de wachtende `ready`-taken. Wrapup-PR's: #58-#69 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken sinds de eerdere
+rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Ollie kan de stuck-keten openen door `learning-website#3` (clean) te mergen.
+
+---
+
+## 2026-10-15
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-14`, de kop van de keten.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`, 08-07), `learning-website#3`
+(`5afe91d`, 08-07), `project-management#13` (`blocked`, `dirty`). Drie: regel 5,
+geen taak gebouwd, ondanks de wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-14
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-13` (kop van de keten).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`),
+`project-management#13` (`4aecda6`) en `#11` (`cb55382`). Vier, dus regel 5:
+geen taak gebouwd. Wrapup-PR's: #58-#67 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-13
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-12` (kop van de keten).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`),
+`project-management#13` (`4aecda6`) en `#11` (`cb55382`). Vier, dus regel 5:
+geen taak gebouwd, ondanks vijf `ready`-taken. Wrapup-PR's: #58-#66 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-12
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-11` (kop van de keten).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`, `dirty`), `learning-website#3`
+(`5afe91d`, `clean` maar nooit gemerged), `project-management#13` en `#11`
+(beide nog open). Vier, dus regel 5: geen taak gebouwd. Wrapup-PR's: #58-#65 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+Ollie: de vier vastgelopen PR's blokkeren elke nachtbouw; `learning-website#3` is
+`clean` en wacht alleen op een merge.
+
+---
+
+## 2026-10-09
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Basis: `origin/main` (`a915d0e`); de logs van 10-05 t/m 10-08
+staan nog in open wrapup-PR's (#59-#62).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`),
+`project-management#13` (`4aecda6`) en `#11` (`cb55382`). Vier, dus regel 5:
+geen taak gebouwd. (`percentile#3`, de MVP-PR, is geen nachtrun-PR en telt niet mee.)
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-11
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `origin/claude/night-2026-10-10` (kop van de keten).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-bouw-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`),
+`project-management#13` (`4aecda6`) en `#11` (`cb55382`). Vier, dus regel 5:
+geen taak gebouwd, ondanks zeven `ready`-taken. Wrapup-PR's: #58-#64 open.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input voor de inbox-taken.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-10
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
+toegewezen branch is nog steeds stale; vertakt van
+`origin/claude/night-2026-10-09`, de kop van de keten. Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`, laatst bijgewerkt 08-07),
+`learning-website#3` (`5afe91d`, 08-07), `project-management#13` (`blocked`).
+Drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken.
+Wrapup-PR's in `project-management`: tot #63.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
