@@ -11,6 +11,41 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-25
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak.
+
+**Stap 1 — geen bouw.** Open PR's vers bij GitHub opgevraagd, ongewijzigd:
+`percentile#1` (08-07), `percentile#3` (08-09) en `learning-website#3` (08-07).
+Drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken.
+Wrapup-PR's in `project-management`: tot #78.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input; de inbox-taken wachten op Ollie's
+beslissing.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-10-24
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak.
+
+**Stap 1 — geen bouw.** Open PR's vers bij GitHub opgevraagd: `percentile#1` en
+`#3` en `learning-website#3` zijn nog open en sinds augustus onbewogen. Drie of
+meer: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken
+(`hangar-sessionstart-hook-gedrag`, `pi-openclaw-gateway`, drie quizzly-taken).
+Wrapup-PR's in `project-management`: tot #77.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input; de inbox-taken wachten op Ollie's
+beslissing.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
