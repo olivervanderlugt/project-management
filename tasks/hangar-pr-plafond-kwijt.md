@@ -132,3 +132,16 @@ Geen nieuwe feiten, dus geen andere uitkomst dan 09-05: dit blijft `inbox`,
 wachtend op Ollie's antwoord op de drie vragen hierboven. Niet zelf
 doorgevoerd — dit raakt regel 5, een veiligheidsregel, nooit een nachtrun's
 eigen beslissing.
+
+## Herchecked 2026-10-27 (nachtrun, stap 3)
+
+Oudste niet-herbekeken inbox-taak (laatste recheck 09-22). Vers bij de API
+opgevraagd: zes open nachtrun-PR's, geen enkele met een `APPROVED`-review in
+de zoekresultaten: `quizzly#4`, `#5`, `#6`, `project-management#11`,
+`learning-website#3`, `percentile#1`. Dat is zes in plaats van de drie waar
+de vorige rechecks over gingen: ook met het kdilid-besluit (per repo 2, totaal
+8) zou het totaal nog onder 8 blijven, maar `quizzly` zit met drie op de
+per-repo-grens van 2 — de nacht zou dus op `quizzly`-taken alsnog overslaan en
+`pi-openclaw-gateway`/`hangar-sessionstart-hook-gedrag` mogen proberen. Dat is
+de eerste keer dat het besluit een andere uitkomst zou geven dan de platte regel.
+Niet doorgevoerd (raakt regel 5); de drie vragen blijven bij Ollie.
