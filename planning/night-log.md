@@ -11,6 +11,24 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-27
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Geen `doing`-taak.
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers opgevraagd: zes
+(`quizzly#4`, `#5`, `#6`, `project-management#11`, `learning-website#3`,
+`percentile#1`). Regel 5: geen taak gebouwd, ondanks vijf wachtende
+`ready`-taken.
+
+**Stap 3.** `hangar-pr-plafond-kwijt` herchecked: blijft `inbox`, wacht op
+Ollie. Nieuw feit genoteerd: bij de huidige stand zou het per-repo-plafond van
+dat besluit voor het eerst een andere uitkomst geven dan de platte regel.
+
+**Niet gedaan:** niets gebouwd of gemerged; regel 5 niet aangepast.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
