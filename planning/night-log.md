@@ -11,6 +11,27 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-28
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Geen `doing`-taak. Lokale `main` gelijk aan `origin/main` (`a915d0e`).
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers opgevraagd: zeven
+(`quizzly#4`, `#5`, `#6`, `project-management#11`, `#13`,
+`learning-website#3`, `percentile#1`; geen enkele bijgewerkt sinds 08-07 t/m
+08-20). Regel 5: geen taak gebouwd, ondanks de wachtende `ready`-taken.
+Let op: de `Night`-wrapup-PR's #59 t/m #81 zijn nooit gemerged; dit blok staat
+daarom ook niet in het night-log op `main` van die nachten.
+
+**Stap 3 — geen nieuwe uitkomst.** Niets nieuws onderzocht dat een `inbox`-taak
+scherper maakt; alle acht blijven `inbox` en wachten op Ollie's beslissingen
+(o.a. `hangar-pr-plafond-kwijt`, regel 5). Niets verzonnen.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd; regel 5 niet
+aangepast.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
