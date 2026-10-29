@@ -9,6 +9,24 @@ started himself leaves its trail in `planning/now.md` and in the task files —
 day work in this file would cost it the one thing it is for. Rules and
 reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
+
+---
+
+## 2026-10-29
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `main` (`a915d0e`).
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`, laatst bijgewerkt 08-07),
+`learning-website#3` (`5afe91d`, 08-07), `project-management#13` (`blocked`) en
+`#11`. Drie of meer: regel 5, geen taak gebouwd, ondanks de wachtende
+`ready`-taken (o.a. `quizzly-media-read-authz`, `quizzly-semantische-tokens`).
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
 ---
 
 ## 2026-10-04
