@@ -11,6 +11,25 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-10-30
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen
+`doing`-taak. Vertakt van `main` (`a915d0e`).
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd,
+ongewijzigd: `percentile#1` (`b73c406`) en `#3`, `learning-website#3`
+(`5afe91d`), plus `project-management#13` (`blocked`) en `#11`. Drie of meer:
+regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken (o.a.
+`quizzly-media-read-authz`, `quizzly-semantische-tokens`). Dit loopt al sinds
+augustus vast: de vastgelopen PR's wachten op een beslissing van Ollie.
+
+**Stap 3 — overgeslagen.** Geen enkele taakwijziging in `tasks/` sinds 10-04;
+geen nieuwe input om een inbox-taak mee aan te scherpen.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
