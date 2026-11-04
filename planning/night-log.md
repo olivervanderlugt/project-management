@@ -11,6 +11,61 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-11-04
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Geen `doing`-taak. `origin/main` onveranderd (`a915d0e`); nachtbranch vertakt
+van `claude/night-2026-11-03`, de kop van de keten.
+
+**Stap 1 — geen bouw.** Open taak-PR's vers bij GitHub opgevraagd:
+`percentile#1`, `learning-website#3`, `project-management#13` en `#11`
+(`night/*`-branches, laatst bijgewerkt 08-07 t/m 08-20). Vier: regel 5, geen
+taak gebouwd, ondanks de wachtende `ready`-taken. Quizzly-PR's niet opnieuw
+opgevraagd; drie waren al genoeg. Nachtlog-PR's in `project-management`: tot #88.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input in `tasks/`; de inbox-taken
+wachten op antwoorden van Ollie.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-11-03
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Geen `doing`-taak. Tree vers gefetcht: `origin/main` onveranderd (`a915d0e`).
+
+**Stap 1 — geen bouw.** Open taak-PR's vers bij GitHub opgevraagd, ongewijzigd:
+`percentile#1`, `learning-website#3`, `quizzly#4`, `#5` en `#6` (laatst
+bijgewerkt 08-07 t/m 08-14). Vijf: regel 5, geen taak gebouwd, ondanks de
+wachtende `ready`-taken. Nachtlog-PR's in `project-management`: tot #87.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input in `tasks/` sinds 09-27; de
+inbox-taken wachten op antwoorden van Ollie.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-11-02
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd.
+Geen `doing`-taak. Tree vers gefetcht: `origin/main` heeft niets nieuws.
+
+**Stap 1 — geen bouw.** Open nachtrun-PR's vers bij GitHub opgevraagd:
+`percentile#1`, `learning-website#3`, `quizzly#4`, `#5` en `#6` (laatst
+bijgewerkt 08-07 t/m 08-14), plus de stapel night-/wrapup-PR's in
+`project-management` (#38, #58 en #59 t/m #86). Vijf of meer taak-PR's: regel
+5, geen taak gebouwd, ondanks de wachtende `ready`-taken.
+
+**Stap 3 — overgeslagen.** De oudste inbox-taak (`hangar-pr-plafond-kwijt`)
+is op 09-22 al herverifieerd en wacht op Ollie's antwoord op drie vragen.
+Er is geen nieuwe input, dus niet opnieuw onderzocht.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
