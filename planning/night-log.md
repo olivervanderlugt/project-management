@@ -11,6 +11,66 @@ reasoning: `reference/nightrun-rules.md`, decision `0004`.
 
 ---
 
+## 2026-11-11
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen `doing`-taak. `origin/main` onveranderd sinds `a915d0e`; vertakt van `origin/claude/night-2026-11-10`.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd, ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`), `project-management#13` (`4aecda6`, `dirty`). Drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken. Daarnaast staan er nu 32 open no-build-PR's (#64-#95, plus oudere) in `project-management` — Ollie kan die gerust sluiten.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks (`main` en `tasks/` onveranderd).
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-11-10
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen `doing`-taak. `origin/main` onveranderd sinds `a915d0e`; vertakt van `origin/claude/night-2026-11-09`.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd, ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`), `project-management#13` (`blocked`). Drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken. Daarnaast staan er nu 31 open no-build-PR's (#64-#94) in `project-management` — Ollie kan die gerust sluiten.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-11-09
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen `doing`-taak. `origin/main` onveranderd sinds `a915d0e`; vertakt van `origin/claude/night-2026-11-08`.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd, ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`), `project-management#13` (`blocked`, `dirty`). Drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken. Daarnaast staan er 30 open no-build-PR's van eerdere nachten (#64-#93) in `project-management` — Ollie kan die gerust sluiten.
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-11-08
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen `doing`-taak. `origin/main` onveranderd sinds `a915d0e` (04-10); vertakt van `origin/claude/night-2026-11-07`.
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd, ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`), `project-management#13` (`blocked`, `dirty`). Drie: regel 5, geen taak gebouwd, ondanks de wachtende `ready`-taken. (`percentile#3` is een MVP-PR, geen nachtrun-PR.)
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
+## 2026-11-07
+
+**Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. Geen `doing`-taak. Clone gelijk aan `origin/main` (`a915d0e`).
+
+**Stap 1 — geen bouw.** Vastgelopen nachtrun-PR's vers bij GitHub opgevraagd, ongewijzigd: `percentile#1` (`b73c406`), `learning-website#3` (`5afe91d`), `project-management#13` (`blocked`, `dirty`). Drie: regel 5, geen taak gebouwd, ondanks 5 wachtende `ready`-taken. (`percentile#3` is een MVP-PR, geen nachtrun-PR, en telt niet mee.)
+
+**Stap 3 — overgeslagen.** Geen nieuwe input sinds de eerdere rechecks.
+
+**Niet gedaan:** niets gebouwd, gemerged of aan taken veranderd. Een lege nacht.
+
+---
+
 ## 2026-10-04
 
 **Start.** Subagents beschikbaar; niet gebruikt, want er is niets gebouwd. De
